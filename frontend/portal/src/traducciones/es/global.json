@@ -1,0 +1,10 @@
+{
+    "portal": {
+        "titulo": "Cash Register"
+    },
+
+    "mensajes":{
+        "loading": "Cargando..."
+    }
+
+}

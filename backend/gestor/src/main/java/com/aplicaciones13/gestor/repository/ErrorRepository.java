@@ -1,0 +1,57 @@
+package com.aplicaciones13.gestor_ws.repository;
+
+import com.aplicaciones13.gestor_ws.model.Error;
+
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+/**
+ * Repositorio de la entidad Error.
+ * 
+ * @author omargo33
+ * @since 2025-01-12
+ */
+@Repository
+public interface ErrorRepository extends JpaRepository<Error, Long> {
+
+    /**
+     * Metodo para buscar una por indice(like) y/o mensaje(like) y que sea pageable.
+     * 
+     * @param indice
+     * @param mensaje
+     * @param pageable
+     * @return
+     */
+    @Query("SELECT e FROM Error e WHERE (:indice IS NULL OR upper(e.indice) LIKE %:indice%) AND (:mensaje IS NULL OR upper(e.mensaje) LIKE %:mensaje%)")
+    Page<Error> findByIndiceContaining(String indice, String mensaje, Pageable pageable);
+
+    /**
+     * Método para buscar una entidad de Error por indice.
+     * 
+     * @param indice
+     * @return
+     */
+    Optional<Error> findByIndice(String indice);
+
+    /**
+     * Método para buscar una entidad de Error por UUID.
+     * 
+     * @param uuid
+     * @return
+     */
+    @Query(value = "SELECT * FROM gs_001_01.error WHERE uuid = CAST(?1 AS uuid)", nativeQuery = true)
+    Optional<Error> findByUuid(String uuid);
+
+    /**
+     * Método para buscar una entidad de Error por id.
+     * 
+     * @param id
+     * @return
+     */
+    Optional<Error> findByIdError(long id);
+}

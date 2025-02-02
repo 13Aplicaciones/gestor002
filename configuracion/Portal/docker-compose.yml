@@ -1,0 +1,118 @@
+##
+##
+## Docker para administrar contenedores del desarrollo del proyecto gestor002
+## 
+## Servidor de base de datos postgres latest
+## Servidor de nxinx latest
+## Servidor de Spring Boot Admin java 
+
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_gestor002_001
+    ## restart: always
+    ##
+    ## configuracion de recursos
+    mem_limit: 512m
+    mem_reservation: 256M
+    cpus: 1
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: America/Bogota
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gs002001
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./baseDatos/:/docker-entrypoint-initdb.d
+    network_mode: 
+      host  
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_gestor002_001
+    ## restart: always
+    ##
+    ## configuracion de recursos
+    mem_limit: 384m
+    mem_reservation: 128M
+    cpus: 0.5
+    ports:
+      - "80:80"
+    environment:
+      TZ: America/Bogota
+    volumes:
+      - ./html:/var/www/html
+      - ./cert:/etc/nginx/cert
+      - ./config:/etc/nginx
+    network_mode: 
+      host 
+    depends_on:
+      - postgres
+  ##
+  ## Servidor de keycloak
+  keycloak:
+    build: keycloak_build
+    image: keycloak:26.0
+    container_name: keycloak_gestor002_001
+    ## restart: always
+    ##
+    ## configuration recursos
+    mem_limit: 1024m
+    mem_reservation: 512M
+    cpus: 1
+    environment:
+      - TZ=America/Bogota
+      - KC_DB=postgres ## tipo de base de datos
+      - KC_DB_URL_HOST=127.0.0.1 ## host de base de datos
+      - KC_DB_URL_PORT=5432 ## puerto de base de datos
+      - KC_DB_URL_DATABASE=keycloak ## base de datos   
+      - KC_DB_USERNAME=user_keycloak ## usuario de base de datos
+      - KC_DB_PASSWORD=12341234s ## clave de base de datos      
+      - KC_HOSTNAME_STRICT_HTTPS=false ## configuracion de host
+      - KC_HOSTNAME_STRICT=false ## configuracion de host
+      - KC_HTTP_ENABLED=true ## configuracion de host
+      - KEYCLOAK_ADMIN=admin ## usuario de keycloak
+      - KEYCLOAK_ADMIN_PASSWORD=admin123 ## clave de keycloak
+      - KC_PROXY=edge ## configuracion de proxy
+    ports:
+      - 8080:8080
+    network_mode: 
+      host
+    depends_on:
+      - postgres
+    command:
+      - start    
+
+  ##
+  ## Servidor de cache Redis
+  redis:
+    image: redis:latest
+    container_name: redis_gestor002_001
+    ## restart: always
+    ##
+    ## configuracion de recursos
+    mem_limit: 256m
+    mem_reservation: 128M
+    cpus: 0.5
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: America/Bogota
+    network_mode: 
+      host
+    depends_on:
+      - postgres
+
+
+##  spring-boot-admin:
+##    image: springbootadmin/spring-boot-admin:2.3.1
+##    container_name: spring-boot-admin
+##    ports:
+##      - "8080:8080"
+##    networks:
+##      - gestor002-network
+

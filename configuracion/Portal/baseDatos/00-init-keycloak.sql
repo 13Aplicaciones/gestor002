@@ -1,0 +1,5 @@
+CREATE USER user_keycloak WITH PASSWORD '12341234s';
+
+CREATE DATABASE keycloak WITH OWNER = user_keycloak ENCODING = 'UTF8';
+
+CREATE SCHEMA keycloak AUTHORIZATION user_keycloak;

@@ -1,0 +1,206 @@
+{
+  "main": {
+    "id": "2fd719d8c660cbcf",
+    "type": "split",
+    "children": [
+      {
+        "id": "3f7abe0b0c0ca3b2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5cd440f9879005c8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "mega Check list.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "mega Check list"
+            }
+          },
+          {
+            "id": "cde83b5c2ba07f62",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Muleto.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Muleto"
+            }
+          },
+          {
+            "id": "d21fee894ea3ff6c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Muleto.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Muleto"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c7d066ac0d10c6d5",
+    "type": "split",
+    "children": [
+      {
+        "id": "13113bd0dbde1b95",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9c93cbab976ca3c3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "3068eed6bc6edf24",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "988227944d370be4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 413.5
+  },
+  "right": {
+    "id": "ac280dad3096a4eb",
+    "type": "split",
+    "children": [
+      {
+        "id": "0f4d228327e7f644",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0586031fa0ed3f95",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "logo.png",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de logo"
+            }
+          },
+          {
+            "id": "1709d21eef28eeeb",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "logo.png",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de logo"
+            }
+          },
+          {
+            "id": "204ab34a3da9d065",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "ba3e09b2d9cf2646",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "logo.png"
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de logo"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false
+    }
+  },
+  "active": "d21fee894ea3ff6c",
+  "lastOpenFiles": [
+    "Seguridades.pdf",
+    "CORS.md",
+    "Muleto.md",
+    "Muleto-REST.md",
+    "mega Check list.md",
+    "Screenshot_20250122_150440.png",
+    "logo01.png",
+    "rolCrearUsuarios.png",
+    "logo.png"
+  ]
+}

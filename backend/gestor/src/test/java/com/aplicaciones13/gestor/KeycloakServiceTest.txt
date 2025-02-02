@@ -1,0 +1,79 @@
+package com.aplicaciones13.gestor_ws;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakClient;
+import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest;
+import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse;
+import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserRequest;
+import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class KeycloakServiceTest {
+
+    @Mock
+    private KeycloakClient keycloakClient;
+
+    @InjectMocks
+    private KeycloakServiceTest keycloakService;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testGetToken() {
+        String url = "http://localhost/realms/gestor002-realm/protocol/openid-connect/token";
+        String clientId = "gestor002-client";
+        String clientSecret = "ooghA6fmjgjkQY6IvaZiuNpMNltwcc8K";
+        String userName = "root";
+        String password = "12341234s";
+        String grantType = "password";
+        String grantTypeCredential = "client_credentials";
+        String scope = "openid";
+
+        KeycloakResponse keycloakResponse = new KeycloakResponse();
+        KeycloakTokenResponse mockResponse = keycloakResponse.new KeycloakTokenResponse();
+
+        KeycloakRequest keycloakRequest = new KeycloakRequest();
+        UserRequest userRequest = keycloakRequest.new UserRequest();
+        userRequest.setClientId(clientId);
+        userRequest.setUsername(userName);
+        userRequest.setPassword(password);
+        userRequest.setGrantType(grantType);
+
+        mockResponse = keycloakClient.fetchToken(url, userRequest);
+
+        when(keycloakClient.fetchToken(url, userRequest)).thenReturn(mockResponse);
+
+        System.out.println("mockResponse: " + mockResponse.getAccessToken());
+
+        assertNotNull(mockResponse);
+
+        System.out.println("mockResponse: " + mockResponse.getAccessToken());
+
+        String accessToken = mockResponse.getAccessToken();
+
+        System.out.println("accessToken: " + accessToken);
+
+        assertEquals("mock-access-token", mockResponse.getAccessToken());
+        assertEquals("mock-refresh-token", mockResponse.getRefreshToken());
+        assertEquals("Bearer", mockResponse.getTokenType());
+        assertEquals(3600, mockResponse.getExpiresIn());
+        assertEquals(1800, mockResponse.getRefreshExpiresIn());
+        assertEquals(0, mockResponse.getNotBeforePolicy());
+        assertEquals("mock-session-state", mockResponse.getSessionState());
+        assertEquals("mock-scope", mockResponse.getScope());
+
+        verify(keycloakClient, times(1)).fetchToken(url, userRequest);
+    }
+}

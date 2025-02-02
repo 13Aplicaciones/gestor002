@@ -1,0 +1,33 @@
+##
+## Autor: omargo33
+FROM keycloak/keycloak:26.0
+LABEL version="1.0"
+LABEL description="Custom Keycloak 26 Image"
+
+##
+## Define el tipo de base de datos a utilizar por keycloak, necesaria antes de kc.sh build para que genere los driver
+ENV KC_DB=postgres
+
+##
+## Habilita el estado de salud de keycloak
+ENV KC_HEALTH_ENABLED=true
+
+##
+## Habilita las metricas de keycloak
+ENV KC_METRICS_ENABLED=true
+
+##
+## Habilita el uso de XA(transacciones atomicas y consistentes) para transacciones
+ENV KC_TRANSACTION_XA_ENABLED='true'
+
+##
+## Carpeta de trabajo
+WORKDIR /opt/keycloak
+
+##
+## build del aplicativo
+## RUN /opt/keycloak/bin/kc.sh build --cache=ispn
+
+##
+## ejecuta el servidor de keycloak
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]

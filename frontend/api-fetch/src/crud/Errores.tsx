@@ -1,0 +1,82 @@
+import { Button, Flex, Heading, Text } from "@radix-ui/themes";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { EstadoEdicion } from "../ConstantesPresentacion";
+import { useState } from "react";
+import ButtonCrearRegistroFlotante from "../componentes/boton/Boton";
+import ErrorEdit from "./ErroresEdit";
+import Tabla from "./ErroresTabla";
+import VistaPrevia, { IRowDataError } from "./ErroresVistaPrevia";
+
+/**
+ * CRUD de errores del sistema.
+ * 
+ * @author @omargo33
+ * @since 2025-01-30
+ * 
+ */
+const ErrorPage = () => {
+    const [estado, setEstado] = useState(EstadoEdicion.crear);
+    const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>({
+        mensaje: '',
+        descripcion: '',
+        uuid: '',
+        indice: '',
+        usuario: '',
+        usuarioFecha: '',
+        usuarioPrograma: '',
+    });
+
+    const onEditarRow = (row: IRowDataError) => {
+        setEstado(EstadoEdicion.editar);
+        setRowSelecionado(row);
+    }
+
+    if (estado === EstadoEdicion.buscar) {
+        return (
+            <Flex direction="column" gap="3" p="3">
+                <Heading>Listar Errores del sistema</Heading>
+                <Text>En esta sección se muestran los errores del sistema y descripciones que este sitema tiene.</Text>
+                <Tabla onEditar={onEditarRow} />
+                <VistaPrevia
+                    indice="268"
+                />
+                <ButtonCrearRegistroFlotante
+                    toolTip="Error"
+                    onClick={() => {
+                        setEstado(EstadoEdicion.crear);
+                        setRowSelecionado({
+                            mensaje: '',
+                            descripcion: '',
+                            uuid: '',
+                            indice: '',
+                            usuario: '',
+                            usuarioFecha: '',
+                            usuarioPrograma: '',
+                        });
+                    }}
+                />
+            </Flex>
+        )
+    }
+    else {
+        return (
+            <Flex direction="row" justify="between" p="3">
+                <Flex direction="column" gap="3">
+                    <Heading>Error del sistema</Heading>
+                    <Text>En esta sección se muestran los errores del sistema y descripciones que este sitema tiene.</Text>
+                    <ErrorEdit estado={estado}
+                        row={rowSelecionado}
+                        onAtras={() => {
+                            setEstado(EstadoEdicion.buscar)
+                        }} />
+                </Flex>
+                <Flex gap="3">
+                    <Button onClick={() => { setEstado(EstadoEdicion.buscar) }}>
+                        <ChevronLeftIcon />Atras</Button>
+                </Flex>
+            </Flex>
+        )
+    }
+}
+
+export default ErrorPage;
