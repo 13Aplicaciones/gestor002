@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.mapping;
+package com.aplicaciones13.gestor.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.gestor_ws.model.Rol;
-import com.aplicaciones13.gestor_ws.payload.request.RolRequest;
-import com.aplicaciones13.gestor_ws.payload.response.RolResponse;
+import com.aplicaciones13.gestor.model.Rol;
+import com.aplicaciones13.gestor.payload.request.RolRequest;
+import com.aplicaciones13.gestor.payload.response.RolResponse;
 
 @Mapper
 public interface RolMapper {

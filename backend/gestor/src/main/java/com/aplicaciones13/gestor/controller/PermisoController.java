@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aplicaciones13.gestor_ws.payload.request.PermisoRequest;
-import com.aplicaciones13.gestor_ws.payload.response.PermisoResponse;
-import com.aplicaciones13.gestor_ws.services.PermisoService;
+import com.aplicaciones13.gestor.payload.request.PermisoRequest;
+import com.aplicaciones13.gestor.payload.response.PermisoResponse;
+import com.aplicaciones13.gestor.services.PermisoService;
 
 @Valid
 @RestController

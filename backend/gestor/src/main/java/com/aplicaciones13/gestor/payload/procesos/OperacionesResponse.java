@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.payload.procesos;
+package com.aplicaciones13.gestor.payload.procesos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

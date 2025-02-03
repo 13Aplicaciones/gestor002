@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.model.common;
+package com.aplicaciones13.gestor.model.common;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

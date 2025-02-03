@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

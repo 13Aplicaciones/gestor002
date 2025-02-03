@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.payload.response;
+package com.aplicaciones13.gestor.payload.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

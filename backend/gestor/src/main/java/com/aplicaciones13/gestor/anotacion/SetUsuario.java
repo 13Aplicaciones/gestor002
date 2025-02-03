@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.anotacion;
+package com.aplicaciones13.gestor.anotacion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * @author omargo33
  * @since 2025-01-24
  * 
- * @see com.aplicaciones13.gestor_ws.aspect.SetUsuarioAspect
+ * @see com.aplicaciones13.gestor.aspect.SetUsuarioAspect
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

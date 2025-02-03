@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.client.keyckloak26;
+package com.aplicaciones13.gestor.client.keyckloak26;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.payload.common;
+package com.aplicaciones13.gestor.payload.common;
 
 public enum TipoEncripcion {
 

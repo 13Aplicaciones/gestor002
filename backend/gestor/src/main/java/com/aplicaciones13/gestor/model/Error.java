@@ -1,9 +1,9 @@
-package com.aplicaciones13.gestor_ws.model;
+package com.aplicaciones13.gestor.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor_ws.model.common.UuidUsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UuidUsuarioFechaPrograma;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.payload.common;
+package com.aplicaciones13.gestor.payload.common;
 
-import com.aplicaciones13.gestor_ws.anotacion.SetUsuario;
+import com.aplicaciones13.gestor.anotacion.SetUsuario;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

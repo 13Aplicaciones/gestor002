@@ -1,7 +1,7 @@
-package com.aplicaciones13.gestor_ws.payload.procesos;
+package com.aplicaciones13.gestor.payload.procesos;
 
-import com.aplicaciones13.gestor_ws.payload.common.ProgramaRequest;
-import com.aplicaciones13.gestor_ws.payload.common.TipoEncripcion;
+import com.aplicaciones13.gestor.payload.common.ProgramaRequest;
+import com.aplicaciones13.gestor.payload.common.TipoEncripcion;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

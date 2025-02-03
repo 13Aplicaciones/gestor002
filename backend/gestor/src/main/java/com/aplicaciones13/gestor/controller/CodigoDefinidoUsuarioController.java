@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.aplicaciones13.gestor_ws.model.CodigoDefinidoUsuario;
-import com.aplicaciones13.gestor_ws.services.CodigoDefinidoUsuarioService;
+import com.aplicaciones13.gestor.model.CodigoDefinidoUsuario;
+import com.aplicaciones13.gestor.services.CodigoDefinidoUsuarioService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

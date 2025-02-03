@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.model;
+package com.aplicaciones13.gestor.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import com.aplicaciones13.gestor_ws.model.common.UsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UsuarioFechaPrograma;
 
 /**
  * 

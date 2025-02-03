@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.mapping;
+package com.aplicaciones13.gestor.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.gestor_ws.model.Informacion;
-import com.aplicaciones13.gestor_ws.payload.request.InformacionRequest;
-import com.aplicaciones13.gestor_ws.payload.response.InformacionResponse;
+import com.aplicaciones13.gestor.model.Informacion;
+import com.aplicaciones13.gestor.payload.request.InformacionRequest;
+import com.aplicaciones13.gestor.payload.response.InformacionResponse;
 
 @Mapper
 public interface InformacionMapper {

@@ -1,9 +1,9 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.aplicaciones13.gestor_ws.model.Permiso;
+import com.aplicaciones13.gestor.model.Permiso;
 
 @Repository
 public interface PermisoRepository extends JpaRepository<Permiso, Long> {

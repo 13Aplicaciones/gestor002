@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor_ws.model.Informacion;
+import com.aplicaciones13.gestor.model.Informacion;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +35,6 @@ public interface InformacionRepository extends JpaRepository<Informacion, Long> 
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.informacion WHERE uuid = CAST(?1 AS uuid)", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.informacion WHERE uuid = ?1", nativeQuery = true)
     Optional<Informacion> findByUuid(String uuid);
 }

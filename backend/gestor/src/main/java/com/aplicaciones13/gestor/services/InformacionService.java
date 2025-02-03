@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.mapping.InformacionMapper;
-import com.aplicaciones13.gestor_ws.model.Informacion;
-import com.aplicaciones13.gestor_ws.payload.request.InformacionRequest;
-import com.aplicaciones13.gestor_ws.payload.response.InformacionResponse;
-import com.aplicaciones13.gestor_ws.repository.InformacionRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.mapping.InformacionMapper;
+import com.aplicaciones13.gestor.model.Informacion;
+import com.aplicaciones13.gestor.payload.request.InformacionRequest;
+import com.aplicaciones13.gestor.payload.response.InformacionResponse;
+import com.aplicaciones13.gestor.repository.InformacionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

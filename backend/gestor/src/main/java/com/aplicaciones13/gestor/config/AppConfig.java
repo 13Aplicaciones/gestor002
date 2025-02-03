@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.config;
+package com.aplicaciones13.gestor.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;

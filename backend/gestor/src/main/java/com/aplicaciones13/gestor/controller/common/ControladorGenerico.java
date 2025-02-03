@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller.common;
+package com.aplicaciones13.gestor.controller.common;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 

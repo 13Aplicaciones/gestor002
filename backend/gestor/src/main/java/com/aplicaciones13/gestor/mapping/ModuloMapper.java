@@ -1,13 +1,13 @@
-package com.aplicaciones13.gestor_ws.mapping;
+package com.aplicaciones13.gestor.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.gestor_ws.model.Modulo;
-import com.aplicaciones13.gestor_ws.payload.request.ModuloRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloListaResponse;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloResponse;
+import com.aplicaciones13.gestor.model.Modulo;
+import com.aplicaciones13.gestor.payload.request.ModuloRequest;
+import com.aplicaciones13.gestor.payload.response.ModuloListaResponse;
+import com.aplicaciones13.gestor.payload.response.ModuloResponse;
 
 @Mapper
 public interface ModuloMapper {

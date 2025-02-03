@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor_ws.model.Error;
+import com.aplicaciones13.gestor.model.Error;
 
 import java.util.Optional;
 
@@ -44,7 +44,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.error WHERE uuid = CAST(?1 AS uuid)", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.error WHERE uuid = ?1", nativeQuery = true)
     Optional<Error> findByUuid(String uuid);
 
     /**

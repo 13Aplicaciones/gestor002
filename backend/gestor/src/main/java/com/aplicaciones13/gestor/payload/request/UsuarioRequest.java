@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.payload.request;
+package com.aplicaciones13.gestor.payload.request;
 
-import com.aplicaciones13.gestor_ws.payload.common.EstadoProgramaRequest;
+import com.aplicaciones13.gestor.payload.common.EstadoProgramaRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

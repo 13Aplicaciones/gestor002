@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.mapping.ParametroMapper;
-import com.aplicaciones13.gestor_ws.model.Parametro;
-import com.aplicaciones13.gestor_ws.payload.request.ParametroRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ParametroResponse;
-import com.aplicaciones13.gestor_ws.repository.ParametroRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.mapping.ParametroMapper;
+import com.aplicaciones13.gestor.model.Parametro;
+import com.aplicaciones13.gestor.payload.request.ParametroRequest;
+import com.aplicaciones13.gestor.payload.response.ParametroResponse;
+import com.aplicaciones13.gestor.repository.ParametroRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

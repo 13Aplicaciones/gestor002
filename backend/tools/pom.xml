@@ -10,7 +10,7 @@
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.qapaq</groupId>
+    <groupId>com.aplicaciones13</groupId>
     <artifactId>tools</artifactId>
     <version>0.0.2</version>
     <name>tools</name>

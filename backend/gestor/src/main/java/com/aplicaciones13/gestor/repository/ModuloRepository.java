@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor_ws.model.Modulo;
+import com.aplicaciones13.gestor.model.Modulo;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -31,7 +31,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.modulo WHERE estado != 'X' ORDER BY indice, nombre", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.modulo WHERE estado != 'X' ORDER BY indice, nombre", nativeQuery = true)
     List<Modulo> findAll();
 
     /**
@@ -40,7 +40,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.modulo WHERE uuid = CAST(?1 AS uuid) and estado != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.modulo WHERE uuid = ?1 and estado != 'X'", nativeQuery = true)
     Optional<Modulo> findByUuid(String uuid);
 
     /**
@@ -49,6 +49,6 @@ public interface ModuloRepository extends JpaRepository<Modulo, Long> {
      * @param indice
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.modulo WHERE indice = ?1 and estado != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.modulo WHERE indice = ?1 and estado != 'X'", nativeQuery = true)
     Optional<Modulo> findByIndice(String indice);
 }

@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import java.util.Optional;
 
@@ -10,12 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.mapping.ErrorMapper;
-import com.aplicaciones13.gestor_ws.payload.request.ErrorRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ErrorResponse;
-import com.aplicaciones13.gestor_ws.repository.ErrorRepository;
-import com.aplicaciones13.gestor_ws.model.Error;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.mapping.ErrorMapper;
+import com.aplicaciones13.gestor.payload.request.ErrorRequest;
+import com.aplicaciones13.gestor.payload.response.ErrorResponse;
+import com.aplicaciones13.gestor.repository.ErrorRepository;
+import com.aplicaciones13.gestor.model.Error;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

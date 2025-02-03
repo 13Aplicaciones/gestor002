@@ -1,13 +1,13 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.model.Token;
-import com.aplicaciones13.gestor_ws.model.Usuario;
-import com.aplicaciones13.gestor_ws.payload.procesos.CrearClaveRequest;
-import com.aplicaciones13.gestor_ws.payload.procesos.OperacionesResponse;
-import com.aplicaciones13.gestor_ws.repository.TokenRepository;
-import com.aplicaciones13.gestor_ws.repository.UsuarioRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.model.Token;
+import com.aplicaciones13.gestor.model.Usuario;
+import com.aplicaciones13.gestor.payload.procesos.CrearClaveRequest;
+import com.aplicaciones13.gestor.payload.procesos.OperacionesResponse;
+import com.aplicaciones13.gestor.repository.TokenRepository;
+import com.aplicaciones13.gestor.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

@@ -169,3 +169,12 @@ Las dimensiones son:
 - **md**: Medium, o mediano, para ordenadores de mesa con más de 992px de ancho 
 - **lg**: Large, o grande, para ordenadores de escritorio más grandes 
 - **xl**: Extra large, o extra grande, para pantallas con más de 1200px de ancho
+
+
+
+ALTER TABLE GS_002_01.error ADD uuid varchar(64) NULL COMMENT 'UUID para indice unico de consulta';
+
+update GS_002_01.error
+set uuid = uuid ()
+
+ALTER TABLE GS_002_01.error MODIFY COLUMN uuid varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'UUID para indice unico de consulta';

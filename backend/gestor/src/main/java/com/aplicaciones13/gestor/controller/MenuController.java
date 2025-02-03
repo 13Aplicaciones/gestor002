@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.aplicaciones13.gestor_ws.payload.request.MenuRequest;
-import com.aplicaciones13.gestor_ws.payload.response.MenuResponse;
-import com.aplicaciones13.gestor_ws.services.MenuService;
+import com.aplicaciones13.gestor.payload.request.MenuRequest;
+import com.aplicaciones13.gestor.payload.response.MenuResponse;
+import com.aplicaciones13.gestor.services.MenuService;
 
 import java.util.List;
 

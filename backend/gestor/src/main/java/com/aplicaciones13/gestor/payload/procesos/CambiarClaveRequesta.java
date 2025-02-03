@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.payload.procesos;
+package com.aplicaciones13.gestor.payload.procesos;
 
 public class CambiarClaveRequesta {
     

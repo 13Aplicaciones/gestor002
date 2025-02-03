@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.mapping;
+package com.aplicaciones13.gestor.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.gestor_ws.payload.request.ErrorRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ErrorResponse;
-import com.aplicaciones13.gestor_ws.model.Error;
+import com.aplicaciones13.gestor.payload.request.ErrorRequest;
+import com.aplicaciones13.gestor.payload.response.ErrorResponse;
+import com.aplicaciones13.gestor.model.Error;
 
 /**
  * Mapeador de errores.

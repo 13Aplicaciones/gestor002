@@ -1,11 +1,11 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import com.aplicaciones13.base.controller.ControllerTools;
 import com.aplicaciones13.base.validaciones.ValidUUID;
-import com.aplicaciones13.gestor_ws.payload.request.ModuloRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloListaResponse;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloResponse;
-import com.aplicaciones13.gestor_ws.services.ModuloService;
+import com.aplicaciones13.gestor.payload.request.ModuloRequest;
+import com.aplicaciones13.gestor.payload.response.ModuloListaResponse;
+import com.aplicaciones13.gestor.payload.response.ModuloResponse;
+import com.aplicaciones13.gestor.services.ModuloService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

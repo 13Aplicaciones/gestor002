@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws;
+package com.aplicaciones13.gestor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

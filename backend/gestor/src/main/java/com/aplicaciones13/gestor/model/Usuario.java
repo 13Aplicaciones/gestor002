@@ -1,11 +1,11 @@
-package com.aplicaciones13.gestor_ws.model;
+package com.aplicaciones13.gestor.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-import com.aplicaciones13.gestor_ws.model.common.UuidUsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UuidUsuarioFechaPrograma;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +18,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 /**
- * Clase que representa la tabla gs_001_01.usuario
+ * Clase que representa la tabla GS_002_01.usuario
  * 
  * @autor omargo33
  * @since 2025-01-12

@@ -1,8 +1,8 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.gestor_ws.payload.request.ParametroRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ParametroResponse;
-import com.aplicaciones13.gestor_ws.services.ParametroService;
+import com.aplicaciones13.gestor.payload.request.ParametroRequest;
+import com.aplicaciones13.gestor.payload.response.ParametroResponse;
+import com.aplicaciones13.gestor.services.ParametroService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

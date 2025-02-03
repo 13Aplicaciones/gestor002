@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.aplicaciones13.gestor_ws.model.CodigoDefinidoUsuario;
+import com.aplicaciones13.gestor.model.CodigoDefinidoUsuario;
 
 /**
  * Repositorio de la entidad CodigoDefinidoUsuario.

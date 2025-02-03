@@ -12,7 +12,7 @@
 	<groupId>com.aplicaciones13</groupId>
 	<artifactId>gestor</artifactId>
 	<version>0.0.1</version>
-	<name>gestor-ws</name>
+	<name>gestor</name>
 	<description>REST Web Services de Gestor</description>
 
 	<developers>
@@ -62,9 +62,9 @@
 
 		<!-- Base Datos -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.7.4</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
 		</dependency>
 
 		<!-- Log -->
@@ -91,7 +91,7 @@
 
 		<!-- Dependencia de tools personalizados -->
 		<dependency>
-			<groupId>com.qapaq</groupId>
+			<groupId>com.aplicaciones13</groupId>
 			<artifactId>tools</artifactId>
 			<version>0.0.2</version>
 		</dependency>

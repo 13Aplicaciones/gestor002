@@ -1,11 +1,11 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aplicaciones13.gestor_ws.payload.procesos.CrearClaveRequest;
-import com.aplicaciones13.gestor_ws.payload.procesos.OperacionesResponse;
-import com.aplicaciones13.gestor_ws.services.TokenService;
+import com.aplicaciones13.gestor.payload.procesos.CrearClaveRequest;
+import com.aplicaciones13.gestor.payload.procesos.OperacionesResponse;
+import com.aplicaciones13.gestor.services.TokenService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

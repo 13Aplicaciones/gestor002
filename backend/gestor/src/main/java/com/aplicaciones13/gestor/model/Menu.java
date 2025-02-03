@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.model;
+package com.aplicaciones13.gestor.model;
 
-import com.aplicaciones13.gestor_ws.model.common.UsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UsuarioFechaPrograma;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

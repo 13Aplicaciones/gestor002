@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.config;
+package com.aplicaciones13.gestor.config;
 
 import java.util.Arrays;
 

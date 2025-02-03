@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.mapping;
+package com.aplicaciones13.gestor.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.gestor_ws.model.Usuario;
-import com.aplicaciones13.gestor_ws.payload.request.UsuarioRequest;
-import com.aplicaciones13.gestor_ws.payload.response.UsuarioResponse;
+import com.aplicaciones13.gestor.model.Usuario;
+import com.aplicaciones13.gestor.payload.request.UsuarioRequest;
+import com.aplicaciones13.gestor.payload.response.UsuarioResponse;
 
 @Mapper
 public interface UsuarioMapper {

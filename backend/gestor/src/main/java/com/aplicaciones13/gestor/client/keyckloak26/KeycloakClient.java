@@ -1,13 +1,13 @@
-package com.aplicaciones13.gestor_ws.client.keyckloak26;
+package com.aplicaciones13.gestor.client.keyckloak26;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserScopeRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.UserRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.UserScopeRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

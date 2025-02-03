@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.payload.common;
+package com.aplicaciones13.gestor.payload.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

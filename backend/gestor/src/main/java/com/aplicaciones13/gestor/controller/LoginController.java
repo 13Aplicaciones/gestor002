@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakService;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserScopeRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakService;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.UserRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.UserScopeRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
 
 
 /**

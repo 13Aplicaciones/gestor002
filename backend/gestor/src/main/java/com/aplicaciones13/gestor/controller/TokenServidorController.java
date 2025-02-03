@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aplicaciones13.gestor_ws.services.TokenServidorService;
+import com.aplicaciones13.gestor.services.TokenServidorService;
 
 @Valid
 @RestController

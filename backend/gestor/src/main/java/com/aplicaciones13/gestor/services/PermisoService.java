@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.model.Permiso;
-import com.aplicaciones13.gestor_ws.payload.request.PermisoRequest;
-import com.aplicaciones13.gestor_ws.payload.response.PermisoResponse;
-import com.aplicaciones13.gestor_ws.repository.PermisoRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.model.Permiso;
+import com.aplicaciones13.gestor.payload.request.PermisoRequest;
+import com.aplicaciones13.gestor.payload.response.PermisoResponse;
+import com.aplicaciones13.gestor.repository.PermisoRepository;
 
 import java.util.List;
 

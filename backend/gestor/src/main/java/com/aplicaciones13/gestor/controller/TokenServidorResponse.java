@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 public class TokenServidorResponse {
 

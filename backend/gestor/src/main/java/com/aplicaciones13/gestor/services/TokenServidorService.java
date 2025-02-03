@@ -1,10 +1,10 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.model.TokenServidor;
-import com.aplicaciones13.gestor_ws.payload.request.TokenServidorRequest;
-import com.aplicaciones13.gestor_ws.repository.TokenServidorRepository;
+import com.aplicaciones13.gestor.model.TokenServidor;
+import com.aplicaciones13.gestor.payload.request.TokenServidorRequest;
+import com.aplicaciones13.gestor.repository.TokenServidorRepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

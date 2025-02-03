@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.mapping.UsuarioMapper;
-import com.aplicaciones13.gestor_ws.model.Usuario;
-import com.aplicaciones13.gestor_ws.payload.request.UsuarioRequest;
-import com.aplicaciones13.gestor_ws.payload.response.UsuarioResponse;
-import com.aplicaciones13.gestor_ws.repository.UsuarioRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.mapping.UsuarioMapper;
+import com.aplicaciones13.gestor.model.Usuario;
+import com.aplicaciones13.gestor.payload.request.UsuarioRequest;
+import com.aplicaciones13.gestor.payload.response.UsuarioResponse;
+import com.aplicaciones13.gestor.repository.UsuarioRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

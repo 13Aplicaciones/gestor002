@@ -1,8 +1,8 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.gestor_ws.payload.request.RolRequest;
-import com.aplicaciones13.gestor_ws.payload.response.RolResponse;
-import com.aplicaciones13.gestor_ws.services.RolService;
+import com.aplicaciones13.gestor.payload.request.RolRequest;
+import com.aplicaciones13.gestor.payload.response.RolResponse;
+import com.aplicaciones13.gestor.services.RolService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

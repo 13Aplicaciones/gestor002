@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws.aspect;
+package com.aplicaciones13.gestor.aspect;
 
 import java.lang.reflect.Field;
 
@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aplicaciones13.gestor_ws.anotacion.SetUsuario;
-import com.aplicaciones13.gestor_ws.services.JwtService;
+import com.aplicaciones13.gestor.anotacion.SetUsuario;
+import com.aplicaciones13.gestor.services.JwtService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class SetUsuarioAspect {
     @Autowired
     private JwtService jwtService;
                          
-    @Around("@annotation(com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario)")
+    @Around("@annotation(com.aplicaciones13.gestor.anotacion.EjecutarUsuario)")
     public Object setUsuario(ProceedingJoinPoint joinPoint) throws Throwable  {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {

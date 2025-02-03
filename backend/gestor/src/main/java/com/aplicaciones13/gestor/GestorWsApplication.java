@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws;
+package com.aplicaciones13.gestor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

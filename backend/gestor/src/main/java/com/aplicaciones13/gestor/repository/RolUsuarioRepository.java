@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor_ws.model.RolUsuario;
+import com.aplicaciones13.gestor.model.RolUsuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

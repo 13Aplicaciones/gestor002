@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor_ws;
+package com.aplicaciones13.gestor;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,11 +9,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakClient;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakRequest.UserRequest;
-import com.aplicaciones13.gestor_ws.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakClient;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakResponse;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakRequest.UserRequest;
+import com.aplicaciones13.gestor.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

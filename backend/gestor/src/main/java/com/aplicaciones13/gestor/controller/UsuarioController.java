@@ -1,12 +1,12 @@
-package com.aplicaciones13.gestor_ws.controller;
+package com.aplicaciones13.gestor.controller;
 
 import com.aplicaciones13.base.controller.ControllerTools;
 import com.aplicaciones13.base.tools.Conversiones;
 import com.aplicaciones13.base.validaciones.ValidUUID;
-import com.aplicaciones13.gestor_ws.model.Usuario;
-import com.aplicaciones13.gestor_ws.payload.request.UsuarioRequest;
-import com.aplicaciones13.gestor_ws.payload.response.UsuarioResponse;
-import com.aplicaciones13.gestor_ws.services.UsuarioService;
+import com.aplicaciones13.gestor.model.Usuario;
+import com.aplicaciones13.gestor.payload.request.UsuarioRequest;
+import com.aplicaciones13.gestor.payload.response.UsuarioResponse;
+import com.aplicaciones13.gestor.services.UsuarioService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

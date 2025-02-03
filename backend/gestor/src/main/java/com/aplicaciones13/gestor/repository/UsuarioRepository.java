@@ -1,6 +1,6 @@
-package com.aplicaciones13.gestor_ws.repository;
+package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor_ws.model.Usuario;
+import com.aplicaciones13.gestor.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -49,7 +49,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.usuario WHERE uuid = CAST(?1 AS uuid) and estado != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.usuario WHERE uuid = ?1 and estado != 'X'", nativeQuery = true)
     Optional<Usuario> findByUuid(String uuid);
 
     /**
@@ -59,6 +59,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
      * @param indice
      * @return
      */
-    @Query(value = "SELECT * FROM gs_001_01.usuario WHERE nick = ?1 and estado != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.usuario WHERE nick = ?1 and estado != 'X'", nativeQuery = true)
     Optional<Usuario> findByNick(String nick);
 }

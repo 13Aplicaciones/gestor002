@@ -1,13 +1,13 @@
-package com.aplicaciones13.gestor_ws.services;
+package com.aplicaciones13.gestor.services;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor_ws.anotacion.EjecutarUsuario;
-import com.aplicaciones13.gestor_ws.mapping.ModuloMapper;
-import com.aplicaciones13.gestor_ws.model.Modulo;
-import com.aplicaciones13.gestor_ws.payload.request.ModuloRequest;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloListaResponse;
-import com.aplicaciones13.gestor_ws.payload.response.ModuloResponse;
-import com.aplicaciones13.gestor_ws.repository.ModuloRepository;
+import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.mapping.ModuloMapper;
+import com.aplicaciones13.gestor.model.Modulo;
+import com.aplicaciones13.gestor.payload.request.ModuloRequest;
+import com.aplicaciones13.gestor.payload.response.ModuloListaResponse;
+import com.aplicaciones13.gestor.payload.response.ModuloResponse;
+import com.aplicaciones13.gestor.repository.ModuloRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
