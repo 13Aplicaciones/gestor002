@@ -9,8 +9,8 @@
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
 export { Alerts, BandaPresentacion, Direccion } from './ConstantesPresentacion';
-export { CreateSearchField } from './componentes/table/TableSearch';
-export { DialogForm, DialogAlerts } from './componentes/dialog/Dialog';
+export { CreateSearchField } from './components/table/TableSearch';
+export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { fetchData } from './api/Api';
-export { TableConfigurable } from './componentes/table/Table';
+export { TableConfigurable } from './components/table/Table';
 

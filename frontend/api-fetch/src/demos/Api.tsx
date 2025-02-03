@@ -2,7 +2,7 @@ import { Alerts } from "../ConstantesPresentacion";
 import { cargarCredencial } from "../redux/Store";
 import { fetchData } from "../api/Api";
 import { MethodREST, TypeBody } from "../ConstantesAPI";
-import { toast } from "../componentes/toast/Toast";
+import { toast } from "../components/toast/Toast";
 
 /**
  * Funcion para ejecutar una api.

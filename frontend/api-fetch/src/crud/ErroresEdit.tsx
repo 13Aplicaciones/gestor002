@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertColor } from "../componentes/IconosColoresAlerts";
+import { alertColor } from "../components/IconosColoresAlerts";
 import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantesPresentacion";
-import { AreaField, InputField } from "../componentes/input/Input";
-import { BannerInformation, InformationPanelRegistration } from "../componentes/callout/Information";
+import { AreaField, InputField } from "../components/input/Input";
+import { BannerInformation, InformationPanelRegistration } from "../components/callout/Information";
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogAlerts } from "../componentes/dialog/Dialog";
+import { DialogAlerts } from "../components/dialog/Dialog";
 import { fetchData, IFetchData } from "../api/Api";
-import { FooterForm, FormState } from "../componentes/form/Form";
+import { FooterForm, FormState } from "../components/form/Form";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 import { IRowDataError } from "./ErroresVistaPrevia";
 import { MethodREST, TypeBody } from "../ConstantesAPI";
 import { requestToken } from "../api/Token";
-import { toast } from "../componentes/toast/Toast";
+import { toast } from "../components/toast/Toast";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";

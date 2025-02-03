@@ -3,7 +3,7 @@ import { fetchData } from "../api/Api";
 import { MethodREST, TypeBody } from "../ConstantesAPI";
 import { requestToken } from "../api/Token";
 import { useCallback, useEffect, useState } from "react";
-import { BannerInformation } from "../componentes/callout/Information";
+import { BannerInformation } from "../components/callout/Information";
 import { Alerts } from "../ConstantesPresentacion";
 
 /**

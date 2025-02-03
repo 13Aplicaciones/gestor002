@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CreateSearchField } from "../componentes/table/TableSearch";
+import { CreateSearchField } from "../components/table/TableSearch";
 import { GearIcon, MagnifyingGlassIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
-import PopoverDemo from "../componentes/popover/Popover";
+import PopoverDemo from "../components/popover/Popover";
 
 /**
  * Funcion para crear una tabla que consume un api para la generacion.

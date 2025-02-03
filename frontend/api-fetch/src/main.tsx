@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
-import { Toaster } from './componentes/toast/Toaster.tsx'
+import { Toaster } from './components/toast/Toaster.tsx'
 import App from './App.tsx'
 import store from './redux/Store'
 

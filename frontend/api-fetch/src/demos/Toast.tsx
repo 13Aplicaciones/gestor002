@@ -1,6 +1,6 @@
 import { Button, Flex } from "@radix-ui/themes";
 import { Alerts } from "../ConstantesPresentacion";
-import { useToast } from "../componentes/toast/Toast";
+import { useToast } from "../components/toast/Toast";
 
 
 /**
