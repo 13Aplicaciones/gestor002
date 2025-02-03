@@ -1,0 +1,19 @@
+package com.aplicaciones13.gestor.anotacion;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Anotación que se encarga de asignar el user logueado a las entidades que implementan la interfaz UuidUserDateApp.
+ * 
+ * @author omargo33
+ * @since 2025-01-24
+ * 
+ * @see com.aplicaciones13.gestor.aspect.SetuserAspect
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface InvokeUser {
+}

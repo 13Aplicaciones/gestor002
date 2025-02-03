@@ -202,7 +202,7 @@ public class ControllerGeneric {
     }
 
     /**
-     * Metodo para obtener el nombre del RequestMapping de la clase.
+     * Metodo para obtener el name del RequestMapping de la clase.
      */
     private String getControllerMapping() {
         try {

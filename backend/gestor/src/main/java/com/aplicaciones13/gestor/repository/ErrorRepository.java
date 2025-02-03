@@ -28,7 +28,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @return
      */
     @Query("SELECT e FROM Error e WHERE (:indice IS NULL OR upper(e.indice) LIKE %:indice%) AND (:mensaje IS NULL OR upper(e.mensaje) LIKE %:mensaje%)")
-    Page<Error> findByIndiceContaining(String indice, String mensaje, Pageable pageable);
+    Page<Error> findByIndexContaining(String indice, String mensaje, Pageable pageable);
 
     /**
      * Método para buscar una entidad de Error por indice.
@@ -36,7 +36,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param indice
      * @return
      */
-    Optional<Error> findByIndice(String indice);
+    Optional<Error> findByIndex(String indice);
 
     /**
      * Método para buscar una entidad de Error por UUID.

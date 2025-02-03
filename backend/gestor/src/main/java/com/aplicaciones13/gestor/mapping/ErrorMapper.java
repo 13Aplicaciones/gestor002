@@ -19,9 +19,9 @@ public interface ErrorMapper {
     ErrorMapper INSTANCE = Mappers.getMapper(ErrorMapper.class);
 
     @Mapping(target = "idError", ignore = true)
-    @Mapping(target = "usuarioFecha", ignore = true)
+    @Mapping(target = "userDate", ignore = true)
     @Mapping(target = "uuid",  ignore = true)
-    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Error toEntity(ErrorRequest errorRequest);
 
     ErrorResponse toResponse(Error error);

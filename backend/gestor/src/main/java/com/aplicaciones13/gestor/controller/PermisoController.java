@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aplicaciones13.gestor.payload.request.PermisoRequest;
-import com.aplicaciones13.gestor.payload.response.PermisoResponse;
-import com.aplicaciones13.gestor.services.PermisoService;
+import com.aplicaciones13.gestor.payload.request.PermissionRequest;
+import com.aplicaciones13.gestor.payload.response.PermissionResponse;
+import com.aplicaciones13.gestor.services.PermissionService;
 
 @Valid
 @RestController
@@ -27,25 +27,25 @@ import com.aplicaciones13.gestor.services.PermisoService;
 public class PermisoController {
 
     @Autowired
-    private PermisoService permisoService;
+    private PermissionService permisoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PermisoResponse> getPermisoById(@PathVariable Long id) {
-        PermisoResponse response = permisoService.findById(id);
+    public ResponseEntity<PermissionResponse> getPermisoById(@PathVariable Long id) {
+        PermissionResponse response = permisoService.findById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<PermisoResponse> crearPermiso(@RequestBody @Valid PermisoRequest request) {
-        PermisoResponse response = permisoService.create(request);
+    public ResponseEntity<PermissionResponse> crearPermiso(@RequestBody @Valid PermissionRequest request) {
+        PermissionResponse response = permisoService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PermisoResponse> actualizarPermiso(
+    public ResponseEntity<PermissionResponse> actualizarPermiso(
             @PathVariable Long id,
-            @RequestBody @Valid PermisoRequest request) {
-        PermisoResponse response = permisoService.update(id, request);
+            @RequestBody @Valid PermissionRequest request) {
+        PermissionResponse response = permisoService.update(id, request);
         return ResponseEntity.ok(response);
     }
 

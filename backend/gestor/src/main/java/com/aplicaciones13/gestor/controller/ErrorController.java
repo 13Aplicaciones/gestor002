@@ -52,7 +52,7 @@ public class ErrorController {
      */
     @GetMapping("/indice={indice}")
     public ErrorResponse getErrorById(@PathVariable String indice) {
-        return (ErrorResponse) errorService.findByIndice(indice);
+        return (ErrorResponse) errorService.findByIndex(indice);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ErrorController {
     }
 
     /**
-     * Metodo para obtener todos los errores con paginacion, orden y busqueda por indice y mensaje.
+     * Metodo para obtener todos los errores con paginacion, order y busqueda por indice y mensaje.
      * 
      * @param page
      * @param size
@@ -123,8 +123,8 @@ public class ErrorController {
             @RequestParam(defaultValue = "indice,desc") String[] sort,
             @RequestParam(required = false) String indice,
             @RequestParam(required = false) String mensaje) {
-        Page<Error> pageErrors = errorService.findByIndiceAndMensaje(indice, mensaje,
-                ControllerTools.generarOrders(page, size, sort));
+        Page<Error> pageErrors = errorService.findByIndexAndMessage(indice, mensaje,
+                ControllerTools.generateOrders(page, size, sort));
 
         return ControllerTools.generarPiePage(pageErrors);
     }

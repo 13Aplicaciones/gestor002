@@ -32,10 +32,10 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     Optional<Token> findBySocialNick(String socialNick);
     
     /**
-     * Metodo para buscar un token por idUsuario.
+     * Metodo para buscar un token por idUser.
      * 
-     * @param idUsuario
+     * @param idUser
      * @return
      */
-    List<Token> findByIdUsuario(Long idUsuario);
+    List<Token> findByIduser(Long idUser);
 }

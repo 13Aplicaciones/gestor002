@@ -38,7 +38,7 @@ public class KeycloakClient {
     }
 
     /**
-     * Metodo para obtener un token de acceso a partir de un usuario y contraseña
+     * Metodo para obtener un token de acceso a partir de un user y contraseña
      * 
      * @param url
      * @param clientId
@@ -78,7 +78,7 @@ public class KeycloakClient {
 
     /**
      * Metodo para obtener un token de acceso a partir de un cliente, un secreto; un
-     * usuario y contraseña, y scope
+     * user y contraseña, y scope
      * 
      * @param url
      * @param clientId

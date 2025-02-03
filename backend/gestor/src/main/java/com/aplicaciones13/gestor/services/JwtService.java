@@ -43,7 +43,7 @@ public class JwtService {
     }
 
     /**
-     * Obtiene el nombre completo del JWT
+     * Obtiene el name completo del JWT
      * 
      * @return
      */

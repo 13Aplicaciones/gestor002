@@ -35,7 +35,7 @@ public class Bundles {
     }
 
     /**
-     * To String mas ingreso de parametros.
+     * To String mas ingreso de parameters.
      *
      * @param key
      * @param parameters

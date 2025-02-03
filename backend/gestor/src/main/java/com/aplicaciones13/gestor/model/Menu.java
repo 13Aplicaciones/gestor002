@@ -1,6 +1,6 @@
 package com.aplicaciones13.gestor.model;
 
-import com.aplicaciones13.gestor.model.common.UsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,37 +25,37 @@ import lombok.EqualsAndHashCode;
 @Table(name = "menu")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Menu extends UsuarioFechaPrograma {
+public class Menu extends UserDateApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_menu")
     private Long idMenu;
 
-    @Column(name = "id_modulo")
-    private Long idModulo;
+    @Column(name = "id_module")
+    private Long idModule;
 
     @Column(nullable = false, length = 8)
-    private String tipo; // Tipo de menú (ej. principal, secundario)
+    private String type; // Type de menú (ej. principal, secundario)
 
     @Column(length = 32, nullable = false, unique = true)
-    private String indice; // Índice único del menú
+    private String index; // Índice único del menú
 
     @Column(length = 128, nullable = false)
-    private String nombre; // Nombre del menú
+    private String name; // Name del menú
 
-    @Column(name = "ruta_flujo", length = 256, nullable = false)
-    private String rutaFlujo; // Ruta del flujo asociado al menú
+    @Column(name = "task_flow", length = 256, nullable = false)
+    private String taskFlow; // Ruta del flujo asociado al menú
 
     @Column(length = 8, nullable = false)
-    private String estado; // Estado del menú (ej. A=activo, I=inactivo)
+    private String status; // Status del menú (ej. A=activo, I=inactivo)
 
     @Column
-    private Long orden; // Orden de visualización del menú
+    private Long order; // Order de visualización del menú
 
     @PrePersist
     public void prePersist() {
         super.onUpdate();
-        estado = "C";
+        status = "C";
     }
 }

@@ -3,7 +3,7 @@ package com.aplicaciones13.gestor.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor.model.common.UsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,36 +23,36 @@ import jakarta.persistence.Table;
 @Table(name = "token")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Token extends UsuarioFechaPrograma{
+public class Token extends UserDateApp{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_token")
     private Long idToken;
 
-    @Column(name = "id_usuario", nullable = false)
-    private Long idUsuario;
+    @Column(name = "id_user", nullable = false)
+    private Long idUser;
 
     @Column(length = 8, nullable = false)
-    private String tipo;
+    private String type;
 
     @Column(name = "social_nick", length = 256, nullable = false)
     private String socialNick;
 
     @Column(length = 256)
-    private String correo;
+    private String email;
 
     @Column(length = 512, nullable = false)
     private String token;
 
     @Column(length = 512, nullable = false)
-    private String validador;
+    private String validator;
 
     @Column(length = 8, nullable = false)
-    private String estado;
+    private String status;
 
     @PrePersist
     protected void onCreate() {
         super.onCreate();
-        estado = "C";
+        status = "C";
     }
 }

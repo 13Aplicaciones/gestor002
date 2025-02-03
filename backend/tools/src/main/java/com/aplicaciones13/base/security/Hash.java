@@ -3,7 +3,7 @@ package com.aplicaciones13.base.security;
 import java.util.StringJoiner;
 
 /**
- * Clase para crear el hash de los parametros.
+ * Clase para crear el hash de los parameters.
  * 
  * @author omargo33
  * @since 2020-12-09
@@ -19,7 +19,7 @@ public class Hash {
     }
 
     /**
-     * Metodo para crear el hash de los parametros.
+     * Metodo para crear el hash de los parameters.
      * 
      * @param params
      * @return
@@ -33,7 +33,7 @@ public class Hash {
     }
 
     /**
-     * Metodo para validar el hash de los parametros.
+     * Metodo para validar el hash de los parameters.
      * 
      * @param params
      * @return

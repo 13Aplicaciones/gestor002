@@ -28,9 +28,9 @@ public class RolController {
     @Autowired
     private RolService rolService;
 
-    @GetMapping("/{nombre}")
-    public ResponseEntity<RolResponse> getRolByNombre(@PathVariable String nombre) {
-        RolResponse response = rolService.findByNombre(nombre);
+    @GetMapping("/{name}")
+    public ResponseEntity<RolResponse> getRolByName(@PathVariable String name) {
+        RolResponse response = rolService.findByName(name);
         return ResponseEntity.ok(response);
     }
 
@@ -40,17 +40,17 @@ public class RolController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{nombre}")
+    @PutMapping("/{name}")
     public ResponseEntity<RolResponse> actualizarRol(
-            @PathVariable String nombre,
+            @PathVariable String name,
             @RequestBody @Valid RolRequest request) {
-        RolResponse response = rolService.update(nombre, request);
+        RolResponse response = rolService.update(name, request);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{nombre}")
-    public ResponseEntity<Void> eliminarRol(@PathVariable String nombre) {
-        rolService.delete(nombre);
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Void> eliminarRol(@PathVariable String name) {
+        rolService.delete(name);
         return ResponseEntity.noContent().build();
     }
 }

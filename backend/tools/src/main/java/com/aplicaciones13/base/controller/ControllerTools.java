@@ -36,7 +36,7 @@ public class ControllerTools {
     }
 
     /**
-     * Metodo para generar lor ordenes de una paginacion.
+     * Metodo para generar lor orderes de una paginacion.
      * 
      * @param sort
      * @return

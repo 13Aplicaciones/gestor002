@@ -2,7 +2,8 @@ package com.aplicaciones13.gestor.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.aplicaciones13.gestor.model.common.UuidUsuarioFechaPrograma;
+
+import com.aplicaciones13.gestor.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,29 +25,28 @@ import jakarta.persistence.Table;
 @Table(name = "rol")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Rol extends UuidUsuarioFechaPrograma {
+public class Rol extends UuidUserDateApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
     private Long idRol;
 
-    @Column(name = "id_modulo")
-    private Long idModulo;
+    @Column(name = "id_module")
+    private Long idModule;
 
     @Column(length = 128, nullable = false)
-    private String nombre;
+    private String name;
 
     @Column(length = 8, nullable = false)
-    private String tipo;
+    private String type;
 
     @Column(length = 8)
-    private String estado;
+    private String status;
 
     @PrePersist
     public void prePersist() {
         super.onCreate();
-        estado = "C";
+        status = "C";
     }
-
 }

@@ -1,16 +1,16 @@
 # Orquestador-WS
 
-El producto ORQUESTADOR-MS backend que le voy a dedicar servicios relacionados con el manejo de sesiones, informacion compartida para frontend.
+El producto ORQUESTADOR-MS backend que le voy a dedicar servicios relacionados con el manejo de sesiones, information compartida para frontend.
 
 ## Características/features
 
 ### Versión 1
 
 - **Soporte de Session:**
-Se gestiona la información de la sesión de los usuarios en el sistema.
+Se gestiona la información de la sesión de los users en el sistema.
 
 - **Soporte de configuracion del entorno visual:**
-Se gestiona la información de la configuración del entorno visual de los usuarios en el sistema.
+Se gestiona la información de la configuración del entorno visual de los users en el sistema.
 
 ## Configuración de desarrollo
 
@@ -32,7 +32,7 @@ mvn -version
 
 ## Dependencias internas
 
-Para el presente desarrollo y en el orden de ejecución se debe tener instalado y configurado los siguientes productos:
+Para el presente desarrollo y en el order de ejecución se debe tener instalado y configurado los siguientes productos:
 
 | Producto | Dirección | Rama |
 | --- | --- | --- |
@@ -61,7 +61,7 @@ ORDER BY
 
 Que tiene la siguiente descripción de campos:
 
-|Id.|Descripción|Texto_A|Texto_B|#_1|#_2|
+|Id.|Descripción|Text_A|Text_B|#_1|#_2|
 |---|---|---|---|---|---|
 | 200 | Dirección de encabezado para documentos | /mnt/documentos/logosCooperativa/membreteSuperior_2239x209.png | jpg pdf word | 3 | 0 |
 | 201 | Dirección de pie para documentos | /mnt/documentos/logosCooperativa/membreteInferior_2239x209.png |  |  |  |

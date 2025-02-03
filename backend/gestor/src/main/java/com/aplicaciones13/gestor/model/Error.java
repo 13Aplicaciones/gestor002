@@ -3,7 +3,7 @@ package com.aplicaciones13.gestor.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor.model.common.UuidUsuarioFechaPrograma;
+import com.aplicaciones13.gestor.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,18 +22,18 @@ import jakarta.persistence.Table;
 @Table(name = "error")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Error extends UuidUsuarioFechaPrograma {
+public class Error extends UuidUserDateApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_error")
     private Long idError;
     
     @Column(length = 128, nullable = false)
-    private String indice;
+    private String index;
 
     @Column(length = 1024, nullable = false)
-    private String mensaje;
+    private String message;
 
     @Column(length = 4098, nullable = false)
-    private String descripcion;
+    private String description;
 }

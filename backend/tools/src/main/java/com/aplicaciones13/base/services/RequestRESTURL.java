@@ -86,8 +86,8 @@ public class RequestRESTURL {
      * Proceso el ingreso a sitios SSL. Inicializa mensajes de error Inicializa
      * datos para la conexion. Prepara a la conexion para enviar, recibir datos
      * y tiempos de espera en conexion y de escritura. Abre el puerto output y
-     * envia el xml a ser consultado y cierra el puerto. Pregunta el estado de
-     * la response. Si la response es HTTP_OK estado html 200 "response ok
+     * envia el xml a ser consultado y cierra el puerto. Pregunta el status de
+     * la response. Si la response es HTTP_OK status html 200 "response ok
      * del servidor consultado" Lee el contendio del imputStream Caso contrario
      * Lee el contenido del imputStream de Error
      *

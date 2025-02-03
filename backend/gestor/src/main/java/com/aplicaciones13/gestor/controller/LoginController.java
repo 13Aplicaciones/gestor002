@@ -30,7 +30,7 @@ public class LoginController {
     private KeycloakService keycloakService;
 
     /**
-     * Metodo para obtener un token de acceso a partir de un usuario y contraseña
+     * Metodo para obtener un token de acceso a partir de un user y contraseña
      * 
      * @param userRequest
      * @return

@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor.payload.common.UsuarioFechaProgramaResponse;
+import com.aplicaciones13.gestor.payload.common.UserDateAppResponse;
 
 /**
  * DTO para la respuesta de la entidad Menu
@@ -15,31 +15,31 @@ import com.aplicaciones13.gestor.payload.common.UsuarioFechaProgramaResponse;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "DTO para la respuesta de la entidad Menu")
-public class MenuResponse extends UsuarioFechaProgramaResponse {
+public class MenuResponse extends UserDateAppResponse {
 
     @Schema(description = "Identificador único del menú", example = "1")
     private Long idMenu;
 
     @Schema(description = "Identificador del módulo al que pertenece el menú", example = "2")
-    private Long idModulo;
+    private Long idModule;
 
-    @Schema(description = "Tipo de menú", example = "principal")
-    private String tipo;
+    @Schema(description = "Type de menú", example = "principal")
+    private String type;
 
     @Schema(description = "Índice del menú", example = "menu_01")
-    private String indice;
+    private String index;
 
-    @Schema(description = "Nombre del menú", example = "Menú Principal")
-    private String nombre;
+    @Schema(description = "Name del menú", example = "Menú Principal")
+    private String name;
 
     @Schema(description = "Ruta del flujo asociado al menú", example = "/home")
-    private String rutaFlujo;
+    private String taskFlow;
 
-    @Schema(description = "Estado del menú (activo/inactivo)", example = "activo")
-    private String estado;
+    @Schema(description = "Status del menú (activo/inactivo)", example = "activo")
+    private String status;
 
-    @Schema(description = "Orden de visualización del menú", example = "1")
-    private Long orden;
+    @Schema(description = "Order de visualización del menú", example = "1")
+    private Long order;
 
 
 }

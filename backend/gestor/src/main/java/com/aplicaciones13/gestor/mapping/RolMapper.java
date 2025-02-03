@@ -14,8 +14,8 @@ public interface RolMapper {
 
     @Mapping(target = "uuid", ignore = true)
     @Mapping(target = "idRol", ignore = true)
-    @Mapping(target = "usuarioFecha", ignore = true)
-    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "userDate", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Rol toEntity(RolRequest request);
 
     RolResponse toResponse(Rol rol);

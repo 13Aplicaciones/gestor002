@@ -18,14 +18,14 @@ public class Encrypt {
             SecretKey secretKey = generateKey();
             log.info("Clave generada: " + secretKey.getAlgorithm());
             String encryptedData = encrypt(data, secretKey);
-            log.info("Texto encriptado: " + encryptedData);
+            log.info("Text encriptado: " + encryptedData);
             String decryptedData = decrypt(encryptedData, secretKey);
-            log.info("Texto desencriptado: " + decryptedData);
+            log.info("Text desencriptado: " + decryptedData);
             String miKeyString = secretKeyToString(secretKey);
             log.info("Clave en string: " +miKeyString);
             SecretKey miSecretKey = stringToSecretKey(miKeyString);   
             String encryptedData2 = decrypt(encryptedData, miSecretKey);
-            log.info("Texto desencriptado con clave en string: " + encryptedData2);
+            log.info("Text desencriptado con clave en string: " + encryptedData2);
         } catch (Exception e) {
             log.error("Error al generar la clave", e);
         }

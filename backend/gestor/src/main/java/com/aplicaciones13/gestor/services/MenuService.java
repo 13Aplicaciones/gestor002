@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.model.Menu;
 import com.aplicaciones13.gestor.payload.request.MenuRequest;
 import com.aplicaciones13.gestor.payload.response.MenuResponse;
@@ -31,24 +31,24 @@ public class MenuService {
         return toResponse(menu);
     }
 
-    @EjecutarUsuario
+    @InvokeUser
     public MenuResponse create(MenuRequest request) {
         Menu menu = toEntity(request);
         menu = menuRepository.save(menu);
         return toResponse(menu);
     }
 
-    @EjecutarUsuario
+    @InvokeUser
     public MenuResponse update(Long id, MenuRequest request) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Menu no encontrado"));
-        menu.setTipo(request.getTipo());
-        menu.setIndice(request.getIndice());
-        menu.setNombre(request.getNombre());
-        menu.setRutaFlujo(request.getRutaFlujo());
-        menu.setEstado(request.getEstado());
-        menu.setOrden(request.getOrden());
-        menu.setUsuarioPrograma(request.getUsuarioPrograma());
+        menu.setType(request.getType());
+        menu.setIndex(request.getIndex());
+        menu.setName(request.getName());
+        menu.setTaskFlow(request.getTaskFlow());
+        menu.setStatus(request.getStatus());
+        menu.setOrder(request.getOrder());
+        menu.setUserApp(request.getUserApp());
         menu = menuRepository.save(menu);
         return toResponse(menu);
     }
@@ -61,29 +61,29 @@ public class MenuService {
 
     private Menu toEntity(MenuRequest request) {
         Menu menu = new Menu();
-        menu.setTipo(request.getTipo());
-        menu.setIndice(request.getIndice());
-        menu.setNombre(request.getNombre());
-        menu.setRutaFlujo(request.getRutaFlujo());
-        menu.setEstado(request.getEstado());
-        menu.setOrden(request.getOrden());
+        menu.setType(request.getType());
+        menu.setIndex(request.getIndex());
+        menu.setName(request.getName());
+        menu.setTaskFlow(request.getTaskFlow());
+        menu.setStatus(request.getStatus());
+        menu.setOrder(request.getOrder());
         //Seguridades
-        //menu.setUsuario(request.getUsuario());
-        menu.setUsuarioPrograma(request.getUsuarioPrograma());
+        //menu.setUser(request.getUser());
+        menu.setUserApp(request.getUserApp());
         return menu;
     }
 
     private MenuResponse toResponse(Menu menu) {
         MenuResponse response = new MenuResponse();
         response.setIdMenu(menu.getIdMenu());
-        response.setTipo(menu.getTipo());
-        response.setIndice(menu.getIndice());
-        response.setNombre(menu.getNombre());
-        response.setRutaFlujo(menu.getRutaFlujo());
-        response.setEstado(menu.getEstado());
-        response.setOrden(menu.getOrden());
-        response.setUsuario(menu.getUsuario());
-        response.setUsuarioPrograma(menu.getUsuarioPrograma());
+        response.setType(menu.getType());
+        response.setIndex(menu.getIndex());
+        response.setName(menu.getName());
+        response.setTaskFlow(menu.getTaskFlow());
+        response.setStatus(menu.getStatus());
+        response.setOrder(menu.getOrder());
+        response.setUser(menu.getUser());
+        response.setUserApp(menu.getUserApp());
         return response;
     }
 }

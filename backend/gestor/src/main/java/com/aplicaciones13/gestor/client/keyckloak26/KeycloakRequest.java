@@ -16,7 +16,7 @@ import lombok.Data;
 public class KeycloakRequest {
 
     /**
-     * Clase que contiene los atributos necesarios para obtener un token de acceso a partir de un usuario y contraseña
+     * Clase que contiene los atributos necesarios para obtener un token de acceso a partir de un user y contraseña
      */
     @Data
     public static class UserRequest {

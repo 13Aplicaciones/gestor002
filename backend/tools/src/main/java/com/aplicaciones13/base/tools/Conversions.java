@@ -20,7 +20,7 @@ public class Conversions {
     public static String ISO_8601_DATE = "yyyy-MM-dd";
 
     /**
-     * Convierte un objeto de tipo java.util.Date a un String en formato ISO 8601.
+     * Convierte un objeto de type java.util.Date a un String en formato ISO 8601.
      * 
      * @param date
      * @return String
@@ -30,7 +30,7 @@ public class Conversions {
     }
 
     /**
-     * Convierte un objeto de tipo String a un java.sql.Date.
+     * Convierte un objeto de type String a un java.sql.Date.
      * 
      * @param date
      * @param format

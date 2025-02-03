@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.anotacion.EjecutarUsuario;
+import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.mapping.ErrorMapper;
 import com.aplicaciones13.gestor.payload.request.ErrorRequest;
 import com.aplicaciones13.gestor.payload.response.ErrorResponse;
@@ -34,8 +34,8 @@ public class ErrorService {
      * @param indice
      * @param uuid
      */
-    public void validateUniqueIndiceUuid(String indice, String uuid) {
-        Optional<Error> existingError = errorRepository.findByIndice(indice);
+    public void validateUniqueIndexUuid(String indice, String uuid) {
+        Optional<Error> existingError = errorRepository.findByIndex(indice);
         if (existingError.isPresent() && !existingError.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
@@ -46,8 +46,8 @@ public class ErrorService {
      * 
      * @param indice
      */
-    public void validateUniqueIndice(String indice) {
-        if (errorRepository.findByIndice(indice).isPresent()) {
+    public void validateUniqueIndex(String indice) {
+        if (errorRepository.findByIndex(indice).isPresent()) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
     }
@@ -60,8 +60,8 @@ public class ErrorService {
      * @param pagingSort
      * @return
      */
-    public Page<Error> findByIndiceAndMensaje(String indice, String mensaje, Pageable pagingSort) {
-        return errorRepository.findByIndiceContaining(indice, mensaje, pagingSort);
+    public Page<Error> findByIndexAndMessage(String indice, String mensaje, Pageable pagingSort) {
+        return errorRepository.findByIndexContaining(indice, mensaje, pagingSort);
     }
 
     /**
@@ -70,8 +70,8 @@ public class ErrorService {
      * @param indice
      * @return
      */
-    public ErrorResponse findByIndice(String indice) {
-        return errorRepository.findByIndice(indice)
+    public ErrorResponse findByIndex(String indice) {
+        return errorRepository.findByIndex(indice)
                 .map(ErrorMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
     }
@@ -106,11 +106,11 @@ public class ErrorService {
      * @param pagingSort
      * @return
      */
-    @EjecutarUsuario
+    @InvokeUser
     public ErrorResponse create(ErrorRequest errorRequest) {        
-        validateUniqueIndice(errorRequest.getIndice());
+        validateUniqueIndex(errorRequest.getIndex());
         Error error = ErrorMapper.INSTANCE.toEntity(errorRequest);
-        error.setUsuario(errorRequest.getUsuarioHidden());    
+        error.setUser(errorRequest.getUserHidden());    
         error = errorRepository.saveAndFlush(error);
         return ErrorMapper.INSTANCE.toResponse(error);
     }
@@ -122,19 +122,19 @@ public class ErrorService {
      * @param errorRequest
      * @return
      */
-    @EjecutarUsuario
+    @InvokeUser
     public ErrorResponse update(String uuid, ErrorRequest errorRequest) {
-        validateUniqueIndiceUuid(errorRequest.getIndice(), uuid);
+        validateUniqueIndexUuid(errorRequest.getIndex(), uuid);
 
 
         Error error = errorRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
 
-        error.setIndice(errorRequest.getIndice());
-        error.setMensaje(errorRequest.getMensaje());
-        error.setDescripcion(errorRequest.getDescripcion());
-        error.setUsuarioPrograma(errorRequest.getUsuarioPrograma());
-        error.setUsuario(errorRequest.getUsuarioHidden());
+        error.setIndex(errorRequest.getIndex());
+        error.setMessage(errorRequest.getMessage());
+        error.setDescription(errorRequest.getDescription());
+        error.setUserApp(errorRequest.getUserApp());
+        error.setUser(errorRequest.getUserHidden());
         error = errorRepository.saveAndFlush(error);
         return ErrorMapper.INSTANCE.toResponse(error);
     }
