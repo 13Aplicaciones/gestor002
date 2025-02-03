@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.aspect;
+package com.aplicaciones13.base.aspect;
 
 import java.lang.reflect.Field;
 
@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aplicaciones13.gestor.anotacion.SetUser;
-import com.aplicaciones13.gestor.services.JwtService;
+import com.aplicaciones13.base.anotacion.SetUser;
+import com.aplicaciones13.base.services.JwtService;
 
 import lombok.extern.slf4j.Slf4j;
 

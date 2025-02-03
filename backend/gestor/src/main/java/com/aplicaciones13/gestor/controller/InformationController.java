@@ -104,6 +104,6 @@ public class InformationController {
         Page<Information> pageInformation = informationService.findByName(name,
                 ControllerTools.generateOrders(page, size, sort));
 
-        return ControllerTools.generarPiePage(pageInformation);
+        return ControllerTools.generateFooterPage(pageInformation);
     }
 }

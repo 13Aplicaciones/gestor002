@@ -1,7 +1,7 @@
 package com.aplicaciones13.gestor.services;
 
+import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.mapping.ModuleMapper;
 import com.aplicaciones13.gestor.model.Module;
 import com.aplicaciones13.gestor.payload.request.ModuleRequest;
@@ -107,40 +107,40 @@ public class ModuleService {
     }
 
     /**
-     * Metodo para validar que el indice sea unico.
+     * Metodo para validar que el index sea unico.
      * 
-     * @param indice
+     * @param index
      */
-    private void validateUniqueIndex(String indice) {
-        if (moduleRepository.findByIndex(indice).isPresent()) {
-            throw new DataIntegrityViolationException("El indice ya existe");
+    private void validateUniqueIndex(String index) {
+        if (moduleRepository.findByIndex(index).isPresent()) {
+            throw new DataIntegrityViolationException("El index ya existe");
         }
     }
 
     /**
-     * Metodo para validar que el indice sea unico.
+     * Metodo para validar que el index sea unico.
      * 
-     * @param indice
+     * @param index
      * @param uuid
      */
-    private void validateUniqueIndexUuid(String indice, String uuid) {
-        Optional<Module> existingModule = moduleRepository.findByIndex(indice);
+    private void validateUniqueIndexUuid(String index, String uuid) {
+        Optional<Module> existingModule = moduleRepository.findByIndex(index);
         if (existingModule.isPresent() && !existingModule.get().getUuid().equals(uuid)) {
-            throw new DataIntegrityViolationException("El indice ya existe");
+            throw new DataIntegrityViolationException("El index ya existe");
         }
     }
 
     /**
      * Metodo para obtener todos los modules paginados.
      * 
-     * @param indice
+     * @param index
      * @param name
      * @param status
      * @param pageable
      * @return
      */
-    public Page<ModuleResponse> paginada(String indice, String name, String status, Pageable pageable) {
-        Page<Module> listaModules = moduleRepository.paginado(indice, name, status, pageable);
+    public Page<ModuleResponse> paginada(String index, String name, String status, Pageable pageable) {
+        Page<Module> listaModules = moduleRepository.paginado(index, name, status, pageable);
         return listaModules.map(ModuleMapper.INSTANCE::toResponse);
     }
    

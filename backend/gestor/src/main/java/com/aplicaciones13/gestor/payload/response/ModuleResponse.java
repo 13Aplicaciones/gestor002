@@ -25,7 +25,7 @@ public class ModuleResponse extends UserDateAppResponse {
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
     private String index;
 
-    @Schema(description = "Name del indice", example = "Name del Módulo")
+    @Schema(description = "Name del index", example = "Name del Módulo")
     private String name;
 
     @Schema(description = "Context de aplicacion", example = "Context del Módulo")

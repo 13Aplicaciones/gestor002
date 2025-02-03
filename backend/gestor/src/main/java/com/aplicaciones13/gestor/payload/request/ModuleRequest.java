@@ -27,7 +27,7 @@ public class ModuleRequest extends StatusAppRequest {
 
     @NotNull
     @Size(max = 128)
-    @Schema(description = "Name del indice", example = "Name del Módulo")
+    @Schema(description = "Name del index", example = "Name del Módulo")
     private String name;
 
     

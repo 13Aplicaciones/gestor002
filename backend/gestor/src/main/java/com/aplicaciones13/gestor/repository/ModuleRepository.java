@@ -15,23 +15,23 @@ import java.util.Optional;
 public interface ModuleRepository extends JpaRepository<Module, Long> {
 
     /**
-     * Metodo para buscar un module por su indice, name y status sea diferente de
+     * Metodo para buscar un module por su index, name y status sea diferente de
      * X y este paginado
      * 
      * @param uuid
      * @return
      */
-    @Query("SELECT m FROM Module m WHERE (:indice IS NULL OR upper(m.indice) LIKE %:indice%) AND (:name IS NULL OR upper(m.name) LIKE %:name%) AND (:estado IS NULL OR upper(m.estado) LIKE %:estado%)")
-    Page<Module> paginado(String indice, String name, String status, Pageable pageable);
+    @Query("SELECT m FROM Module m WHERE (:index IS NULL OR upper(m.index) LIKE %:index%) AND (:name IS NULL OR upper(m.name) LIKE %:name%) AND (:status IS NULL OR upper(m.status) LIKE %:status%)")
+    Page<Module> paginado(String index, String name, String status, Pageable pageable);
 
 
     /**
-     * Método para buscar un module de lista de modules diferente de X y orderados por indice y por name
+     * Método para buscar un module de lista de modules diferente de X y orderados por index y por name
      * 
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.module WHERE status != 'X' ORDER BY indice, name", nativeQuery = true)
+    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE status != 'X' ORDER BY m.index, m.name", nativeQuery = true)
     List<Module> findAll();
 
     /**
@@ -44,11 +44,11 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
     Optional<Module> findByUuid(String uuid);
 
     /**
-     * Método para buscar un module por su indice y status sea diferente de X
+     * Método para buscar un module por su index y status sea diferente de X
      * 
-     * @param indice
+     * @param index
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.module WHERE indice = ?1 and status != 'X'", nativeQuery = true)
-    Optional<Module> findByIndex(String indice);
+    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE m.index = ?1 and m.status != 'X'", nativeQuery = true)
+    Optional<Module> findByIndex(String index);
 }

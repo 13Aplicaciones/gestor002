@@ -28,9 +28,9 @@ public class ParameterController {
     @Autowired
     private ParameterService parameterService;
 
-    @GetMapping("/{indice}")
-    public ResponseEntity<ParameterResponse> getParameterByIndex(@PathVariable String indice) {
-        ParameterResponse response = parameterService.findByIndex(indice);
+    @GetMapping("/{index}")
+    public ResponseEntity<ParameterResponse> getParameterByIndex(@PathVariable String index) {
+        ParameterResponse response = parameterService.findByIndex(index);
         return ResponseEntity.ok(response);
     }
 
@@ -40,17 +40,17 @@ public class ParameterController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{indice}")
+    @PutMapping("/{index}")
     public ResponseEntity<ParameterResponse> actualizarParameter(
-            @PathVariable String indice,
+            @PathVariable String index,
             @RequestBody @Valid ParameterRequest request) {
-        ParameterResponse response = parameterService.update(indice, request);
+        ParameterResponse response = parameterService.update(index, request);
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{indice}")
-    public ResponseEntity<Void> eliminarParameter(@PathVariable String indice) {
-        parameterService.delete(indice);
+    @DeleteMapping("/{index}")
+    public ResponseEntity<Void> eliminarParameter(@PathVariable String index) {
+        parameterService.delete(index);
         return ResponseEntity.noContent().build();
     }
 }

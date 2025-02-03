@@ -9,8 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.mapping.ErrorMapper;
 import com.aplicaciones13.gestor.payload.request.ErrorRequest;
 import com.aplicaciones13.gestor.payload.response.ErrorResponse;
@@ -31,11 +31,11 @@ public class ErrorService {
     /**
      * Valida que el índice sea único en la base de datos con excepción del uuid
      * 
-     * @param indice
+     * @param index
      * @param uuid
      */
-    public void validateUniqueIndexUuid(String indice, String uuid) {
-        Optional<Error> existingError = errorRepository.findByIndex(indice);
+    public void validateUniqueIndexUuid(String index, String uuid) {
+        Optional<Error> existingError = errorRepository.findByIndex(index);
         if (existingError.isPresent() && !existingError.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
@@ -44,10 +44,10 @@ public class ErrorService {
     /**
      * Valida que el índice sea único en la base de datos
      * 
-     * @param indice
+     * @param index
      */
-    public void validateUniqueIndex(String indice) {
-        if (errorRepository.findByIndex(indice).isPresent()) {
+    public void validateUniqueIndex(String index) {
+        if (errorRepository.findByIndex(index).isPresent()) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
     }
@@ -55,23 +55,23 @@ public class ErrorService {
     /**
      * Busca los errores por índice y mensaje
      * 
-     * @param indice
+     * @param index
      * @param mensaje
      * @param pagingSort
      * @return
      */
-    public Page<Error> findByIndexAndMessage(String indice, String mensaje, Pageable pagingSort) {
-        return errorRepository.findByIndexContaining(indice, mensaje, pagingSort);
+    public Page<Error> findByIndexAndMessage(String index, String mensaje, Pageable pagingSort) {
+        return errorRepository.findByIndexContaining(index, mensaje, pagingSort);
     }
 
     /**
      * Busca los errores por índice
      * 
-     * @param indice
+     * @param index
      * @return
      */
-    public ErrorResponse findByIndex(String indice) {
-        return errorRepository.findByIndex(indice)
+    public ErrorResponse findByIndex(String index) {
+        return errorRepository.findByIndex(index)
                 .map(ErrorMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
     }

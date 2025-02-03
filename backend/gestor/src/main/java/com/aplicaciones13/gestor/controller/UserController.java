@@ -125,6 +125,6 @@ public class UserController {
         Page<User> pageusers = userService.findAll(nick, name, apellido, status, fechaInicio, fechaFin,
                 ControllerTools.generateOrders(page, size, sort));
                 
-        return ControllerTools.generarPiePage(pageusers);
+        return ControllerTools.generateFooterPage(pageusers);
     }
 }

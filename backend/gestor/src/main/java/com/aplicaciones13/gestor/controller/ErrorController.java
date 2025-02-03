@@ -47,12 +47,12 @@ public class ErrorController {
     /**
      * Metodo para obtener todos los errores.
      * 
-     * @param indice
+     * @param index
      * @return
      */
-    @GetMapping("/indice={indice}")
-    public ErrorResponse getErrorById(@PathVariable String indice) {
-        return (ErrorResponse) errorService.findByIndex(indice);
+    @GetMapping("/index={index}")
+    public ErrorResponse getErrorById(@PathVariable String index) {
+        return (ErrorResponse) errorService.findByIndex(index);
     }
 
     /**
@@ -107,12 +107,12 @@ public class ErrorController {
     }
 
     /**
-     * Metodo para obtener todos los errores con paginacion, order y busqueda por indice y mensaje.
+     * Metodo para obtener todos los errores con paginacion, order y busqueda por index y mensaje.
      * 
      * @param page
      * @param size
      * @param sort
-     * @param indice
+     * @param index
      * @param mensaje
      * @return
      */
@@ -120,12 +120,12 @@ public class ErrorController {
     public Map<String, Object> getAllErrorsWithPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "indice,desc") String[] sort,
-            @RequestParam(required = false) String indice,
+            @RequestParam(defaultValue = "index,desc") String[] sort,
+            @RequestParam(required = false) String index,
             @RequestParam(required = false) String mensaje) {
-        Page<Error> pageErrors = errorService.findByIndexAndMessage(indice, mensaje,
+        Page<Error> pageErrors = errorService.findByIndexAndMessage(index, mensaje,
                 ControllerTools.generateOrders(page, size, sort));
 
-        return ControllerTools.generarPiePage(pageErrors);
+        return ControllerTools.generateFooterPage(pageErrors);
     }
 }

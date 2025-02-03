@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.model.Permission;
 import com.aplicaciones13.gestor.payload.request.PermissionRequest;
 import com.aplicaciones13.gestor.payload.response.PermissionResponse;

@@ -20,23 +20,23 @@ import org.springframework.stereotype.Repository;
 public interface ErrorRepository extends JpaRepository<Error, Long> {
 
     /**
-     * Metodo para buscar una por indice(like) y/o mensaje(like) y que sea pageable.
+     * Metodo para buscar una por index(like) y/o mensaje(like) y que sea pageable.
      * 
-     * @param indice
+     * @param index
      * @param mensaje
      * @param pageable
      * @return
      */
-    @Query("SELECT e FROM Error e WHERE (:indice IS NULL OR upper(e.indice) LIKE %:indice%) AND (:mensaje IS NULL OR upper(e.mensaje) LIKE %:mensaje%)")
-    Page<Error> findByIndexContaining(String indice, String mensaje, Pageable pageable);
+    @Query("SELECT e FROM Error e WHERE (:index IS NULL OR upper(e.index) LIKE %:index%) AND (:message IS NULL OR upper(e.message) LIKE %:message%)")
+    Page<Error> findByIndexContaining(String index, String message, Pageable pageable);
 
     /**
-     * Método para buscar una entidad de Error por indice.
+     * Método para buscar una entidad de Error por index.
      * 
-     * @param indice
+     * @param index
      * @return
      */
-    Optional<Error> findByIndex(String indice);
+    Optional<Error> findByIndex(String index);
 
     /**
      * Método para buscar una entidad de Error por UUID.

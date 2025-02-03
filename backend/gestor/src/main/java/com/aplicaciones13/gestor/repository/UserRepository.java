@@ -33,11 +33,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param pageable
      * @return
      */
-    @Query("SELECT u FROM user u WHERE (:nick IS NULL OR upper(u.nick) LIKE %:nick%) AND (:name IS NULL OR upper(u.name) LIKE %:name%) AND (:apellido IS NULL OR upper(u.apellido) LIKE %:apellido%) AND (:estado IS NULL OR upper(u.estado) LIKE %:estado%) AND (u.UserDate > :userDateInicio AND u.UserDate < :userDateFin)")
+    @Query("SELECT u FROM user u WHERE (:nick IS NULL OR upper(u.nick) LIKE %:nick%) AND (:name IS NULL OR upper(u.name) LIKE %:name%) AND (:lastName IS NULL OR upper(u.lastName) LIKE %:lastName%) AND (:status IS NULL OR upper(u.status) LIKE %:status%) AND (u.userDate > :userDateInicio AND u.userDate < :userDateFin)")
     Page<User> paginado(
             String nick,
             String name,
-            String apellido,
+            String lastName,
             String status,
             Date userDateInicio,
             Date userDateFin,
@@ -53,10 +53,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUuid(String uuid);
 
     /**
-     * Método para buscar una entidad de Error por indice y status sea diferente de
+     * Método para buscar una entidad de Error por index y status sea diferente de
      * X
      * 
-     * @param indice
+     * @param index
      * @return
      */
     @Query(value = "SELECT * FROM GS_002_01.User WHERE nick = ?1 and status != 'X'", nativeQuery = true)

@@ -50,5 +50,4 @@ public class OpenAPI30 {
                                 .scheme("bearer")
                                 .bearerFormat("JWT")));
     }
-
 }

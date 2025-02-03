@@ -120,7 +120,7 @@ public class ModuleController {
      * @param page
      * @param size
      * @param sort
-     * @param indice
+     * @param index
      * @param name
      * @param status
      * @return
@@ -133,14 +133,14 @@ public class ModuleController {
     public Map<String, Object> paginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "indice,asc") String[] sort,
-            @RequestParam(required = false) String indice,
+            @RequestParam(defaultValue = "index,asc") String[] sort,
+            @RequestParam(required = false) String index,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String status) {
-        Page<ModuleResponse> pageModules = moduleService.paginada(indice, name, status,
+        Page<ModuleResponse> pageModules = moduleService.paginada(index, name, status,
                 ControllerTools.generateOrders(page, size, sort));
 
-        return ControllerTools.generarPiePage(pageModules);
+        return ControllerTools.generateFooterPage(pageModules);
     }
 
     /**

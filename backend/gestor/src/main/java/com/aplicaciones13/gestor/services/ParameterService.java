@@ -1,7 +1,7 @@
 package com.aplicaciones13.gestor.services;
 
+import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.mapping.ParameterMapper;
 import com.aplicaciones13.gestor.model.Parameter;
 import com.aplicaciones13.gestor.payload.request.ParameterRequest;
@@ -24,8 +24,8 @@ public class ParameterService {
     @Autowired
     private ParameterRepository parameterRepository;
 
-    public ParameterResponse findByIndex(String indice) {
-        return parameterRepository.findByIndex(indice)
+    public ParameterResponse findByIndex(String index) {
+        return parameterRepository.findByIndex(index)
                 .map(ParameterMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
     }
@@ -39,10 +39,10 @@ public class ParameterService {
     }
 
     @InvokeUser
-    public ParameterResponse update(String indice, ParameterRequest parameterRequest) {
+    public ParameterResponse update(String index, ParameterRequest parameterRequest) {
         validateUniqueIndex(parameterRequest.getIndex());
 
-        Parameter parameter = parameterRepository.findByIndex(indice)
+        Parameter parameter = parameterRepository.findByIndex(index)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
 
         parameter.setIndex(parameterRequest.getIndex());
@@ -62,16 +62,16 @@ public class ParameterService {
         return ParameterMapper.INSTANCE.toResponse(parameter);
     }
 
-    public void delete(String indice) {
-        Parameter parameter = parameterRepository.findByIndex(indice)
+    public void delete(String index) {
+        Parameter parameter = parameterRepository.findByIndex(index)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
 
         parameterRepository.delete(parameter);
     }
 
-    private void validateUniqueIndex(String indice) {
-        if (parameterRepository.findByIndex(indice).isPresent()) {
-            throw new DataIntegrityViolationException("El indice ya existe");
+    private void validateUniqueIndex(String index) {
+        if (parameterRepository.findByIndex(index).isPresent()) {
+            throw new DataIntegrityViolationException("El index ya existe");
         }
     }
 }

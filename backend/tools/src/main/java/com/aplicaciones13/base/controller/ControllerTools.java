@@ -26,7 +26,7 @@ public class ControllerTools {
      * @param pageItems
      * @return
      */
-    public static <T> Map<String, Object> generarPiePage(Page<T> pageItems) {
+    public static <T> Map<String, Object> generateFooterPage(Page<T> pageItems) {
         Map<String, Object> response = new HashMap<>();
         response.put("items", pageItems.getContent());
         response.put("currentPage", pageItems.getNumber());

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aplicaciones13.gestor.anotacion.InvokeUser;
+import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.gestor.model.Menu;
 import com.aplicaciones13.gestor.payload.request.MenuRequest;
 import com.aplicaciones13.gestor.payload.response.MenuResponse;

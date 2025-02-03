@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.anotacion;
+package com.aplicaciones13.base.anotacion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * 
  * @see com.aplicaciones13.gestor.aspect.SetuserAspect
  */
-@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SetUser {
+@Target(ElementType.METHOD)
+public @interface InvokeUser {
 }

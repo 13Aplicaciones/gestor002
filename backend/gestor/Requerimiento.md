@@ -119,7 +119,7 @@ Este paquete va a tener las clases de mapeo de los objetos de la base de datos a
     - Se crea los listados de las entidades que tenga status activo es decir cuyo campo status sea diferente de `X`
     - Se va a tener que crear un metodo que busque por el campo `uuid` que no sea borrado.
     - Se va a tener que crear un metodo que busque por el campo `id` y que no sea borrado.
-    - Para la entidades que tengan user_fecha, se creara un metodo de busqueda que incluya el indice (de existir), el detalle o descripcion (de existir) y el rango de fechas (user_fecha) y que no sea borrado (de existir el campo "estado").
+    - Para la entidades que tengan user_fecha, se creara un metodo de busqueda que incluya el index (de existir), el detalle o descripcion (de existir) y el rango de fechas (user_fecha) y que no sea borrado (de existir el campo "estado").
     - Se va a tener que crear un metodo que busque por el detalle o descripcion (de existir) que sea del type like y tenga un limitante a 100 registros y que no sea borrado (de existir el campo "estado").
     - En las entidades donde se tenga el campo order, por este campo sera orderdado de forma ascendente.
     - Los listado del type findAll se tiene que limitar al 1500 registros.

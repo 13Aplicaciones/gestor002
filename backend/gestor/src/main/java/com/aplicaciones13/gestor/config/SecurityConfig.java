@@ -43,7 +43,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 @EnableWebSecurity
 public class SecurityConfig {
 
-@Value("${cors.allowed-origins}")
+    @Value("${cors.allowed-origins}")
     String origins;
 
     @Value("${cors.allowed-methods}")
@@ -59,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
@@ -86,10 +86,12 @@ public class SecurityConfig {
      * , y;
      * - Aplicar la configuración a todos los endpoints
      * 
-     * @return 
+     * @return
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
+        log.info("Configurando CORS con orígenes: {} y métodos: {}", origins, methods);
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
         configuration.setAllowedMethods(Arrays.asList(methods.split(",")));
