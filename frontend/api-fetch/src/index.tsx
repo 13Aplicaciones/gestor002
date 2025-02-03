@@ -8,9 +8,9 @@
  * 
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
-export { Alertas, BandaPresentacion, Direccion } from './ConstantesPresentacion';
-export { CrearCampoBusqueda } from './componentes/tabla/TablaBusqueda';
-export { DialogForm, DialogAlertas } from './componentes/dialog/Dialgo';
+export { Alerts, BandaPresentacion, Direccion } from './ConstantesPresentacion';
+export { CreateSearchField } from './componentes/tabla/TablaBusqueda';
+export { DialogForm, DialogAlerts } from './componentes/dialog/Dialgo';
 export { fetchData } from './api/Api';
 export { TableConfigurable } from './componentes/tabla/Tabla';
 

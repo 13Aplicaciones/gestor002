@@ -1,9 +1,9 @@
 /**
- * Enumerado de alertas que se pueden mostrar en la aplicación.
+ * Enumerado de alerts que se pueden mostrar en la aplicación.
  *
  * @returns 
  */
-const enum Alertas {
+const enum Alerts {
     info = "info",
     warning = "warning",
     error = "error",
@@ -35,19 +35,19 @@ const enum Direccion{
 }
 
 /**
- * Se usa para dar formato a los textos en tablas y datalist.
+ * Se usa para dar format a los textos en tablas y datalist.
  * 
  * @returns
  */
-const enum FormatoTexto{
+const enum TextFormat{
     none = "none",
     decimal2 = "##.##",
     date = "date",
-    //TODO: Agregar mas formatos de texto.
+    //TODO: Agregar mas formats de texto.
 }
 
 /**
- * Se usa para dar formato a los textos en tablas y datalist.
+ * Se usa para dar format a los textos en tablas y datalist.
  * 
  * @returns
  */
@@ -58,7 +58,7 @@ const enum JustificacionTexto{
 }
 
 /**
- * Enumeración para la presentación para la presentación de las columnas de las tablas.
+ * Enumeración para la presentación para la presentación de las columns de las tablas.
  * 
  * @returns 
 */
@@ -81,4 +81,4 @@ const enum EstadoEdicion{
     buscar = "buscar",
 }
 
-export {Alertas, BandaPresentacion, Direccion, FormatoTexto, JustificacionTexto, OrdenarColumna, EstadoEdicion};
+export {Alerts, BandaPresentacion, Direccion, TextFormat, JustificacionTexto, OrdenarColumna, EstadoEdicion};

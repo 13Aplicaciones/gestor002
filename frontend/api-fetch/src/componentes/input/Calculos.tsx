@@ -2,7 +2,7 @@ import { useMediaQuery } from 'react-responsive';
 import { BandaPresentacion, Direccion } from '../../ConstantesPresentacion';
 
 /**
- * Funciones de calculos para la presentacion dinamica.
+ * Funciones de calculos para la presentation dinamica.
  * 
  * @autor @omargo33
  * @since 2025-01-20
@@ -10,47 +10,47 @@ import { BandaPresentacion, Direccion } from '../../ConstantesPresentacion';
  */
 
 /**
- * Interfaz para la presentación de los campos de texto
+ * Interfaz para la presentación de los fields de texto
  * 
  * @returns 
  */
-interface IPresentacion {
-    alinear: string;
-    justificar: string;
-    direccion: Direccion;
-    ancho: string | undefined;
+interface IPresentation {
+    align: string;
+    justify: string;
+    direction: Direccion;
+    width: string | undefined;
 }
 
 /**
- * hook para calcular la presentación de los campos de texto
+ * hook para calcular la presentación de los fields de texto
  * 
- * @param direccionLabel Dirección de la presentación 
- * @param columnas Columnas de la presentación
+ * @param directionLabel Dirección de la presentación 
+ * @param columns Columnas de la presentación
  * @param width Ancho de la presentación
  *  
  * @returns 
  */
-const useCalcularPresentacion = (direccionLabel: Direccion | Direccion.horizontal, columnas?: BandaPresentacion, width?: string) => {
+const useCalculatePresentation = (directionLabel: Direccion | Direccion.horizontal, columns?: BandaPresentacion, width?: string) => {
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
-    const respuesta: IPresentacion = {
-        alinear: "end",
-        justificar: "end",
-        direccion: Direccion.horizontal,
-        ancho: ''
+    const iPresentation: IPresentation = {
+        align: "end",
+        justify: "end",
+        direction: Direccion.horizontal,
+        width: ''
     };
     
-    if (direccionLabel === Direccion.vertical) {
-        respuesta.alinear = "start";
-        respuesta.justificar = "start";
+    if (directionLabel === Direccion.vertical) {
+        iPresentation.align = "start";
+        iPresentation.justify = "start";
     } else {
-        respuesta.alinear = isPortrait ? "start" : "center";
-        respuesta.justificar = isPortrait ? "start" : "end";
+        iPresentation.align = isPortrait ? "start" : "center";
+        iPresentation.justify = isPortrait ? "start" : "end";
     }
 
-    respuesta.direccion = isPortrait ? Direccion.vertical : direccionLabel;
-    respuesta.ancho = isPortrait ? width : 'calc(100vw * ' + (columnas ? columnas : BandaPresentacion.columna_1) + ')'
+    iPresentation.direction = isPortrait ? Direccion.vertical : directionLabel;
+    iPresentation.width = isPortrait ? width : 'calc(100vw * ' + (columns ? columns : BandaPresentacion.columna_1) + ')'
 
-    return respuesta;
+    return iPresentation;
 };
 
-export default useCalcularPresentacion;
+export default useCalculatePresentation;

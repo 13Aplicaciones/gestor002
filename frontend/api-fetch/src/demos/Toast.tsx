@@ -1,5 +1,5 @@
 import { Button, Flex } from "@radix-ui/themes";
-import { Alertas } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantesPresentacion";
 import { useToast } from "../componentes/toast/Toast";
 
 
@@ -17,35 +17,35 @@ const MiToast = () => {
 
     const { toast } = useToast();
     const texto = "Texto de prueba<Strong>hola</Strong><br>Texto de prueba<br>Texto de prueba <h1>hola</h1>";
-    const titulo = "<strong>hola</strong> super titulo <a href='https://www.google.com'>google</a>";
+    const title = "<strong>hola</strong> super title <a href='https://www.google.com'>google</a>";
 
     const mostrarError = () => {
         toast({
-            title: titulo,
+            title: title,
             description: texto,
-            alerta: Alertas.error,
+            alert: Alerts.error,
         });
     };
 
     const mostrarInfo = () => {
         toast({
-            title: "titulo",
+            title: "title",
             description: "Descripción",
-            alerta: Alertas.info
+            alert: Alerts.info
         });
     };
 
     const mostrarSuccess = () => {
         toast({
-            title: "titulo",
-            alerta: Alertas.success
+            title: "title",
+            alert: Alerts.success
         });
     };
 
     const mostrarWarning = () => {
         toast({
             description: "Descripción",
-            alerta: Alertas.warning
+            alert: Alerts.warning
         });
     };
     return (

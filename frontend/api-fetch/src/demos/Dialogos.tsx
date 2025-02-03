@@ -1,7 +1,7 @@
 import { Button } from "@radix-ui/themes";
 import { useDispatch } from 'react-redux';
-import { DialogAlertas, DialogForm } from "../componentes/dialog/Dialgo";
-import { Alertas } from "../ConstantesPresentacion";
+import { DialogAlerts, DialogForm } from "../componentes/dialog/Dialgo";
+import { Alerts } from "../ConstantesPresentacion";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 
 /**
@@ -25,8 +25,8 @@ const MiDialogos = () => {
 
                 <DialogForm
                     id='1'
-                    titulo="Agregar RUC"
-                    descripcion="Ingrese el <strong>RUC</strong> que desea agregar"
+                    title="Agregar RUC"
+                    description="Ingrese el <strong>RUC</strong> que desea agregar"
                     buttons={
                         <>
                             <Button size="3" variant="surface" onClick={
@@ -61,14 +61,14 @@ const MiDialogos = () => {
                     }
                 }>Abrir dialogo 2 !!</Button>
 
-                <DialogAlertas
+                <DialogAlerts
                     id='2'
                     cancel={true}
-                    titulo="Agregar RUC"
-                    descripcion="Ingrese el <strong>RUC</strong> que desea agregar"
-                    alerta={Alertas.warning}
+                    title="Agregar RUC"
+                    description="Ingrese el <strong>RUC</strong> que desea agregar"
+                    alert={Alerts.warning}
                 >
-                </DialogAlertas>
+                </DialogAlerts>
             </div>
         </>
     )

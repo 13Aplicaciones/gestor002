@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alertas, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
 import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
 import { fetchData } from "../../api/Api";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
-import { InputBusquedaDinamica, InputSubmit } from "../input/Input";
-import { MetodosREST, TipoBody } from "../../ConstantesAPI";
+import { InputSearchDynamic, InputSubmit } from "../input/Input";
+import { MethodREST, TypeBody } from "../../ConstantesAPI";
 import { requestToken } from "../../api/Token";
 import { TableConfigurable, TableSkeleton } from "./Tabla";
 import { toast } from "../toast/Toast";
@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 /**
- * Componete para crear un campo de busqueda.
+ * Componete para crear un field de busqueda.
  * 
  * @author @omargo33
  * @since 2021-09-20
@@ -23,22 +23,22 @@ import * as yup from "yup";
 */
 
 /*
-* Componente para crear un campo de busqueda.
+* Componente para crear un field de busqueda.
 * 
 * @param apiUrl URL de la API.
-* @param nombreIndice Nombre del indice.
-* @param parametrosApi Parametros de la API.
-* @param presentacionItem Presentacion de los items.
+* @param nameIndex Nombre del indice.
+* @param parametersApi Parametros de la API.
+* @param presentationItem Presentacion de los items.
 * @param children Hijos del componente.
 * 
 * @returns 
 */
-const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionItem, children }:
+const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem, children }:
   {
     apiUrl: string,
-    nombreIndice: string,
-    parametrosApi: any,
-    presentacionItem: any,
+    nameIndex: string,
+    parametersApi: any,
+    presentationItem: any,
     children?: any
   }) => {
 
@@ -50,9 +50,9 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
   const [totalPages, setTotalPages] = useState(0);
 
   /** 
-    * Validacion de los campos del formulario.
+    * Validacion de los fields del formulario.
     */
-  const getSchemaPagina = (maxPage: number) => yup.object(
+  const getSchemaPage = (maxPage: number) => yup.object(
     {
       page: yup
         .string()
@@ -63,7 +63,7 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
   );
 
   /** 
-    * Validacion de los campos del formulario.
+    * Validacion de los fields del formulario.
     */
   const schemaBusqueda = yup.object(
     {
@@ -75,23 +75,23 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
    * Funcion para ejecutar la api.
    *    
    */
-  const ejecutarApi = async () => {
+  const runApi = async () => {
 
-    if (parametrosApi[nombreIndice] === undefined || parametrosApi[nombreIndice] === null) {
-      parametrosApi[nombreIndice] = '';
+    if (parametersApi[nameIndex] === undefined || parametersApi[nameIndex] === null) {
+      parametersApi[nameIndex] = '';
     }
 
-    if (parametrosApi.page === undefined || parametrosApi.page === null || parametrosApi.page < 0) {
-      parametrosApi.page = 0;
+    if (parametersApi.page === undefined || parametersApi.page === null || parametersApi.page < 0) {
+      parametersApi.page = 0;
     }
 
     if (totalPages === undefined || totalPages === null || totalPages <= 0) {
       setTotalPages(1);
     }
 
-    if (parametrosApi.page >= totalPages) {
+    if (parametersApi.page >= totalPages) {
       const pageTemp = (totalPages - 1) > 0 ? (totalPages - 1) : 0;
-      parametrosApi.page = pageTemp;
+      parametersApi.page = pageTemp;
     }
 
     setTotalPages(0);
@@ -106,9 +106,9 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
         token = credencial.access_token;
         fetchData({
           url: apiUrl,
-          methodRest: MetodosREST.GET,
-          tipoBody: TipoBody.URL_PARAMS,
-          bodyParametro: parametrosApi,
+          methodRest: MethodREST.GET,
+          typeBody: TypeBody.URL_PARAMS,
+          bodyParameter: parametersApi,
           token: token
         })
           .then(response => {
@@ -116,12 +116,12 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
               toast({
                 title: response.status.toString(),
                 description: response.error,
-                alerta: Alertas.warning
+                alert: Alerts.warning
               });
               return;
             } else {
-              const respuesta = response.response.items;
-              setItems(respuesta);
+              const items = response.response.items;
+              setItems(items);
               setTotalPages(response.response.totalPages);
               setCurrentPage(response.response.currentPage);
               setTotalItems(response.response.totalItems);
@@ -130,7 +130,7 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
             toast({
               title: "Error",
               description: error,
-              alerta: Alertas.error
+              alert: Alerts.error
             });
           });
       }
@@ -143,48 +143,48 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
   useEffect(() => {
     setLoading(true);
 
-    const itemsPivot = presentacionItem.items.map((item: any) => {
-      if (item.orden !== undefined) {
+    const itemsPivot = presentationItem.items.map((item: any) => {
+      if (item.order !== undefined) {
         return {
           ...item,
-          accionOrden: (order: any) => {
-            presentacionItem.items[order.index].orden = order.orden;
-            const espacios = ' '.repeat(order.index);
+          actionOrder: (order: any) => {
+            presentationItem.items[order.index].order = order.order;
+            const spaces = ' '.repeat(order.index);
 
-            if (order.orden === 'none') {
-              delete parametrosApi[espacios + 'sort'];
-              delete parametrosApi[espacios + ' sort'];
+            if (order.order === 'none') {
+              delete parametersApi[spaces + 'sort'];
+              delete parametersApi[spaces + ' sort'];
             } else {
-              parametrosApi[espacios + 'sort'] = order.nombre;
-              parametrosApi[espacios + ' sort'] = order.orden;
+              parametersApi[spaces + 'sort'] = order.name;
+              parametersApi[spaces + ' sort'] = order.order;
             }
 
-            paginacionPresentacion();
+            paginationPresentation();
           }
         };
       }
       return item;
     });
 
-    presentacionItem.items = itemsPivot;
-    parametrosApi[nombreIndice] = '';
-    parametrosApi.page = 0;
-    paginacionPresentacion();
+    presentationItem.items = itemsPivot;
+    parametersApi[nameIndex] = '';
+    parametersApi.page = 0;
+    paginationPresentation();
   }, []);
 
   /**
    * Hook para el formulario y usa register, handleSubmit y reset.
    */
-  const { register: registerBusqueda, handleSubmit: handleSubmitBusqueda, formState: { errors: errorsBusqueda } } = useForm({
+  const { register: registerSearch, handleSubmit: handleSubmitBusqueda, formState: { errors: errorsBusqueda } } = useForm({
     resolver: yupResolver(schemaBusqueda)
   });
 
-  const schemaPagina = getSchemaPagina(totalPages);
+  const schemaPagina = getSchemaPage(totalPages);
 
   /**
    * Hook para el formulario y usa register, handleSubmit y reset.
    */
-  const { register: registerPagina, handleSubmit: handleSubmitPagina, reset: resetPagina, formState: { errors: errorsPagina } } = useForm({
+  const { register: registerPage, handleSubmit: handleSubmitPagina, reset: resetPagina, formState: { errors: errorsPagina } } = useForm({
     resolver: yupResolver(schemaPagina)
   });
 
@@ -195,11 +195,11 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
    * 
    * @param data 
    */
-  const consultarBusqueda = async (data: any) => {
+  const consultSearch = async (data: any) => {
     resetPagina();
-    parametrosApi[nombreIndice] = data.search;
-    parametrosApi.page = 0;
-    paginacionPresentacion();
+    parametersApi[nameIndex] = data.search;
+    parametersApi.page = 0;
+    paginationPresentation();
   }
 
   /**
@@ -207,18 +207,18 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
    * 
    * @param data 
    */
-  const consultarPaginar = async (data: any) => {
-    parametrosApi.page = ((data.page - 1));
-    paginacionPresentacion();
+  const consultPage = async (data: any) => {
+    parametersApi.page = ((data.page - 1));
+    paginationPresentation();
   }
 
   /**
-   * Metodo para el ordenamiento, y; paginacion de botones inicio, atras, siguiente y fin.
+   * Metodo para el orderamiento, y; paginacion de botones inicio, atras, siguiente y fin.
    */
-  const paginacionPresentacion = () => {
+  const paginationPresentation = () => {
     setLoading(true);
     setTimeout(async () => {
-      await ejecutarApi();
+      await runApi();
       setLoading(false);
     }, 333);
   }
@@ -231,12 +231,12 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
   const searchForm = () => {
     return (
       <Flex direction="row" gap="1" align="baseline">
-        <form onSubmit={handleSubmitBusqueda(consultarBusqueda)}>
-          <InputBusquedaDinamica
+        <form onSubmit={handleSubmitBusqueda(consultSearch)}>
+          <InputSearchDynamic
             placeholder="Buscar"
             columna={BandaPresentacion.columna_6}
-            register={registerBusqueda("search", { required: true })}
-            mensajeError={errorsBusqueda.search?.message}
+            register={registerSearch("search", { required: true })}
+            messageError={errorsBusqueda.search?.message}
           />
         </form>
         {children}
@@ -249,7 +249,7 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
    * 
    * @returns 
    */
-  const paginadoForm = () => {
+  const pageForm = () => {
 
     if (totalItems <= 0 || totalItems == undefined) {
       return <></>;
@@ -260,41 +260,41 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
           (totalPages > 1 &&
             <Flex direction="row" gap="1" align="baseline" >
               <IconButton variant="outline" onClick={async () => {
-                parametrosApi.page = 0;
-                paginacionPresentacion();
+                parametersApi.page = 0;
+                paginationPresentation();
               }
               }>
                 <DoubleArrowLeftIcon width="14" height="14" />
               </IconButton>
               <IconButton variant="outline" onClick={async () => {
-                parametrosApi.page = (currentPage - 1);
-                paginacionPresentacion();
+                parametersApi.page = (currentPage - 1);
+                paginationPresentation();
               }
               }>
 
                 <ChevronLeftIcon width="14" height="14" />
               </IconButton>
-              <form onSubmit={handleSubmitPagina(consultarPaginar)}>
+              <form onSubmit={handleSubmitPagina(consultPage)}>
                 <InputSubmit
                   placeholder={t("pagina.paginaPlaceholder")}
-                  direccionLabel={Direccion.vertical}
+                  directionLabel={Direccion.vertical}
                   columna={BandaPresentacion.columna_6}
-                  register={registerPagina("page", { required: true })}
-                  mensajeError={errorsPagina.page?.message}
+                  register={registerPage("page", { required: true })}
+                  messageError={errorsPagina.page?.message}
                   size="2"
                 />
               </form>
               <IconButton variant="outline" onClick={async () => {
-                parametrosApi.page = (currentPage + 1);
-                paginacionPresentacion();
+                parametersApi.page = (currentPage + 1);
+                paginationPresentation();
               }
               }>
 
                 <ChevronRightIcon width="14" height="14" />
               </IconButton>
               <IconButton variant="outline" onClick={async () => {
-                parametrosApi.page = (totalPages - 1);
-                paginacionPresentacion();
+                parametersApi.page = (totalPages - 1);
+                paginationPresentation();
               }
               }>
                 <DoubleArrowRightIcon width="14" height="14" />
@@ -307,24 +307,24 @@ const CrearCampoBusqueda = ({ apiUrl, nombreIndice, parametrosApi, presentacionI
   }
 
   return (
-    <Flex direction="column" gap="2" width={presentacionItem.skeleton.width}>
+    <Flex direction="column" gap="2" width={presentationItem.skeleton.width}>
       {searchForm()}
       {
         loading ?
-          <TableSkeleton column={parametrosApi.size} /> :
+          <TableSkeleton column={parametersApi.size} /> :
           <>
             <TableConfigurable
               data={items}
-              isBanda={presentacionItem.banding}
-              presentacion={presentacionItem.items}
-              isEncabezado={presentacionItem.encabezados}
-              isNumeroLinea={presentacionItem.numeroLinea}
+              isBand={presentationItem.banding}
+              presentation={presentationItem.items}
+              isHeader={presentationItem.headers}
+              isLineNumber={presentationItem.numeroLinea}
             />
-            {paginadoForm()}
+            {pageForm()}
           </>
       }
     </Flex>
   );
 }
 
-export { CrearCampoBusqueda };
+export { CreateSearchField };

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertaColor, alertaIcono, alertaVariant } from "../IconosColoresAlertas";
-import { Alertas } from "../../ConstantesPresentacion";
+import { alertColor, alertIcon, alertVariant } from "../IconosColoresAlerts";
+import { Alerts } from "../../ConstantesPresentacion";
 import { Badge, Callout, Container, DataList, Flex, Heading, HoverCard, Link } from "@radix-ui/themes"
 import { useTranslation } from "react-i18next";
 
 /**
- * Clase que representa los tipos de mensajes que se pueden mostrar en la aplicación.
+ * Clase que representa los tipos de messages que se pueden mostrar en la aplicación.
  * 
  * @autor @omargo33
  * @since 2025-01-20
@@ -13,26 +13,26 @@ import { useTranslation } from "react-i18next";
  */
 
 /**
- * Presenta un mensaje en la pantalla. 
+ * Presenta un message en la pantalla. 
  * 
- * @param mensaje Mensaje a mostrar
- * @param alerta Tipo de mensaje a mostrar
+ * @param message Mensaje a mostrar
+ * @param alert Tipo de message a mostrar
  * @returns 
  */
-const BannerInformacion = ({ alerta, mensaje }: { alerta: Alertas, mensaje?: string }) => {
+const BannerInformation = ({ alert, message }: { alert: Alerts, message?: string }) => {
 
-    if (mensaje === "" || mensaje === undefined) {
+    if (message === "" || message === undefined) {
         return null
     }
 
     return (
         <Container py={{ xs: "1", sm: "1", md: "2", lg: "3", xl: "4" }}>
-            <Callout.Root size="1" color={alertaColor({ alerta })} variant={alertaVariant({ alerta })} >
+            <Callout.Root size="1" color={alertColor({ alert })} variant={alertVariant({ alert })} >
                 <Callout.Icon>
-                    {alertaIcono({ alerta })}
+                    {alertIcon({ alert })}
                 </Callout.Icon>
                 <Callout.Text>
-                    <span dangerouslySetInnerHTML={{ __html: mensaje }} />
+                    <span dangerouslySetInnerHTML={{ __html: message }} />
                 </Callout.Text>
             </Callout.Root>
         </Container>
@@ -52,7 +52,7 @@ const BannerInformacion = ({ alerta, mensaje }: { alerta: Alertas, mensaje?: str
  * @param row Registro a mostrar 
  * @returns 
  */
-const InfoPanelRegistro = ({ row }: { row: any }) => {
+const InformationPanelRegistration = ({ row }: { row: any }) => {
     const [t] = useTranslation("global");
 
     if (row === undefined || row === null || Object.keys(row).length === 0 || row.usuarioPrograma === "") {
@@ -65,12 +65,12 @@ const InfoPanelRegistro = ({ row }: { row: any }) => {
         <HoverCard.Root>
             <HoverCard.Trigger>
                 <Link size="2">
-                    @{t("infoPanelRegistro.titulo")}
+                    @{t("infoPanelRegistro.title")}
                 </Link>
             </HoverCard.Trigger>
             <HoverCard.Content >
                 <Flex direction="column" gap="3">
-                    <Heading size="2">{t("infoPanelRegistro.titulo")}</Heading>
+                    <Heading size="2">{t("infoPanelRegistro.title")}</Heading>
                     <DataList.Root>
                         {row.usuario &&
                             <DataList.Item >
@@ -111,4 +111,4 @@ const InfoPanelRegistro = ({ row }: { row: any }) => {
     );
 }
 
-export { BannerInformacion, InfoPanelRegistro };
+export { BannerInformation, InformationPanelRegistration };

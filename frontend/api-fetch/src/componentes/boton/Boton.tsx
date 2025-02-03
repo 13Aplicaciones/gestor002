@@ -18,13 +18,13 @@ import { useTranslation } from "react-i18next";
  *  
  * @returns 
  */
-const ButtonCrearRegistroFlotante = ({ toolTip, disabled = false, onClick }: {  toolTip: string, disabled?:boolean, onClick?: () => void }) => {
+const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  toolTip: string, disabled?:boolean, onClick?: () => void }) => {
     const [t] = useTranslation("global");
         
     if (disabled)
         return (
             <div style={{ position: 'fixed', bottom: '2vh', right: '2vh' }}>
-                <Tooltip content={t("acciones.addDescripcion", { descripcion: toolTip })} side="top" align="center" sideOffset={5}>
+                <Tooltip content={t("acciones.addDescripcion", { description: toolTip })} side="top" align="center" sideOffset={5}>
                     <IconButton disabled onClick={onClick} variant="solid" size="4" radius="full" >
                         <PlusIcon />
                     </IconButton>
@@ -33,7 +33,7 @@ const ButtonCrearRegistroFlotante = ({ toolTip, disabled = false, onClick }: {  
         )
     return (
         <div style={{ position: 'fixed', bottom: '2vh', right: '2vh' }}>
-            <Tooltip content={t("acciones.addDescripcion", { descripcion: toolTip })} side="top" align="center" sideOffset={5}>
+            <Tooltip content={t("acciones.addDescripcion", { description: toolTip })} side="top" align="center" sideOffset={5}>
                 <IconButton onClick={onClick} variant="solid" size="4" radius="full" >
                     <PlusIcon />
                 </IconButton>
@@ -42,4 +42,4 @@ const ButtonCrearRegistroFlotante = ({ toolTip, disabled = false, onClick }: {  
     )
 }
 
-export default ButtonCrearRegistroFlotante;
+export default ButtonCreateRecordFloating;

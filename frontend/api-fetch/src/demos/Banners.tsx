@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes"
-import { BannerInformacion } from "../componentes/callout/Informar"
-import { Alertas } from "../ConstantesPresentacion"
+import { BannerInformation } from "../componentes/callout/Informar"
+import { Alerts } from "../ConstantesPresentacion"
 
 /**
  * Metodo que muestra los diferentes tipos de banners
@@ -11,10 +11,10 @@ import { Alertas } from "../ConstantesPresentacion"
 const MiBaners = () => {
     return (
         <Flex direction="column" align="start" width="80vw" gap="3" >
-            <BannerInformacion mensaje="hola" alerta={Alertas.success} />
-            <BannerInformacion mensaje="hola" alerta={Alertas.error} />
-            <BannerInformacion mensaje="hola" alerta={Alertas.info} />
-            <BannerInformacion mensaje="hola" alerta={Alertas.warning} />
+            <BannerInformation message="hola" alert={Alerts.success} />
+            <BannerInformation message="hola" alert={Alerts.error} />
+            <BannerInformation message="hola" alert={Alerts.info} />
+            <BannerInformation message="hola" alert={Alerts.warning} />
         </Flex>
     )
 }

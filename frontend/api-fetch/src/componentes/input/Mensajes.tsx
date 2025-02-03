@@ -1,9 +1,9 @@
-import { alertaColor, alertaIcono } from "../IconosColoresAlertas";
-import { Alertas } from "../../ConstantesPresentacion";
+import { alertColor, alertIcon } from "../IconosColoresAlerts";
+import { Alerts } from "../../ConstantesPresentacion";
 import { Icon, Root, Text } from "@radix-ui/themes/dist/esm/components/callout.js";
 
 /**
- * Funciones de presentacion de los mensajes de los input fiel personalizados.
+ * Funciones de presentation de los messages de los input fiel personalizados.
  * 
  * @autor @omargo33
  * @since 2025-01-20
@@ -13,22 +13,22 @@ import { Icon, Root, Text } from "@radix-ui/themes/dist/esm/components/callout.j
 /**
  * Mensaje de error para los atributos
  * 
- * @param mensaje Mensaje a mostrar
- * @param alerta Tipo de alerta
+ * @param message Mensaje a mostrar
+ * @param alert Tipo de alert
  *  
  * @returns 
  */
-const MensajeField = (
-    { mensaje, alerta }: 
-    {mensaje: string | undefined, alerta?: Alertas | Alertas.error,}
+const MessageField = (
+    { message, alert }: 
+    {message: string | undefined, alert?: Alerts | Alerts.error,}
 ) => {
-    if (mensaje === undefined) {
+    if (message === undefined) {
         return null;
     }
 
     return (
-        <Text size="1" mb="3" ml='2' weight="bold" color={alertaColor({alerta})}>
-            <span dangerouslySetInnerHTML={{ __html: mensaje }} />
+        <Text size="1" mb="3" ml='2' weight="bold" color={alertColor({alert})}>
+            <span dangerouslySetInnerHTML={{ __html: message }} />
         </Text>
     );
 }
@@ -37,27 +37,27 @@ const MensajeField = (
 /**
  * Mensaje de error para el formulario completo o informacion relacionada.
  * 
- * @param mensaje Mensaje a mostrar
- * @param alerta Tipo de alerta
+ * @param message Mensaje a mostrar
+ * @param alert Tipo de alert
  * 
  * @returns 
  */
-const MensajeFormulario = (
-    { mensaje, alerta }: 
-    { mensaje: string, alerta: Alertas}
+const MessageForm = (
+    { message, alert }: 
+    { message: string, alert: Alerts}
 ) => {
-    if (mensaje === undefined || mensaje === "") {
+    if (message === undefined || message === "") {
         return null;
     }
     return (
-        <Root size="1" color={alertaColor({alerta})}>
+        <Root size="1" color={alertColor({alert})}>
             <Icon>
-                {alertaIcono({alerta})}
+                {alertIcon({alert})}
             </Icon>
             <Text>
-                <span dangerouslySetInnerHTML={{ __html: mensaje }} /></Text>
+                <span dangerouslySetInnerHTML={{ __html: message }} /></Text>
         </Root>
     );
 }
 
-export { MensajeField, MensajeFormulario };
+export { MessageField, MessageForm };

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertaColor } from "../componentes/IconosColoresAlertas";
-import { Alertas, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantesPresentacion";
+import { alertColor } from "../componentes/IconosColoresAlerts";
+import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantesPresentacion";
 import { AreaField, InputField } from "../componentes/input/Input";
-import { BannerInformacion, InfoPanelRegistro } from "../componentes/callout/Informar";
+import { BannerInformation, InformationPanelRegistration } from "../componentes/callout/Informar";
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogAlertas } from "../componentes/dialog/Dialgo";
+import { DialogAlerts } from "../componentes/dialog/Dialgo";
 import { fetchData, IFetchData } from "../api/Api";
-import { FooterForm, EstadoForm } from "../componentes/form/PieBotones";
+import { FooterForm, FormState } from "../componentes/form/PieBotones";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 import { IRowDataError } from "./ErroresVistaPrevia";
-import { MetodosREST, TipoBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../ConstantesAPI";
 import { requestToken } from "../api/Token";
 import { toast } from "../componentes/toast/Toast";
 import { useDispatch } from "react-redux";
@@ -28,8 +28,8 @@ import * as yup from "yup";
  */
 const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion, row?: IRowDataError, onAtras?: () => void }) => {
 
-    const [estadoFormulario, setEstadoFormulario] = useState<EstadoEdicion>(estado || EstadoEdicion.crear);
-    const [mensajeFormulario, setMensajeFormulario] = useState("");
+    const [estadoFormulario, setFormStateulario] = useState<EstadoEdicion>(estado || EstadoEdicion.crear);
+    const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -42,8 +42,8 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
             .max(128, "El indice debe tener máximo 10 caracteres"),
         mensaje: yup
             .string()
-            .required("El mensaje es requerido")
-            .max(1024, "El mensaje debe tener máximo 124 caracteres"),
+            .required("El message es requerido")
+            .max(1024, "El message debe tener máximo 124 caracteres"),
         descripcion: yup
             .string()
             .max(4098, "La descripción debe tener máximo 4098 caracteres"),
@@ -74,46 +74,46 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                     if (estadoFormulario === EstadoEdicion.crear) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors",
-                            methodRest: MetodosREST.POST,
-                            tipoBody: TipoBody.JSON,
-                            bodyParametro: data,
+                            methodRest: MethodREST.POST,
+                            typeBody: TypeBody.JSON,
+                            bodyParameter: data,
                             token: token
                         }).then(response => {
                             analizarAccionar(response);
-                            setEstadoFormulario(EstadoEdicion.editar);
+                            setFormStateulario(EstadoEdicion.editar);
                         }).catch(error => {
-                            setMensajeFormulario("Error al crear el registro: " + error);
+                            setMessageForm("Error al crear el registro: " + error);
                             return null;
                         });
                     }
                     if (estadoFormulario === EstadoEdicion.editar) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
-                            methodRest: MetodosREST.PUT,
-                            tipoBody: TipoBody.JSON,
-                            bodyParametro: data,
+                            methodRest: MethodREST.PUT,
+                            typeBody: TypeBody.JSON,
+                            bodyParameter: data,
                             token: token
                         }).then(response => {
                             analizarAccionar(response);
                         }).catch(error => {
-                            setMensajeFormulario("Error al accionar el registro " + error);
+                            setMessageForm("Error al accionar el registro " + error);
                             return null;
                         });
                     }
                     if (estadoFormulario === EstadoEdicion.bloquear) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
-                            methodRest: MetodosREST.DELETE,
-                            tipoBody: TipoBody.NONE,
-                            bodyParametro: null,
+                            methodRest: MethodREST.DELETE,
+                            typeBody: TypeBody.NONE,
+                            bodyParameter: null,
                             token: token
                         }).then(response => {
                             analizarAccionar(response);
-                            setEstadoFormulario(EstadoEdicion.buscar);
+                            setFormStateulario(EstadoEdicion.buscar);
                             dispatch(hideDialogDinamico('1'));
                             onAtras();
                         }).catch(error => {
-                            setMensajeFormulario("Error al borrar el registro " + error);
+                            setMessageForm("Error al borrar el registro " + error);
                             return null;
                         });
                     }
@@ -130,13 +130,13 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                 toast({
                     title: response.error + ' ' + response.status.toString(),
                     description: response.responseErrorJSON.message,
-                    alerta: Alertas.warning
+                    alert: Alerts.warning
                 });
             } else {
                 toast({
                     title: response.status.toString(),
                     description: response.error,
-                    alerta: Alertas.warning
+                    alert: Alerts.warning
                 });
             }
             return;
@@ -148,69 +148,69 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
             toast({
                 title: respuesta.status.toString(),
                 description: "Accion realizada con exito",
-                alerta: Alertas.success
+                alert: Alerts.success
             });
         }
     }
 
     const showPopUpDelete = () => {
-        setEstadoFormulario(EstadoEdicion.bloquear);
+        setFormStateulario(EstadoEdicion.bloquear);
         dispatch(showDialogDinamico('1'));
     }
 
     return (
         <>
-            <BannerInformacion mensaje={mensajeFormulario} alerta={Alertas.error} />
+            <BannerInformation message={messageFormulario} alert={Alerts.error} />
             <Flex direction="row" gap="3" align="center">
-                <EstadoForm estadoEdicion={estadoFormulario} />
-                <InfoPanelRegistro row={row} />
+                <FormState statusEdit={estadoFormulario} />
+                <InformationPanelRegistration row={row} />
             </Flex>
-            <DialogAlertas
+            <DialogAlerts
                 id='1'
-                titulo="Desae borrar el Registro"
-                descripcion="Una ves borrado el registro <strong>no se podra recuperar</strong> </br> </br> <strong>¿Desea continuar?</strong>"
-                alerta={Alertas.error}
+                title="Desae borrar el Registro"
+                description="Una ves borrado el registro <strong>no se podra recuperar</strong> </br> </br> <strong>¿Desea continuar?</strong>"
+                alert={Alerts.error}
                 cancel={false}
                 buttons={
                     <>
                         <Button size="3" disabled={loading}
-                            color={alertaColor({ alerta: Alertas.error })}
+                            color={alertColor({ alert: Alerts.error })}
                             variant="solid"
                             onClick={() => { accionar(null); }
                             }>Si, Borrar</Button>
                         <Button size="3" onClick={() => {
-                            setEstadoFormulario(EstadoEdicion.editar);
+                            setFormStateulario(EstadoEdicion.editar);
                             dispatch(hideDialogDinamico('1'));
                         }}>No, Cancelar</Button>
                     </>
                 }
             >
-            </DialogAlertas>
+            </DialogAlerts>
             <form onSubmit={handleSubmit(accionar)}>
                 <InputField
-                    titulo="Indice"
-                    columnas={BandaPresentacion.columna_3}
+                    title="Indice"
+                    columns={BandaPresentacion.columna_3}
                     placeholder="ERR001"
-                    direccionLabel={Direccion.horizontal}
+                    directionLabel={Direccion.horizontal}
                     register={register("indice", { required: true })}
-                    mensajeError={errors.indice?.message} />
+                    messageError={errors.indice?.message} />
                 <AreaField
-                    titulo="Mensaje"
-                    columnas={BandaPresentacion.columna_2}
+                    title="Mensaje"
+                    columns={BandaPresentacion.columna_2}
                     rows={3}
                     placeholder="Error al procesar la solicitud"
-                    direccionLabel={Direccion.horizontal}
+                    directionLabel={Direccion.horizontal}
                     register={register("mensaje", { required: true })}
-                    mensajeError={errors.mensaje?.message} />
+                    messageError={errors.mensaje?.message} />
                 <AreaField
-                    titulo="Descripción"
-                    columnas={BandaPresentacion.columna_1}
+                    title="Descripción"
+                    columns={BandaPresentacion.columna_1}
                     rows={5}
                     placeholder="Descripción detallada del error"
-                    direccionLabel={Direccion.horizontal}
+                    directionLabel={Direccion.horizontal}
                     register={register("descripcion")}
-                    mensajeError={errors.descripcion?.message} />
-                <FooterForm direccionLabel={Direccion.horizontal} columnas={BandaPresentacion.columna_2}>
+                    messageError={errors.descripcion?.message} />
+                <FooterForm directionLabel={Direccion.horizontal} columns={BandaPresentacion.columna_2}>
                     <Button type="submit" disabled={loading} >Guardar</Button>
                     <Button type="button" variant="surface"
                         disabled={estadoFormulario === EstadoEdicion.crear}

@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from 'react';
 
 interface CapturarErrorProps {
   children: ReactNode;
-  tituloName: string;
+  titleName: string;
 }
 
 interface CapturarErrorState {
@@ -32,7 +32,7 @@ class CapturarError extends Component<CapturarErrorProps, CapturarErrorState> {
 
   render() {
     if (this.state.hasError) {
-      return <p style={{color:"red"}}>{this.props.tituloName}: Error al cargar.</p>;
+      return <p style={{color:"red"}}>{this.props.titleName}: Error al cargar.</p>;
     }
 
     return this.props.children;

@@ -1,6 +1,6 @@
 import { toast } from "../componentes/toast/Toast";
-import { MetodosREST, TipoBody } from "../ConstantesAPI";
-import { Alertas } from "../ConstantesPresentacion";
+import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { Alerts } from "../ConstantesPresentacion";
 import { fetchData } from "./Api";
 
 /**
@@ -45,11 +45,11 @@ export const requestToken = async () => {
         grant_type: 'password'
     };
 
-    const miRespuesta = fetchData({
+    const responseToken = fetchData({
         url: "http://localhost:8080/realms/portal-realm/protocol/openid-connect/token",
-        methodRest: MetodosREST.POST,
-        tipoBody: TipoBody.FORM_URLENCODED,
-        bodyParametro: data
+        methodRest: MethodREST.POST,
+        typeBody: TypeBody.FORM_URLENCODED,
+        bodyParameter: data
     }).then(response => {
 
         if (response.status === 200) {
@@ -69,11 +69,11 @@ export const requestToken = async () => {
         toast({
             title: "Error",
             description: error,
-            alerta: Alertas.error
+            alert: Alerts.error
         });
         console.error("Error: " + JSON.stringify(error));
     });
 
 
-    return miRespuesta;
+    return responseToken;
 }

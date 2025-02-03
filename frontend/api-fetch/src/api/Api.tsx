@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { generarParametrosUrl, generarRequestBody } from "./CommonAPI";
-import { MetodosREST, TipoBody } from "../ConstantesAPI";
+import { generateParametersUrl, generateRequestBody } from "./CommonAPI";
+import { MethodREST, TypeBody } from "../ConstantesAPI";
 import i18next from "i18next";
 
 /**
@@ -12,7 +12,7 @@ import i18next from "i18next";
  */
 
 /**
- * Interfaz para el objeto de respuesta de la llamada.
+ * Interfaz para el objeto de iFetchData de la llamada.
  */
 export interface IFetchData {
   responseErrorJSON: any;
@@ -31,16 +31,16 @@ export interface IFetchData {
  * 
  * @param url Dirección del servicio 
  * @param methodRest Metodo de consumo 
- * @param tipoBody Tipo de body o parametros que se envian 
- * @param bodyParametro Body o Parametros que se envian
+ * @param typeBody Tipo de body o parametros que se envian 
+ * @param bodyParameter Body o Parametros que se envian
  * @param token Token de autenticación
- * @returns devuelve un objeto con la respuesta del servicio
+ * @returns devuelve un objeto con la iFetchData del servicio
  */
 export const fetchData = async (
-  { url, methodRest, tipoBody, bodyParametro, token }:
-    { url: string, methodRest: MetodosREST, tipoBody: TipoBody, bodyParametro?: any, token?: string }
+  { url, methodRest, typeBody, bodyParameter, token }:
+    { url: string, methodRest: MethodREST, typeBody: TypeBody, bodyParameter?: any, token?: string }
 ) => {
-  const respuesta: IFetchData = {
+  const iFetchData: IFetchData = {
     responseErrorJSON: null,
     responseErrorText: null,
     response: null,
@@ -48,34 +48,34 @@ export const fetchData = async (
     error: null
   };
 
-  url = url + generarParametrosUrl(tipoBody, bodyParametro);
-  const requestInit = generarRequestBody(methodRest, tipoBody, bodyParametro, token) as RequestInit;
+  url = url + generateParametersUrl(typeBody, bodyParameter);
+  const requestInit = generateRequestBody(methodRest, typeBody, bodyParameter, token) as RequestInit;
 
   try {
 
-    const respuestaFetch = await fetch(url, requestInit);
-    if ( respuestaFetch.ok) {
-      if (respuestaFetch.status === 204) {
-        respuesta.response = null;
+    const responseFetch = await fetch(url, requestInit);
+    if ( responseFetch.ok) {
+      if (responseFetch.status === 204) {
+        iFetchData.response = null;
       } else {
-        respuesta.response = await respuestaFetch.json();
+        iFetchData.response = await responseFetch.json();
       }
 
-      respuesta.status = respuestaFetch.status;
+      iFetchData.status = responseFetch.status;
     } else {
-      const contentType = respuestaFetch.headers.get("content-type");
+      const contentType = responseFetch.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
-        respuesta.responseErrorJSON = await respuestaFetch.json();
+        iFetchData.responseErrorJSON = await responseFetch.json();
       } else {
-        respuesta.responseErrorText = await respuestaFetch.text();
+        iFetchData.responseErrorText = await responseFetch.text();
       }
-      respuesta.status = respuestaFetch.status;
-      respuesta.error = i18next.t('httpStatus.' + respuestaFetch.status, { ns: 'global' });
+      iFetchData.status = responseFetch.status;
+      iFetchData.error = i18next.t('httpStatus.' + responseFetch.status, { ns: 'global' });
     }
   } catch (e) {
-    respuesta.error = e instanceof Error ? e.message : String(e);
-    respuesta.status = 500;
+    iFetchData.error = e instanceof Error ? e.message : String(e);
+    iFetchData.status = 500;
   }
-  return respuesta;
+  return iFetchData;
 }
 

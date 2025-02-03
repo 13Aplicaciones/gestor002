@@ -20,39 +20,39 @@ const App = () => {
 
   return (
     <>
-      <CapturarError tituloName="EncabezadoWrapper">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="EncabezadoWrapper">
+        <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
         </Suspense>
       </CapturarError>
 
-      <CapturarError tituloName="Button">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="Button">
+        <Suspense fallback={t("messages.loading")}>
           <Button />
         </Suspense>
       </CapturarError>
 
 
-      <CapturarError tituloName="Usuario">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="Usuario">
+        <Suspense fallback={t("messages.loading")}>
           <Usuario />
         </Suspense>
       </CapturarError>
 
-      <CapturarError tituloName="Flujo">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="Flujo">
+        <Suspense fallback={t("messages.loading")}>
           <Flujo />
         </Suspense>
       </CapturarError>
 
-      <CapturarError tituloName="Dashboard">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="Dashboard">
+        <Suspense fallback={t("messages.loading")}>
           <Dashboard />
         </Suspense>
       </CapturarError>
 
-      <CapturarError tituloName="Footer">
-        <Suspense fallback={t("mensajes.loading")}>
+      <CapturarError titleName="Footer">
+        <Suspense fallback={t("messages.loading")}>
           <Footer />
         </Suspense>
       </CapturarError>

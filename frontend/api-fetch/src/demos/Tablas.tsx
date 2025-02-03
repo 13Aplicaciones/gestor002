@@ -16,92 +16,92 @@ const miTablaDemo = () => {
       items: [
         {
           uuid: "189098-123123-123123",
-          nombre: "Supeer nombren",
-          descripcon: "descripcion",
+          name: "Supeer nombren",
+          descripcon: "description",
           instancia: "instancia",
           valor: 10.23,
           fecha: "2021-06-01T12:34:34"
         },
         {
           uuid: "000098-123123-123123",
-          nombre: "nombre",
-          descripcon: "descripcion super interesante descripcion super interesante descripcion super interesante",
+          name: "nombre",
+          descripcon: "description super interesante description super interesante description super interesante",
           instancia: "instancia--",
           valor: 100.1,
           fecha: "2025-06-01T12:34:30"
         },
         {
           uuid: "199998-999-123123",
-          nombre: "omar",
-          descripcon: "descripcion",
+          name: "omar",
+          descripcon: "description",
           instancia: "instancia001",
           valor: 12000
         },
         {
           uuid: "788998-999-123123",
-          nombre: "omar",
-          descripcon: "descripcion",
+          name: "omar",
+          descripcon: "description",
           instancia: "instancia001",
           valor: 10000
         },
         {
           uuid: "123123-199998-999",
-          nombre: "omar",
-          descripcon: "descripcion",
+          name: "omar",
+          descripcon: "description",
           instancia: "instancia001",
           valor: 111111
         },
         {
           uuid: "788998-999-123123",
-          nombre: "omar",
-          descripcon: "descripcion",
+          name: "omar",
+          descripcon: "description",
           instancia: "instancia001",
           valor: 10000
         }
       ]
     };
   
-    const presentacion = [
+    const presentation = [
       {
-        nombre: "nombre",
-        titulo: "Nombre",
-        justificacion: "start",
-        formato: "none",
+        name: "nombre",
+        title: "Nombre",
+        justification: "start",
+        format: "none",
         width: "30vw",
         accion: (row: any) => {
           console.log("nombre" + JSON.stringify(row));
         },
       },
       {
-        nombre: "descripcon",
-        titulo: "Descripción",
-        justificacion: "start",
-        formato: "none",
+        name: "descripcon",
+        title: "Descripción",
+        justification: "start",
+        format: "none",
         width: "10vw",
       },
       {
-        nombre: "fecha",
-        titulo: "Fecha de Ingreso",
-        justificacion: "start",
-        formato: "date",
+        name: "fecha",
+        title: "Fecha de Ingreso",
+        justification: "start",
+        format: "date",
         width: "10vw",
         accion: (row: any) => {
           console.error("fecha " + JSON.stringify(row));
         }
       },
       {
-        nombre: "valor",
-        titulo: "Total $",
-        justificacion: "end",
-        formato: "##.##",
+        name: "valor",
+        title: "Total $",
+        justification: "end",
+        format: "##.##",
         width: "10vw",
       },
   
       {
-        nombre: "acciones",
-        titulo: "Acciones",
-        justificacion: "start",
-        formato: "empty",
+        name: "acciones",
+        title: "Acciones",
+        justification: "start",
+        format: "empty",
         width: "6vw",
         accion: (row: any) => {
           console.error("nombre" + JSON.stringify(row));
@@ -128,10 +128,10 @@ const miTablaDemo = () => {
       <Flex direction="column" p="5" gap="3">
         <TableConfigurable
           data={data.items}
-          presentacion={presentacion}
-          isEncabezado={true}
-          isNumeroLinea={true}
-          isBanda={true} />
+          presentation={presentation}
+          isHeader={true}
+          isLineNumber={true}
+          isBand={true} />
       </Flex>
     );
   }

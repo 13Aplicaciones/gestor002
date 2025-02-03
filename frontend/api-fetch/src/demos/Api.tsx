@@ -1,7 +1,7 @@
-import { Alertas } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantesPresentacion";
 import { cargarCredencial } from "../redux/Store";
 import { fetchData } from "../api/Api";
-import { MetodosREST, TipoBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../ConstantesAPI";
 import { toast } from "../componentes/toast/Toast";
 
 /**
@@ -10,7 +10,7 @@ import { toast } from "../componentes/toast/Toast";
  * @author @omargo33
  * @returns 
  */
-const ejecutarApi = () => {
+const runApi = () => {
     const data = {
       username: 'root',
       password: '12341234s',
@@ -23,9 +23,9 @@ const ejecutarApi = () => {
     fetchData(
       {
         url: "http://localhost:8080/realms/portal-realm/protocol/openid-connect/token",
-        methodRest: MetodosREST.POST,
-        tipoBody: TipoBody.FORM_URLENCODED,
-        bodyParametro: data
+        methodRest: MethodREST.POST,
+        typeBody: TypeBody.FORM_URLENCODED,
+        bodyParameter: data
       }
     ).then(response => {
         console.log("responseErrorJSON", response.responseErrorJSON);
@@ -38,7 +38,7 @@ const ejecutarApi = () => {
           toast({
             title: response.status.toString(),
             description: response.error,
-            alerta: Alertas.warning
+            alert: Alerts.warning
           });
           return;
         } else {
@@ -46,7 +46,7 @@ const ejecutarApi = () => {
           toast({
             title: "conectado",
             description: "super conecatad",
-            alerta: Alertas.info
+            alert: Alerts.info
           });
         }
       }).catch(error => {
@@ -54,4 +54,4 @@ const ejecutarApi = () => {
       });
   }
 
-export default ejecutarApi;
+export default runApi;

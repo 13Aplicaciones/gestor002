@@ -1,4 +1,4 @@
-import { Alertas } from '../../ConstantesPresentacion';
+import { Alerts } from '../../ConstantesPresentacion';
 import * as React from 'react';
 import type { ToastActionElement, ToastProps } from './Index';
 
@@ -14,7 +14,7 @@ type ToasterToast = ToastProps & {
     title?: React.ReactNode
     description?: React.ReactNode
     action?: ToastActionElement
-    alerta?: Alertas
+    alert?: Alerts
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

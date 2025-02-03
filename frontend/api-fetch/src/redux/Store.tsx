@@ -4,7 +4,7 @@ import { boolean } from "yup";
 
 
 /**
- * Componete para crear un campo de busqueda.
+ * Componete para crear un field de busqueda.
  * 
  * @author @omargo33
  * @since 2025-01-15
@@ -37,7 +37,7 @@ const perfilSlice = createSlice({
 export const { setPerfil, setTablas } = perfilSlice.actions;
 
 /**
- * dynamicDialogSlice entrada para contener el estado de presentacion del diálogo por indice
+ * dynamicDialogSlice entrada para contener el estado de presentation del diálogo por indice
  * 
  */
 const dynamicDialogSlice = createSlice({

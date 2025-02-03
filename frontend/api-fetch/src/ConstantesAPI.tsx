@@ -1,7 +1,7 @@
 /**
  * Enumerado de metodos REST que se pueden utilizar.
  */
-const enum MetodosREST {
+const enum MethodREST {
     GET = "GET",
     POST = "POST",
     PUT = "PUT",
@@ -11,7 +11,7 @@ const enum MetodosREST {
 /**
  * Enumerado de tipos de body que se pueden utilizar.
  */
-const enum TipoBody {
+const enum TypeBody {
     NONE = "none",
     JSON = "raw",
     FORM_URLENCODED = "x-www-form-urlencoded",
@@ -20,4 +20,4 @@ const enum TipoBody {
     URL_PARAMS = "url-params",
 }
 
-export { TipoBody, MetodosREST };
+export { TypeBody, MethodREST };

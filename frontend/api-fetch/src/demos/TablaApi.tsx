@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CrearCampoBusqueda } from "../componentes/tabla/TablaBusqueda";
+import { CreateSearchField } from "../componentes/tabla/TablaBusqueda";
 import { GearIcon, MagnifyingGlassIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import PopoverDemo from "../componentes/popover/Popover";
 
@@ -16,37 +16,37 @@ const miTablaApiDemo = () => {
     sort: 'indice',
     'sort ': 'asc', // Espacio en blanco para que no lo tome como repetido, se recomienda no usarlo en la paginacion.
     indice: '',
-    mensaje: '',
+    message: '',
   };
 
-  const presentacionItems = {
+  const presentationItems = {
     skeleton: {
       with: "50vw",
     },
     items:
       [
         {
-          nombre: "indice",
-          titulo: "Indice",
-          justificacion: "start",
-          formato: "none",
+          name: "indice",
+          title: "Indice",
+          justification: "start",
+          format: "none",
           width: "10vw",
           accion: (row: any) => {
             console.log("indice" + JSON.stringify(row));
           },
         },
         {
-          nombre: "mensaje",
-          titulo: "Mensaje",
-          justificacion: "start",
-          formato: "none",
+          name: "message",
+          title: "Mensaje",
+          justification: "start",
+          format: "none",
           width: "30vw",
         },
         {
-          nombre: "usuarioFecha",
-          titulo: "Fecha",
-          justificacion: "start",
-          formato: "date",
+          name: "usuarioFecha",
+          title: "Fecha",
+          justification: "start",
+          format: "date",
           width: "10vw",
           accion: (row: any) => {
             console.log("fecha " + JSON.stringify(row));
@@ -105,13 +105,13 @@ const miTablaApiDemo = () => {
 
   return (
     <Flex direction="column" p="5" gap="3">
-      <CrearCampoBusqueda
+      <CreateSearchField
         apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-        nombreIndice="indice"
-        presentacionItem={presentacionItems}
-        parametrosApi={parametros} >
+        nameIndex="indice"
+        presentationItem={presentationItems}
+        parametersApi={parametros} >
         {busquedaPersonalizada()}
-      </CrearCampoBusqueda>
+      </CreateSearchField>
     </Flex>
   );
 }

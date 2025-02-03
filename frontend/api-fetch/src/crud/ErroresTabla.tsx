@@ -1,7 +1,7 @@
 import { Button } from "@radix-ui/themes";
-import { CrearCampoBusqueda } from "../componentes/tabla/TablaBusqueda";
+import { CreateSearchField } from "../componentes/tabla/TablaBusqueda";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { FormatoTexto, JustificacionTexto, OrdenarColumna } from "../ConstantesPresentacion";
+import { TextFormat, JustificacionTexto, OrdenarColumna } from "../ConstantesPresentacion";
 import { IRowDataError } from "./ErroresVistaPrevia";
 
 /**
@@ -22,12 +22,12 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
         page: 0,
         size: 10,
         indice: '',
-        mensaje: '',
+        message: '',
     };
 
-    const presentacionItems = {
+    const presentationItems = {
         banding: false,
-        encabezados: true,
+        headers: true,
         numeroLinea: false,
         skeleton: {
             with: "90vw",
@@ -35,18 +35,18 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
         items:
             [
                 {
-                    nombre: "indice",
-                    titulo: "Indice",
-                    justificacion: JustificacionTexto.start,
-                    formato: FormatoTexto.none,
+                    name: "indice",
+                    title: "Indice",
+                    justification: JustificacionTexto.start,
+                    format: TextFormat.none,
                     width: "10vw",
-                    orden: OrdenarColumna.neutro,
+                    order: OrdenarColumna.neutro,
                 },
                 {
-                    nombre: "mensaje",
-                    titulo: "Mensaje que hay",
-                    justificacion: JustificacionTexto.start,
-                    formato: FormatoTexto.none,
+                    name: "mensaje",
+                    title: "Mensaje que hay",
+                    justification: JustificacionTexto.start,
+                    format: TextFormat.none,
                     width: "20vw",
                     accion: (row: IRowDataError) => {                        
                         if (onEditar) {
@@ -56,26 +56,26 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
                 },
 
                 {
-                    nombre: "descripcion",
-                    titulo: "Descripción",
-                    justificacion: JustificacionTexto.start,
-                    formato: FormatoTexto.none,
+                    name: "descripcion",
+                    title: "Descripción",
+                    justification: JustificacionTexto.start,
+                    format: TextFormat.none,
                     width: "40vw",
                 },
 
                 {
-                    nombre: "usuarioFecha",
-                    titulo: "Fecha",
-                    justificacion: JustificacionTexto.start,
-                    formato: FormatoTexto.none,
+                    name: "usuarioFecha",
+                    title: "Fecha",
+                    justification: JustificacionTexto.start,
+                    format: TextFormat.none,
                     width: "20vw",
-                    orden: OrdenarColumna.neutro,
+                    order: OrdenarColumna.neutro,
                 },
                 {
-                    nombre: "acciones",
-                    titulo: "Acci.",
-                    justificacion: "center",
-                    formato: "empty",
+                    name: "acciones",
+                    title: "Acci.",
+                    justification: "center",
+                    format: "empty",
                     width: "6vw",
                     componente: (row: IRowDataError) => (
                         <Button size="1" variant='ghost' onClick={() => console.log("nombre " + row.indice)}>
@@ -87,12 +87,12 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
     };
 
     return (
-        <CrearCampoBusqueda
+        <CreateSearchField
             apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-            nombreIndice="indice"
-            presentacionItem={presentacionItems}
-            parametrosApi={parametros} >
-        </CrearCampoBusqueda>
+            nameIndex="indice"
+            presentationItem={presentationItems}
+            parametersApi={parametros} >
+        </CreateSearchField>
     );
 }
 

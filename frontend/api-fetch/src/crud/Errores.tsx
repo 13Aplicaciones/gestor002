@@ -2,7 +2,7 @@ import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { EstadoEdicion } from "../ConstantesPresentacion";
 import { useState } from "react";
-import ButtonCrearRegistroFlotante from "../componentes/boton/Boton";
+import ButtonCreateRecordFloating from "../componentes/boton/Boton";
 import ErrorEdit from "./ErroresEdit";
 import Tabla from "./ErroresTabla";
 import VistaPrevia, { IRowDataError } from "./ErroresVistaPrevia";
@@ -35,12 +35,12 @@ const ErrorPage = () => {
         return (
             <Flex direction="column" gap="3" p="3">
                 <Heading>Listar Errores del sistema</Heading>
-                <Text>En esta sección se muestran los errores del sistema y descripciones que este sitema tiene.</Text>
+                <Text>En esta sección se muestran los errores del sistema y descriptiones que este sitema tiene.</Text>
                 <Tabla onEditar={onEditarRow} />
                 <VistaPrevia
                     indice="268"
                 />
-                <ButtonCrearRegistroFlotante
+                <ButtonCreateRecordFloating
                     toolTip="Error"
                     onClick={() => {
                         setEstado(EstadoEdicion.crear);
@@ -63,7 +63,7 @@ const ErrorPage = () => {
             <Flex direction="row" justify="between" p="3">
                 <Flex direction="column" gap="3">
                     <Heading>Error del sistema</Heading>
-                    <Text>En esta sección se muestran los errores del sistema y descripciones que este sitema tiene.</Text>
+                    <Text>En esta sección se muestran los errores del sistema y descriptiones que este sitema tiene.</Text>
                     <ErrorEdit estado={estado}
                         row={rowSelecionado}
                         onAtras={() => {

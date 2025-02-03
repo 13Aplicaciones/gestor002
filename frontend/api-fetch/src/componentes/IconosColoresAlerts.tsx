@@ -1,4 +1,4 @@
-import { Alertas } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantesPresentacion";
 import { CheckCircledIcon, CrossCircledIcon, ExclamationTriangleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 
 
@@ -10,33 +10,33 @@ import { CheckCircledIcon, CrossCircledIcon, ExclamationTriangleIcon, InfoCircle
  */
 
 /**
- * Iconos de alertas.
+ * Iconos de alerts.
  * 
- * @param alerta Alerta a mostrar.
+ * @param alert Alerta a mostrar.
  *  
  * @returns 
  */
-const alertaIcono = ({ alerta }: { alerta: Alertas }) => {
-   return alertaIconoSize({ alerta, size: "16" });
+const alertIcon = ({ alert }: { alert: Alerts }) => {
+   return alertIconSize({ alert, size: "16" });
 };
 
 /**
- * Iconos de alertas con tamaño.
+ * Iconos de alerts con tamaño.
  * 
- * @param alerta Alerta a mostrar.
+ * @param alert Alerta a mostrar.
  * @param size Tamaño del icono.
  * 
  * @returns 
  */
-const alertaIconoSize = ({ alerta, size  }: { alerta: Alertas, size: string }) => {
-    switch (alerta) {
-        case Alertas.info:
+const alertIconSize = ({ alert, size  }: { alert: Alerts, size: string }) => {
+    switch (alert) {
+        case Alerts.info:
             return <InfoCircledIcon height={size} width={size}/>;
-        case Alertas.warning:
+        case Alerts.warning:
             return <ExclamationTriangleIcon height={size} width={size} />;
-        case Alertas.error:
+        case Alerts.error:
             return <CrossCircledIcon height={size} width={size}/>;
-        case Alertas.success:
+        case Alerts.success:
             return <CheckCircledIcon height={size} width={size}/>;
         default:
             return <InfoCircledIcon height={size} width={size}/>;
@@ -46,14 +46,14 @@ const alertaIconoSize = ({ alerta, size  }: { alerta: Alertas, size: string }) =
 /**
  * Alerta variant.
  * 
- * @param alerta Alerta a mostrar.
+ * @param alert Alerta a mostrar.
  * @returns 
  */
-const alertaVariant = ({ alerta }: { alerta: Alertas }) => {
-    switch (alerta) {
-        case Alertas.info:
+const alertVariant = ({ alert }: { alert: Alerts }) => {
+    switch (alert) {
+        case Alerts.info:
             return "outline";        
-        case Alertas.success:
+        case Alerts.success:
             return "surface";  
         default:
             return "soft";
@@ -63,23 +63,23 @@ const alertaVariant = ({ alerta }: { alerta: Alertas }) => {
 /**
  * Alerta color.
  * 
- * @param alerta Alerta a mostrar. 
+ * @param alert Alerta a mostrar. 
  * @returns 
  */
-const alertaColor = ({ alerta }: { alerta?: Alertas }) => {
+const alertColor = ({ alert }: { alert?: Alerts }) => {
 
-    if (alerta === undefined) {
+    if (alert === undefined) {
         return "blue";
     }
 
-    switch (alerta) {
-        case Alertas.info:
+    switch (alert) {
+        case Alerts.info:
             return "blue";
-        case Alertas.warning:
+        case Alerts.warning:
             return "orange";
-        case Alertas.error:
+        case Alerts.error:
             return "red";        
-        case Alertas.success:
+        case Alerts.success:
             return "green";
         default:
             return "blue";
@@ -87,25 +87,25 @@ const alertaColor = ({ alerta }: { alerta?: Alertas }) => {
 }
 
 /**
- * Funcion para seleccionar el color del mensaje.
+ * Funcion para seleccionar el color del message.
  * 
- * @param alerta Alerta a mostrar.
+ * @param alert Alerta a mostrar.
  * 
  * @returns 
  */
-const alertaColorFondo = (alerta: Alertas | undefined) => {
-    switch (alerta) {
-        case Alertas.success:
+const alertColorBackground = (alert: Alerts | undefined) => {
+    switch (alert) {
+        case Alerts.success:
             return "var(--green-9)";
-        case Alertas.info:
+        case Alerts.info:
             return "var(--blue-7)";
-        case Alertas.warning:
+        case Alerts.warning:
             return "var(--orange-9)";
-        case Alertas.error:
+        case Alerts.error:
             return "var(--red-9)";
         default:
             return "var(--blue-11)";
     }
 }
 
-export { alertaIcono, alertaIconoSize, alertaColor, alertaColorFondo, alertaVariant };
+export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant };

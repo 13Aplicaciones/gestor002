@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alertas, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { MensajeField } from "./Mensajes";
+import { MessageField } from "./Mensajes";
 import { MouseEventHandler, ReactNode, useState } from "react";
 import { Root as TextField, Slot } from "@radix-ui/themes/dist/cjs/components/text-field.js";
 import { TextArea } from "@radix-ui/themes";
-import useCalcularPresentacion from "./Calculos";
+import useCalculatePresentation from "./Calculos";
 
 /**
  * Componentes de input del sistema. 
@@ -17,60 +17,60 @@ import useCalcularPresentacion from "./Calculos";
  */
 
 /**
- * Se crea un componente de tipo función que recibe las propiedades titulo, placeHolder, mensajeError, register 
+ * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register 
  * 
- * @param titulo Titulo del campo
- * @param placeHolder Placeholder del campo
- * @param mensajeError Mensaje de error
- * @param columnas Columnas de la presentación
- * @param direccionLabel Dirección de la presentación
- * @param register Registro del campo para el formulario (yup)
+ * @param title Titulo del field
+ * @param placeHolder Placeholder del field
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
  *  
  * @returns 
  */
-const InputField = ({ titulo, placeholder, mensajeError, columnas, direccionLabel, register }:
-    { titulo?: string, placeholder?: string, mensajeError?: string, columnas?: BandaPresentacion, direccionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+const InputField = ({ title, placeholder, messageError, columns, directionLabel, register }:
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandaPresentacion, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
 
-    const presentacion = useCalcularPresentacion(direccionLabel, columnas, '60vw');
+    const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
-        <Flex direction={presentacion.direccion} gap="3" style={{ alignItems: presentacion.alinear }} >
-            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentacion.justificar }}>
-                <Text size="2" as="div" weight="bold" truncate trim="normal">{titulo}</Text>
+        <Flex direction={presentation.direction} gap="3" style={{ alignItems: presentation.align }} >
+            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
+                <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
                 <TextField type='text'
-                    size="2" style={{ marginBottom: '1vh', width: presentacion.ancho }}
+                    size="2" style={{ marginBottom: '1vh', width: presentation.width }}
                     placeholder={placeholder}
                     {...register}
                 />
-                <MensajeField mensaje={mensajeError} />
+                <MessageField message={messageError} />
             </Flex>
         </Flex>
     )
 };
 
 /**
- * Funcion para crear un campo de fecha
+ * Funcion para crear un field de fecha
  * 
- * @param titulo Titulo del campo
- * @param placeholder Placeholder del campo
- * @param mensajeError Mensaje de error
- * @param columnas Columnas de la presentación
- * @param direccionLabel Dirección de la presentación
- * @param register Registro del campo para el formulario (yup)
+ * @param title Titulo del field
+ * @param placeholder Placeholder del field
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
  *  
  * @returns 
  */
-const InputFieldDate = ({ titulo, placeholder, mensajeError, columnas, direccionLabel, register }:
-    { titulo?: string, placeholder?: string, mensajeError?: string, columnas?: BandaPresentacion, direccionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+const InputFieldDate = ({ title, placeholder, messageError, columns, directionLabel, register }:
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandaPresentacion, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
 
-    const presentacion = useCalcularPresentacion(direccionLabel, columnas, '60vw');
+    const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
-        <Flex direction={presentacion.direccion} gap="3" style={{ alignItems: presentacion.alinear }} >
-            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentacion.justificar }}>
-                <Text size="2" as="div" weight="bold" truncate trim="normal">{titulo}</Text>
+        <Flex direction={presentation.direction} gap="3" style={{ alignItems: presentation.align }} >
+            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
+                <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
                 <TextField type='date'
@@ -78,7 +78,7 @@ const InputFieldDate = ({ titulo, placeholder, mensajeError, columnas, direccion
                     placeholder={placeholder}
                     {...register}
                 />
-                <MensajeField mensaje={mensajeError} />
+                <MessageField message={messageError} />
             </Flex>
         </Flex>
     )
@@ -86,35 +86,35 @@ const InputFieldDate = ({ titulo, placeholder, mensajeError, columnas, direccion
 
 
 /**
- * Se crea un componente de tipo función que recibe las propiedades titulo, placeHolder, mensajeError, register 
- * para un un campo de texto secreto
+ * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register 
+ * para un un field de texto secreto
  * 
- * @param titulo Titulo del campo
- * @param placeHolder Placeholder del campo
- * @param mensajeError Mensaje de error
- * @param columnas Columnas de la presentación
- * @param direccionLabel Dirección de la presentación
- * @param register Registro del campo para el formulario (yup)
+ * @param title Titulo del field
+ * @param placeHolder Placeholder del field
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
  *  
  * @returns 
  */
-const InputSecretField = ({ titulo, placeholder, mensajeError, columnas, direccionLabel, register }:
-    { titulo?: string, placeholder?: string, mensajeError?: string, columnas?: BandaPresentacion, direccionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+const InputSecretField = ({ title, placeholder, messageError, columns, directionLabel, register }:
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandaPresentacion, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
 
     const [visible, setVisible] = useState(false);
-    const presentacion = useCalcularPresentacion(direccionLabel, columnas, '60vw');
+    const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
     const onClick = () => {
         setVisible(!visible);
     }
 
     return (
-        <Flex direction={presentacion.direccion} gap="3" style={{ alignItems: presentacion.alinear }}>
-            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentacion.justificar }}>
-                <Text size="2" as="div" weight="bold" truncate trim="normal">{titulo}</Text>
+        <Flex direction={presentation.direction} gap="3" style={{ alignItems: presentation.align }}>
+            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
+                <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
                 <TextField type={visible ? 'text' : 'password'}
-                    size="2" style={{ marginBottom: '1vh', width: presentacion.ancho }}
+                    size="2" style={{ marginBottom: '1vh', width: presentation.width }}
                     placeholder={placeholder}
                     {...register}
                 >
@@ -126,71 +126,71 @@ const InputSecretField = ({ titulo, placeholder, mensajeError, columnas, direcci
                         }
                     </Slot>
                 </TextField>
-                <MensajeField mensaje={mensajeError} />
+                <MessageField message={messageError} />
             </Flex>
         </Flex>
     )
 };
 
 /**
- * Se crea un componente de tipo función que recibe las propiedades titulo, placeHolder, mensajeError, register 
+ * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register 
  * 
- * @param titulo Titulo del campo
- * @param placeHolder Placeholder del campo
- * @param mensajeError Mensaje de error
- * @param columnas Columnas de la presentación
- * @param direccionLabel Dirección de la presentación
- * @param register Registro del campo para el formulario (yup)
+ * @param title Titulo del field
+ * @param placeHolder Placeholder del field
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
  * 
  * @returns 
  */
-const AreaField = ({ titulo, placeholder, mensajeError, columnas, rows, direccionLabel, register }:
-    { titulo?: string, placeholder?: string, mensajeError?: string, columnas?: BandaPresentacion,  rows?:number | 2,  direccionLabel: Direccion | Direccion.horizontal, register?: any }) => {
-    const presentacion = useCalcularPresentacion(direccionLabel, columnas, '60vw');
+const AreaField = ({ title, placeholder, messageError, columns, rows, directionLabel, register }:
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandaPresentacion,  rows?:number | 2,  directionLabel: Direccion | Direccion.horizontal, register?: any }) => {
+    const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
-        <Flex direction={presentacion.direccion} gap="3" style={{ alignItems: presentacion.alinear }}>
-            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentacion.justificar }}>
-                <Text size="2" as="div" weight="bold" truncate trim="normal">{titulo}</Text>
+        <Flex direction={presentation.direction} gap="3" style={{ alignItems: presentation.align }}>
+            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
+                <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
-                <TextArea style={{ marginBottom: '1vh', width: presentacion.ancho }}
+                <TextArea style={{ marginBottom: '1vh', width: presentation.width }}
                     placeholder={placeholder}
                     rows={rows}
                     {...register}
                 />
-                <MensajeField mensaje={mensajeError} />
+                <MessageField message={messageError} />
             </Flex>
         </Flex>
     )
 };
 
 /**
- * Metodo para crear un campo de texto simple.
+ * Metodo para crear un field de texto simple.
  * 
- * @param placeholder Placeholder del campo
+ * @param placeholder Placeholder del field
  * @param columna Columnas de la presentación
- * @param mensajeError Mensaje de error
+ * @param messageError Mensaje de error
  * @param onClick Evento de click
- * @param register Registro del campo para el formulario (yup)
+ * @param register Registro del field para el formulario (yup)
  * @param children Componentes hijos
  *  
  * @returns 
  */
-const InputBusquedaDinamica = ({ placeholder, columna, mensajeError, onClick, register, children }:
+const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, register, children }:
     {
         placeholder?: string;
         columna?: BandaPresentacion;
-        mensajeError?: string;
+        messageError?: string;
         onClick?: MouseEventHandler<HTMLDivElement>;
         register?: any;
         children?: ReactNode
     }) => {
-    const presentacion = useCalcularPresentacion(Direccion.horizontal, columna, '30vw');
+    const presentation = useCalculatePresentation(Direccion.horizontal, columna, '30vw');
 
     return (
         <Flex direction={"row"} >
-            <TextField size="3" style={{ width: presentacion.ancho }} placeholder={placeholder}
+            <TextField size="3" style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
                 <Slot onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
@@ -199,51 +199,51 @@ const InputBusquedaDinamica = ({ placeholder, columna, mensajeError, onClick, re
                     <MagnifyingGlassIcon />
                 </Slot>
             </TextField>
-            <MensajeField mensaje={mensajeError} />
+            <MessageField message={messageError} />
             {children}
         </Flex>
     )
 }
 
 /**
- * Metodo para crear un campo de texto simple.
+ * Metodo para crear un field de texto simple.
  * 
- * @param plasholder Placeholder del campo
+ * @param plasholder Placeholder del field
  * @param columna Columnas de la presentación
- * @param mensajeError Mensaje de error
+ * @param messageError Mensaje de error
  * @param onClick Evento de click
- * @param direccionLabel Dirección de la presentación
- * @param register Registro del campo para el formulario (yup)
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
  * @param children Componentes hijos
- * @param size Tamaño del campo
+ * @param size Tamaño del field
  *  
  * @returns 
  */
-const InputSubmit = ({ placeholder, columna, mensajeError, onClick, direccionLabel, register, children, size }:
+const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLabel, register, children, size }:
     {
         placeholder?: string;
         columna?: BandaPresentacion;
-        mensajeError?: string;
+        messageError?: string;
         onClick?: MouseEventHandler<HTMLDivElement>;
-        direccionLabel: Direccion;
+        directionLabel: Direccion;
         register?: any;
         children?: ReactNode,
         size?: string | "3"
     }) => {
-    const presentacion = useCalcularPresentacion(direccionLabel, columna, '30vw');
+    const presentation = useCalculatePresentation(directionLabel, columna, '30vw');
 
     return (
-        <Flex direction={presentacion.direccion} gap={size} style={{ alignItems: presentacion.alinear }}>
-            <TextField size={size} style={{ width: presentacion.ancho }} placeholder={placeholder}
+        <Flex direction={presentation.direction} gap={size} style={{ alignItems: presentation.align }}>
+            <TextField size={size} style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
                 <Slot onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
                 </Slot>
             </TextField>
-            <MensajeField mensaje={mensajeError} alerta={Alertas.error} />
+            <MessageField message={messageError} alert={Alerts.error} />
             {children}
         </Flex>
     )
 }
 
-export { InputBusquedaDinamica, InputField, InputSecretField, AreaField, InputFieldDate, InputSubmit };
+export { InputSearchDynamic, InputField, InputSecretField, AreaField, InputFieldDate, InputSubmit };

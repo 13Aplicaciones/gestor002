@@ -10,7 +10,7 @@
  */
 
 /**
- * Metodo para eliminar los campos vacios de un objeto JSON.
+ * Metodo para eliminar los fields vacios de un objeto JSON.
  * 
  * @param objeto Objeto JSON.  
  * @returns 

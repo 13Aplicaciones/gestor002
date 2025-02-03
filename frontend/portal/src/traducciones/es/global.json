@@ -1,9 +1,9 @@
 {
     "portal": {
-        "titulo": "Cash Register"
+        "title": "Cash Register"
     },
 
-    "mensajes":{
+    "messages":{
         "loading": "Cargando..."
     }
 

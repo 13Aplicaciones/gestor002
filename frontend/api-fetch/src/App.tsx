@@ -10,14 +10,14 @@ import { MiDialogos } from "./demos/Dialogos";
 import { miTablaDemo } from "./demos/Tablas";
 import { MiToast } from "./demos/Toast";
 import ConsolaPantalla from "./demos/Consola";
-import ejecutarApi from "./demos/Api";
+import runApi from "./demos/Api";
 import ErrorPage from "./crud/Errores";
 import miTablaApiDemo from "./demos/TablaApi";
 
 /**
  * Componente principal
  * 
- * Para probar el componente de toast, se crean 4 botones que al hacer click en ellos, se muestra un mensaje de alerta.
+ * Para probar el componente de toast, se crean 4 botones que al hacer click en ellos, se muestra un message de alert.
  * 
  * @returns 
  */
@@ -45,7 +45,7 @@ const App = () => {
 
       <Separator size="4" orientation="horizontal" />
       <Heading>Ejecutar API</Heading>
-      <Button size="3" variant="soft" onClick={ejecutarApi}>Ejecutar API</Button>
+      <Button size="3" variant="soft" onClick={runApi}>Ejecutar API</Button>
 
       <Separator size="4" orientation="horizontal" />
       <Heading>Uso de Toast</Heading>

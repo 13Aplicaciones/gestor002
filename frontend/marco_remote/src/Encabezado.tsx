@@ -1,25 +1,25 @@
 import { Box, Flex, Separator, Text } from "@radix-ui/themes"
 import { ReactNode } from "react";
-import { Alertas, Informar } from "api-fetch";
+import { Alerts, Informar } from "api-fetch";
 import { useTranslation } from "react-i18next";
 import BotonMenu from "./componetes/BotonMenu";
 import BotonSession from './componetes/BotonSession';
 import logo from './assets/logo.png';
 
 /**
- * Función que muestra un mensaje de información dinámico.
+ * Función que muestra un message de información dinámico.
  * 
  * @param param0 
  * @returns 
  */
 const informacionDinamica = () => {
 
-    //TODO poner proceso FETCH API de busqueda de mensajes desde tabla de mensajes por empresa
-    const mensaje = "Este es un mensaje de prueba <a href='https://www.google.com'>Google</a> <a href='https://www.yahoo.com'>Yahoo</a>";
+    //TODO poner proceso FETCH API de busqueda de messages desde tabla de messages por empresa
+    const message = "Este es un message de prueba <a href='https://www.google.com'>Google</a> <a href='https://www.yahoo.com'>Yahoo</a>";
     
-    if (mensaje) {
+    if (message) {
         return (
-            <Informar mensaje={mensaje} alerta={Alertas.success} />
+            <Informar message={message} alert={Alerts.success} />
         );
     }
 }
@@ -40,7 +40,7 @@ const Encabezado = ({ children }: { children?: ReactNode }) => {
                     <BotonMenu />
                     <img src={logo} alt="Logo" style={{ height: '5vh', maxHeight: 90, width: 'auto' }} />
                     <Flex direction="column">
-                        <Text as="div" weight="bold" color="sky" size={{ xs: "1", sm: "2", md: "3", lg: "4", xl: "5" }}>{t("marco.encabezado")}</Text>
+                        <Text as="div" weight="bold" color="sky" size={{ xs: "1", sm: "2", md: "3", lg: "4", xl: "5" }}>{t("marco.header")}</Text>
                         <Text as="div" truncate={true} size={{ xs: "1", sm: "1", md: "2", lg: "3", xl: "4" }}>Caja de Ahorro de los Trabajadores de la Universidad de Oriente</Text>
                     </Flex>
                 </Flex>

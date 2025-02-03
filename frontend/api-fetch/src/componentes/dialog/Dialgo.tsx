@@ -1,6 +1,6 @@
 import '../../i18n';
-import { alertaColor, alertaIconoSize } from '../IconosColoresAlertas';
-import { Alertas } from '../../ConstantesPresentacion';
+import { alertColor, alertIconSize } from '../IconosColoresAlerts';
+import { Alerts } from '../../ConstantesPresentacion';
 import { Button, Dialog, Flex, Separator } from '@radix-ui/themes';
 import { hideDialogDinamico } from '../../redux/Store';
 import { ReactNode } from 'react';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Funciones de presentacion de Dialogos.
+ * Funciones de presentation de Dialogos.
  * 
  * @autor @omargo33
  * @since 2025-01-20
@@ -31,17 +31,17 @@ interface IRootState {
 /**
  * Pie del dialogo que permite cerrar el dialogo o tener botones adicionales o unicos.
  * 
- * @param cerrarDialogo Función para cerrar el dialogo
- * @param textoAccion Texto del botón de acción
+ * @param closeDialogue Función para cerrar el dialogo
+ * @param textAction Texto del botón de acción
  * @param cancel Indica si se muestra el botón de cancelar
  * @param buttons Botones adicionales o unicos 
  * @returns 
  */
-const pieDialogo =
-    ({ cerrarDialogo, textoAccion, cancel = true, buttons }:
+const footDialogue =
+    ({ closeDialogue, textAction, cancel = true, buttons }:
         {
-            cerrarDialogo: () => void,
-            textoAccion: string,
+            closeDialogue: () => void,
+            textAction: string,
             cancel?: boolean,
             buttons?: ReactNode
         }) => {
@@ -53,7 +53,7 @@ const pieDialogo =
                         <Flex direction="row" align="baseline" gap="2">
                             {buttons}
                             {cancel &&
-                                <Button size="3" variant="solid" onClick={cerrarDialogo} >{textoAccion}</Button>
+                                <Button size="3" variant="solid" onClick={closeDialogue} >{textAction}</Button>
                             }
                         </Flex>
                     </Flex>
@@ -62,7 +62,7 @@ const pieDialogo =
                     <Flex direction="column" align="end">
                         <Separator my="3" size="4" />
                         <Flex direction="row" align="baseline" gap="2">
-                            <Button size="3" variant="solid" onClick={cerrarDialogo} >{textoAccion}</Button>
+                            <Button size="3" variant="solid" onClick={closeDialogue} >{textAction}</Button>
                         </Flex>
                     </Flex>
                 }
@@ -74,18 +74,18 @@ const pieDialogo =
  * Dialogo para formularios 
  * 
  * @param id Identificador del dialogo
- * @param titulo Titulo del dialogo
- * @param descripcion Descripción del dialogo
+ * @param title Titulo del dialogo
+ * @param description Descripción del dialogo
  * @param cancel Indica si se muestra el botón de cancelar
  * @param children Contenido del dialogo
  * @param buttons Botones adicionales o unicos
  *
  */
-const DialogForm = ({ id, titulo, descripcion, cancel = true, children, buttons }:
+const DialogForm = ({ id, title, description, cancel = true, children, buttons }:
     {
         id: string,
-        titulo?: string,
-        descripcion?: string,
+        title?: string,
+        description?: string,
         cancel?: boolean,
         children?: ReactNode,
         buttons?: ReactNode
@@ -101,18 +101,18 @@ const DialogForm = ({ id, titulo, descripcion, cancel = true, children, buttons 
     return (
         <Dialog.Root open={open}>
             <Dialog.Content maxWidth="500px">
-                {titulo &&
+                {title &&
                     <Dialog.Title  >
-                        <span dangerouslySetInnerHTML={{ __html: titulo }} />
+                        <span dangerouslySetInnerHTML={{ __html: title }} />
                     </Dialog.Title>}
-                {descripcion &&
+                {description &&
                     <Dialog.Description  >
-                        <span dangerouslySetInnerHTML={{ __html: descripcion }} />
+                        <span dangerouslySetInnerHTML={{ __html: description }} />
                     </Dialog.Description>}
                 {children}
-                {pieDialogo({
-                    cerrarDialogo: () => dispatch(hideDialogDinamico(id)),
-                    textoAccion: t('acciones.cancelar'),
+                {footDialogue({
+                    closeDialogue: () => dispatch(hideDialogDinamico(id)),
+                    textAction: t('acciones.cancelar'),
                     cancel: cancel,
                     buttons: buttons
                 })}
@@ -122,24 +122,24 @@ const DialogForm = ({ id, titulo, descripcion, cancel = true, children, buttons 
 };
 
 /**
- * Dialogo para alertas
+ * Dialogo para alerts
  * 
  * @param id Identificador del dialogo
- * @param titulo Titulo del dialogo
- * @param descripcion Descripción del dialogo
+ * @param title Titulo del dialogo
+ * @param description Descripción del dialogo
  * @param cancel Indica si se muestra el botón de cancelar
- * @param alerta Tipo de alerta
+ * @param alert Tipo de alert
  * @param children Contenido del dialogo
  * @param buttons Botones adicionales o unicos
  *
  */
-const DialogAlertas = ({ id, titulo, descripcion, cancel = true, alerta, children, buttons }:
+const DialogAlerts = ({ id, title, description, cancel = true, alert, children, buttons }:
     {
         id: string,
-        titulo: string,
-        descripcion: string,
+        title: string,
+        description: string,
         cancel?: boolean,
-        alerta: Alertas,
+        alert: Alerts,
         children?: ReactNode,
         buttons?: ReactNode
     }) => {
@@ -154,21 +154,21 @@ const DialogAlertas = ({ id, titulo, descripcion, cancel = true, alerta, childre
     return (
         <Dialog.Root open={open}>
             <Dialog.Content >
-                {titulo &&
+                {title &&
                     <Dialog.Title  >
-                        <Flex gap="2" style={{ color: alertaColor({ alerta }) }}>
-                            {alertaIconoSize({ alerta: alerta, size: "24" })}
-                            <span dangerouslySetInnerHTML={{ __html: titulo }} />
+                        <Flex gap="2" style={{ color: alertColor({ alert }) }}>
+                            {alertIconSize({ alert: alert, size: "24" })}
+                            <span dangerouslySetInnerHTML={{ __html: title }} />
                         </Flex>
                     </Dialog.Title>}
-                {descripcion &&
+                {description &&
                     <Dialog.Description  >
-                        <span dangerouslySetInnerHTML={{ __html: descripcion }} />
+                        <span dangerouslySetInnerHTML={{ __html: description }} />
                     </Dialog.Description>}
                 {children}
-                {pieDialogo({
-                    cerrarDialogo: () => dispatch(hideDialogDinamico(id)),
-                    textoAccion: t('acciones.cancelar'),
+                {footDialogue({
+                    closeDialogue: () => dispatch(hideDialogDinamico(id)),
+                    textAction: t('acciones.cancelar'),
                     cancel: cancel,
                     buttons: buttons
                 })}
@@ -177,4 +177,4 @@ const DialogAlertas = ({ id, titulo, descripcion, cancel = true, alerta, childre
     );
 };
 
-export { DialogForm, DialogAlertas };
+export { DialogForm, DialogAlerts };
