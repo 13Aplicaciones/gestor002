@@ -4,7 +4,7 @@ import { blackA } from "@radix-ui/colors";
 import { CaretDownIcon, CaretSortIcon, CaretUpIcon } from '@radix-ui/react-icons';
 import { DropdownMenu, Flex, IconButton, Link, Skeleton, Table, Text } from '@radix-ui/themes';
 import { useTranslation } from 'react-i18next';
-import { BannerInformation } from '../callout/Informar';
+import { BannerInformation } from '../callout/Information';
 
 /**
  * Componente de tabla paginada.

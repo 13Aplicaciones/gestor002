@@ -4,7 +4,7 @@ import { Badge, Flex } from "@radix-ui/themes";
 import { EyeOpenIcon, LockClosedIcon, Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import useCalculatePresentation from "../input/Calculos";
+import useCalculatePresentation from "../input/Calculations";
 
 /**
  * Funciones de presentation de pie en los formualrios y estos son resize.

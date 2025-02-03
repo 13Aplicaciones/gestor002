@@ -2,7 +2,7 @@ import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { EstadoEdicion } from "../ConstantesPresentacion";
 import { useState } from "react";
-import ButtonCreateRecordFloating from "../componentes/boton/Boton";
+import ButtonCreateRecordFloating from "../componentes/Button/Button";
 import ErrorEdit from "./ErroresEdit";
 import Tabla from "./ErroresTabla";
 import VistaPrevia, { IRowDataError } from "./ErroresVistaPrevia";

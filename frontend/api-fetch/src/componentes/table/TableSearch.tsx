@@ -6,7 +6,7 @@ import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { InputSearchDynamic, InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "../../ConstantesAPI";
 import { requestToken } from "../../api/Token";
-import { TableConfigurable, TableSkeleton } from "./Tabla";
+import { TableConfigurable, TableSkeleton } from "./Table";
 import { toast } from "../toast/Toast";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

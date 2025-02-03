@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex } from "@radix-ui/themes";
 import { GearIcon, LineHeightIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { TableConfigurable } from "../componentes/tabla/Tabla";
+import { TableConfigurable } from "../componentes/table/Table";
 
 /**
  * Funcion para crear una tabla.

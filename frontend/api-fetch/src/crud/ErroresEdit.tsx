@@ -2,11 +2,11 @@
 import { alertColor } from "../componentes/IconosColoresAlerts";
 import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantesPresentacion";
 import { AreaField, InputField } from "../componentes/input/Input";
-import { BannerInformation, InformationPanelRegistration } from "../componentes/callout/Informar";
+import { BannerInformation, InformationPanelRegistration } from "../componentes/callout/Information";
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogAlerts } from "../componentes/dialog/Dialgo";
+import { DialogAlerts } from "../componentes/dialog/Dialog";
 import { fetchData, IFetchData } from "../api/Api";
-import { FooterForm, FormState } from "../componentes/form/PieBotones";
+import { FooterForm, FormState } from "../componentes/form/Form";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 import { IRowDataError } from "./ErroresVistaPrevia";
 import { MethodREST, TypeBody } from "../ConstantesAPI";

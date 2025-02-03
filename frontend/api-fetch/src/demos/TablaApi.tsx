@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CreateSearchField } from "../componentes/tabla/TablaBusqueda";
+import { CreateSearchField } from "../componentes/table/TableSearch";
 import { GearIcon, MagnifyingGlassIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import PopoverDemo from "../componentes/popover/Popover";
 

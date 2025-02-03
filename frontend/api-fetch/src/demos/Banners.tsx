@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes"
-import { BannerInformation } from "../componentes/callout/Informar"
+import { BannerInformation } from "../componentes/callout/Information"
 import { Alerts } from "../ConstantesPresentacion"
 
 /**

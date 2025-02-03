@@ -2,11 +2,11 @@
 import { Alerts, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { MessageField } from "./Mensajes";
+import { MessageField } from "./Menssages";
 import { MouseEventHandler, ReactNode, useState } from "react";
 import { Root as TextField, Slot } from "@radix-ui/themes/dist/cjs/components/text-field.js";
 import { TextArea } from "@radix-ui/themes";
-import useCalculatePresentation from "./Calculos";
+import useCalculatePresentation from "./Calculations";
 
 /**
  * Componentes de input del sistema. 
