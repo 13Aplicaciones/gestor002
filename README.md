@@ -1,10 +1,10 @@
 # GESTOR 002
 
-Sistema de manejo de cajas de ahorro
+Sistema de manejo de aplicativos y administración de modulos.
 
 ## Descripción del Proyecto
 
-Gestor 002 es un sistema de manejo de cajas de ahorro que permite a los usuarios gestionar sus ahorros de manera eficiente y segura.
+Gestor 002 es un sistema de manejo de aplicativos y administración de modulos.que permite a los usuarios gestionar aplicativos y modulos de manera eficiente y segura.
 
 ## Arquitectura del Sistema
 
@@ -22,8 +22,8 @@ El sistema está compuesto por las siguientes partes:
 
 ### Esquema de Base de Datos
 
-- **Base de Datos:** PostgreSQL
-- **Descripción:** El esquema de la base de datos incluye tablas para usuarios, transacciones, y registros de ahorro.
+- **Base de Datos:** MySQL
+- **Descripción:** El esquema de la base de datos incluye tablas para usuarios, transacciones, y registros de relativos a cada modulo.
 
 ## Configuraciones
 
