@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
  *
  * @author omargo33
  * @since 2024-12-19
- * @see com.qapaq.gs00101.controller.common.ControladorGenerico
+ * @see com.ControllerGeneric.gs00101.controller.common.ControladorGenerico
  * 
  */
 @ControllerAdvice
-public class ControladorGenerico extends com.aplicaciones13.base.controller.ControladorGenerico {
+public class ControladorGenerico extends com.aplicaciones13.base.controller.ControllerGeneric {
 
 }

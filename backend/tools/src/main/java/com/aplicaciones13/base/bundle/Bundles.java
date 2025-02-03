@@ -38,17 +38,17 @@ public class Bundles {
      * To String mas ingreso de parametros.
      *
      * @param key
-     * @param parametros
+     * @param parameters
      * @return
      */
-    public String getString(String key, Object... parametros) {
-        String texto = resourceBundle.getString(key);
-        if (texto == null) {
-            texto = key;
+    public String getString(String key, Object... parameters) {
+        String text = resourceBundle.getString(key);
+        if (text == null) {
+            text = key;
         }
 
-        MessageFormat messageFormat = new MessageFormat(texto);
+        MessageFormat messageFormat = new MessageFormat(text);
         messageFormat.setLocale(locale);
-        return messageFormat.format(parametros, new StringBuffer(), null).toString();
+        return messageFormat.format(parameters, new StringBuffer(), null).toString();
     }
 }

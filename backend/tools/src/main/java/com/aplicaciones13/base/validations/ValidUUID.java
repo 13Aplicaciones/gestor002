@@ -1,4 +1,4 @@
-package com.aplicaciones13.base.validaciones;
+package com.aplicaciones13.base.validations;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

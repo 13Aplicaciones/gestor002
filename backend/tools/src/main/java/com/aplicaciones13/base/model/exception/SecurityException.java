@@ -10,7 +10,7 @@ package com.aplicaciones13.base.model.exception;
  * @see security
  * 
  */
-public class SeguridadException extends RuntimeException {
+public class SecurityException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     
     /**
@@ -18,7 +18,7 @@ public class SeguridadException extends RuntimeException {
      *    
      * @param message
      */
-    public SeguridadException(String message) {
+    public SecurityException(String message) {
         super(message);                
     }    
 }

@@ -1,4 +1,4 @@
-package com.aplicaciones13.base.servicios;
+package com.aplicaciones13.base.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +19,10 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AccessLevel;
+
 /**
  * Clase que permite realizar una solicitud a una URL con JSON de entrada y de
  * salida
@@ -27,41 +31,53 @@ import javax.net.ssl.X509TrustManager;
  * @since 2020-08-17
  * 
  */
-public class SolicitarRESTURL {
+@Getter
+@Setter
+public class RequestRESTURL {
 
     private int timeOut;
-    private int httpEstado = 0;
+    
+    @Setter(AccessLevel.NONE)
+    private int httpStatus = 0;
 
     private String ipProxy;
-    private String puertoProxy;
-    private String pathCertificado;
-    private String claveCertificado;
+    private String portProxy;
+    private String pathCertificate;
+    private String claveCertificate;
 
-    private String jsonConsulta;
-    private String urlConsulta;
-    private String jsonRespuesta;
-    private String errorRespuesta;
+    private String jsonQuery;
+    
+    private String urlQuery;
 
-    private final Date fechaInicio;
-    private Date fechaFin;
+    @Setter(AccessLevel.NONE)
+    private String jsonResponse;
+    
+    @Setter(AccessLevel.NONE)
+    private String errorResponse;
+
+    @Setter(AccessLevel.NONE)
+    private final Date startDate;
+        
+    @Setter(AccessLevel.NONE)
+    private Date endDate;
 
     /**
      * Metodo para crear el objeto.
      *
      */
-    public SolicitarRESTURL() {
+    public RequestRESTURL() {
         super();
         timeOut = 0;
-        httpEstado = 0;
-        jsonConsulta = "";
-        urlConsulta = "";
-        jsonRespuesta = "";
+        httpStatus = 0;
+        jsonQuery = "";
+        urlQuery = "";
+        jsonResponse = "";
         ipProxy = "";
-        puertoProxy = "";
-        pathCertificado = "";
-        claveCertificado = "";
-        fechaInicio = new Date();
-        fechaFin = new Date();
+        portProxy = "";
+        pathCertificate = "";
+        claveCertificate = "";
+        startDate = new Date();
+        endDate = new Date();
     }
 
     /**
@@ -71,41 +87,41 @@ public class SolicitarRESTURL {
      * datos para la conexion. Prepara a la conexion para enviar, recibir datos
      * y tiempos de espera en conexion y de escritura. Abre el puerto output y
      * envia el xml a ser consultado y cierra el puerto. Pregunta el estado de
-     * la respuesta. Si la respuesta es HTTP_OK estado html 200 "respuesta ok
+     * la response. Si la response es HTTP_OK estado html 200 "response ok
      * del servidor consultado" Lee el contendio del imputStream Caso contrario
      * Lee el contenido del imputStream de Error
      *
-     * Consume el contenido del imputStream y pasa a un respuestaSOAP Cierra la
+     * Consume el contenido del imputStream y pasa a un responseSOAP Cierra la
      * conexion al servidor.
      *
      * Si existio un error en el servidor lo notifica Devuelve el valor de la
-     * consulta al web service.
+     * Query al web service.
      *
      * @throws Exception
      *
      */
-    public void ejecutarConsultaWebService() throws Exception {
+    public void executeQueryWebService() throws Exception {
         String responseString = "";
-        String respuesta = "";
+        String response = "";
         InputStream inputStream = null;
 
-        eludirSSL();
-        enviarPorProxy();
-        agregarCertificadoSSL();
+        bypassSSL();
+        sendByProxy();
+        addCertificateSSL();
 
-        HttpURLConnection connection = generarConexion();
+        HttpURLConnection connection = generateConnection();
         connection.setDoOutput(true);
         connection.setDoInput(true);
         connection.setConnectTimeout(getTimeOut());
         connection.setReadTimeout(getTimeOut());
 
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
-        outputStreamWriter.write(jsonConsulta);
+        outputStreamWriter.write(jsonQuery);
         outputStreamWriter.close();
 
-        httpEstado = connection.getResponseCode();
+        httpStatus = connection.getResponseCode();
 
-        if (getHttpEstado() != HttpURLConnection.HTTP_OK) {
+        if (getHttpStatus() != HttpURLConnection.HTTP_OK) {
             inputStream = connection.getErrorStream();
         } else {
             inputStream = connection.getInputStream();
@@ -118,17 +134,17 @@ public class SolicitarRESTURL {
             stringBuilder.append(responseString);
         }
 
-        respuesta = stringBuilder.toString();
+        response = stringBuilder.toString();
         bufferedReader.close();
-        fechaFin = new Date();
-        limpiarProxy();
+        endDate = new Date();
+        cleanProxy();
 
-        if (getHttpEstado() != HttpURLConnection.HTTP_OK) {
-            errorRespuesta = respuesta;
-            throw new Exception(String.valueOf(getHttpEstado()));
+        if (getHttpStatus() != HttpURLConnection.HTTP_OK) {
+            errorResponse = response;
+            throw new Exception(String.valueOf(getHttpStatus()));
         }
 
-        jsonRespuesta = respuesta;
+        jsonResponse = response;
     }
 
     /**
@@ -140,8 +156,8 @@ public class SolicitarRESTURL {
      * @throws MalformedURLException
      * @throws IOException
      */
-    public HttpURLConnection generarConexion() throws IOException {
-        URL url = new URL(this.urlConsulta);
+    public HttpURLConnection generateConnection() throws IOException {
+        URL url = new URL(this.urlQuery);
         return (HttpURLConnection) url.openConnection();
     }
 
@@ -149,26 +165,26 @@ public class SolicitarRESTURL {
      * Metodo para hacer la solicitud por un proxy
      *
      */
-    private void enviarPorProxy() {
+    private void sendByProxy() {
         if (ipProxy != null && !ipProxy.isEmpty()) {
             System.setProperty("http.proxyHost", ipProxy);
             System.setProperty("https.proxyHost", ipProxy);
-            if (puertoProxy != null && !puertoProxy.isEmpty()) {
-                System.setProperty("http.proxyPort", puertoProxy);
-                System.setProperty("https.proxyPort", puertoProxy);
+            if (portProxy != null && !portProxy.isEmpty()) {
+                System.setProperty("http.proxyPort", portProxy);
+                System.setProperty("https.proxyPort", portProxy);
             }
         }
     }
 
     /**
-     * Metodo para agregar certificado SSL.
+     * Metodo para agregar certificate SSL.
      *
      */
-    private void agregarCertificadoSSL() {
-        if (pathCertificado != null && !pathCertificado.isEmpty()) {
-            System.setProperty("javax.net.ssl.trustStoore", pathCertificado);
-            if (claveCertificado != null && !claveCertificado.isEmpty()) {
-                System.setProperty("javax.net.ssl.keyStorePassword", claveCertificado);
+    private void addCertificateSSL() {
+        if (pathCertificate != null && !pathCertificate.isEmpty()) {
+            System.setProperty("javax.net.ssl.trustStoore", pathCertificate);
+            if (claveCertificate != null && !claveCertificate.isEmpty()) {
+                System.setProperty("javax.net.ssl.keyStorePassword", claveCertificate);
             }
         }
     }
@@ -176,7 +192,7 @@ public class SolicitarRESTURL {
     /**
      * Metodo para limpiar el proxy.
      */
-    private void limpiarProxy() {
+    private void cleanProxy() {
         if (ipProxy != null && !ipProxy.isEmpty()) {
             System.clearProperty("http.proxyHost");
             System.clearProperty("https.proxyHost");
@@ -189,7 +205,7 @@ public class SolicitarRESTURL {
      * 
      * @throws Exception
      */
-    private void eludirSSL() throws Exception {
+    private void bypassSSL() throws Exception {
         TrustManager[] trustAllCerts;
         trustAllCerts = new TrustManager[] { new X509TrustManager() {
             @Override
@@ -240,99 +256,4 @@ public class SolicitarRESTURL {
         return (timeOut == 0) ? 15000 : timeOut;
     }
 
-    /**
-     * @param timeOut
-     */
-    public void setTimeOut(int timeOut) {
-        this.timeOut = timeOut;
-    }
-
-    /**
-     * @return
-     */
-    public int getHttpEstado() {
-        return httpEstado;
-    }
-
-    /**
-     * @param urlConsulta
-     */
-    public void setUrlConsulta(String urlConsulta) {
-        this.urlConsulta = urlConsulta;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getUrlConsulta() {
-        return this.urlConsulta;
-    }
-
-    /**
-     * @return
-     */
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    /**
-     * @return
-     */
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    /**
-     * @return the errorRespuesta
-     */
-    public String getErrorRespuesta() {
-        return errorRespuesta;
-    }
-
-    public void setErrorRespuesta(String errorRespuesta) {
-        this.errorRespuesta = errorRespuesta;
-    }
-
-    /**
-     * @param jsonConsulta the jsonConsulta to set
-     */
-    public void setJsonConsulta(String jsonConsulta) {
-        this.jsonConsulta = jsonConsulta;
-    }
-
-    /**
-     * @return the jsonRespuesta
-     */
-    public String getJsonRespuesta() {
-        return jsonRespuesta;
-    }
-
-    /**
-     * @param ipProxy the ipProxy to set
-     */
-    public void setIpProxy(String ipProxy) {
-        this.ipProxy = ipProxy;
-    }
-
-    /**
-     * @param puertoProxy the puertoProxy to set
-     */
-    public void setPuertoProxy(String puertoProxy) {
-        this.puertoProxy = puertoProxy;
-    }
-
-    /**
-     * @param pathCertificado the pathCertificado to set
-     */
-    public void setPathCertificado(String pathCertificado) {
-        this.pathCertificado = pathCertificado;
-    }
-
-    /**
-     * @param claveCertificado the claveCertificado to set
-     */
-    public void setClaveCertificado(String claveCertificado) {
-        this.claveCertificado = claveCertificado;
-    }
 }

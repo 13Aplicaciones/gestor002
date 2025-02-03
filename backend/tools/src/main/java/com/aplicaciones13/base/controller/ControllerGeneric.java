@@ -22,7 +22,7 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.base.model.exception.ForeignKeyException;
-import com.aplicaciones13.base.tools.Conversiones;
+import com.aplicaciones13.base.tools.Conversions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +35,11 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author omargo33
  * @since 2024-12-19
- * @see com.qapaq.gs00101.controller.common.ControladorGenerico
+ * @see com.ControllerGeneric.gs00101.controller.common.ControladorGenerico
  * 
  */
 @Slf4j
-public class ControladorGenerico {
+public class ControllerGeneric {
 
     @Value("${spring.application.name}")
     private String appName;
@@ -58,7 +58,7 @@ public class ControladorGenerico {
     @ExceptionHandler(ResourceHttpStatusException.class)
     public ResponseEntity<Map<String, String>> handleResourceNotFoundException(ResourceHttpStatusException ex,
             WebRequest request) {
-        errors.put("timestamp", Conversiones.dateToStringFormat(new Date(), Conversiones.ISO_8601_LARGA));
+        errors.put("timestamp", Conversions.dateToStringFormat(new Date(), Conversions.ISO_8601_LARGA));
         errors.put("details", request.getDescription(false));
         errors.put("message", ex.getMessage());
 
@@ -91,7 +91,7 @@ public class ControladorGenerico {
         } catch (Exception e) {
             log.warn("No se localiza el  URI: {}", e);
         }
-        errors.put("timestamp", Conversiones.dateToStringFormat(new Date(), Conversiones.ISO_8601_LARGA));
+        errors.put("timestamp", Conversions.dateToStringFormat(new Date(), Conversions.ISO_8601_LARGA));
 
         if (ex instanceof MethodArgumentNotValidException) {
             return ResponseEntity.badRequest().body(
@@ -257,29 +257,5 @@ public class ControladorGenerico {
         log.warn("La integridad esta comprometida en: {} y {}", message, messageRoot);
         errors.put(getControllerMapping(), message);
         return errors;
-    }
-
-    //TODO completar para validar el programa del usuario
-    /**
-     * Metodo para crear el nombre de aplicacion con path correcto.
-     * 
-     * @param usuarioPrograma
-     * @return
-     * 
-     */
-    public String getUsuarioPrograma(String usuarioPrograma) {
-        if (usuarioPrograma == null || usuarioPrograma.isEmpty()) {
-            usuarioPrograma = "noCliente@" + appName;
-            return usuarioPrograma;
-        }
-
-        int separador = usuarioPrograma.indexOf("@");
-        if (separador > 0) {
-            usuarioPrograma = usuarioPrograma.substring(0, separador) + "@" + appName;
-        } else {
-            usuarioPrograma = usuarioPrograma + "@" + appName;
-        }
-
-        return usuarioPrograma;
-    }
+    }    
 }

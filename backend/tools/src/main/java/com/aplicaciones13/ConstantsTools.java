@@ -7,7 +7,7 @@ package com.aplicaciones13;
  * @since 2020-10-28
  * 
  */
-public class ConstantesTools {
+public class ConstantsTools {
     public static final String TOKEN_SECRET="qapaq.io";
     public static final String ACCESS_TOKEN="access-token";
     public static final String REFRESH_TOKEN="refresh-token";
@@ -26,7 +26,7 @@ public class ConstantesTools {
     /**
      * Constructor de la clase.
      */
-    protected ConstantesTools() { 
+    protected ConstantsTools() { 
     }    
 
     /**

@@ -13,7 +13,7 @@ import java.util.Date;
  * 
  * @see https://es.wikipedia.org/wiki/ISO_8601
  */
-public class Conversiones {
+public class Conversions {
     public static String ISO_8601_LARGA = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static String ISO_8601_CORTA = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     public static String ISO_8601_TIME = "HH:mm:ss";

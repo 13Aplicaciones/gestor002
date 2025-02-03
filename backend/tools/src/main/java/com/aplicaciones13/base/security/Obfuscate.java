@@ -7,13 +7,13 @@ package com.aplicaciones13.base.security;
  * @since 2022-09-20
  * 
  */
-public class Ofuscar {
-    private static final String OFUSCADO = "********";
+public class Obfuscate {
+    private static final String OBFUSCED = "********";
 
     /**
      * Constructor de la clase.
      */
-    private Ofuscar() {
+    private Obfuscate() {
         super();
     }
 
@@ -23,14 +23,14 @@ public class Ofuscar {
      * @param item
      * @return
      */
-    public static String ofuscar(String item) {
+    public static String obfuscate(String item) {
         if (item == null || item.isEmpty()) {
             return "";
         }
         if (item.length() < 4) {
-            return OFUSCADO;
+            return OBFUSCED;
         }
-        return item.substring(0, 4) + OFUSCADO;
+        return item.substring(0, 4) + OBFUSCED;
     }
 
     /**
@@ -39,11 +39,11 @@ public class Ofuscar {
      * @param item
      * @return
      */
-    public static String ofuscarTarjetaCredito(String item) {
+    public static String obfuscateCreditCard(String item) {
         if (item == null || item.length() < 12) {
             return item;
         }
-        return item.substring(0, 6) + OFUSCADO + item.substring(item.length() - 4);
+        return item.substring(0, 6) + OBFUSCED + item.substring(item.length() - 4);
     }
 
     /**
@@ -52,20 +52,20 @@ public class Ofuscar {
      * @param item
      * @return
      */
-    public static String ofuscarCorreoElectronico(String item) {
+    public static String obfuscateEmail(String item) {
         if (item == null || item.length() < 6) {
             return item;
         }
-        String[] partes = item.split("@");
-        if (partes.length != 2) {
+        String[] parts = item.split("@");
+        if (parts.length != 2) {
             return item;
         }
-        String parteNombre = partes[0];
-        String parteDominio = partes[1];
-        if (parteNombre.length() < 3) {
+        String partName = parts[0];
+        String partDomain = parts[1];
+        if (partName.length() < 3) {
             return item;
         }
-        return parteNombre.substring(0, 3) + OFUSCADO + parteDominio;
+        return partName.substring(0, 3) + OBFUSCED + partDomain;
     }
 
     /**
@@ -74,19 +74,19 @@ public class Ofuscar {
      * @param item
      * @return
      */
-    public static String ofuscarNumeroTelefono(String item) {
+    public static String obfuscateNumberPhone(String item) {
         if (item == null || item.length() < 8) {
             return item;
         }
-        String[] partes = item.split("-");
-        if (partes.length != 2) {
+        String[] parts = item.split("-");
+        if (parts.length != 2) {
             return item;
         }
-        String parte1 = partes[0];
-        String parte2 = partes[1];
-        if (parte1.length() < 3) {
+        String part1 = parts[0];
+        String part2 = parts[1];
+        if (part1.length() < 3) {
             return item;
         }
-        return parte1.substring(0, 3) + OFUSCADO + parte2;
+        return part1.substring(0, 3) + OBFUSCED + part2;
     }
 }

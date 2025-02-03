@@ -1,7 +1,7 @@
 package com.aplicaciones13.gestor.controller;
 
 import com.aplicaciones13.base.controller.ControllerTools;
-import com.aplicaciones13.base.validaciones.ValidUUID;
+import com.aplicaciones13.base.validations.ValidUUID;
 import com.aplicaciones13.gestor.model.Informacion;
 import com.aplicaciones13.gestor.payload.request.InformacionRequest;
 import com.aplicaciones13.gestor.payload.response.InformacionResponse;

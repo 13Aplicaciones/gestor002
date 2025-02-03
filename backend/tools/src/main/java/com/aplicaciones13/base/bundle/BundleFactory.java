@@ -21,7 +21,7 @@ public class BundleFactory{
      * @param bundlePath
      * @return
      */
-    public static Bundles crearBundle(String bundlePath) {
+    public static Bundles createBundle(String bundlePath) {
         Bundles bundles = new Bundles();
         bundles.setBundle(bundlePath);
         return bundles;

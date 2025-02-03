@@ -2,7 +2,7 @@ package com.aplicaciones13.gestor.controller;
 
 import com.aplicaciones13.base.controller.ControllerTools;
 import com.aplicaciones13.base.tools.Conversiones;
-import com.aplicaciones13.base.validaciones.ValidUUID;
+import com.aplicaciones13.base.validations.ValidUUID;
 import com.aplicaciones13.gestor.model.Usuario;
 import com.aplicaciones13.gestor.payload.request.UsuarioRequest;
 import com.aplicaciones13.gestor.payload.response.UsuarioResponse;
