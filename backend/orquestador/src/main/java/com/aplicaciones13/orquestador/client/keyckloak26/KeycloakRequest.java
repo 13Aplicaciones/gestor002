@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.client.keyckloak26;
+package com.aplicaciones13.orquestador.client.keyckloak26;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 # Orquestador-WS
 
-El producto ORQUESTADOR-MS backend que le voy a dedicar servicios relacionados con el manejo de sesiones, information compartida para frontend.
+El producto ORQUESTADOR-MS backend de servicios relacionados con el manejo de sesiones, information compartida para frontend y otra información de configuración del sistema que facilita la interacción con los usuarios mediante el frontend.
 
 ## Características/features
 
