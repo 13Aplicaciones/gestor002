@@ -119,6 +119,19 @@ services:
       - mysql
     networks:
       - gestor-network
+    
+  ## Servicio de mensajeria local para pruebas.
+  manager:
+    image: manager:0.0.1
+    container_name: manager_portal
+    ## configuration recursos
+    mem_limit: 256m
+    mem_reservation: 64M
+    cpus: 0.5    
+    ## restart: always
+    build: manager_build
+    ports:
+      - 8100:8100    
 
 networks:
   gestor-network:

@@ -1,0 +1,14 @@
+##
+## Build para Discovery con openjdk 11
+##
+FROM eclipse-temurin:17-jdk-focal
+
+RUN apt-get update && apt-get install -y maven 
+RUN mkdir -p /usr/src/app
+
+COPY /manager/ /usr/src/app/
+WORKDIR /usr/src/app
+
+RUN mvn clean compile install 
+
+ENTRYPOINT ["mvn", "spring-boot:run"  ]
