@@ -18,11 +18,11 @@ import java.util.List;
 public class UserDefinedCodeController {
 
     @Autowired
-    private UserDefinedCodeService codigoDefinidouserService;
+    private UserDefinedCodeService userDefinedCodeService;
 
     @GetMapping
     public ResponseEntity<List<UserDefinedCode>> getAllCodigosDefinidos() {
-        List<UserDefinedCode> codigos = codigoDefinidouserService.findAll();
+        List<UserDefinedCode> codigos = userDefinedCodeService.findAll();
         return ResponseEntity.ok(codigos);
     }
 
@@ -36,19 +36,19 @@ public class UserDefinedCodeController {
 
     @PostMapping
     public ResponseEntity<UserDefinedCode> createCodigoDefinido(@RequestBody UserDefinedCode UserDefinedCode) {
-        UserDefinedCode createdCodigo = codigoDefinidouserService.create(UserDefinedCode);
+        UserDefinedCode createdCodigo = userDefinedCodeService.create(UserDefinedCode);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCodigo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDefinedCode> updateCodigoDefinido(@PathVariable Long id, @RequestBody UserDefinedCode UserDefinedCode) {
-        UserDefinedCode updatedCodigo = codigoDefinidouserService.update(id, UserDefinedCode);
+        UserDefinedCode updatedCodigo = userDefinedCodeService.update(id, UserDefinedCode);
         return ResponseEntity.ok(updatedCodigo);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCodigoDefinido(@PathVariable Long id) {
-        codigoDefinidouserService.delete(id);
+        userDefinedCodeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

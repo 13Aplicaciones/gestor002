@@ -18,10 +18,10 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     
     /**
      * Metodo para buscar un token por correo.
-     * @param correo
+     * @param email
      * @return
      */
-    Optional<Token> findByCorreo(String correo);
+    Optional<Token> findByEmail(String email);
         
     /**
      * Metodo para buscar un token por socialNick.
@@ -37,5 +37,5 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @param idUser
      * @return
      */
-    List<Token> findByIduser(Long idUser);
+    List<Token> findByIdUser(Long idUser);
 }

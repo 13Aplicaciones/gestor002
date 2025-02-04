@@ -35,7 +35,7 @@ public class TokenService {
      * @param idUser
      */
     public void validateUniqueToken(Long idUser) {
-        if (tokenRepository.findByIduser(idUser).size() > 0) {
+        if (tokenRepository.findByIdUser(idUser).size() > 0) {
             throw new DataIntegrityViolationException("Ya se encuetra registrada una Clave de user");
         }
     }
@@ -43,10 +43,10 @@ public class TokenService {
     /**
      * Valida que el correo sea único.
      * 
-     * @param correo
+     * @param email
      */
-    public void validateUniqueCorreo(String correo) {
-        if (tokenRepository.findByCorreo(correo).isPresent()) {
+    public void validateUniqueEmail(String email) {
+        if (tokenRepository.findByEmail(email).isPresent()) {
             throw new DataIntegrityViolationException("El Correo ya existe");
         }
     }
@@ -59,7 +59,7 @@ public class TokenService {
      */
     @InvokeUser
     public OperationsResponse crearPassword(CreatePasswordRequest crearClaveRequesta) {
-        validateUniqueCorreo(crearClaveRequesta.getEmail());
+        validateUniqueEmail(crearClaveRequesta.getEmail());
 
         User user =  userRepository.findByUuid(crearClaveRequesta.getUuid().toString())
         .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));

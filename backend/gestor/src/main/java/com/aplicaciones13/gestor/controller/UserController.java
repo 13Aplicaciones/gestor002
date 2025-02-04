@@ -110,7 +110,8 @@ public class UserController {
      * 
      * @return
      */
-    @GetMapping("/paginado")
+   /* 
+     @GetMapping("/paginado")
     public Map<String, Object> getAllusersWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -126,5 +127,5 @@ public class UserController {
                 ControllerTools.generateOrders(page, size, sort));
                 
         return ControllerTools.generateFooterPage(pageusers);
-    }
+    }*/
 }

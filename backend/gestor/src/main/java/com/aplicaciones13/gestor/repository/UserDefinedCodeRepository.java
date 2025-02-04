@@ -24,7 +24,7 @@ public interface UserDefinedCodeRepository extends JpaRepository<UserDefinedCode
      * @param group
      * @return
      */
-    List<UserDefinedCode> findByGruop(String group);
+    List<UserDefinedCode> findByGroup(String group);
 
     /**
      * Metodo para buscar por idUserDefinedCode.

@@ -3,6 +3,7 @@ package com.aplicaciones13.gestor.repository;
 import com.aplicaciones13.gestor.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param pageable
      * @return
      */
+    /* 
     @Query("SELECT u FROM user u WHERE (:nick IS NULL OR upper(u.nick) LIKE %:nick%) AND (:name IS NULL OR upper(u.name) LIKE %:name%) AND (:lastName IS NULL OR upper(u.lastName) LIKE %:lastName%) AND (:status IS NULL OR upper(u.status) LIKE %:status%) AND (u.userDate > :userDateInicio AND u.userDate < :userDateFin)")
     Page<User> paginado(
             String nick,
@@ -42,6 +44,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             Date userDateInicio,
             Date userDateFin,
             Pageable pageable);
+
+*/
 
     /**
      * Método para buscar un user por su UUID y status sea diferente de X

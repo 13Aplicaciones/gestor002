@@ -11,7 +11,7 @@ version: '3.7'
 services:
   
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: mysql_portal
     ## restart: always
     ##
@@ -21,6 +21,8 @@ services:
     cpus: 1
     ports:
       - "3306:3306"
+    command: 
+      --bind-address=0.0.0.0
     environment:
       TZ: America/Bogota
       MYSQL_DATABASE: GS_002_01
@@ -30,8 +32,8 @@ services:
     volumes:
       - ./mysql-data:/var/lib/mysql
       - ./baseDatos/:/docker-entrypoint-initdb.d
-    network_mode: 
-      host
+    networks:
+      - gestor-network
 
   nginx:
     image: nginx:latest
@@ -50,10 +52,12 @@ services:
       - ./html:/var/www/html
       - ./cert:/etc/nginx/cert
       - ./config:/etc/nginx
-    network_mode: 
-      host 
+    ##network_mode: 
+      ##host 
     depends_on:
       - mysql
+    networks:
+      - gestor-network
 
   ##
   ## Servidor de keycloak
@@ -70,7 +74,7 @@ services:
     environment:
       - TZ=America/Bogota
       - KC_DB_PASSWORD=${KC_DB_PASSWORD} ## clave de base de datos      
-      - KC_DB_URL=jdbc:mysql://localhost:3306/keycloak?allowPublicKeyRetrieval=true&useSSL=false
+      - KC_DB_URL=jdbc:mysql://mysql:3306/keycloak?allowPublicKeyRetrieval=true&useSSL=false
       - KC_DB_USERNAME=user_keycloak ## usuario de base de datos
       - KC_DB=mysql ## tipo de base de datos
       - KC_HOSTNAME_STRICT_HTTPS=false ## configuracion de host
@@ -83,12 +87,14 @@ services:
       - JTA=false
     ports:
       - 8080:8080
-    network_mode: 
-      host
+    ##network_mode: 
+      ##host
     depends_on:
       - mysql
     command:
       - start    
+    networks:
+      - gestor-network
 
   ##
   ## Servidor de cache Redis
@@ -106,8 +112,14 @@ services:
     environment:
       TZ: America/Bogota
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-    network_mode: 
-      host
+    ##network_mode: 
+      ## host
     depends_on:
       - mysql
+    networks:
+      - gestor-network
+
+networks:
+  gestor-network:
+    driver: bridge
 
