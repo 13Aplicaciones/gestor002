@@ -3,7 +3,6 @@ package com.aplicaciones13.gestor.repository;
 import com.aplicaciones13.gestor.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Page;
@@ -34,8 +33,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param pageable
      * @return
      */
-    /* 
-    @Query("SELECT u FROM user u WHERE (:nick IS NULL OR upper(u.nick) LIKE %:nick%) AND (:name IS NULL OR upper(u.name) LIKE %:name%) AND (:lastName IS NULL OR upper(u.lastName) LIKE %:lastName%) AND (:status IS NULL OR upper(u.status) LIKE %:status%) AND (u.userDate > :userDateInicio AND u.userDate < :userDateFin)")
+     
+    @Query(value = "SELECT * FROM GS_002_01.User u WHERE (?1 IS NULL OR upper(u.nick) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(u.name) LIKE '%' || upper('?2') || '%') AND (?3 IS NULL OR upper(u.lastName) LIKE '%' || upper('?3') || '%') AND (?4 IS NULL OR upper(u.status) LIKE '%' || upper('?4') || '%') AND (u.userDate > ?5 AND u.userDate < ?6)",
+        countQuery = "SELECT count(*) FROM GS_002_01.User u WHERE (?1 IS NULL OR upper(u.nick) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(u.name) LIKE '%' || upper('?2') || '%') AND (?3 IS NULL OR upper(u.lastName) LIKE '%' || upper('?3') || '%') AND (?4 IS NULL OR upper(u.status) LIKE '%' || upper('?4') || '%') AND (u.userDate > ?5 AND u.userDate < ?6)",
+        nativeQuery = true)
     Page<User> paginado(
             String nick,
             String name,
@@ -45,7 +46,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             Date userDateFin,
             Pageable pageable);
 
-*/
+
 
     /**
      * Método para buscar un user por su UUID y status sea diferente de X

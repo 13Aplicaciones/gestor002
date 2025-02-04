@@ -110,7 +110,7 @@ public class UserController {
      * 
      * @return
      */
-   /* 
+   
      @GetMapping("/paginado")
     public Map<String, Object> getAllusersWithPaginado(
             @RequestParam(defaultValue = "0") int page,
@@ -118,14 +118,14 @@ public class UserController {
             @RequestParam(defaultValue = "name,desc") String[] sort,
             @RequestParam(required = false) String nick,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String apellido,
+            @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String status,
-            @RequestParam(required = true) Date fechaInicio,
-            @RequestParam(required = true) Date fechaFin) {
+            @RequestParam(required = true) Date startDate,
+            @RequestParam(required = true) Date endDate) {
 
-        Page<User> pageusers = userService.findAll(nick, name, apellido, status, fechaInicio, fechaFin,
+        Page<User> pageusers = userService.findAll(nick, name, lastName, status, startDate, endDate,
                 ControllerTools.generateOrders(page, size, sort));
                 
         return ControllerTools.generateFooterPage(pageusers);
-    }*/
+    }
 }

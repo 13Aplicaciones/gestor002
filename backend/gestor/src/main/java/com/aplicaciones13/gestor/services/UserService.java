@@ -71,13 +71,12 @@ public class UserService {
      * @param pageable
      * @return
      */
-    /* 
+     
     public Page<User> findAll(String nick, String name, String lastName, String status,
             Date startDate, Date endDate, Pageable pageable) {
         return userRepository.paginado(nick, name, lastName,status,startDate, endDate, pageable);
     }
-        */
-
+    
     /**
      * Obtiene un registro de la entidad user por su uuid.
      * 
