@@ -30,8 +30,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: user
     volumes:
-      - ./mysql-data:/var/lib/mysql
-      - ./baseDatos/:/docker-entrypoint-initdb.d
+      - ./baseDatos/mysql-files:/var/lib/mysql-files
+      - ./baseDatos/mysql-data:/var/lib/mysql
+      - ./baseDatos/init.d:/docker-entrypoint-initdb.d
     networks:
       - gestor-network
 
