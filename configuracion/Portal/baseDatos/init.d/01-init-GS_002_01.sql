@@ -5,7 +5,7 @@
 -- Leer el archivo clave.txt y crear el usuario user_keycloak con la clave leída
 --
 CREATE TEMPORARY TABLE temp_password (password VARCHAR(255));
-LOAD DATA INFILE '/var/lib/mysql-files/.clave.txt' INTO TABLE temp_password LINES TERMINATED BY '\n';
+LOAD DATA INFILE '/var/lib/mysql-files/clave.txt' INTO TABLE temp_password LINES TERMINATED BY '\n';
 
 -- Usar el valor cargado para crear el usuario
 SET @password = (SELECT password FROM temp_password LIMIT 1);

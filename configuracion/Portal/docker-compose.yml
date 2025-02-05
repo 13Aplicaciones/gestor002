@@ -132,7 +132,8 @@ services:
     build: manager_build
     ports:
       - 8100:8100    
-    network_mode: host
+    network_mode: 
+      host
     
 networks:
   gestor-network:

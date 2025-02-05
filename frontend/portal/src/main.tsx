@@ -5,6 +5,8 @@ import App from './App.tsx'
 import global_en from './traducciones/en/global.json';
 import global_es from './traducciones/es/global.json';
 import i18next from 'i18next';
+import { AuthProvider } from 'react-oidc-context';
+import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 
 //Instancia de i18next
 i18next.init({
@@ -21,7 +23,9 @@ i18next.init({
 });
 
 
-/*
+/**
+ * See: {@link https://authts.github.io/oidc-client-ts/classes/UserManager.html}
+ */
 const userManager = new UserManager({
   authority: import.meta.env.VITE_KEYCLOAK_REALM_URL,
   client_id: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
@@ -34,17 +38,23 @@ const userManager = new UserManager({
   automaticSilentRenew: true
 });
 
+
 const onSigninCallback = () => {
   window.history.replaceState({}, document.title, window.location.pathname);
 };
 
 Log.setLogger(console);
-*/
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nextProvider i18n={i18next}>
-      <App />
+
+
+      <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
+        <App />
+      </AuthProvider>
+
+
     </I18nextProvider>
   </StrictMode >,
 )
