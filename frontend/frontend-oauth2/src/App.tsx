@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Playground from './pages/Playground';
-import NotFound from './pages/NotFound';
-import { useEffect, useState } from 'react';
 import { hasAuthParams, useAuth } from 'react-oidc-context';
+import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import Playground from './pages/Playground';
 
 const App = () => {
   const auth = useAuth();

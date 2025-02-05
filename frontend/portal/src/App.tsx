@@ -2,6 +2,10 @@ import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
 
+// Autt
+import { hasAuthParams, useAuth } from 'react-oidc-context';
+import { useEffect, useState } from 'react';
+
 /**
  * Componente principal de la aplicación.
  * 
@@ -18,8 +22,49 @@ const App = () => {
 
   const [t] = useTranslation("global"); 
 
+
+
+
+
+  // seguridades inicio 
+  const auth = useAuth();
+  const [hasTriedSignin, setHasTriedSignin] = useState(false);
+
+  useEffect(() => {
+    if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
+      auth.signinRedirect();
+      setHasTriedSignin(true);
+    }
+  }, [auth, hasTriedSignin]);
+
+  if (auth.isLoading) {
+    return (
+      <div >
+        <span ></span>
+        <span >
+          Loading... (it may take a while for the first time, just have some coffee~ ☕️)
+        </span>
+      </div>
+    );
+  }
+
+  if (auth.error || !auth.isAuthenticated) {
+    return (
+      <div >
+        
+        {auth.error ? (
+          <span>😬 Ops, login error: {auth.error.message} (checkout Keycloak status and configuration)</span>
+        ) : (
+          <span>🤔 You're still not authenticated, and I don't know why... Maybe you can find out! </span>
+        )}
+      </div>
+    );
+  }
+  // seguridades fin
+
   return (
     <>
+      {/* 
       <CapturarError titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
@@ -56,6 +101,13 @@ const App = () => {
           <Footer />
         </Suspense>
       </CapturarError>
+       */}
+"hola"
+
+{JSON.stringify(auth.user).substring(0, 30) + '...'}
+
+{JSON.stringify(auth)}
+
     </>
   );
 };

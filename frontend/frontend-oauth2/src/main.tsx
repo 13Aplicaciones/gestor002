@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './styles/main.css';
-import App from './App';
+import { AuthProvider } from 'react-oidc-context';
+import { BrowserRouter } from 'react-router-dom';
 import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from 'react-oidc-context';
+import App from './App';
 import Layout from './layouts/Layout';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 if (import.meta.env.PROD) {
   console.log('Running in production mode, version: ' + import.meta.env.VITE_DEPLOY_VERSION);
