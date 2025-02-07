@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"bf602e45fb880bae","type":"link","url":"https://dlcastillop.com/blog/libreria-hooks-react","x":-207,"y":220,"width":400,"height":391},
+		{"id":"9954e6e3ac596141","x":-1160,"y":360,"width":400,"height":400,"type":"link","url":"https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9"},
+		{"id":"fba36e81cc92d847","x":-641,"y":314,"width":250,"height":60,"type":"text","text":"reactLibreria"}
+	],
+	"edges":[
+		{"id":"4a735d99ce063e54","fromNode":"9954e6e3ac596141","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"},
+		{"id":"e0855aac6b8eee6e","fromNode":"bf602e45fb880bae","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"}
+	]
+}

@@ -1,3 +1,4 @@
+import "@radix-ui/themes/styles.css";
 import { AuthProvider } from 'react-oidc-context';
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next';
@@ -9,6 +10,7 @@ import global_es from './traducciones/es/global.json';
 import i18next from 'i18next';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Theme } from '@radix-ui/themes';
 
 //Instancia de i18next
 i18next.init({
@@ -57,8 +59,14 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
 
       <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
+        
+        
+      <Theme accentColor="teal" grayColor="auto" scaling="90%" panelBackground="translucent" appearance="light">
         <App />
-      </AuthProvider>
+        {/*<Toaster />*/}
+        se pone el componente de toast
+      </Theme>
+    </AuthProvider>
       
       </QueryClientProvider>
 

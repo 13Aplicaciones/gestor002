@@ -13,4 +13,4 @@ export { CreateSearchField } from './components/table/TableSearch';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { fetchData } from './api/Api';
 export { TableConfigurable } from './components/table/Table';
-
+export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';

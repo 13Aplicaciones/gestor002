@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
 
+import { Alerts, BannerInformation } from "api-fetch";
+
 // Autt
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { useEffect, useState } from 'react';
@@ -20,7 +22,7 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
-  const [t] = useTranslation("global"); 
+  const [t] = useTranslation("global");
 
 
 
@@ -51,11 +53,17 @@ const App = () => {
   if (auth.error || !auth.isAuthenticated) {
     return (
       <div >
-        
+
         {auth.error ? (
-          <span>😬 Ops, login error: {auth.error.message} (checkout Keycloak status and configuration)</span>
+        
+          <BannerInformation 
+            alert={Alerts.warning} 
+            message='Ops, login error: ${auth.error.message} (checkout Keycloak status and configuration' />
+
         ) : (
-          <span>🤔 You're still not authenticated, and I don't know why... Maybe you can find out! </span>
+          <BannerInformation 
+            alert={Alerts.error} 
+            message="Aún no estás autenticado y no sé por qué... ¡Quizás puedas descubrirlo!" />
         )}
       </div>
     );
@@ -64,7 +72,7 @@ const App = () => {
 
   return (
     <>
-      {/* 
+      {/*
       <CapturarError titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
@@ -101,12 +109,11 @@ const App = () => {
           <Footer />
         </Suspense>
       </CapturarError>
-       */}
-"hola"
+      */}
 
-{JSON.stringify(auth.user).substring(0, 30) + '...'}
+      {JSON.stringify(auth.user).substring(0, 30) + '...'}
 
-{JSON.stringify(auth)}
+      {JSON.stringify(auth.user)}
 
     </>
   );

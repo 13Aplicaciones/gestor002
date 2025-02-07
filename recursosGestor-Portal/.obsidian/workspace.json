@@ -39,14 +39,17 @@
             "id": "d21fee894ea3ff6c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Muleto.md",
-                "mode": "source",
-                "source": false
+                "file": "SitiosAyuda.canvas",
+                "viewState": {
+                  "x": -483.5,
+                  "y": 490,
+                  "zoom": -0.38083995951199395
+                }
               },
-              "icon": "lucide-file",
-              "title": "Muleto"
+              "icon": "lucide-layout-dashboard",
+              "title": "SitiosAyuda"
             }
           }
         ],
@@ -194,14 +197,22 @@
   },
   "active": "d21fee894ea3ff6c",
   "lastOpenFiles": [
-    "Seguridades.pdf",
-    "CORS.md",
     "Muleto.md",
-    "Muleto-REST.md",
+    "SitiosAyuda.canvas",
     "mega Check list.md",
+    "documentos/Respuesta-REST.md",
     "Screenshot_20250122_150440.png",
-    "logo01.png",
     "rolCrearUsuarios.png",
-    "logo.png"
+    "documentos/CORS.md",
+    "documentos",
+    "documentos/Seguridades.pdf",
+    "imagenes/13_512x512.png",
+    "imagenes/13_64x64.svg",
+    "imagenes/13_64x64.png",
+    "imagenes/13_512x512.svg",
+    "imagenes/Paleta.png",
+    "imagenes/red13_512x512.svg",
+    "imagenes/13_128x128.png",
+    "imagenes/full13_512x512.png"
   ]
 }
