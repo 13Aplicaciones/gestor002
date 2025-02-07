@@ -1,12 +1,10 @@
+import { Alerts, BannerInformation } from "api-fetch";
+import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
+import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
-
-import { Alerts, BannerInformation } from "api-fetch";
-
-// Autt
-import { hasAuthParams, useAuth } from 'react-oidc-context';
-import { useEffect, useState } from 'react';
+import MainFrame from "./layouts/MainFrame";
 
 /**
  * Componente principal de la aplicación.
@@ -21,14 +19,7 @@ const App = () => {
   const Flujo = lazy(() => import("usuario_remote/Flujo"));
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
-
   const [t] = useTranslation("global");
-
-
-
-
-
-  // seguridades inicio 
   const auth = useAuth();
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
 
@@ -53,13 +44,10 @@ const App = () => {
   if (auth.error || !auth.isAuthenticated) {
     return (
       <div >
-
-        {auth.error ? (
-        
+        {auth.error ? (        
           <BannerInformation 
             alert={Alerts.warning} 
             message='Ops, login error: ${auth.error.message} (checkout Keycloak status and configuration' />
-
         ) : (
           <BannerInformation 
             alert={Alerts.error} 
@@ -68,54 +56,43 @@ const App = () => {
       </div>
     );
   }
-  // seguridades fin
-
   return (
-    <>
+    <MainFrame>      
       {/*
       <CapturarError titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
         </Suspense>
       </CapturarError>
-
       <CapturarError titleName="Button">
         <Suspense fallback={t("messages.loading")}>
           <Button />
         </Suspense>
       </CapturarError>
-
-
       <CapturarError titleName="Usuario">
         <Suspense fallback={t("messages.loading")}>
           <Usuario />
         </Suspense>
       </CapturarError>
-
       <CapturarError titleName="Flujo">
         <Suspense fallback={t("messages.loading")}>
           <Flujo />
         </Suspense>
       </CapturarError>
-
       <CapturarError titleName="Dashboard">
         <Suspense fallback={t("messages.loading")}>
           <Dashboard />
         </Suspense>
       </CapturarError>
-
       <CapturarError titleName="Footer">
         <Suspense fallback={t("messages.loading")}>
           <Footer />
         </Suspense>
-      </CapturarError>
+      </CapturarError>      
       */}
-
       {JSON.stringify(auth.user).substring(0, 30) + '...'}
-
       {JSON.stringify(auth.user)}
-
-    </>
+    </MainFrame>
   );
 };
 

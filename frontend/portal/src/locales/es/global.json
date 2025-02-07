@@ -1,0 +1,24 @@
+{
+    "portal": {
+        "title": "Cash Register"
+    },
+
+    "messages":{
+        "loading": "Cargando..."
+    },
+
+    "frame":{
+        "footer": {
+            "title": "Powered by 13Aplicaciones",
+            "copyright": "Copyright © 2020 - {{year}}",
+            "all_rights_reserved": "Todos los derechos reservados "
+        }
+    },
+
+    "marco": {
+        "pie": {
+            "titulo": "Powered by 13Aplicaciones",
+            "subtitulo": "© 2021 Cash Register"
+        }
+    }
+}

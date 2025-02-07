@@ -3,14 +3,14 @@ import { AuthProvider } from 'react-oidc-context';
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next';
 import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
-import { StrictMode } from 'react'
-import App from './App.tsx'
-import global_en from './traducciones/en/global.json';
-import global_es from './traducciones/es/global.json';
-import i18next from 'i18next';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes';
+import { Toaster } from "api-fetch";
+import App from './App.tsx'
+import global_en from './locales/en/global.json';
+import global_es from './locales/es/global.json';
+import i18next from 'i18next';
 
 //Instancia de i18next
 i18next.init({
@@ -37,7 +37,7 @@ const userManager = new UserManager({
   post_logout_redirect_uri: window.location.origin,
   scope: 'openid profile',
   userStore: new WebStorageStateStore({ store: window.sessionStorage }),
-  // userStore: new WebStorageStateStore({ store: window.localStorage }),
+  //userStore: new WebStorageStateStore({ store: window.localStorage }),
   monitorSession: true, // this allows cross tab login/logout detection
   automaticSilentRenew: true
 });
@@ -54,22 +54,14 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nextProvider i18n={i18next}>
-
-
-    <QueryClientProvider client={queryClient}>
-
-      <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-        
-        
-      <Theme accentColor="teal" grayColor="auto" scaling="90%" panelBackground="translucent" appearance="light">
-        <App />
-        {/*<Toaster />*/}
-        se pone el componente de toast
-      </Theme>
-    </AuthProvider>
-      
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
+          <Theme accentColor="yellow" grayColor="auto" scaling="100%" panelBackground="translucent" appearance="dark">
+            <App />
+            <Toaster />
+          </Theme>
+        </AuthProvider>
       </QueryClientProvider>
-
     </I18nextProvider>
-  </StrictMode >,
+  </StrictMode >
 )

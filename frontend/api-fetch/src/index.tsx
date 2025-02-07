@@ -9,8 +9,9 @@
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
 export { Alerts, BandaPresentacion, Direccion } from './ConstantesPresentacion';
+export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { CreateSearchField } from './components/table/TableSearch';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { fetchData } from './api/Api';
 export { TableConfigurable } from './components/table/Table';
-export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
+export { Toaster } from './components/toast/Toaster.tsx'
