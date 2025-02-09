@@ -37,6 +37,7 @@ const userManager = new UserManager({
   post_logout_redirect_uri: window.location.origin,
   scope: 'openid profile',
   userStore: new WebStorageStateStore({ store: window.sessionStorage }),
+  //TODO: Cambiar a local storage
   //userStore: new WebStorageStateStore({ store: window.localStorage }),
   monitorSession: true, // this allows cross tab login/logout detection
   automaticSilentRenew: true
@@ -56,7 +57,7 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-          <Theme accentColor="yellow" grayColor="auto" scaling="100%" panelBackground="translucent" appearance="dark">
+          <Theme accentColor="ambar" grayColor="sand" scaling="110%" radius="full" panelBackground="solid" appearance="light">
             <App />
             <Toaster />
           </Theme>
@@ -65,3 +66,4 @@ createRoot(document.getElementById('root')!).render(
     </I18nextProvider>
   </StrictMode >
 )
+

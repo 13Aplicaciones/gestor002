@@ -15,10 +15,12 @@
         }
     },
 
-    "marco": {
-        "pie": {
-            "titulo": "Powered by 13Aplicaciones",
-            "subtitulo": "© 2021 Cash Register"
-        }
+    "app":{
+        "error": {
+            "error": "Ha ocurrido el siguiente error: {{error}}, verifica la configuración de tu aplicación",
+            "no_authorization": "No tienes autorización para acceder a esta página"
+        },
+        "loading": "Cargando... (puede que tarde un poco la primera vez)"
+   
     }
 }
