@@ -1,5 +1,5 @@
 import Button from "./Button";
-import useCount from "./store";
+import {useCount} from "./store";
 
 function App() {
   const [count, setCount] = useCount();

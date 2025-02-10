@@ -24,6 +24,7 @@ export default defineConfig({
       exposes: {
         "./Button": "./src/Button",
         "./store": "./src/store",
+        "./storeAtom": "./src/storeAtom",
         "./Footer": "./src/Footer",
       },
       shared: ["react", "react-dom", "jotai"],

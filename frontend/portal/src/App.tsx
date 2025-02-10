@@ -1,12 +1,14 @@
 import { alertColor, Alerts, BannerInformation } from "api-fetch";
-import { Avatar, Button, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, TextArea } from "@radix-ui/themes";
-import { CalendarIcon, ExclamationTriangleIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { Avatar, Text, DropdownMenu, Flex, Heading, IconButton, SegmentedControl,  TextArea } from "@radix-ui/themes";
+import { AvatarIcon, CalendarIcon, ExclamationTriangleIcon, EnvelopeOpenIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon, ExitIcon } from "@radix-ui/react-icons";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
 import { MainFrame, WorkFrame2 } from "./layouts/MainFrame";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
+
+import { useCount } from "./store";
 
 /**
  * Componente principal de la aplicación.
@@ -20,11 +22,14 @@ const App = () => {
   const auth = useAuth();
   const Button = lazy(() => import("demo_remote/Button"));
   const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
-  const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
+  //const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
   const Flujo = lazy(() => import("usuario_remote/Flujo"));
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
+
+  const [count, useCount] = useCount();
+ 
   useEffect(() => {
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
       auth.signinRedirect();
@@ -32,6 +37,7 @@ const App = () => {
     }
   }, [auth, hasTriedSignin]);
 
+ 
   if (auth.isLoading) {
     return (
       <MainFrame>
@@ -73,11 +79,23 @@ const App = () => {
   }
   return (
     <WorkFrame2 header={<Header />}>
+
+      <>
+
+      
+      <h1>Contador: {count}</h1>
+
+      {/*
+     
+      
       <CapturarError titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
         </Suspense>
       </CapturarError>
+      
+    */}
+      
       <CapturarError titleName="Button">
         <Suspense fallback={t("messages.loading")}>
           <Button />
@@ -103,12 +121,11 @@ const App = () => {
           <Footer />
         </Suspense>
       </CapturarError>
-      <TextArea rows="15"
+      <TextArea rows={15}
         value={JSON.stringify(auth.user)}
       />
-      <TextArea rows="15"
-        value={JSON.stringify(auth.user)}
-      />
+
+</>
     </WorkFrame2>
   );
 };
@@ -117,9 +134,24 @@ const App = () => {
 const Header = () => {
 
   const auth = useAuth();
+  const [name, setName] = useState<string | "o.velez">();
+  const [abreviatura, setAbreviatura] = useState<string>("Ov");
+  const [avatarUrl, setAvatarUrl] = useState<string>("https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop");
+
+  
+  
+  useEffect(() => {
+    setName(auth.user?.profile?.preferred_username);
+    if (name) {
+      setAbreviatura(name.substring(0, 2));
+      // fetchApi para obtener la imagen del avatar
+      setAvatarUrl(`https://avatars.dicebear.com/api/avataaars/${name}.svg`);
+    }
+  }, [auth.user?.profile?.preferred_username, name]);
+
 
   return (
-    <Flex direction="row" px="4" align="center" justify="between" style={{ height: '6vh', backgroundColor: 'var(--gray-a3)', borderBottom: '1px solid var(--gray-a6)' }}>
+    <Flex direction="row" px="4" align="center" justify="between" style={{ height: '6vh', backgroundColor: 'var(--gray-a2)', borderBottom: '1px solid var(--gray-a6)' }}>
       <Flex direction="row" align="center" gap="2">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
@@ -172,11 +204,37 @@ const Header = () => {
       </SegmentedControl.Root>
 
       <Flex direction="row" align="center" justify="center" gap="2">
-        <Button size="2" variant="solid" onClick={() => auth.signoutRedirect()}>Cerrar Sesión</Button>
-        <Avatar size="2"
-          src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
-          fallback="A"
-        />
+
+        <Text>{name}</Text>
+
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <Avatar size="3"
+              src={avatarUrl}
+              fallback={abreviatura || "Ov"}
+            />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item
+            
+            onClick={() => console.log("mi final token pasado")}
+            >
+              <AvatarIcon height="18" width="18" />
+              Perfil {name}
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              color="red"
+              onClick={() => auth.signoutRedirect()}>
+              <ExitIcon height="18" width="18" />
+              Salir
+            </DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item>
+              <EnvelopeOpenIcon height="18" width="18" />
+              Enviar Comentario
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </Flex>
     </Flex>
   );

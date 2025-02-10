@@ -1,4 +1,4 @@
-import { Flex, Heading, Box, Text, Separator } from '@radix-ui/themes';
+import { Box, Flex, Heading, Separator, Text } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/13_512x512.svg';
@@ -63,7 +63,7 @@ const WorkFrame2 = ({ header, children }: { header?: ReactNode, children: ReactN
     return (
         <Flex direction="column" >
             {header}
-            <Flex direction="column" pl="2" pr="4" pb="3" style={{ minHeight: '85vh' }}>
+            <Flex direction="column" px="9" pt="0" pb="4" gap="3">
                 {children}
             </Flex>
             <Footer />

@@ -12,7 +12,9 @@ import global_en from './locales/en/global.json';
 import global_es from './locales/es/global.json';
 import i18next from 'i18next';
 
-//Instancia de i18next
+/**
+ * Inicialización de i18next.
+ */
 i18next.init({
   interpolation: { escapeValue: false },
   lng: 'es',
@@ -43,7 +45,6 @@ const userManager = new UserManager({
   automaticSilentRenew: true
 });
 
-
 const onSigninCallback = () => {
   window.history.replaceState({}, document.title, window.location.pathname);
 };
@@ -57,7 +58,7 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-          <Theme accentColor="ambar" grayColor="sand" scaling="110%" radius="full" panelBackground="solid" appearance="light">
+          <Theme accentColor="amber" grayColor="auto" scaling="110%" radius="none" panelBackground="solid" appearance="light">
             <App />
             <Toaster />
           </Theme>

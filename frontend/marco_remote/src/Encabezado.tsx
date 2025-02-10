@@ -1,6 +1,6 @@
 import { Box, Flex, Separator, Text } from "@radix-ui/themes"
 import { ReactNode } from "react";
-import { Alerts, Informar } from "api-fetch";
+import { Alerts, BannerInformation } from "api-fetch";
 import { useTranslation } from "react-i18next";
 import BotonMenu from "./componetes/BotonMenu";
 import BotonSession from './componetes/BotonSession';
@@ -19,7 +19,7 @@ const informacionDinamica = () => {
     
     if (message) {
         return (
-            <Informar message={message} alert={Alerts.success} />
+            <BannerInformation message={message} alert={Alerts.success} />
         );
     }
 }
