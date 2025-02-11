@@ -8,7 +8,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
 
-import { useCount } from "./store";
+import  useCount  from "demo_remote/store";
+
+
+
 
 /**
  * Componente principal de la aplicación.
@@ -27,9 +30,8 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
+  const [count, setCount ] = useCount();
 
-  const [count, useCount] = useCount();
- 
   useEffect(() => {
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
       auth.signinRedirect();
@@ -83,7 +85,11 @@ const App = () => {
       <>
 
       
-      <h1>Contador: {count}</h1>
+      <h1>Contador: count {count}</h1>
+
+
+      <button onClick={() => setCount(count + 1)}>Incrementar</button>
+
 
       {/*
      

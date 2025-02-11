@@ -5,10 +5,10 @@ function App() {
   const [count, setCount] = useCount();
 
   return (
-    <div className="App">
+    <div>
       <h1>Remote Application</h1>
       <Button />
-      <div className="card">
+      <div>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>

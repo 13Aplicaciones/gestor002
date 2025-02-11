@@ -1,5 +1,4 @@
-import { atom, useAtom } from "jotai";
+import {useAtom} from "jotai";
+import {countAtom} from "./shared/store";
 
-export const countAtom = atom(0);
-
-export const useCount = () => useAtom(countAtom);
+export const useCount = () => useAtom(countAtom)

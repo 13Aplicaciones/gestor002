@@ -2,7 +2,4 @@ import { atom, useAtom } from "jotai";
 
 const tokenAtom = atom<string | null>(null);
 
-
-const useToken = () => useAtom(tokenAtom);
-
-export { useToken };
+export const useToken = () => useAtom(tokenAtom);
