@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "documentos/ArquitecturaReact.md",
+                "file": "Muleto.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ArquitecturaReact"
+              "title": "Muleto"
             }
           }
         ]
@@ -165,10 +165,10 @@
   },
   "active": "e9888249fe3cfdb4",
   "lastOpenFiles": [
-    "SitiosAyuda.canvas",
-    "documentos/ArquitecturaReact.md",
-    "Muleto.md",
     "mega Check list.md",
+    "documentos/ArquitecturaReact.md",
+    "SitiosAyuda.canvas",
+    "Muleto.md",
     "documentos/Respuesta-REST.md",
     "Screenshot_20250122_150440.png",
     "rolCrearUsuarios.png",

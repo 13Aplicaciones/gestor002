@@ -7,11 +7,7 @@ import { MainFrame, WorkFrame2 } from "./layouts/MainFrame";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
-
-import  useCount  from "demo_remote/store";
-
-
-
+import {globalStore} from  "orchestrator_remote/globalStore";
 
 /**
  * Componente principal de la aplicación.
@@ -30,7 +26,6 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
-  const [count, setCount ] = useCount();
 
   useEffect(() => {
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
@@ -84,13 +79,7 @@ const App = () => {
 
       <>
 
-      
-      <h1>Contador: count {count}</h1>
-
-
-      <button onClick={() => setCount(count + 1)}>Incrementar</button>
-
-
+      <h1>mi data {globalStore.getState().sharedData}</h1>
       {/*
      
       

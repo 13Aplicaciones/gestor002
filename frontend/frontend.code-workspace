@@ -4,7 +4,19 @@
 			"path": "."
 		}
 	],
-	"settings": {
+
+"settings": {
+		"files.exclude": {
+			"api-fetch": false,
+			"dashboard_remote": true,
+			"demo_remote": false,
+			"frontend-oauth2": false,
+			"gestor_remote": true,
+			"marco_remote": true,
+			"orchestrator_remote": false,
+			"portal": false,
+			"usuario_remote": true,
+		},
 		"workbench.colorCustomizations": {
 			"activityBar.activeBackground": "#65c89b",
 			"activityBar.background": "#65c89b",

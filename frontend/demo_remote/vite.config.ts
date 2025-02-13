@@ -23,9 +23,10 @@ export default defineConfig({
       filename: "demoRemoteEntry.js",
       exposes: {
         "./Button": "./src/Button",
-        "./store": "./src/store",
-        // "./storeAtom": "./src/storeAtom",
         "./Footer": "./src/Footer",
+      },
+      remotes: {
+        orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",
       },
       shared: ["react", "react-dom", "jotai"],
     }),

@@ -1,24 +1,33 @@
-import { useCount } from "./store";
-import { useToken } from "./shared/storeAtom";
+import { useEffect, useState } from "react";
+import { globalStore } from  "orchestrator_remote/globalStore";
 
 export const Button = () => {
-  const [state, setState] = useCount();
+  const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
 
-  const [token, setToken] = useToken();
+useEffect(() => {
+    const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {        
+      setSharedData(state.sharedData);
+    });
+    return () => unsubscribe();
+}, []);
+
+
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  globalStore.setState({ sharedData: e.target.value });
+};
+
 
   return (
     <div>
-
-      <h1>Token: {token}</h1>
-
-      <button onClick={() => setState((s) => s + 1)}>
-        Click me kljlaksdf !!!: {state}
-      </button>
-
-      <button onClick={() => setToken("1234")}>
-        Set token {token}
-      </button>
-    </div>
+    <h2>Microfrontend A</h2>
+    <input
+      type="text"
+      value={sharedData}
+      onChange={handleChange}
+      placeholder="Escribe algo..."
+    />
+    <p>Datos compartidos: {sharedData}</p>
+  </div>
   );
 };
 

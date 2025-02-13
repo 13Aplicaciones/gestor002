@@ -1,27 +1,103 @@
-# Muleto de actividades
-## crear proyectos Front
+#  Crear proyectos microfrontend
 
+Crear proyecto
+```bash
+npm create vite@latest {nombre}_remote
+```
+ 
+ Opciones de Vite: react -> TypeScript + SWC
 
-npm create vite@latest **producto** _remote
+```bash
+cd {nombre}_remote
 
-npm install 
-
+npm install @vitejs/plugin-react --save-dev
+npm install @originjs/vite-plugin-federation --save-dev
+npm install
 npm run dev
+```
+## Configuración: 
+### Package
+En el archivo de package.json
 
-## Agregar libreriasal proyecto
+```json
+"scripts": {
+	"dev": "vite --port {port} --strictPort",
+	"build": "tsc -b && vite build",
+	"lint": "eslint .",
+	"preview": "vite preview --port {port} --strictPort",
+	"serve": "npm run build && npm run preview"
+}
+```
+### Vite
+Cambios en vite se deben hacer conociendo la estructura del proyecto y se debe tomar en cuenta que hay elementos de remotes y exposes necesarias para la orquestación de la data
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import federation from "@originjs/vite-plugin-federation";
+
+/**
+* Configuración de Vite para el proyecto remoto.
+*
+* Esta configuración incluye:
+* - Plugin de React para soporte de JSX y otras características de React.
+* - Plugin de federación de módulos para exponer componentes y hooks a otros proyectos.
+*
+* @author @omargo33
+* @date 2025-01-04
+*/
+export default defineConfig({
+	base: '/',
+	plugins: [
+	// Plugin de React para Vite
+	react(),
+	// Plugin de federación de módulos
+	federation({
+		name: "demo_remote",
+		filename: "demoRemoteEntry.js",
+		exposes: {
+			"./Button": "./src/Button",
+			"./Footer": "./src/Footer",
+			... //mas elementos
+		},
+		remotes: {
+			portal: 'http://localhost:5050/assets/orchestadorRemoteEntry.js',
+			... //mas elementos
+		},
+		shared: ["react", "react-dom", ... //mas elementos ],
+		}),
+	],
+
+// Configuración de construcción
+	build: {
+		modulePreload: false,
+		target: "esnext",
+		minify: false,
+		cssCodeSplit: false,
+		},
+	}
+);
+```
+
 ## Adaptar a portal
+## Agregar librerías al proyecto
+## Agregar librería común
+En el archivo package.json en las entradas de dependencias agregar:
+``` json
+"api-fetch": "file:../api-fetch",
+```
+y luego ejecutar los siguientes comandos:
+``` bash
+ rm -rf node_modules package-lock.json
+ 
+ npm install 
+```
 
-## Agregar libreria comun
-
-
+---
+# Spring
 
 Stamento para crear elementos
-
-
 En base a la estructura sql 
-
 <<poner estructura con los comentarios>>
-
 No olvides tomar en cuenta en los campos varchar se usen en las anotaciones de @column -> length y usar los comentarios para documentar el objeto Request
 
 
