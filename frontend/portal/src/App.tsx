@@ -26,6 +26,8 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
+  const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
+
 
   useEffect(() => {
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
@@ -33,6 +35,15 @@ const App = () => {
       setHasTriedSignin(true);
     }
   }, [auth, hasTriedSignin]);
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {        
+      setSharedData(state.sharedData);
+    });
+    return () => unsubscribe();
+}, []);
+
 
  
   if (auth.isLoading) {
@@ -74,12 +85,34 @@ const App = () => {
       </MainFrame>
     );
   }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    globalStore.setState({ sharedData: e.target.value });
+  };
+
   return (
     <WorkFrame2 header={<Header />}>
 
       <>
 
       <h1>mi data {globalStore.getState().sharedData}</h1>
+
+
+      <input
+        type="text"
+        value={sharedData}
+        onChange={handleChange}
+        placeholder="Escribe algo..."
+      />
+      <p>Datos compartidos: {sharedData}</p>
+
+      
+      <CapturarError titleName="Button">
+        <Suspense fallback={t("messages.loading")}>
+          <Button />
+        </Suspense>
+      </CapturarError>
+      
       {/*
      
       
@@ -89,13 +122,8 @@ const App = () => {
         </Suspense>
       </CapturarError>
       
-    */}
       
-      <CapturarError titleName="Button">
-        <Suspense fallback={t("messages.loading")}>
-          <Button />
-        </Suspense>
-      </CapturarError>
+      
       <CapturarError titleName="Usuario">
         <Suspense fallback={t("messages.loading")}>
           <Usuario />
@@ -116,6 +144,8 @@ const App = () => {
           <Footer />
         </Suspense>
       </CapturarError>
+          */}
+
       <TextArea rows={15}
         value={JSON.stringify(auth.user)}
       />

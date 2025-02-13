@@ -5,6 +5,7 @@ export const Button = () => {
   const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
 
 useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {        
       setSharedData(state.sharedData);
     });

@@ -15,6 +15,13 @@ npm install @originjs/vite-plugin-federation --save-dev
 npm install
 npm run dev
 ```
+
+se puede ejecutar luego con los siguientes comandos:
+``` bash
+ rm -rf node_modules package-lock.json
+ npm install 
+```
+
 ## Configuración: 
 ### Package
 En el archivo de package.json
@@ -29,7 +36,8 @@ En el archivo de package.json
 }
 ```
 ### Vite
-Cambios en vite se deben hacer conociendo la estructura del proyecto y se debe tomar en cuenta que hay elementos de remotes y exposes necesarias para la orquestación de la data
+Cambios en vite se deben hacer conociendo la estructura del proyecto y se debe tomar en cuenta que hay elementos de "remotes" y "exposes" necesarias para la orquestación de la data
+
 ```js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -79,17 +87,64 @@ export default defineConfig({
 ```
 
 ## Adaptar a portal
-## Agregar librerías al proyecto
-## Agregar librería común
-En el archivo package.json en las entradas de dependencias agregar:
-``` json
-"api-fetch": "file:../api-fetch",
+Para adaptar al portal o un sub uso en otros componentes front, tomar en cuenta los siguientes pasos:
+
+### Paso1: Crear un Archivo de Declaración de Tipo para el Módulo Federado
+
+TypeScript necesita saber cómo resolver el módulo federado. Para ello, puedes crear un archivo de declaración de tipo (`.d.ts`) que le indique a TypeScript cómo manejar la importación del módulo federado.
+
+``` ts
+// globalStore.d.ts
+declare module 'orchestrator_remote/globalStore' {
+  import { GlobalStore } from './path/to/globalStore'; // Ajusta la ruta según tu estructura
+  export const globalStore: GlobalStore;
+}
 ```
-y luego ejecutar los siguientes comandos:
-``` bash
- rm -rf node_modules package-lock.json
- 
- npm install 
+### Paso 2: Asegurarte de que TypeScript Reconozca el Archivo de Declaración
+1. **Incluir el archivo de declaración en `tsconfig.app.json`**:    
+    - Asegúrate de que el archivo `globalStore.d.ts` esté incluido en la configuración de TypeScript. En tu `tsconfig.json`, verifica que la opción `include` tenga la ruta correcta:
+``` json
+{
+  "include": ["src", "globalStore.d.ts"] // Ajusta según la ubicación del archivo
+}
+```
+
+1. **Verificar la resolución de módulos**: {Opcional}
+    - Asegúrate de que TypeScript esté configurado para resolver módulos correctamente. En tu `tsconfig.json`, verifica las siguientes opciones:
+        
+
+``` json
+{
+  "compilerOptions": {
+    "moduleResolution": "node", // Asegúrate de que esté en "node"
+    "baseUrl": ".", // Define la base para las rutas
+    "paths": {
+      "orchestrator_remote/*": ["path/to/orchestrator_remote/*"] 
+    }
+  }
+}
+```
+### Paso 3: Verificar la Configuración de Vite
+Asegúrate de que la configuración de Vite esté correctamente configurada para exponer y consumir el módulo federado.
+
+Tanto en el vite.config.ts de microfrontend como del portal tengan sus configuraciones que hagan match en sus declaraciones de **exposes** y **remotes**
+
+### Paso 4: Importar Correctamente el Módulo Federado
+
+En el archivo donde estás intentando importar `globalStore`, asegúrate de que la ruta sea correcta. Por ejemplo:
+
+``` json
+import { globalStore } from 'orchestrator_remote/globalStore';
+const App = () => {
+  return (
+    <div>
+      <h1>Portal</h1>
+      <p>Datos compartidos: {globalStore.getState().sharedData}</p>
+    </div>
+  );
+};
+
+export default App;
 ```
 
 ---
