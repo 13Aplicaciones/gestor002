@@ -1,7 +1,7 @@
-import { Alerts } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantsPresentation";
 import { cargarCredencial } from "../redux/Store";
 import { fetchData } from "../api/Api";
-import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../APIConstants";
 import { toast } from "../components/toast/Toast";
 
 /**

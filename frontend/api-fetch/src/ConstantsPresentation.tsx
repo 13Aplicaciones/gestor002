@@ -74,11 +74,11 @@ const enum OrdenarColumna{
  * @returns
  */
 const enum EstadoEdicion{
-    crear = "crear",
-    editar = "editar",
-    ver = "ver",
-    bloquear = "bloquear",
-    buscar = "buscar",
+    create = "crear",
+    edit = "editar",
+    see = "ver",
+    block = "bloquear",
+    find = "buscar",
 }
 
 export {Alerts, BandaPresentacion, Direccion, TextFormat, JustificacionTexto, OrdenarColumna, EstadoEdicion};

@@ -1,10 +1,10 @@
 import { Badge, DataList, Flex, Heading } from "@radix-ui/themes";
 import { fetchData } from "../api/Api";
-import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../APIConstants";
 import { requestToken } from "../api/Token";
 import { useCallback, useEffect, useState } from "react";
 import { BannerInformation } from "../components/callout/Information";
-import { Alerts } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantsPresentation";
 
 /**
  * Interfaz para el objeto de respuesta de la llamada.

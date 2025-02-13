@@ -1,4 +1,4 @@
-import { Alerts } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantsPresentation";
 import { CheckCircledIcon, CrossCircledIcon, ExclamationTriangleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 
 

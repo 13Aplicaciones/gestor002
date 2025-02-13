@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { generateParametersUrl, generateRequestBody } from "./CommonAPI";
-import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../APIConstants";
 import i18next from "i18next";
 
 /**

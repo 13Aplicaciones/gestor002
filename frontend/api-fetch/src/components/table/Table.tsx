@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alerts, TextFormat, OrdenarColumna } from '../../ConstantesPresentacion';
+import { Alerts, TextFormat, OrdenarColumna } from '../../ConstantsPresentation';
 import { blackA } from "@radix-ui/colors";
 import { CaretDownIcon, CaretSortIcon, CaretUpIcon } from '@radix-ui/react-icons';
 import { DropdownMenu, Flex, IconButton, Link, Skeleton, Table, Text } from '@radix-ui/themes';
@@ -141,7 +141,7 @@ const TableConfigurable = ({ presentation, data, isHeader, isLineNumber, isBand 
                                     order: OrdenarColumna.neutro
                                 });
                             }}>
-                            <CaretSortIcon />{t('tabla.sinOrdenar')}</DropdownMenu.Item>
+                            <CaretSortIcon />{t('tabla.unordered')}</DropdownMenu.Item>
                     </DropdownMenu.Content>
                 </DropdownMenu.Root>
         );

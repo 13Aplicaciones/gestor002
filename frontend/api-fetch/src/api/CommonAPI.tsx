@@ -1,4 +1,4 @@
-import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../APIConstants";
 import { convertJsontToUrlParams, removeEmptyFields } from "../tools/ToolsJSON";
 
 /**

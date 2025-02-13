@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { alertColor, alertIcon, alertVariant } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantesPresentacion";
+import { Alerts } from "../../ConstantsPresentation";
 import { Badge, Callout, Container, DataList, Flex, Heading, HoverCard, Link } from "@radix-ui/themes"
 import { useTranslation } from "react-i18next";
 
@@ -65,16 +65,16 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
         <HoverCard.Root>
             <HoverCard.Trigger>
                 <Link size="2">
-                    @{t("infoPanelRegistro.title")}
+                    @{t("infoPanelRegistration.title")}
                 </Link>
             </HoverCard.Trigger>
             <HoverCard.Content >
                 <Flex direction="column" gap="3">
-                    <Heading size="2">{t("infoPanelRegistro.title")}</Heading>
+                    <Heading size="2">{t("infoPanelRegistration.title")}</Heading>
                     <DataList.Root>
                         {row.usuario &&
                             <DataList.Item >
-                                <DataList.Label minWidth={{ md: "80px" }} >{t("infoPanelRegistro.usuario")}</DataList.Label>
+                                <DataList.Label minWidth={{ md: "80px" }} >{t("infoPanelRegistration.usuario")}</DataList.Label>
                                 <DataList.Value>
                                     <Badge color="crimson" variant="soft" radius="full">
                                         {row.usuario}
@@ -84,7 +84,7 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                         }
                         {row.usuarioFechaCreacion &&
                             <DataList.Item >
-                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistro.usuarioFechaCreacion")}</DataList.Label>
+                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistration.usuarioFechaCreacion")}</DataList.Label>
                                 <DataList.Value>
                                     {row.usuarioFechaCreacion}
                                 </DataList.Value>
@@ -92,7 +92,7 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                         }
                         {row.usuarioFecha &&
                             <DataList.Item >
-                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistro.usuarioFecha")}</DataList.Label>
+                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistration.usuarioFecha")}</DataList.Label>
                                 <DataList.Value>
                                     {row.usuarioFecha}
                                 </DataList.Value>
@@ -100,7 +100,7 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                         }
                         {row.usuarioPrograma &&
                             <DataList.Item >
-                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistro.usuarioPrograma")}</DataList.Label>
+                                <DataList.Label minWidth={{ md: "80px" }}>{t("infoPanelRegistration.usuarioPrograma")}</DataList.Label>
                                 <DataList.Value>{row.usuarioPrograma}</DataList.Value>
                             </DataList.Item>
                         }

@@ -1,4 +1,4 @@
-import { Alerts } from '../../ConstantesPresentacion';
+import { Alerts } from '../../ConstantsPresentation';
 import * as React from 'react';
 import type { ToastActionElement, ToastProps } from './Index';
 

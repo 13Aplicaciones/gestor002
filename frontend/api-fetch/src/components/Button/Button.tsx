@@ -24,7 +24,7 @@ const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  t
     if (disabled)
         return (
             <div style={{ position: 'fixed', bottom: '2vh', right: '2vh' }}>
-                <Tooltip content={t("acciones.addDescripcion", { description: toolTip })} side="top" align="center" sideOffset={5}>
+                <Tooltip content={t("actions.addDescription", { description: toolTip })} side="top" align="center" sideOffset={5}>
                     <IconButton disabled onClick={onClick} variant="solid" size="4" radius="full" >
                         <PlusIcon />
                     </IconButton>
@@ -33,7 +33,7 @@ const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  t
         )
     return (
         <div style={{ position: 'fixed', bottom: '2vh', right: '2vh' }}>
-            <Tooltip content={t("acciones.addDescripcion", { description: toolTip })} side="top" align="center" sideOffset={5}>
+            <Tooltip content={t("actions.addDescription", { description: toolTip })} side="top" align="center" sideOffset={5}>
                 <IconButton onClick={onClick} variant="solid" size="4" radius="full" >
                     <PlusIcon />
                 </IconButton>

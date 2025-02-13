@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { alertColor } from "../components/IconosColoresAlerts";
-import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../ConstantsPresentation";
 import { AreaField, InputField } from "../components/input/Input";
 import { BannerInformation, InformationPanelRegistration } from "../components/callout/Information";
 import { Button, Flex } from "@radix-ui/themes";
@@ -9,7 +9,7 @@ import { fetchData, IFetchData } from "../api/Api";
 import { FooterForm, FormState } from "../components/form/Form";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 import { IRowDataError } from "./ErroresVistaPrevia";
-import { MethodREST, TypeBody } from "../ConstantesAPI";
+import { MethodREST, TypeBody } from "../APIConstants";
 import { requestToken } from "../api/Token";
 import { toast } from "../components/toast/Toast";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ import * as yup from "yup";
  */
 const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion, row?: IRowDataError, onAtras?: () => void }) => {
 
-    const [estadoFormulario, setFormStateulario] = useState<EstadoEdicion>(estado || EstadoEdicion.crear);
+    const [stateFormulario, setFormStateulario] = useState<EstadoEdicion>(estado || EstadoEdicion.create);
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
     const [loading, setLoading] = useState(false);
@@ -71,7 +71,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
             await requestToken().then((credencial) => {
                 if (credencial?.access_token) {
                     token = credencial.access_token;
-                    if (estadoFormulario === EstadoEdicion.crear) {
+                    if (stateFormulario === EstadoEdicion.create) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors",
                             methodRest: MethodREST.POST,
@@ -80,13 +80,13 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                             token: token
                         }).then(response => {
                             analizarAccionar(response);
-                            setFormStateulario(EstadoEdicion.editar);
+                            setFormStateulario(EstadoEdicion.edit);
                         }).catch(error => {
                             setMessageForm("Error al crear el registro: " + error);
                             return null;
                         });
                     }
-                    if (estadoFormulario === EstadoEdicion.editar) {
+                    if (stateFormulario === EstadoEdicion.edit) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
                             methodRest: MethodREST.PUT,
@@ -100,7 +100,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                             return null;
                         });
                     }
-                    if (estadoFormulario === EstadoEdicion.bloquear) {
+                    if (stateFormulario === EstadoEdicion.block) {
                         fetchData({
                             url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
                             methodRest: MethodREST.DELETE,
@@ -109,7 +109,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                             token: token
                         }).then(response => {
                             analizarAccionar(response);
-                            setFormStateulario(EstadoEdicion.buscar);
+                            setFormStateulario(EstadoEdicion.find);
                             dispatch(hideDialogDinamico('1'));
                             onAtras();
                         }).catch(error => {
@@ -154,7 +154,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
     }
 
     const showPopUpDelete = () => {
-        setFormStateulario(EstadoEdicion.bloquear);
+        setFormStateulario(EstadoEdicion.block);
         dispatch(showDialogDinamico('1'));
     }
 
@@ -162,7 +162,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
         <>
             <BannerInformation message={messageFormulario} alert={Alerts.error} />
             <Flex direction="row" gap="3" align="center">
-                <FormState statusEdit={estadoFormulario} />
+                <FormState statusEdit={stateFormulario} />
                 <InformationPanelRegistration row={row} />
             </Flex>
             <DialogAlerts
@@ -179,7 +179,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                             onClick={() => { accionar(null); }
                             }>Si, Borrar</Button>
                         <Button size="3" onClick={() => {
-                            setFormStateulario(EstadoEdicion.editar);
+                            setFormStateulario(EstadoEdicion.edit);
                             dispatch(hideDialogDinamico('1'));
                         }}>No, Cancelar</Button>
                     </>
@@ -213,7 +213,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                 <FooterForm directionLabel={Direccion.horizontal} columns={BandaPresentacion.columna_2}>
                     <Button type="submit" disabled={loading} >Guardar</Button>
                     <Button type="button" variant="surface"
-                        disabled={estadoFormulario === EstadoEdicion.crear}
+                        disabled={stateFormulario === EstadoEdicion.create}
                         onClick={() => { showPopUpDelete() }}>Borrar</Button>
                 </FooterForm>
             </form>

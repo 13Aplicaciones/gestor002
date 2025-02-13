@@ -1,7 +1,7 @@
 import { Button } from "@radix-ui/themes";
 import { CreateSearchField } from "../components/table/TableSearch";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { TextFormat, JustificacionTexto, OrdenarColumna } from "../ConstantesPresentacion";
+import { TextFormat, JustificacionTexto, OrdenarColumna } from "../ConstantsPresentation";
 import { IRowDataError } from "./ErroresVistaPrevia";
 
 /**

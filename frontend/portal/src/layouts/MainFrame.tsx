@@ -12,8 +12,8 @@ const Footer = () => {
     const [t] = useTranslation("global");
 
     return (
-        <Flex style={{ background: "var(--white-a3)", borderTop: "1px solid var(--gray-a6)" }} direction="row" justify="between" p="4" align="center">
-            <Flex direction="column">
+        <Flex style={{ background: "var(--white-a3)", borderTop: "1px solid var(--gray-a6)" }} width="100vw" direction="row" justify="between" p="4" align="center">
+            <Flex direction="column" align="start">
                 <Text size="1">
                     {t('frame.footer.copyright', { year: new Date().getFullYear() })}
                 </Text>
@@ -61,9 +61,12 @@ const MainFrame = ({ children }: { children: ReactNode }) => {
  */
 const WorkFrame2 = ({ header, children }: { header?: ReactNode, children: ReactNode }) => {
     return (
-        <Flex direction="column" >
+        <Flex direction="column" style={{ backgroundColor: "red" }}>
             {header}
-            <Flex direction="column" px="9" pt="0" pb="4" gap="3">
+            
+            <Flex direction="column" pl="2" pr="4" pb="3" style={{ minHeight: '85vh' }}>
+
+
                 {children}
             </Flex>
             <Footer />

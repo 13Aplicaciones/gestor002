@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alerts, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion } from "../../ConstantsPresentation";
 import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
 import { fetchData } from "../../api/Api";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { InputSearchDynamic, InputSubmit } from "../input/Input";
-import { MethodREST, TypeBody } from "../../ConstantesAPI";
+import { MethodREST, TypeBody } from "../../APIConstants";
 import { requestToken } from "../../api/Token";
 import { TableConfigurable, TableSkeleton } from "./Table";
 import { toast } from "../toast/Toast";
@@ -56,7 +56,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
     {
       page: yup
         .string()
-        .test('max-page', t('pagina.errorPagina', { maxPage }), value => {
+        .test('max-page', t('page.errorPage', { maxPage }), value => {
           return parseInt(value || '0', 10) <= maxPage && parseInt(value || '0', 10) > 0;
         })
     }
@@ -276,7 +276,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               </IconButton>
               <form onSubmit={handleSubmitPagina(consultPage)}>
                 <InputSubmit
-                  placeholder={t("pagina.paginaPlaceholder")}
+                  placeholder={t("page.pagePlaceholder")}
                   directionLabel={Direccion.vertical}
                   columna={BandaPresentacion.columna_6}
                   register={registerPage("page", { required: true })}
@@ -301,7 +301,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               </IconButton>
             </Flex>)
         }
-        <Text size="1">{t("pagina.informacionPaginas", { pagina: (currentPage + 1), totalPagina: totalPages, totalItems: totalItems })}</Text>
+        <Text size="1">{t("page.informationPages", { pagina: (currentPage + 1), totalPagina: totalPages, totalItems: totalItems })}</Text>
       </>
     );
   }

@@ -1,7 +1,7 @@
 
 import { initReactI18next } from 'react-i18next';
-import global_en from './traducciones/en/global.json';
-import global_es from './traducciones/es/global.json';
+import global_en from './locales/en/global.json';
+import global_es from './locales/es/global.json';
 import i18n from 'i18next';
 
 /**

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alerts, BandaPresentacion, Direccion } from "../../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion } from "../../ConstantsPresentation";
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
 import { MessageField } from "./Menssages";

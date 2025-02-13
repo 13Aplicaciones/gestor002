@@ -1,5 +1,5 @@
 import { alertColor } from "../IconosColoresAlerts";
-import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../../ConstantesPresentacion";
+import { Alerts, BandaPresentacion, Direccion, EstadoEdicion } from "../../ConstantsPresentation";
 import { Badge, Flex } from "@radix-ui/themes";
 import { EyeOpenIcon, LockClosedIcon, Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { ReactNode } from "react";
@@ -49,24 +49,24 @@ const FormState = ({ statusEdit }: { statusEdit: EstadoEdicion }) => {
 
     return (
         <Flex>
-            {(statusEdit === EstadoEdicion.crear) &&
+            {(statusEdit === EstadoEdicion.create) &&
                 <Badge color={alertColor({ alert: Alerts.info })} radius="full" size="1" variant="soft">
-                    <PlusIcon />{t('estadoForm.crear')}
+                    <PlusIcon />{t('stateForm.create')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.editar) &&
+            {(statusEdit === EstadoEdicion.edit) &&
                 <Badge color={alertColor({ alert: Alerts.success })} radius="full" size="1" variant="soft">
-                    <Pencil1Icon />{t('estadoForm.editar')}
+                    <Pencil1Icon />{t('stateForm.edit')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.bloquear) &&
+            {(statusEdit === EstadoEdicion.block) &&
                 <Badge color={alertColor({ alert: Alerts.warning })} radius="full" size="1" variant="soft">
-                    <LockClosedIcon />{t('estadoForm.bloquear')}
+                    <LockClosedIcon />{t('stateForm.block')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.ver) &&
+            {(statusEdit === EstadoEdicion.see) &&
                 <Badge color={alertColor({ alert: Alerts.success })} radius="full" size="1" variant="soft"> 
-                    <EyeOpenIcon />{t('estadoForm.ver')}
+                    <EyeOpenIcon />{t('stateForm.see')}
                 </Badge>
             }
         </Flex>

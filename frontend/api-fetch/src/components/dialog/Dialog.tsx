@@ -1,6 +1,6 @@
 import '../../i18n';
 import { alertColor, alertIconSize } from '../IconosColoresAlerts';
-import { Alerts } from '../../ConstantesPresentacion';
+import { Alerts } from '../../ConstantsPresentation';
 import { Button, Dialog, Flex, Separator } from '@radix-ui/themes';
 import { hideDialogDinamico } from '../../redux/Store';
 import { ReactNode } from 'react';
@@ -112,7 +112,7 @@ const DialogForm = ({ id, title, description, cancel = true, children, buttons }
                 {children}
                 {footDialogue({
                     closeDialogue: () => dispatch(hideDialogDinamico(id)),
-                    textAction: t('acciones.cancelar'),
+                    textAction: t('actions.cancel'),
                     cancel: cancel,
                     buttons: buttons
                 })}
@@ -168,7 +168,7 @@ const DialogAlerts = ({ id, title, description, cancel = true, alert, children, 
                 {children}
                 {footDialogue({
                     closeDialogue: () => dispatch(hideDialogDinamico(id)),
-                    textAction: t('acciones.cancelar'),
+                    textAction: t('actions.cancel'),
                     cancel: cancel,
                     buttons: buttons
                 })}

@@ -9,7 +9,7 @@
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
 export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant } from './components/IconosColoresAlerts';
-export { Alerts, BandaPresentacion, Direccion } from './ConstantesPresentacion';
+export { Alerts, BandaPresentacion, Direccion } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { CreateSearchField } from './components/table/TableSearch';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';

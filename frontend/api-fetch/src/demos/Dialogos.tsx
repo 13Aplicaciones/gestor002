@@ -1,7 +1,7 @@
 import { Button } from "@radix-ui/themes";
 import { useDispatch } from 'react-redux';
 import { DialogAlerts, DialogForm } from "../components/dialog/Dialog";
-import { Alerts } from "../ConstantesPresentacion";
+import { Alerts } from "../ConstantsPresentation";
 import { hideDialogDinamico, showDialogDinamico } from "../redux/Store";
 
 /**

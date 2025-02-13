@@ -1,6 +1,6 @@
 import { toast } from "../components/toast/Toast";
-import { MethodREST, TypeBody } from "../ConstantesAPI";
-import { Alerts } from "../ConstantesPresentacion";
+import { MethodREST, TypeBody } from "../APIConstants";
+import { Alerts } from "../ConstantsPresentation";
 import { fetchData } from "./Api";
 
 /**

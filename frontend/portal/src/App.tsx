@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { alertColor, Alerts, BannerInformation } from "api-fetch";
-import { Avatar, Text, DropdownMenu, Flex, Heading, IconButton, SegmentedControl,  TextArea } from "@radix-ui/themes";
+import { Avatar, Text, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, TextArea } from "@radix-ui/themes";
 import { AvatarIcon, CalendarIcon, ExclamationTriangleIcon, EnvelopeOpenIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon, ExitIcon } from "@radix-ui/react-icons";
+import { globalStore } from "orchestrator_remote/globalStore";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
 import { MainFrame, WorkFrame2 } from "./layouts/MainFrame";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import CapturarError from "./utils/CapturarError";
-import {globalStore} from  "orchestrator_remote/globalStore";
 
 /**
  * Componente principal de la aplicación.
@@ -20,32 +21,31 @@ const App = () => {
   const [t] = useTranslation("global");
   const auth = useAuth();
   const Button = lazy(() => import("demo_remote/Button"));
-  const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
-  //const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
-  const Flujo = lazy(() => import("usuario_remote/Flujo"));
-  const Footer = lazy(() => import("demo_remote/Footer"));
-  const Usuario = lazy(() => import("usuario_remote/Usuario"));
-
+  // const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
+  // const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
+  // const Flujo = lazy(() => import("usuario_remote/Flujo"));
+  // const Footer = lazy(() => import("demo_remote/Footer"));
+  // const Usuario = lazy(() => import("usuario_remote/Usuario"));
   const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
 
-
   useEffect(() => {
+    console.log("App useEffect 001");
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
       auth.signinRedirect();
       setHasTriedSignin(true);
     }
   }, [auth, hasTriedSignin]);
 
+
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {        
+    console.log("App useEffect 002");
+    const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {
       setSharedData(state.sharedData);
     });
     return () => unsubscribe();
-}, []);
+  }, []);
 
 
- 
   if (auth.isLoading) {
     return (
       <MainFrame>
@@ -91,39 +91,30 @@ const App = () => {
   };
 
   return (
+
+
     <WorkFrame2 header={<Header />}>
+        
+        <input
+          type="text"
+          value={sharedData}
+          onChange={handleChange}
+          placeholder="Escribe algo..."
+        />
+        <p>Datos compartidos: {sharedData}</p>
+        <CapturarError titleName="Button">
+          <Suspense fallback={t("messages.loading")}>
+            <Button />
+          </Suspense>
+        </CapturarError>
 
-      <>
-
-      <h1>mi data {globalStore.getState().sharedData}</h1>
-
-
-      <input
-        type="text"
-        value={sharedData}
-        onChange={handleChange}
-        placeholder="Escribe algo..."
-      />
-      <p>Datos compartidos: {sharedData}</p>
-
-      
-      <CapturarError titleName="Button">
-        <Suspense fallback={t("messages.loading")}>
-          <Button />
-        </Suspense>
-      </CapturarError>
-      
-      {/*
-     
-      
+        { /*
       <CapturarError titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
         </Suspense>
       </CapturarError>
-      
-      
-      
+            
       <CapturarError titleName="Usuario">
         <Suspense fallback={t("messages.loading")}>
           <Usuario />
@@ -144,36 +135,30 @@ const App = () => {
           <Footer />
         </Suspense>
       </CapturarError>
-          */}
-
-      <TextArea rows={15}
-        value={JSON.stringify(auth.user)}
-      />
-
-</>
+*/}
+        <TextArea rows={15}
+          value={JSON.stringify(auth.user)}
+        />
+      
     </WorkFrame2>
   );
 };
 
 
 const Header = () => {
-
   const auth = useAuth();
   const [name, setName] = useState<string | "o.velez">();
   const [abreviatura, setAbreviatura] = useState<string>("Ov");
   const [avatarUrl, setAvatarUrl] = useState<string>("https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop");
 
-  
-  
   useEffect(() => {
     setName(auth.user?.profile?.preferred_username);
     if (name) {
       setAbreviatura(name.substring(0, 2));
-      // fetchApi para obtener la imagen del avatar
-      setAvatarUrl(`https://avatars.dicebear.com/api/avataaars/${name}.svg`);
+      // TODO: fetchApi para obtener la imagen del avatar
+      // setAvatarUrl(`https://avatars.dicebear.com/api/avataaars/${name}.svg`);
     }
   }, [auth.user?.profile?.preferred_username, name]);
-
 
   return (
     <Flex direction="row" px="4" align="center" justify="between" style={{ height: '6vh', backgroundColor: 'var(--gray-a2)', borderBottom: '1px solid var(--gray-a6)' }}>
@@ -241,8 +226,8 @@ const Header = () => {
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>
             <DropdownMenu.Item
-            
-            onClick={() => console.log("mi final token pasado")}
+
+              onClick={() => console.log("mi final token pasado")}
             >
               <AvatarIcon height="18" width="18" />
               Perfil {name}

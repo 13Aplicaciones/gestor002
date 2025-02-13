@@ -1,5 +1,5 @@
 import { alertColor, alertIcon } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantesPresentacion";
+import { Alerts } from "../../ConstantsPresentation";
 import { Icon, Root, Text } from "@radix-ui/themes/dist/esm/components/callout.js";
 
 /**

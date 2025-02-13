@@ -1,21 +1,21 @@
 {
-    "acciones": {
-        "cancelar": "Cancelar",
-        "addDescripcion": "Agregar item para {{description}}"      
+    "actions": {
+        "cancel": "Cancelar",
+        "addDescription": "Agregar item para {{description}}"      
     },
 
-    "estadoForm":{
-        "bloquear": "Registro No Editable",
-        "crear": "Crear Registro",
-        "editar": "Editar Registro",
-        "ver": "Solo Lectura"
+    "stateForm":{
+        "block": "Registro No Editable",
+        "create": "Crear Registro",
+        "edit": "Editar Registro",
+        "readOnly": "Solo Lectura"
     },
 
     "tabla": {        
         "noDataSearch": "No hay datos que coincidan con la búsqueda",
         "orderAsc": "Ordenar Ascendente",
         "orderDesc": "Ordenar Descendente",
-        "sinOrdenar": "Sin Ordenar"
+        "unordered": "Sin Ordenar"
     },
 
     "httpStatus": {
@@ -84,13 +84,13 @@
         "511": "Redirección de autenticación de red"
     },
 
-    "pagina": {
-        "informacionPaginas": "Página: {{pagina}} de {{totalPagina}}. Total Registros: {{totalItems}}",
-        "errorPagina": "Página(s) de 1 a {{maxPage}}",
-        "paginaPlaceholder": "Página"
+    "page": {
+        "informationPages": "Página: {{pagina}} de {{totalPagina}}. Total Registros: {{totalItems}}",
+        "errorPage": "Página(s) de 1 a {{maxPage}}",
+        "pagePlaceholder": "Página"
     },
 
-    "infoPanelRegistro":{
+    "infoPanelRegistration":{
         "title": "Información del Registro",
         "usuario": "Usuario",
         "usuarioFechaCreacion": "Creación",

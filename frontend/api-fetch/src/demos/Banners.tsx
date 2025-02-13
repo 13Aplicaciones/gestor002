@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes"
 import { BannerInformation } from "../components/callout/Information"
-import { Alerts } from "../ConstantesPresentacion"
+import { Alerts } from "../ConstantsPresentation"
 
 /**
  * Metodo que muestra los diferentes tipos de banners

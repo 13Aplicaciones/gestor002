@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import { BandaPresentacion, Direccion } from '../../ConstantesPresentacion';
+import { BandaPresentacion, Direccion } from '../../ConstantsPresentation';
 
 /**
  * Funciones de calculos para la presentation dinamica.

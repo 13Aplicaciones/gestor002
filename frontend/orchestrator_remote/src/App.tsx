@@ -1,5 +1,8 @@
-import './App.css'
-
+/**
+ * @module App
+ * 
+ * @returns 
+ */
 function App() {
   return (
     <>
