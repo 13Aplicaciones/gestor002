@@ -1,12 +1,14 @@
 /**
  * Definicion de los tipos de dato que se van a manejar en el user Store
  */
-type State = {
+export type State = {
     sharedUser: string;
     sharedAccessTolken: string;
     sharedRefreshTolken: string;
     sharedExpiresAt: number;
     sharedIdToken: string;
+    sharedEmail: string;
+    sharedName: string;
 };
 
 /**

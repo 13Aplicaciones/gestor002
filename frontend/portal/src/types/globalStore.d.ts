@@ -6,4 +6,6 @@ declare module 'orchestrator_remote/globalStore' {
 declare module 'orchestrator_remote/userStore' {
   import { UserStore } from 'orchestrator_remote/userStore';
   export const userStore: UserStore;
+  export type State = State;
 }
+

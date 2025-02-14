@@ -3,7 +3,7 @@ import { alertColor, Alerts, BannerInformation } from "api-fetch";
 import { Avatar, Card, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, Text, TextArea, } from "@radix-ui/themes";
 import { AvatarIcon, CalendarIcon, ExclamationTriangleIcon, EnvelopeOpenIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon, ExitIcon } from "@radix-ui/react-icons";
 import { globalStore } from "orchestrator_remote/globalStore";
-import { userStore } from "orchestrator_remote/userStore";
+import { userStore, State as StateUser } from "orchestrator_remote/userStore";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
 import { MainFrame, WorkFrame } from "./layouts/MainFrame";
@@ -20,8 +20,16 @@ import CatchErrorLoadElement from "./utils/CatchErrorLoadElement";
 const App = () => {
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
   const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
-
   const [sharedUser, setSharedUser] = useState(userStore.getState());
+  const [sharedState] = useState<StateUser>({
+    sharedUser: "",
+    sharedAccessTolken: "",
+    sharedRefreshTolken: "",
+    sharedExpiresAt: 0,
+    sharedIdToken: "",
+    sharedEmail: "",
+    sharedName: ""
+  });
 
   const [t] = useTranslation("global");
   const auth = useAuth();
@@ -32,42 +40,65 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
+
+
+  /**
+   * Use effect para manejar la autenticación
+   */
   useEffect(() => {
-    console.log("App useEffect 001");
     if (!hasAuthParams() && !auth.isAuthenticated && !auth.activeNavigator && !auth.isLoading && !hasTriedSignin) {
       auth.signinRedirect();
       setHasTriedSignin(true);
     }
   }, [auth, hasTriedSignin]);
 
-
+  /**
+   * Use effect para manejar el estado compartido de datos genericos
+   */
   useEffect(() => {
-    console.log("App useEffect 002");
     const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {
       setSharedData(state.sharedData);
     });
     return () => unsubscribe();
   }, []);
 
+  /**
+   * Use effect para manejar el estado compartido de datos de usuario y tokens
+   * 
+   * Al suscribirse al userStore se pasa los datos vacios
+   * Al iniciar el componente se obtienen los datos del usuario desde el auth
+   * 
+   */
+  useEffect(() => {    
+    
+    console.log("Data shared 001: ", JSON.stringify(auth.user?.profile));
+    console.log("Data shared 002: ", JSON.stringify(sharedUser));
 
-  useEffect(() => {
-    console.log("App useEffect 003");
-    console.log("Revision: ", JSON.stringify(auth.user?.profile));
 
-    const unsubscribe = userStore.subscribe((state: any) => {
+    const unsubscribe = userStore.subscribe((state: StateUser) => {      
+      state.sharedUser = "";
+      state.sharedAccessTolken =  "";
+      state.sharedRefreshTolken ="";
+      state.sharedExpiresAt = 0;
+      state.sharedIdToken = "";
+      state.sharedEmail = "";
+      state.sharedName = "";
       setSharedUser(state);
-      sharedUser.sharedUser = "omargo33";
-      sharedUser.sharedAccessTolken = auth.user?.access_token || "";
-      sharedUser.sharedRefreshTolken = auth.user?.refresh_token || "";
-      sharedUser.sharedExpiresAt = auth.user?.expires_at || 0;
-      sharedUser.sharedIdToken = auth.user?.id_token || "";
-
     });
-    return () => unsubscribe(auth.user?.profile);
+
+    sharedState.sharedUser = auth.user?.profile?.preferred_username || "";
+    sharedState.sharedAccessTolken = auth.user?.access_token || "";
+    sharedState.sharedRefreshTolken = auth.user?.refresh_token || "";
+    sharedState.sharedExpiresAt = auth.user?.expires_at || 0;
+    sharedState.sharedIdToken = auth.user?.id_token || "";
+    sharedState.sharedEmail = auth.user?.profile?.email || "";
+    sharedState.sharedName = auth.user?.profile?.name || "";
+    setSharedUser(sharedState);
+    
+    return () => unsubscribe();
   }, []);
 
-  console.log("Data shared: ", JSON.stringify(auth.user?.profile));
-  console.log("Data shared: ", JSON.stringify(sharedUser));
+  
 
   if (auth.isLoading) {
     return (
@@ -130,7 +161,6 @@ const App = () => {
         </Suspense>
       </CatchErrorLoadElement>
 
-      {/*
       <CatchErrorLoadElement titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
@@ -152,7 +182,7 @@ const App = () => {
           <Dashboard />
         </Suspense>
       </CatchErrorLoadElement>
-     */}
+
       <TextArea rows={15} variant="soft"
         value={JSON.stringify(auth)}
       />
@@ -162,7 +192,6 @@ const App = () => {
           <Footer />
         </Suspense>
       </CatchErrorLoadElement>
-
 
     </WorkFrame>
   );
