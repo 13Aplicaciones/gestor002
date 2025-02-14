@@ -106,6 +106,8 @@ declare module 'orchestrator_remote/globalStore' {
 ``` json
 {
   "include": ["src", "globalStore.d.ts"] // Ajusta según la ubicación del archivo
+* O
+* "include": ["src", "src/types"]
 }
 ```
 
@@ -146,6 +148,22 @@ const App = () => {
 
 export default App;
 ```
+
+## Librerías comunes
+Las librerías básicas son
+```bash
+npm install @vitejs/plugin-react --save-dev
+npm install @originjs/vite-plugin-federation --save-dev
+npm install @radix-ui/themes
+npm install i18next
+npm install react-i18next
+rm -rf node_modules package-lock.json
+npm install
+npm run dev
+```
+
+## Estructura base
+La estructura base [[ArquitecturaReact]]
 
 ---
 # Spring

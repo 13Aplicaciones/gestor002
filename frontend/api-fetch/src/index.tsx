@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+
 /**
  * 
  * Exportar elementos de la libreria
@@ -14,5 +15,6 @@ export { BannerInformation, InformationPanelRegistration } from './components/ca
 export { CreateSearchField } from './components/table/TableSearch';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { fetchData } from './api/Api';
+export { NotFound } from './pages/NotFound.tsx';
 export { TableConfigurable } from './components/table/Table';
-export { Toaster } from './components/toast/Toaster.tsx'
+export { Toaster } from './components/toast/Toaster';

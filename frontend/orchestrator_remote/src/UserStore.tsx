@@ -38,7 +38,9 @@ class UserStore {
             sharedAccessTolken: "",
             sharedRefreshTolken: "",
             sharedExpiresAt: 0,
-            sharedIdToken: ""
+            sharedIdToken: "",
+            sharedEmail: "",
+            sharedName: ""
         };
         this.channel = new BroadcastChannel("user-store");
         this.listeners = new Set();

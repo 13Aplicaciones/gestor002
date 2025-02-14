@@ -11,7 +11,7 @@
 			"dashboard_remote": true,
 			"demo_remote": false,
 			"frontend-oauth2": false,
-			"gestor_remote": true,
+			"gestor_remote": false,
 			"marco_remote": true,
 			"orchestrator_remote": false,
 			"portal": false,
