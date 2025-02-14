@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { alertColor, Alerts, BannerInformation } from "api-fetch";
-import { Avatar, Text, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, TextArea } from "@radix-ui/themes";
+import { Avatar, Card, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, Text, TextArea, } from "@radix-ui/themes";
 import { AvatarIcon, CalendarIcon, ExclamationTriangleIcon, EnvelopeOpenIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon, ExitIcon } from "@radix-ui/react-icons";
 import { globalStore } from "orchestrator_remote/globalStore";
+import { userStore } from "orchestrator_remote/userStore";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
-import { MainFrame, WorkFrame2 } from "./layouts/MainFrame";
+import { MainFrame, WorkFrame } from "./layouts/MainFrame";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
-import CapturarError from "./utils/CapturarError";
+import CatchErrorLoadElement from "./utils/CatchErrorLoadElement";
 
 /**
  * Componente principal de la aplicación.
@@ -18,15 +19,18 @@ import CapturarError from "./utils/CapturarError";
  */
 const App = () => {
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
+  const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
+
+  const [sharedUser, setSharedUser] = useState(userStore.getState());
+
   const [t] = useTranslation("global");
   const auth = useAuth();
   const Button = lazy(() => import("demo_remote/Button"));
-  // const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
-  // const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
-  // const Flujo = lazy(() => import("usuario_remote/Flujo"));
-  // const Footer = lazy(() => import("demo_remote/Footer"));
-  // const Usuario = lazy(() => import("usuario_remote/Usuario"));
-  const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
+  const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
+  const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
+  const Flujo = lazy(() => import("usuario_remote/Flujo"));
+  const Footer = lazy(() => import("demo_remote/Footer"));
+  const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
   useEffect(() => {
     console.log("App useEffect 001");
@@ -46,18 +50,38 @@ const App = () => {
   }, []);
 
 
+  useEffect(() => {
+    console.log("App useEffect 003");
+    console.log("Revision: ", JSON.stringify(auth.user?.profile));
+
+    const unsubscribe = userStore.subscribe((state: any) => {
+      setSharedUser(state);
+      sharedUser.sharedUser = "omargo33";
+      sharedUser.sharedAccessTolken = auth.user?.access_token || "";
+      sharedUser.sharedRefreshTolken = auth.user?.refresh_token || "";
+      sharedUser.sharedExpiresAt = auth.user?.expires_at || 0;
+      sharedUser.sharedIdToken = auth.user?.id_token || "";
+
+    });
+    return () => unsubscribe(auth.user?.profile);
+  }, []);
+
+  console.log("Data shared: ", JSON.stringify(auth.user?.profile));
+  console.log("Data shared: ", JSON.stringify(sharedUser));
+
   if (auth.isLoading) {
     return (
       <MainFrame>
-        <Flex direction="row" align="center" justify="center" style={{ height: '85vh' }}>
-          <Flex direction="column" align="center" gap="3"
-            style={{ background: "var(--gray-a2)", padding: "3rem", borderRadius: "1rem", border: `1px solid ${alertColor({ alert: Alerts.success })}` }}>
-            <UpdateIcon height="128" width="128"
-              color={alertColor({ alert: Alerts.success })} />
-            <BannerInformation
-              alert={Alerts.success}
-              message={(t("app.loading"))} />
-          </Flex>
+        <Flex direction="row" align="center" justify="center" height="85vh">
+          <Card variant="surface" size="5" >
+            <Flex direction="column" align="center" style={{ minWidth: '30vw' }}>
+              <UpdateIcon height="128" width="128"
+                color={alertColor({ alert: Alerts.success })} />
+              <BannerInformation
+                alert={Alerts.success}
+                message={(t("app.loading"))} />
+            </Flex>
+          </Card>
         </Flex>
       </MainFrame>
     );
@@ -66,21 +90,22 @@ const App = () => {
   if (auth.error || !auth.isAuthenticated) {
     return (
       <MainFrame>
-        <Flex direction="row" align="center" justify="center" style={{ height: '85vh' }}>
-          <Flex direction="column" align="center" gap="3"
-            style={{ background: "var(--gray-a2)", padding: "3rem", borderRadius: "1rem", border: `1px solid ${alertColor({ alert: Alerts.warning })}` }}>
-            <ExclamationTriangleIcon height="128" width="128"
-              color={alertColor({ alert: Alerts.warning })} />
-            {auth.error ? (
-              <BannerInformation
-                alert={Alerts.warning}
-                message={(t("app.error.error", { error: auth.error.message }))} />
-            ) : (
-              <BannerInformation
-                alert={Alerts.warning}
-                message={(t("app.error.no_authorization"))} />
-            )}
-          </Flex>
+        <Flex direction="row" align="center" justify="center" height="85vh">
+          <Card variant="surface" size="5" >
+            <Flex direction="column" align="center" style={{ minWidth: '30vw' }}>
+              <ExclamationTriangleIcon height="128" width="128"
+                color={alertColor({ alert: Alerts.warning })} />
+              {auth.error ? (
+                <BannerInformation
+                  alert={Alerts.warning}
+                  message={(t("app.error.error", { error: auth.error.message }))} />
+              ) : (
+                <BannerInformation
+                  alert={Alerts.warning}
+                  message={(t("app.error.no_authorization"))} />
+              )}
+            </Flex>
+          </Card>
         </Flex>
       </MainFrame>
     );
@@ -91,56 +116,55 @@ const App = () => {
   };
 
   return (
+    <WorkFrame header={<Header />}>
+      <input
+        type="text"
+        value={sharedData}
+        onChange={handleChange}
+        placeholder="Escribe algo..."
+      />
+      <p>Datos compartidos: {sharedData}</p>
+      <CatchErrorLoadElement titleName="Button">
+        <Suspense fallback={t("messages.loading")}>
+          <Button />
+        </Suspense>
+      </CatchErrorLoadElement>
 
-
-    <WorkFrame2 header={<Header />}>
-        
-        <input
-          type="text"
-          value={sharedData}
-          onChange={handleChange}
-          placeholder="Escribe algo..."
-        />
-        <p>Datos compartidos: {sharedData}</p>
-        <CapturarError titleName="Button">
-          <Suspense fallback={t("messages.loading")}>
-            <Button />
-          </Suspense>
-        </CapturarError>
-
-        { /*
-      <CapturarError titleName="EncabezadoWrapper">
+      {/*
+      <CatchErrorLoadElement titleName="EncabezadoWrapper">
         <Suspense fallback={t("messages.loading")}>
           <EncabezadoWrapper />
         </Suspense>
-      </CapturarError>
+      </CatchErrorLoadElement>
             
-      <CapturarError titleName="Usuario">
+      <CatchErrorLoadElement titleName="Usuario">
         <Suspense fallback={t("messages.loading")}>
           <Usuario />
         </Suspense>
-      </CapturarError>
-      <CapturarError titleName="Flujo">
+      </CatchErrorLoadElement>
+      <CatchErrorLoadElement titleName="Flujo">
         <Suspense fallback={t("messages.loading")}>
           <Flujo />
         </Suspense>
-      </CapturarError>
-      <CapturarError titleName="Dashboard">
+      </CatchErrorLoadElement>
+      <CatchErrorLoadElement titleName="Dashboard">
         <Suspense fallback={t("messages.loading")}>
           <Dashboard />
         </Suspense>
-      </CapturarError>
-      <CapturarError titleName="Footer">
+      </CatchErrorLoadElement>
+     */}
+      <TextArea rows={15} variant="soft"
+        value={JSON.stringify(auth)}
+      />
+
+      <CatchErrorLoadElement titleName="Footer">
         <Suspense fallback={t("messages.loading")}>
           <Footer />
         </Suspense>
-      </CapturarError>
-*/}
-        <TextArea rows={15}
-          value={JSON.stringify(auth.user)}
-        />
-      
-    </WorkFrame2>
+      </CatchErrorLoadElement>
+
+
+    </WorkFrame>
   );
 };
 

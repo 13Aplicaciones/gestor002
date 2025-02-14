@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Separator, Text } from '@radix-ui/themes';
+import { Flex, Heading, Separator, Text } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/13_512x512.svg';
@@ -12,8 +12,8 @@ const Footer = () => {
     const [t] = useTranslation("global");
 
     return (
-        <Flex style={{ background: "var(--white-a3)", borderTop: "1px solid var(--gray-a6)" }} width="100vw" direction="row" justify="between" p="4" align="center">
-            <Flex direction="column" align="start">
+        <Flex width="100%" direction="row" justify="between" p="4" align="center" style={{ background: "var(--white-a3)", borderTop: "1px solid var(--gray-a6)" }}>
+            <Flex direction="column" align="start" gap="1">
                 <Text size="1">
                     {t('frame.footer.copyright', { year: new Date().getFullYear() })}
                 </Text>
@@ -25,9 +25,7 @@ const Footer = () => {
                     {t('frame.footer.title')}
                 </Heading>
             </Flex>
-            <Box>
-                <img src={logo} alt="Logo" width="85vh" />
-            </Box>
+            <img src={logo} alt="Logo" width="85vh" />
         </Flex>
     );
 }
@@ -39,12 +37,6 @@ const Footer = () => {
  * @returns 
  */
 const MainFrame = ({ children }: { children: ReactNode }) => {
-
-    /**
-     * Footer
-     * 
-     * @returns 
-     */
     return (
         <Flex direction="column" >
             {children}
@@ -59,14 +51,11 @@ const MainFrame = ({ children }: { children: ReactNode }) => {
  * @param children 
  * @returns 
  */
-const WorkFrame2 = ({ header, children }: { header?: ReactNode, children: ReactNode }) => {
+const WorkFrame = ({ header, children }: { header?: ReactNode, children: ReactNode }) => {
     return (
-        <Flex direction="column" style={{ backgroundColor: "red" }}>
+        <Flex direction="column">
             {header}
-            
-            <Flex direction="column" pl="2" pr="4" pb="3" style={{ minHeight: '85vh' }}>
-
-
+            <Flex direction="column" pl="8" pr="2" pt="4" pb="5" gap="2" style={{ minHeight: '85vh', width: '96vw' }}>
                 {children}
             </Flex>
             <Footer />
@@ -74,4 +63,4 @@ const WorkFrame2 = ({ header, children }: { header?: ReactNode, children: ReactN
     );
 }
 
-export { MainFrame, WorkFrame2 };
+export { MainFrame, WorkFrame };

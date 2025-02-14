@@ -22,7 +22,8 @@ export default defineConfig({
 		name: "orchestrator_remote",
 		filename: "orchestratorRemoteEntry.js",
 		exposes: {
-			"./globalStore": "./src/GlobalStore",			
+			"./globalStore": "./src/GlobalStore",
+			"./userStore": "./src/UserStore",			
 		},
 		remotes: {
 			portal: 'http://localhost:5050/assets/orchestratorRemoteEntry.js',
