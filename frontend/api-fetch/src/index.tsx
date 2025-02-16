@@ -23,10 +23,8 @@ export { TableConfigurable } from './components/table/Table';
 
 
 // Exportar elementos de la libreria para Toast
-export { Toaster } from './components/toast/Toaster';
-export { useToast } from './components/toast/Toast';
+export { ToastContextProvider, useToastContext } from './components/toast/MiToastProvider';
 
-export { MiToastProvider } from './components/toast/MiToastProvider';
+// Exportar elementos de la libreria para Store redux
 export { store } from './store/ConfigStore';
-export { showToast } from "./store/ToastSlice";
 export type { RootState, AppDispatch } from "./store/ConfigStore";

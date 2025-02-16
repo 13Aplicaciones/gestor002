@@ -1,7 +1,6 @@
+import { useToastContext } from "../components/toast/MiToastProvider";
 import { Alerts } from "../ConstantsPresentation";
 import { Button, Flex } from "@radix-ui/themes";
-import { showToast } from "../store/ToastSlice";
-import { useDispatch } from "react-redux";
 
 /**
  * Ejemplo de componente que muestra un toast
@@ -14,38 +13,42 @@ import { useDispatch } from "react-redux";
  * @returns 
  */
 const MiToast = () => {
+    
+    const { showToast } = useToastContext();
     const texto = "Texto de prueba<Strong>hola</Strong><br>Texto de prueba<br>Texto de prueba <h1>hola</h1>";
     const title = "<strong>hola</strong> super title <a href='https://www.google.com'>google</a>";
 
-    const dispatch = useDispatch();
+    
     const mostrarError = () => {
-        dispatch(showToast({
-            title: title,
-            description: texto,
-            alert: Alerts.error,
-        }));
+        showToast(
+            title,
+             texto,
+             "ERROR"
+        );
     };
 
     const mostrarInfo = () => {
-        dispatch(showToast({
-            title: "title",
-            description: "Descripción",
-            alert: Alerts.info,
-        }));
+        showToast(
+             "title",
+             "Descripción",
+             Alerts.info,
+        );
     };
 
     const mostrarSuccess = () => {
-        dispatch(showToast({
-            title: "title",
-            alert: Alerts.success,
-        }));
+        showToast(
+            "title",
+            "Descripción 001",
+            Alerts.success,
+        );
     };
 
     const mostrarWarning = () => {
-        dispatch(showToast({
-            description: "Descripción",
-            alert: Alerts.warning,
-        }));
+        showToast(
+            "DATA",
+            "Descripción",
+             Alerts.warning,
+        );
     };
     return (
         <Flex direction="row" align="center" gap="3" p="3">

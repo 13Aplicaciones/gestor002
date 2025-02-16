@@ -1,60 +1,62 @@
 import "./stylesDemo.css";
 import { Button } from "@radix-ui/themes";
-import { hideToast } from "../../store/ToastSlice";
-import { RootState } from "../../store/ConfigStore";
-import { Toast } from "radix-ui";
-import { useDispatch, useSelector } from "react-redux";
+import { Root, ToastProvider, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "@radix-ui/react-toast";
+import { useState, useEffect, createContext, useContext, ReactNode } from "react";
 
-/**
- * 
- * Exportar elementos de la libreria
- * 
- * @since 2025-01-10
- * 
- * @see https://dlcastillop.com/blog/libreria-hooks-react
- */
-const MiToastProvider: React.FC = () => {
-    const dispatch = useDispatch();
-    
-    let title = "title";
-    let description = "Descripción";
-    let alert= "error";
 
-    
-    const open = useSelector((state: RootState) => {
-        const status = state.dynamicToastSlice.value;
-        title = state.dynamicToastSlice.title;
-        description = state.dynamicToastSlice.description;
-        alert= state.dynamicToastSlice.alert;
 
-        if (status) {
-            setTimeout(() => {
-                dispatch(hideToast());
-            }, 5000);
-        }
-
-        return status;
-    });
-
-    return (
-        <Toast.Provider swipeDirection='right'>
-            <Toast.Root className="ToastRoot" open={open} >
-                <Toast.Title >{title}</Toast.Title>
-                <Toast.Description asChild>
-                    {description + '--' + alert}
-                </Toast.Description>
-                <Toast.Action asChild altText="Goto schedule to undo">
-                    <Button onClick={
-                        () => {
-                            dispatch(hideToast());
-                        }}>
-                        close
-                    </Button>
-                </Toast.Action>
-            </Toast.Root>
-            <Toast.Viewport className="ToastViewport" />
-        </Toast.Provider>
-    )
+interface ToastContextType {
+    showToast: (title: string, description: string, alert: string) => void;
 }
 
-export { MiToastProvider };
+const ToastContext = createContext<ToastContextType | undefined>(undefined);
+
+
+export const useToastContext = () => {
+    const context = useContext(ToastContext);
+    if (!context) {
+        throw new Error('useToastContext must be used within a ToastProvider');
+    }
+    return context;
+};
+
+export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const [open, setOpen] = useState(false);
+    const [title, setTitle] = useState('title');
+    const [description, setDescription] = useState('Descripción');
+    const [alert, setAlert] = useState('error');
+
+    useEffect(() => {
+        if (open) {
+            const timer = setTimeout(() => {
+                setOpen(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [open]);
+
+    const showToast = (newTitle: string, newDescription: string, newAlert: string) => {
+        setTitle(newTitle);
+        setDescription(newDescription);
+        setAlert(newAlert);
+        setOpen(true);
+    };
+
+    return (
+        <ToastContext.Provider value={{ showToast }}>
+            <ToastProvider swipeDirection="right">
+                <Root className="ToastRoot" open={open} onOpenChange={setOpen}>
+                    <ToastTitle>{title}</ToastTitle>
+                    <ToastDescription asChild>
+                        <span>{description + '--' + alert}</span>
+                    </ToastDescription>
+                    <ToastAction asChild altText="Goto schedule to undo">
+                        <Button onClick={() => setOpen(false)}>close</Button>
+                    </ToastAction>
+                </Root>
+                <ToastViewport className="ToastViewport" />
+            </ToastProvider>
+            {children}
+        </ToastContext.Provider>
+    );
+};

@@ -7,12 +7,12 @@ import { InputSearchDynamic, InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "../../APIConstants";
 import { requestToken } from "../../services/Token";
 import { TableConfigurable, TableSkeleton } from "./Table";
-import { toast } from "../toast/Toast";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useToastContext } from "../toast/MiToastProvider";
 
 /**
  * Componete para crear un field de busqueda.
@@ -48,6 +48,8 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
   const [t] = useTranslation("global");
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const { showToast } = useToastContext();
+      
 
   /** 
     * Validacion de los fields del formulario.
@@ -113,11 +115,11 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
         })
           .then(response => {
             if (response.error) {
-              toast({
-                title: response.status.toString(),
-                description: response.error,
-                alert: Alerts.warning
-              });
+              showToast(
+                response.status.toString(),
+                 response.error,
+                 Alerts.warning
+              );
               return;
             } else {
               const items = response.response.items;
@@ -127,11 +129,11 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               setTotalItems(response.response.totalItems);
             }
           }).catch(error => {
-            toast({
-              title: "Error",
-              description: error,
-              alert: Alerts.error
-            });
+            showToast(
+              "Error",
+               error,
+               Alerts.error
+            );
           });
       }
     });

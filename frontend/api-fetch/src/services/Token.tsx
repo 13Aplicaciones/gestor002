@@ -1,6 +1,4 @@
-import { toast } from "../components/toast/Toast";
 import { MethodREST, TypeBody } from "../APIConstants";
-import { Alerts } from "../ConstantsPresentation";
 import { fetchData } from "./Api";
 
 /**
@@ -27,6 +25,7 @@ export interface ICredencialk {
 
 //TODO: Implementar el request token 
 export const requestToken = async () => {
+
     /*const credencial: ICredencialk = {
         accessToken: '',
         expiresIn: 0,
@@ -66,14 +65,9 @@ export const requestToken = async () => {
         }
     }
     ).catch(error => {
-        toast({
-            title: "Error",
-            description: error,
-            alert: Alerts.error
-        });
         console.error("Error: " + JSON.stringify(error));
+        throw new Error("Failed to fetch token: " + JSON.stringify(error));
     });
-
 
     return responseToken;
 }

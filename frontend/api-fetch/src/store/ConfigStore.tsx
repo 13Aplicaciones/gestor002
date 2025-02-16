@@ -1,15 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dynamicDialogSlice from "./DialogSlice";
-import dynamicToastSlice from "./ToastSlice";
 
 /**
  * store entrada para almacenar los reducers.
  */
 const store = configureStore({
     reducer: {
-        dynamicDialogSlice: dynamicDialogSlice.reducer,
-        dynamicToastSlice: dynamicToastSlice.reducer
-    }
+        dynamicDialogSlice: dynamicDialogSlice.reducer    }
 });
 
 export { store };

@@ -11,12 +11,12 @@ import { hideDialogDinamico, showDialogDinamico } from "../store/DialogSlice";
 import { IRowDataError } from "./ErroresVistaPrevia";
 import { MethodREST, TypeBody } from "../APIConstants";
 import { requestToken } from "../services/Token";
-import { toast } from "../components/toast/Toast";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useToastContext } from "../components/toast/MiToastProvider";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -28,6 +28,7 @@ import * as yup from "yup";
  */
 const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion, row?: IRowDataError, onAtras?: () => void }) => {
 
+    const { showToast } = useToastContext();
     const [stateFormulario, setFormStateulario] = useState<EstadoEdicion>(estado || EstadoEdicion.create);
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
@@ -127,17 +128,17 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
     const analizarAccionar = (response: IFetchData) => {
         if (response.error) {
             if (response.status === 400) {
-                toast({
-                    title: response.error + ' ' + response.status.toString(),
-                    description: response.responseErrorJSON.message,
-                    alert: Alerts.warning
-                });
+                showToast(
+                    response.error + ' ' + response.status.toString(),
+                    response.responseErrorJSON.message,
+                     Alerts.warning
+                );
             } else {
-                toast({
-                    title: response.status.toString(),
-                    description: response.error,
-                    alert: Alerts.warning
-                });
+                showToast(
+                     response.status.toString(),
+                     response.error,
+                     Alerts.warning
+                );
             }
             return;
         } else {
@@ -145,11 +146,11 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
             if (respuesta.response && respuesta.response.uuid) {
                 setUuid(respuesta.response.uuid);
             }
-            toast({
-                title: respuesta.status.toString(),
-                description: "Accion realizada con exito",
-                alert: Alerts.success
-            });
+            showToast(
+                 respuesta.status.toString(),
+                 "Accion realizada con exito",
+                Alerts.success
+            );
         }
     }
 
