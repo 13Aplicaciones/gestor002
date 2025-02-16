@@ -1,5 +1,5 @@
 import { Alerts } from '../../ConstantsPresentation';
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import type { ToastActionElement, ToastProps } from './Index';
 
 /**
@@ -77,7 +77,7 @@ const addToRemoveQueue = (toastId: string) => {
     toastTimeouts.set(toastId, timeout)
 }
 
-export const reducer = (state: IState, action: Action): IState => {
+const reducer = (state: IState, action: Action): IState => {
     switch (action.type) {
         case 'ADD_TOAST':
             return {
@@ -143,7 +143,7 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, 'id'>
 
-export function toast({ ...props }: Toast) {
+const toast = ({ ...props }: Toast) => {
     const id = genId()
 
     const update = (props: ToasterToast) =>
@@ -172,22 +172,27 @@ export function toast({ ...props }: Toast) {
     }
 }
 
-export function useToast() {
-    const [state, setIState] = React.useState<IState>(memoryIState)
 
-    React.useEffect(() => {
-        listeners.push(setIState)
+function useToast() {
+    const [state, setIState] = useState<IState>(memoryIState);
+
+    useEffect(() => {
+        listeners.push(setIState);
         return () => {
-            const index = listeners.indexOf(setIState)
+            const index = listeners.indexOf(setIState);
             if (index > -1) {
-                listeners.splice(index, 1)
+                listeners.splice(index, 1);
             }
-        }
-    }, [state])
+        };
+    }, []);
 
     return {
         ...state,
         toast,
         dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
-    }
+    };
 }
+
+export { useToast, toast, reducer, }
+
+export type { IState }

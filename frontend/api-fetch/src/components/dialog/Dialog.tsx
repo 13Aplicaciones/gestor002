@@ -2,7 +2,7 @@ import '../../i18n';
 import { alertColor, alertIconSize } from '../IconosColoresAlerts';
 import { Alerts } from '../../ConstantsPresentation';
 import { Button, Dialog, Flex, Separator } from '@radix-ui/themes';
-import { hideDialogDinamico } from '../../redux/Store';
+import { hideDialogDinamico } from '../../store/DialogSlice';
 import { ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';

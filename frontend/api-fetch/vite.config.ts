@@ -11,11 +11,13 @@ export default defineConfig({
       fileName: (format) => `api-fetch.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react-redux': 'ReactRedux',
+          '@reduxjs/toolkit': 'ReduxToolkit',
         },
       },
     },

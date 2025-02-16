@@ -1,7 +1,7 @@
-import { Button, Flex } from "@radix-ui/themes";
 import { Alerts } from "../ConstantsPresentation";
-import { useToast } from "../components/toast/Toast";
-
+import { Button, Flex } from "@radix-ui/themes";
+import { showToast } from "../store/ToastSlice";
+import { useDispatch } from "react-redux";
 
 /**
  * Ejemplo de componente que muestra un toast
@@ -14,39 +14,38 @@ import { useToast } from "../components/toast/Toast";
  * @returns 
  */
 const MiToast = () => {
-
-    const { toast } = useToast();
     const texto = "Texto de prueba<Strong>hola</Strong><br>Texto de prueba<br>Texto de prueba <h1>hola</h1>";
     const title = "<strong>hola</strong> super title <a href='https://www.google.com'>google</a>";
 
+    const dispatch = useDispatch();
     const mostrarError = () => {
-        toast({
+        dispatch(showToast({
             title: title,
             description: texto,
             alert: Alerts.error,
-        });
+        }));
     };
 
     const mostrarInfo = () => {
-        toast({
+        dispatch(showToast({
             title: "title",
             description: "Descripción",
-            alert: Alerts.info
-        });
+            alert: Alerts.info,
+        }));
     };
 
     const mostrarSuccess = () => {
-        toast({
+        dispatch(showToast({
             title: "title",
-            alert: Alerts.success
-        });
+            alert: Alerts.success,
+        }));
     };
 
     const mostrarWarning = () => {
-        toast({
+        dispatch(showToast({
             description: "Descripción",
-            alert: Alerts.warning
-        });
+            alert: Alerts.warning,
+        }));
     };
     return (
         <Flex direction="row" align="center" gap="3" p="3">

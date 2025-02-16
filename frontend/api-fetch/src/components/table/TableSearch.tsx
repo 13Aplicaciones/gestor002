@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Alerts, BandaPresentacion, Direccion } from "../../ConstantsPresentation";
 import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
-import { fetchData } from "../../api/Api";
+import { fetchData } from "../../services/Api";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { InputSearchDynamic, InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "../../APIConstants";
-import { requestToken } from "../../api/Token";
+import { requestToken } from "../../services/Token";
 import { TableConfigurable, TableSkeleton } from "./Table";
 import { toast } from "../toast/Toast";
 import { useEffect, useState } from "react";

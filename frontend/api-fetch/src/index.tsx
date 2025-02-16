@@ -14,7 +14,19 @@ export { Alerts, BandaPresentacion, Direccion } from './ConstantsPresentation.ts
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { CreateSearchField } from './components/table/TableSearch';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
-export { fetchData } from './api/Api';
+
+export { fetchData } from './services/Api.tsx';
 export { NotFound } from './pages/NotFound.tsx';
+
 export { TableConfigurable } from './components/table/Table';
+
+
+
+// Exportar elementos de la libreria para Toast
 export { Toaster } from './components/toast/Toaster';
+export { useToast } from './components/toast/Toast';
+
+export { MiToastProvider } from './components/toast/MiToastProvider';
+export { store } from './store/ConfigStore';
+export { showToast } from "./store/ToastSlice";
+export type { RootState, AppDispatch } from "./store/ConfigStore";

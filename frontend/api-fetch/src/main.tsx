@@ -1,11 +1,11 @@
 import "@radix-ui/themes/styles.css";
 import { createRoot } from 'react-dom/client'
+import { MiToastProvider } from "./components/toast/MiToastProvider.tsx";
 import { Provider } from 'react-redux'
+import { store } from './store/ConfigStore.tsx';
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
-import { Toaster } from './components/toast/Toaster.tsx'
 import App from './App.tsx'
-import store from './redux/Store'
 
 /**
  * Componente principal de la aplicación
@@ -18,10 +18,10 @@ import store from './redux/Store'
  */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={store}>
+    <Provider store={ store }>
       <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="dark">
         <App />
-        <Toaster />
+        <MiToastProvider />
       </Theme>
     </Provider>
   </StrictMode>,

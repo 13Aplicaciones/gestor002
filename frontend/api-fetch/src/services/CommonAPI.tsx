@@ -1,5 +1,5 @@
 import { MethodREST, TypeBody } from "../APIConstants";
-import { convertJsontToUrlParams, removeEmptyFields } from "../tools/ToolsJSON";
+import { convertJsontToUrlParams, removeEmptyFields } from "../utils/ToolsJSON";
 
 /**
  * Funciones comunes para las consultas a API Rest.

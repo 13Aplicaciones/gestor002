@@ -1,8 +1,10 @@
+import { Flex, Heading } from "@radix-ui/themes";
+
 const Module = () => {
     return (
-        <div>
-            <h1>Module</h1>
-        </div>
+        <Flex>
+            <Heading>Module</Heading>
+        </Flex>
     );
 }
 

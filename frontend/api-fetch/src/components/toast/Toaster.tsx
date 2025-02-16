@@ -11,8 +11,8 @@ import { useToast } from "./Toast"
  * 
  * @returns 
  */
-export function Toaster() {
-    const { toasts } = useToast()
+export const Toaster = () => {
+    const { toasts } = useToast();
     return (
         <ToastProvider swipeDirection='right'>
             {toasts.map(({ id, title, description, action, alert, ...props }) => (
@@ -28,8 +28,8 @@ export function Toaster() {
                             </ToastDescription>}
                     </Flex>
                     {action}                    
-                    <ToastClose >
-                        <IconButton size="3" radius="full" variant="soft" color={alertColor({alert})}>
+                    <ToastClose asChild>
+                        <IconButton asChild size="2" radius="full" variant="soft" color={alertColor({alert})}>
                             <Cross1Icon style={{ cursor: "pointer" }} width="16" height="16" />
                         </IconButton>
                     </ToastClose>

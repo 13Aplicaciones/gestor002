@@ -1,7 +1,7 @@
 import { Badge, DataList, Flex, Heading } from "@radix-ui/themes";
-import { fetchData } from "../api/Api";
+import { fetchData } from "../services/Api";
 import { MethodREST, TypeBody } from "../APIConstants";
-import { requestToken } from "../api/Token";
+import { requestToken } from "../services/Token";
 import { useCallback, useEffect, useState } from "react";
 import { BannerInformation } from "../components/callout/Information";
 import { Alerts } from "../ConstantsPresentation";

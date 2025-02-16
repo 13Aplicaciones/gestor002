@@ -22,40 +22,7 @@ Además de las carpetas que ya tienes (`assets`, `components`, `layouts`), aquí
 ## Ejemplo de estructura de carpetas
 
 ```
-src/
-├── assets/
-│   ├── images/
-│   └── ...
-├── components/
-│   ├── Button/
-│   │   ├── Button.jsx
-│   │   └── Button.module.css
-│   ├── ...
-├── context/
-│   └── ThemeContext.js
-├── hooks/
-│   └── useFetchData.js
-├── layouts/
-│   └── MainLayout.jsx
-├── pages/
-│   ├── Home/
-│   │   ├── Home.jsx
-│   │   ├── Home.module.css
-│   │   └── components/
-│   │       └── ...
-│   ├── About/
-│   │   └── ...
-├── routes/
-│   └── AppRouter.jsx
-├── services/
-│   └── api.js
-├── styles/
-│   ├── global.css
-│   └── variables.css
-├── utils/
-│   └── formatData.js
-└── types/
-    └── Product.d.ts
+
 ```
 
 ## Recomendaciones adicionales
@@ -147,4 +114,104 @@ me haces acuerdo para que uso "layouts"
 - **Consistencia visual:** Aseguras que todas las páginas de tu aplicación tengan una apariencia coherente, lo que mejora la experiencia del usuario.
 - **Organización:** Mantienes el código relacionado con la estructura y el diseño de las páginas separado del código específico de cada página, lo que mejora la legibilidad y el mantenimiento del proyecto.
 
-## Ejemplo de uso
+
+
+
+
+### **📂 Opción 1: Crear una Carpeta `store/` en la Raíz** (Recomendada)
+
+Ubicación:
+
+css
+
+CopiarEditar
+
+`src/ 
+├── store/ 
+│   ├── slices/ 
+│   │   ├── authSlice.js 
+│   │   ├── productSlice.js 
+│   │   └── ... 
+│   ├── actions/ 
+│   │   ├── authActions.js 
+│   │   ├── productActions.js 
+│   │   └── ... 
+│   ├── reducers/ 
+│   │   ├── rootReducer.js 
+│   │   └── ... 
+│   ├── store.js 
+│   └── index.js`
+
+✅ **Ventajas**:
+
+- Todo Redux está centralizado en un solo lugar.
+- Puedes dividir los **slices** y las **acciones** para mejorar la organización.
+- La separación entre `slices/`, `actions/` y `reducers/` mejora la mantenibilidad.
+
+📌 **Ejemplo de `store.js`**
+
+jsx
+
+CopiarEditar
+
+`import { configureStore } from '@reduxjs/toolkit'; import authReducer from './slices/authSlice'; import productReducer from './slices/productSlice';  export const store = configureStore({   reducer: {     auth: authReducer,     product: productReducer   } });`
+
+---
+
+### **📂 Opción 2: Incluir `redux/` dentro de `context/`**
+
+Ubicación:
+
+css
+
+CopiarEditar
+
+`src/ 
+├── context/ 
+│   ├── ThemeContext.js 
+│   ├── redux/ 
+│   │   ├── slices/ 
+│   │   │   ├── userSlice.js 
+│   │   │   └── ... 
+│   │   ├── store.js 
+│   │   └── index.js`
+
+✅ **Ventajas**:
+
+- Mantiene Redux dentro de la misma lógica de manejo de estado.
+- Útil si combinas Redux con Context API.
+
+---
+
+### **📂 Opción 3: Colocar `redux/` dentro de `services/`**
+
+Ubicación:
+
+css
+
+CopiarEditar
+
+`src/ 
+├── services/ 
+│   ├── api.js 
+│   ├── redux/ 
+│   │   ├── store.js 
+│   │   ├── reducers/ 
+│   │   ├── actions/ 
+│   │   └── ...`
+
+✅ **Ventajas**:
+
+- Útil si Redux maneja datos de API y quieres agruparlo con `services/`.
+
+---
+
+### **¿Cuál opción elegir?**
+
+✅ **Si buscas una estructura escalable y modular → `store/` en la raíz (Opción 1).**  
+✅ **Si combinas Context API y Redux → `redux/` dentro de `context/` (Opción 2).**  
+✅ **Si Redux está muy ligado a llamadas de API → `redux/` dentro de `services/` (Opción 3).**
+
+💡 **Recomendación:** Usa **Opción 1** (`store/` en la raíz) para mayor escalabilidad y claridad. 🚀
+
+4o

@@ -25,7 +25,7 @@ const App = () => {
 
   const shouldRenderCrear = 0;
 
-  if (shouldRenderCrear === 0) {
+  if (shouldRenderCrear !== 0) {
     return <ErrorPage />
   } else {
   return (

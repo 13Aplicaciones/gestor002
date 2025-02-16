@@ -18,6 +18,11 @@ rm -rf node_modules package-lock.json
 npm install 
 cd ..
 
+cd gestor_remote
+rm -rf node_modules package-lock.json
+npm install 
+cd ..
+
 cd portal
 rm -rf node_modules package-lock.json
 npm install 

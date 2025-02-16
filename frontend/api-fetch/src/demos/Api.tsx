@@ -1,6 +1,5 @@
 import { Alerts } from "../ConstantsPresentation";
-import { cargarCredencial } from "../redux/Store";
-import { fetchData } from "../api/Api";
+import { fetchData } from "../services/Api";
 import { MethodREST, TypeBody } from "../APIConstants";
 import { toast } from "../components/toast/Toast";
 
@@ -42,9 +41,9 @@ const runApi = () => {
           });
           return;
         } else {
-          cargarCredencial({ id: "tokenKeycloak", token: response.response });
-          toast({
-            title: "conectado",
+          console.log("response", response.response);
+          console.log("response", response.response.access_token);toast({
+          title: "conectado",
             description: "super conecatad",
             alert: Alerts.info
           });

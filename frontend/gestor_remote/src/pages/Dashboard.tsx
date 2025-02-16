@@ -1,8 +1,24 @@
+import { Button, Flex } from "@radix-ui/themes";
+import { Alerts, showToast } from "api-fetch";
+import { useDispatch } from "react-redux";
+
 const Dashboard = () => {
+    const dispatch = useDispatch();
+    const mostrarError = () => {
+        dispatch(showToast({
+            title: "title",
+            description: "Descripción holaaaa !!!",
+            alert: Alerts.info,
+        }));
+    };
+
     return (
-        <div>
+        <Flex direction="column" gap="1">
             <h1>Dashboard</h1>
-        </div>
+            <Button onClick={mostrarError}>Mostrar error</Button>
+
+            
+        </Flex>
     );
 }
 
