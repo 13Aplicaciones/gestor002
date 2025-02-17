@@ -1,17 +1,18 @@
 import "./stylesDemo.css";
-import { Button, IconButton } from "@radix-ui/themes";
-import { Root, ToastProvider, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "@radix-ui/react-toast";
-import { ToastContext } from "./toastContext";
-import { useState, useEffect, ReactNode } from "react";
 import { alertColor } from "../IconosColoresAlerts";
 import { Alerts } from "../../ConstantsPresentation";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
+import { IconButton } from "@radix-ui/themes";
+import { Root, ToastProvider, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "@radix-ui/react-toast";
+import { ToastContext } from "./ToastContext";
+import { useState, useEffect, ReactNode } from "react";
 
-export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
+    
+    const [alert, setAlert] = useState<Alerts>(Alerts.info);
+    const [description, setDescription] = useState('Descripción');
     const [open, setOpen] = useState(false);
     const [title, setTitle] = useState('title');
-    const [description, setDescription] = useState('Descripción');
-    const [alert, setAlert] = useState<Alerts>(Alerts.info);
 
     useEffect(() => {
         if (open) {

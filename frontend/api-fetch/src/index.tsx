@@ -22,7 +22,8 @@ export { TableConfigurable } from './components/table/Table';
 
 // Exportar elementos de la libreria para Toast
 export { ToastContextProvider  } from './components/toast/ToastContextProvider.tsx';
-export { useToastContext, ToastContext } from './components/toast/toastContext';
+export { useToastContext } from './components/toast/useToastContext.tsx';
+export { ToastContext } from './components/toast/ToastContext.tsx';
 
 // Exportar elementos de la libreria para Store redux
 export { store } from './store/ConfigStore';

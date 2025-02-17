@@ -34,9 +34,21 @@
               "icon": "lucide-file",
               "title": "ArquitecturaReact"
             }
+          },
+          {
+            "id": "0cb2813ee0e49b52",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2025-02-17 15.02.20.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-02-17 15.02.20.excalidraw"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -175,13 +187,17 @@
       "canvas:Crear nuevo lienzo": false,
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
-      "command-palette:Abrir paleta de comandos": false
+      "command-palette:Abrir paleta de comandos": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "735fdcd4d42e3af9",
+  "active": "0cb2813ee0e49b52",
   "lastOpenFiles": [
-    "Muleto.md",
+    "Excalidraw/sdfsa.md",
     "documentos/ArquitecturaReact.md",
+    "Excalidraw/Drawing 2025-02-17 15.02.20.excalidraw.md",
+    "Excalidraw",
+    "Muleto.md",
     "mega Check list.md",
     "SitiosAyuda.canvas",
     "documentos/Respuesta-REST.md",

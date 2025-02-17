@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cross1Icon } from "@radix-ui/react-icons";
-import {  IconButton, Popover } from "@radix-ui/themes";
+import { IconButton, Popover } from "@radix-ui/themes";
+import { ReactNode } from "react";
 
 /**
  * Componente para mostrar un Popover.
@@ -16,7 +16,7 @@ import {  IconButton, Popover } from "@radix-ui/themes";
  * @returns 
  */
 const PopoverEmbeber = ({ childrenTigger, childrenContent} : 
-		{ childrenTigger: any, childrenContent: any }) => {
+		{ childrenTigger: ReactNode, childrenContent: ReactNode }) => {
 	return (
 		<Popover.Root>
 			<Popover.Trigger>

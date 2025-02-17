@@ -19,7 +19,7 @@ import { ToastContextProvider } from "./components/toast/ToastContextProvider.ts
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="dark">
+      <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="light">
         <ToastContextProvider >
           <App />
         </ToastContextProvider >
