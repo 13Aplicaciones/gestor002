@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useToastContext } from "../components/toast/MiToastProvider";
+import { useToastContext } from "../components/toast/toastContext";
 
 /**
  * Formulario de edición de errores del sistema.

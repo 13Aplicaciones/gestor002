@@ -20,10 +20,9 @@ export { NotFound } from './pages/NotFound.tsx';
 
 export { TableConfigurable } from './components/table/Table';
 
-
-
 // Exportar elementos de la libreria para Toast
-export { ToastContextProvider, useToastContext } from './components/toast/MiToastProvider';
+export { ToastContextProvider  } from './components/toast/ToastContextProvider.tsx';
+export { useToastContext, ToastContext } from './components/toast/toastContext';
 
 // Exportar elementos de la libreria para Store redux
 export { store } from './store/ConfigStore';

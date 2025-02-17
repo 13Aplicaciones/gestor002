@@ -5,7 +5,7 @@ import { store } from './store/ConfigStore.tsx';
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
 import App from './App.tsx'
-import { ToastContextProvider } from "./components/toast/MiToastProvider.tsx";
+import { ToastContextProvider } from "./components/toast/ToastContextProvider.tsx";
 
 /**
  * Componente principal de la aplicación
@@ -18,10 +18,10 @@ import { ToastContextProvider } from "./components/toast/MiToastProvider.tsx";
  */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={ store }>
+    <Provider store={store}>
       <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="dark">
-      <ToastContextProvider >
-        <App />
+        <ToastContextProvider >
+          <App />
         </ToastContextProvider >
       </Theme>
     </Provider>

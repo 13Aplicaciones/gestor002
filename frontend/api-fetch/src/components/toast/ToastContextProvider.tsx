@@ -1,30 +1,17 @@
 import "./stylesDemo.css";
-import { Button } from "@radix-ui/themes";
+import { Button, IconButton } from "@radix-ui/themes";
 import { Root, ToastProvider, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "@radix-ui/react-toast";
-import { useState, useEffect, createContext, useContext, ReactNode } from "react";
-
-
-
-interface ToastContextType {
-    showToast: (title: string, description: string, alert: string) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-
-export const useToastContext = () => {
-    const context = useContext(ToastContext);
-    if (!context) {
-        throw new Error('useToastContext must be used within a ToastProvider');
-    }
-    return context;
-};
+import { ToastContext } from "./toastContext";
+import { useState, useEffect, ReactNode } from "react";
+import { alertColor } from "../IconosColoresAlerts";
+import { Alerts } from "../../ConstantsPresentation";
+import { CrossCircledIcon } from "@radix-ui/react-icons";
 
 export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [open, setOpen] = useState(false);
     const [title, setTitle] = useState('title');
     const [description, setDescription] = useState('Descripción');
-    const [alert, setAlert] = useState('error');
+    const [alert, setAlert] = useState<Alerts>(Alerts.info);
 
     useEffect(() => {
         if (open) {
@@ -35,7 +22,7 @@ export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({ childr
         }
     }, [open]);
 
-    const showToast = (newTitle: string, newDescription: string, newAlert: string) => {
+    const showToast = (newTitle: string, newDescription: string, newAlert: Alerts) => {
         setTitle(newTitle);
         setDescription(newDescription);
         setAlert(newAlert);
@@ -45,13 +32,17 @@ export const ToastContextProvider: React.FC<{ children: ReactNode }> = ({ childr
     return (
         <ToastContext.Provider value={{ showToast }}>
             <ToastProvider swipeDirection="right">
-                <Root className="ToastRoot" open={open} onOpenChange={setOpen}>
-                    <ToastTitle>{title}</ToastTitle>
-                    <ToastDescription asChild>
-                        <span>{description + '--' + alert}</span>
+                <Root className="ToastRoot" open={open} onOpenChange={setOpen} style={{ backgroundColor: alertColor({ alert: alert }) }}>
+                    <ToastTitle className="ToastTitle" >
+                        <span dangerouslySetInnerHTML={{ __html: title }} />
+                    </ToastTitle>
+                    <ToastDescription asChild className="ToastDescription">
+                        <span dangerouslySetInnerHTML={{ __html: description }} />
                     </ToastDescription>
                     <ToastAction asChild altText="Goto schedule to undo">
-                        <Button onClick={() => setOpen(false)}>close</Button>
+                        <IconButton size="2" onClick={() => setOpen(false)} radius="full" variant="soft" >
+                            <CrossCircledIcon width="3vh" height="3vh" />
+                        </IconButton>
                     </ToastAction>
                 </Root>
                 <ToastViewport className="ToastViewport" />

@@ -1,15 +1,16 @@
 import { Button, Flex } from "@radix-ui/themes";
-import { Alerts, showToast } from "api-fetch";
-import { useDispatch } from "react-redux";
+import { Alerts,  useToastContext } from "api-fetch";
 
 const Dashboard = () => {
-    const dispatch = useDispatch();
+    const { showToast } = useToastContext();
+
+  
     const mostrarError = () => {
-        dispatch(showToast({
-            title: "title",
-            description: "Descripción holaaaa !!!",
-            alert: Alerts.info,
-        }));
+        showToast(
+            "title",
+             "Descripción holaaaa !!!",
+             Alerts.info,
+        );
     };
 
     return (
