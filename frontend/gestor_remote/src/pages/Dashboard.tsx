@@ -1,5 +1,5 @@
 import { Button, Flex } from "@radix-ui/themes";
-import { CustomToast, DialogForm, useToast } from "api-fetch";
+import { Alerts, CustomToast, DialogForm, useToast, useToastContext } from "api-fetch";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch/src/store/DialogSlice";
 import { useDispatch } from "react-redux";
 
@@ -20,10 +20,26 @@ const Dashboard = () => {
     };
     */
 
+    const { showToast001 } = useToastContext();
+    const texto = "Texto de prueba<Strong>hola</Strong><br>Texto de prueba<br>Texto de prueba <h1>hola</h1>";
+    const title = "<strong>hola</strong> super title <a href='https://www.google.com'>google</a>";
+
+    const mostrarError = () => {
+        showToast001(
+            title,
+            texto,
+            Alerts.error,
+        );
+    };
+
+
     return (
         <Flex direction="column" gap="1">
             
             <h1>Dashboard</h1>
+
+            <Button onClick={mostrarError}>Mostrar error super error </Button>
+
 
             <button onClick={showToast}>Mostrar Toast123</button>
             <CustomToast

@@ -48,7 +48,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
   const [t] = useTranslation("global");
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const { showToast } = useToastContext();
+  const { showToast001 } = useToastContext();
       
 
   /** 
@@ -115,7 +115,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
         })
           .then(response => {
             if (response.error) {
-              showToast(
+              showToast001(
                 response.status.toString(),
                  response.error,
                  Alerts.warning
@@ -129,7 +129,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               setTotalItems(response.response.totalItems);
             }
           }).catch(error => {
-            showToast(
+            showToast001(
               "Error",
                error,
                Alerts.error

@@ -23,7 +23,7 @@ export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [open]);
 
-    const showToast = (newTitle: string, newDescription: string, newAlert: Alerts) => {
+    const showToast001 = (newTitle: string, newDescription: string, newAlert: Alerts) => {
         setTitle(newTitle);
         setDescription(newDescription);
         setAlert(newAlert);
@@ -31,11 +31,11 @@ export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <ToastContext.Provider value={{ showToast }}>
+        <ToastContext.Provider value={{ showToast001 }}>
             <ToastProvider swipeDirection="right">
                 <Root className="ToastRoot" open={open} onOpenChange={setOpen} style={{ backgroundColor: alertColor({ alert: alert }) }}>
                     <ToastTitle className="ToastTitle" >
-                        <span dangerouslySetInnerHTML={{ __html: title }} />
+                        <span dangerouslySetInnerHTML={{ __html: + title }} />
                     </ToastTitle>
                     <ToastDescription asChild className="ToastDescription">
                         <span dangerouslySetInnerHTML={{ __html: description }} />

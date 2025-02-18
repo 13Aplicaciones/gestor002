@@ -2,7 +2,7 @@ import "@radix-ui/themes/styles.css";
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from "react-redux";
-import { store } from "api-fetch";
+import { store, ToastContextProvider } from "api-fetch";
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
 import App from './App.tsx'
@@ -31,7 +31,9 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <Provider store={store}>
         <Theme accentColor="green" grayColor="auto" scaling="90%" radius="medium" panelBackground="translucent" appearance="dark">
-          <App />
+          <ToastContextProvider>
+            <App />
+          </ToastContextProvider>
         </Theme>
       </Provider>
     </I18nextProvider>

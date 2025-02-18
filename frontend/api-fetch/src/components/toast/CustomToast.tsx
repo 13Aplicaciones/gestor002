@@ -1,7 +1,14 @@
-import * as React from 'react';
 import * as Toast from '@radix-ui/react-toast';
 
-const CustomToast = ({ open, onOpenChange, title, description, actionText }) => {
+interface CustomToastProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  description: string;
+  actionText?: string;
+}
+
+const CustomToast: React.FC<CustomToastProps> = ({ open, onOpenChange, title, description, actionText }) => {
   return (
     <Toast.Provider>
       <Toast.Root open={open} onOpenChange={onOpenChange}>

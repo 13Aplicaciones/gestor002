@@ -28,7 +28,7 @@ import { useToastContext } from "../components/toast/useToastContext";
  */
 const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion, row?: IRowDataError, onAtras?: () => void }) => {
 
-    const { showToast } = useToastContext();
+    const { showToast001 } = useToastContext();
     const [stateFormulario, setFormStateulario] = useState<EstadoEdicion>(estado || EstadoEdicion.create);
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
@@ -128,13 +128,13 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
     const analizarAccionar = (response: IFetchData) => {
         if (response.error) {
             if (response.status === 400) {
-                showToast(
+                showToast001(
                     response.error + ' ' + response.status.toString(),
                     response.responseErrorJSON.message,
                      Alerts.warning
                 );
             } else {
-                showToast(
+                showToast001(
                      response.status.toString(),
                      response.error,
                      Alerts.warning
@@ -146,7 +146,7 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
             if (respuesta.response && respuesta.response.uuid) {
                 setUuid(respuesta.response.uuid);
             }
-            showToast(
+            showToast001(
                  respuesta.status.toString(),
                  "Accion realizada con exito",
                 Alerts.success

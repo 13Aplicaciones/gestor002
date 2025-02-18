@@ -1,10 +1,10 @@
-import { useState } from "react";
-import DemoToast from "../components/toast/DemoToast";
-import { useToastContext } from "../components/toast/useToastContext";
 import { Alerts } from "../ConstantsPresentation";
 import { Button, Flex } from "@radix-ui/themes";
+import { useState } from "react";
 import { useToast } from "../components/toast/useToast";
+import { useToastContext } from "../components/toast/useToastContext";
 import CustomToast from "../components/toast/CustomToast";
+import DemoToast from "../components/toast/DemoToast";
 
 /**
  * Ejemplo de componente que muestra un toast
@@ -21,42 +21,42 @@ const MiToast = () => {
     const { open, showToast, hideToast } = useToast();
 
 
-    //const { showToast1 } = useToastContext();
+    const { showToast001 } = useToastContext();
     const texto = "Texto de prueba<Strong>hola</Strong><br>Texto de prueba<br>Texto de prueba <h1>hola</h1>";
     const title = "<strong>hola</strong> super title <a href='https://www.google.com'>google</a>";
 
     const [status, setStatus] = useState(true);
 
     const mostrarError = () => {
-        /*showToast1(
+        showToast001(
             title,
             texto,
             Alerts.error,
-        );*/
+        );
     };
 
     const mostrarInfo = () => {
-        /*showToast1(
+        showToast001(
             "title",
             "Descripción",
             Alerts.info,
-        );*/
+        );
     };
 
     const mostrarSuccess = () => {
-        /*showToast1(
+        showToast001(
             "title",
             "Descripción 001",
             Alerts.success,
-        );*/
+        );
     };
 
     const mostrarWarning = () => {
-        /*showToast1(
+        showToast001(
             "DATA",
             "Descripción",
             Alerts.warning,
-        );*/
+        );
     };
 
     const mostrarDemoToast = () => {
@@ -72,10 +72,9 @@ const MiToast = () => {
             <Button onClick={mostrarInfo}>Mostrar info</Button>
             <Button onClick={mostrarSuccess}>Mostrar Success</Button>
             <Button onClick={mostrarWarning}>Mostrar Warnig</Button>
-
             <Button onClick={mostrarDemoToast}>Mostrar Demo Toast!!</Button>
+            
             <DemoToast status={true} />
-
             <button onClick={showToast}>Mostrar Toast</button>
             <CustomToast
                 open={open}
