@@ -7,7 +7,7 @@
 
 "settings": {
 		"files.exclude": {
-			"api-fetch": false,
+			"api_fetch": false,
 			"dashboard_remote": true,
 			"demo_remote": false,
 			"frontend-oauth2": false,
