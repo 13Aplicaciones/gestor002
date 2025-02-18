@@ -1,10 +1,18 @@
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogForm, MioToast } from "api-fetch";
+import { CustomToast, DialogForm, useToast } from "api-fetch";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch/src/store/DialogSlice";
 import { useDispatch } from "react-redux";
 
+//import { useToast } from "./useToast";
+import { useState } from "react";
+//import CustomToast123 from "./CustomToast";
+
 const Dashboard = () => {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
+
+    const [miData, setMiData] = useState("");
+
+    const { open, showToast, hideToast } = useToast();
 
     /*
     const mostrarError = () => {
@@ -17,18 +25,28 @@ const Dashboard = () => {
             
             <h1>Dashboard</h1>
 
-            <MioToast />
+            <button onClick={showToast}>Mostrar Toast123</button>
+            <CustomToast
+                open={open}
+                onOpenChange={hideToast}
+                title="Notificación"
+                description="Este es un mensaje de toast."
+                actionText="Cerrar"
+            />
 
 
             <Button onClick={
                 () => {                    
                     console.log("hola");
+                    console.log("hola " + miData);
+                    setMiData("hola");
+                    console.log("hola " + miData);
                 }
             }>Mostrar error</Button>
 
             <Button onClick={
                 () => {
-                    dispatch(showDialogDinamico('1'));
+                    //dispatch(showDialogDinamico('1'));
                 }
             }>Abrir dialogo 1!!</Button>
 
@@ -42,12 +60,12 @@ const Dashboard = () => {
                     <>
                         <Button size="3" variant="surface" onClick={
                             () => {
-                                dispatch(hideDialogDinamico('1'));
+                                //dispatch(hideDialogDinamico('1'));
                             }
                         }>cerrar </Button>
                         <Button size="3" variant="soft" onClick={
                             () => {
-                                dispatch(hideDialogDinamico('1'));
+                                //dispatch(hideDialogDinamico('1'));
                             }
                         }>cerrar45 </Button>
                     </>

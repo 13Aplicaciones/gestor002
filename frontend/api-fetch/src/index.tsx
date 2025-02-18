@@ -25,6 +25,9 @@ export { ToastContextProvider  } from './components/toast/ToastContextProvider.t
 export { useToastContext } from './components/toast/useToastContext.tsx';
 export { ToastContext } from './components/toast/ToastContext.tsx';
 
+export { useToast } from './components/toast/useToast.tsx';
+export { default as CustomToast } from './components/toast/CustomToast.tsx';
+
 // Exportar elementos de la libreria para Store redux
 export { store } from './store/ConfigStore';
 export type { RootState, AppDispatch } from "./store/ConfigStore";
