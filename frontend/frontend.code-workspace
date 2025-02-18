@@ -7,15 +7,13 @@
 
 "settings": {
 		"files.exclude": {
-			"api_fetch": false,
-			"dashboard_remote": true,
-			"demo_remote": false,
+			"api-fetch": false,			
+			"demo-remote": false,
 			"frontend-oauth2": false,
-			"gestor_remote": false,
-			"marco_remote": true,
-			"orchestrator_remote": false,
+			"gestor-remote": false,
+			"marco-remote": true,
+			"orchestrator-remote": false,
 			"portal": false,
-			"usuario_remote": true,
 		},
 		"workbench.colorCustomizations": {
 			"activityBar.activeBackground": "#65c89b",

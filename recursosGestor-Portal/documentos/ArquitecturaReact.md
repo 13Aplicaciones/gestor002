@@ -23,6 +23,41 @@ Además de las carpetas que ya tienes (`assets`, `components`, `layouts`), aquí
 
 ```
 
+src/
+├── assets/
+│   ├── images/
+│   └── ...
+├── components/
+│   ├── Button/
+│   │   ├── Button.jsx
+│   │   └── Button.module.css
+│   ├── ...
+├── context/
+│   └── ThemeContext.js
+├── hooks/
+│   └── useFetchData.js
+├── layouts/
+│   └── MainLayout.jsx
+├── pages/
+│   ├── Home/
+│   │   ├── Home.jsx
+│   │   ├── Home.module.css
+│   │   └── components/
+│   │       └── ...
+│   ├── About/
+│   │   └── ...
+├── routes/
+│   └── AppRouter.jsx
+├── services/
+│   └── api.js
+├── styles/
+│   ├── global.css
+│   └── variables.css
+├── utils/
+│   └── formatData.js
+└── types/
+    └── Product.d.ts
+
 ```
 
 ## Recomendaciones adicionales

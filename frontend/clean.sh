@@ -6,12 +6,13 @@
 ##
 ## Usage: ./clean.sh
 ##
-cd api_fetch 
+cd api-fetch 
 rm -rf dist node_modules package-lock.json
 npm install 
+npm run build
 cd ..
 
-cd demo_remote
+cd demo-remote
 rm -rf dist node_modules package-lock.json
 npm install 
 cd ..
@@ -21,12 +22,12 @@ rm -rf dist node_modules package-lock.json
 npm install 
 cd ..
 
-cd orchestrator_remote
+cd orchestrator-remote
 rm -rf dist node_modules package-lock.json
 npm install 
 cd ..
 
-cd gestor_remote
+cd gestor-remote
 rm -rf dist node_modules package-lock.json
 npm install 
 cd ..
