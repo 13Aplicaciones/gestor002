@@ -30,7 +30,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nextProvider i18n={i18next}>
       <Provider store={store}>
-        <Theme accentColor="cyan" grayColor="auto" scaling="90%" radius="medium" panelBackground="translucent" appearance="light">
+        <Theme accentColor="cyan" grayColor="auto" scaling="100%" radius="medium" panelBackground="translucent" appearance="dark">
           <ToastContextProvider>
             <App />
           </ToastContextProvider>
