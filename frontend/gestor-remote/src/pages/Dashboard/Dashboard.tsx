@@ -23,9 +23,9 @@ const Dashboard = () => {
     };
 
     return (
-        <Flex direction="column" gap="9" p="5" width="100%" height="100vh">
-            <Heading size="9">Gestor Aplicaciones</Heading>
-            <Text size="8" weight="medium" align="center">Adminitracion general del sistema para poder generar nuevos mddulo genricos</Text>
+        <Flex direction="column" gap="4" p="5" width="100%" height="100vh">
+            <Heading size="5">Gestor Aplicaciones</Heading>
+            <Text size="4" weight="medium">Adminitracion general del sistema para poder generar nuevos mddulo genricos</Text>
             <Grid columns={{ xs: "1", sm: "2", md: "3", lg: "3", xl: "4" }} gap="5">
                 <Card size="2" onClick={mostrarError} style={{ cursor: 'pointer' }} >
                     <Flex direction="row" justify="between" align="baseline" width="100%">
