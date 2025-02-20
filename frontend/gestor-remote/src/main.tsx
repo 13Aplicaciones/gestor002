@@ -31,12 +31,12 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <Provider store={store}>
         <Theme 
-          accentColor="cyan" 
+          accentColor="lime" 
           grayColor="auto" 
           scaling="100%" 
           radius="medium" 
           panelBackground="translucent" 
-          appearance="dark">
+          appearance="light">
           <ToastContextProvider>
             <App />
           </ToastContextProvider>

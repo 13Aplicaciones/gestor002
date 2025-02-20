@@ -1,9 +1,8 @@
-import { Badge, Box, Button, Card, Flex, Grid, Heading, IconButton, Text } from "@radix-ui/themes";
-import { Alerts, useToastContext } from "api-fetch";
+import { Badge, Box, Button, Card, Flex, Heading, Link as MiLink, Text } from "@radix-ui/themes";
+import { Alerts, GridDashboard, useToastContext } from "api-fetch";
 import { InfoCircledIcon, CubeIcon, MinusCircledIcon, PersonIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { Link } from "react-router-dom";
-import { blackA } from "@radix-ui/colors";
-import { whiteA } from "@radix-ui/colors";
+import CardGrid from "./components/Card";
 
 
 /*
@@ -28,40 +27,47 @@ const Dashboard = () => {
         <Flex direction="column" gap="4" p="5" width="100%" height="100vh">
             <Heading size="5">Gestor Aplicaciones</Heading>
             <Text size="4" weight="medium">Adminitracion general del sistema para poder generar nuevos mddulo genricos</Text>
-            <Grid 
-                gap="5" 
-                p="4"
-                columns={{ xs: "1", sm: "2", md: "3", lg: "3", xl: "4" }}
-                style={{ 
-                    borderRadius: '8px', 
-                    backgroundColor: whiteA.whiteA2,
-                    border: `1px solid ${blackA.blackA2}`, 
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-                }}
-                
-                >
+            <GridDashboard >
+
+                <CardGrid   
+                    title="Usuarios"
+                    description="Usuarios registrados en el sist arios registrados en el Usuarios registrados en el sistema,"
+                    onClick={mostrarError}
+                    cardIcon={<PersonIcon width="5vw" height="5vw" />}
+                />
+
                 <Card size="2" onClick={mostrarError} style={{ cursor: 'pointer' }} >
-                    <Flex direction="row" p="2" justify="between" align="start" width="100%">
-                        <Flex gap="2" direction="column" align="start">
-                            <PersonIcon width="5vw" height="5vw" />
-                            <Box>
-                                <Text as="div" size="2" weight="bold">
-                                    Usuarios
-                                </Text>
-                                <Text as="div" size="2" color="gray">
-                                    Usuarios registrados en el sist arios registrados en el Usuarios registrados en el sistema, 
-                                </Text>
-                            </Box>
-                            <IconButton radius="small" variant="ghost" >
-                                Editar
-                                <Pencil1Icon height="16" width="16" />
-                            </IconButton>
+                    <Flex direction="column" gap="2" p="2" width="100%" align="start">
+                        <Flex
+                            align="start"
+                            gap="2"
+                            justify="between"
+                            width="100%"
+                            direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}>
+                            <Flex
+                                align="start"
+                                direction="column"
+                                gap="2"
+                            >
+                                <PersonIcon width="5vw" height="5vw" />
+                                <Box>
+                                    <Text as="p" size="2" weight="bold">
+                                        Usuarios
+                                    </Text>
+                                    <Text as="p" size="2" color="gray">
+                                        Usuarios registrados en el sist arios registrados en el Usuarios registrados en el sistema,
+                                    </Text>
+                                </Box>
+                            </Flex>
+                            <Flex gap="2" direction={{ xs: "row", sm: "row", md: "column", lg: "column", xl: "column" }} >
+                                <Badge size="3" color="green"><strong>53</strong>Activos</Badge>
+                                <Badge size="3" color="blue"><strong>9</strong> Edición</Badge>
+                                <Badge size="3" color="orange"><strong>11</strong> Borrados</Badge>
+                            </Flex>
                         </Flex>
-                        <Flex direction="column" gap="2">
-                            <Badge size="3" color="green"><strong>53</strong>Activos</Badge>
-                            <Badge size="3" color="blue"><strong>9</strong> Edición</Badge>
-                            <Badge size="3" color="orange"><strong>11</strong> Borrados</Badge>
-                        </Flex>
+                        <MiLink size="2" underline="auto" weight="medium">
+                            Editar <Pencil1Icon height="16" width="16" />
+                        </MiLink>
                     </Flex>
                 </Card>
 
@@ -87,7 +93,7 @@ const Dashboard = () => {
                 </Card>
 
                 <Card size="2">
-                    <Flex direction="row" p="2" justify="between" align="start" width="100%">                    
+                    <Flex direction="row" p="2" justify="between" align="start" width="100%">
                         <Flex gap="1" direction="column" align="start">
                             <InfoCircledIcon width="5vw" height="5vw" />
                             <Box>
@@ -129,7 +135,7 @@ const Dashboard = () => {
                 <Link to="/ruta-deseada">
                     <Button>Ir a Ruta Deseada</Button>
                 </Link>
-            </Grid>
+            </GridDashboard>
         </Flex>
     );
 }

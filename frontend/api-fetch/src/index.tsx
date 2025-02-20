@@ -14,6 +14,7 @@ export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVarian
 export { Alerts, BandPresentation, Direccion } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
+export { GridDashboard } from './components/grid/GridDynamic';
 
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from './components/table/Table';
