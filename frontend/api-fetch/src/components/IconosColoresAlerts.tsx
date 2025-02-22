@@ -107,4 +107,26 @@ const alertColorBackground = ({ alert }: { alert?: Alerts }) => {
     }
 }
 
-export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant };
+
+/**
+ * Funcion para seleccionar la enumeracion desde un string de status.
+ * 
+ * @param status 
+ * @returns 
+ */
+const mapStatusToAlert = (status: string): Alerts => {
+    switch (status) {
+        case "info":
+            return Alerts.info;
+        case "warning":
+            return Alerts.warning;
+        case "success":
+            return Alerts.success;
+        case "error":
+            return Alerts.error;
+        default:
+            throw new Error(`Unknown status: ${status}`);
+    }
+};
+
+export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant, mapStatusToAlert };

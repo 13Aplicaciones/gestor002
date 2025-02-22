@@ -10,11 +10,16 @@
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
 // Exportar elementos de la libreria UI
-export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant } from './components/IconosColoresAlerts';
+export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant, mapStatusToAlert } from './components/IconosColoresAlerts';
 export { Alerts, BandPresentation, Direccion } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { GridDashboard } from './components/grid/GridDynamic';
+export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';
+export { getIconComponent } from './components/icon/IconDynamic';
+
+// Exportar elementos Tipos de datos
+export type { DataItemBadge } from './components/grid/Card';
 
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from './components/table/Table';

@@ -1,3 +1,35 @@
 {
-    "title": "Gestor de tareas"
+    "title": "Gestor de tareas",
+    "menus": [
+        {
+            "index": "001",
+            "icon": "PersonIcon",
+            "title": "Usuarios",
+            "description": "Usuarios del sistema, roles, y permisos",
+            "path": "/users",
+            "firtsColor": true
+        },
+        {
+            "index": "002",
+            "icon": "CubeIcon",
+            "title": "Modulos",
+            "description": "Modulos del sistema",
+            "path": "/modules",
+            "firtsColor": false
+        },
+        {
+            "index": "003",
+            "icon": "InfoCircledIcon",
+            "title": "Información",
+            "description": "Información del sistema, versiones, etc.",
+            "path": "/info"            
+        },
+        {
+            "index": "004",
+            "icon": "MinusCircledIcon",
+            "title": "Errores",
+            "description": "Errores del sistema y descripción",
+            "path": "/errors"
+        }
+    ]
 }

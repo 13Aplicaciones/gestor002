@@ -1,6 +1,7 @@
 {
     "actions": {
         "cancel": "Cancelar",
+        "edit": "Editar",
         "addDescription": "Agregar item para {{description}}"
     },
     "stateForm": {
