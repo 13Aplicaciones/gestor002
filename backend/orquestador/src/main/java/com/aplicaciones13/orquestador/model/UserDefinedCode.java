@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -36,6 +37,7 @@ public class UserDefinedCode extends UserDateApp {
     private Long idModule;
 
     @ManyToOne
+    @JoinColumn(name = "id_module", referencedColumnName = "id_module", insertable = false, updatable = false)
     private Module module;
 
     @Column(nullable = false, length = 8)

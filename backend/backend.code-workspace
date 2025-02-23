@@ -5,12 +5,12 @@
 		}
 	],
 
-
 	"settings": {
 		"files.exclude": {
+			"aplicaciones13": true,
 			"gestor":false,
 			"orquestador": false,
-			"tools": false,
+			"tools": true,
 			"**/target": true,
 			"**/.mvn": true,
 			".vscode": true,

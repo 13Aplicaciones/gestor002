@@ -3,7 +3,10 @@ package com.aplicaciones13.orquestador.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
+import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeGroupResponse;
+import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeResponse;
 import com.aplicaciones13.orquestador.services.ParameterService;
+import com.aplicaciones13.orquestador.services.UserDefinedCodeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +30,9 @@ public class StructureMenuController {
 
     @Autowired
     private ParameterService parameterService;
+
+    @Autowired
+    private UserDefinedCodeService userDefinedCodeService;
 
     /**
      * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
@@ -64,17 +70,6 @@ public class StructureMenuController {
      * 
      * @return
      */
-    @GetMapping("/udc/module={module}")
-    public String getUdc() {
-        // Obtienen los
-        return new String();
-    }
-
-    /**
-     * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
-     * 
-     * @return
-     */
     @GetMapping("/udc/udc={udc}")
     public String getUdc1() {
         // Obtienen los
@@ -89,6 +84,17 @@ public class StructureMenuController {
     @GetMapping("/parameter/module={module}")
     public ResponseEntity<List<ParameterResponse>> getParameters(@PathVariable String module) {
         List<ParameterResponse> response = parameterService.findParametersByModuleIndex(module);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Metodo para obtener los UDC Modulos.
+     * 
+     * @return
+     */
+    @GetMapping("/udc/module={module}")
+    public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String module) {
+        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(module);        
         return ResponseEntity.ok(response);
     }
 }

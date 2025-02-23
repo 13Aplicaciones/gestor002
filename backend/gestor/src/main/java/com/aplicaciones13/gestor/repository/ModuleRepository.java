@@ -31,6 +31,7 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      * @param uuid
      * @return
      */
+    @SuppressWarnings("null")
     @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE status != 'X' ORDER BY m.index, m.name", nativeQuery = true)
     List<Module> findAll();
 
