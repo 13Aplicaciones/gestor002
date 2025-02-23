@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.payload.common;
+package com.aplicaciones13.base.payload.common;
 
 import com.aplicaciones13.base.anotacion.SetUser;
 

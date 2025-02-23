@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
-import com.aplicaciones13.gestor.payload.common.UserDateAppResponse;
+import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 
 /**
  * DTO para la respuesta de un error.

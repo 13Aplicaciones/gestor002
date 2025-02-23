@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.model.common;
+package com.aplicaciones13.base.model.common;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,17 +13,14 @@ import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 /**
- * Clase abstracta que contiene los campos de auditoría de user, fecha y programa.
+ * Clase abstracta que contiene los campos de auditoría de fecha y programa.
  * 
  * @author omargo33
  * @since 2025-01-24
  */
 @MappedSuperclass
 @Data
-public abstract class UserDateApp {
-
-    @Column(length = 128, nullable = false)
-    private String user;
+public abstract class DateApp {
 
     @Column(name = "user_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,9 +34,6 @@ public abstract class UserDateApp {
      */
     @PrePersist
     protected void onCreate() {
-        if (user == null) {
-            user = "<anonimo>";
-        }
         userDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         userApp = ((userApp == null) ? "" : userApp + "-") + getClass().getSimpleName();
     }
@@ -49,10 +43,6 @@ public abstract class UserDateApp {
      */
     @PreUpdate
     protected void onUpdate() {
-        if (user == null) {
-            user = "<anonimo>";
-        }
-
         userDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
         int last = userApp.lastIndexOf("-");

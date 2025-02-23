@@ -1,7 +1,18 @@
 package com.aplicaciones13.orquestador.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
+import com.aplicaciones13.orquestador.services.ParameterService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 
@@ -10,22 +21,26 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author omargo33
  * @since 20024-12-18
  */
+@Slf4j
 @RestController(value = "/structure")
 public class StructureMenuController {
-    
+
+    @Autowired
+    private ParameterService parameterService;
+
     /**
      * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
      * 
-     * Lista<Modulos> 
-     *  -> lista<Menus>
-     *      -> lista<Persmios>
-     *  -> lista<Parametros>
+     * Lista<Modulos>
+     * -> lista<Menus>
+     * -> lista<Persmios>
+     * -> lista<Parametros>
      * 
      * @return
      */
     @GetMapping("/modules")
     public String getModules() {
-        //Obtienen los 
+        // Obtienen los
         return new String();
     }
 
@@ -33,14 +48,14 @@ public class StructureMenuController {
      * Metodo para obtener las configuraciones de un usuario (Oauth2) tiene acceso.
      * 
      * Lista<Configuraciones>
-     *  -> FormatoTabla
-     *  -> Tokens de seguridad
+     * -> FormatoTabla
+     * -> Tokens de seguridad
      * 
      * @return
      */
     @GetMapping("/settings")
     public String getUserSettings() {
-        //Obtienen los 
+        // Obtienen los
         return new String();
     }
 
@@ -51,9 +66,9 @@ public class StructureMenuController {
      */
     @GetMapping("/udc/module={module}")
     public String getUdc() {
-        //Obtienen los 
+        // Obtienen los
         return new String();
-    }    
+    }
 
     /**
      * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
@@ -62,7 +77,18 @@ public class StructureMenuController {
      */
     @GetMapping("/udc/udc={udc}")
     public String getUdc1() {
-        //Obtienen los 
+        // Obtienen los
         return new String();
+    }
+
+    /**
+     * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
+     * 
+     * @return
+     */
+    @GetMapping("/parameter/module={module}")
+    public ResponseEntity<List<ParameterResponse>> getParameters(@PathVariable String module) {
+        List<ParameterResponse> response = parameterService.findParametersByModuleIndex(module);
+        return ResponseEntity.ok(response);
     }
 }

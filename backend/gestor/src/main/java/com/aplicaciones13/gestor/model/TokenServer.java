@@ -1,6 +1,6 @@
 package com.aplicaciones13.gestor.model;
 
-import com.aplicaciones13.gestor.model.common.DateApp;
+import com.aplicaciones13.base.model.common.DateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

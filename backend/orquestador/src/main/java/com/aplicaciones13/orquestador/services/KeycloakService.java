@@ -1,4 +1,4 @@
-package com.aplicaciones13.orquestador.service;
+package com.aplicaciones13.orquestador.services;
 
 import org.springframework.stereotype.Service;
 
@@ -7,8 +7,7 @@ import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.Applica
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserScopeRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
-
-
+ 
 @Service
 public class KeycloakService{
     

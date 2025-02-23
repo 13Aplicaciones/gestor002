@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor.payload.common.UserDateAppResponse;
+import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

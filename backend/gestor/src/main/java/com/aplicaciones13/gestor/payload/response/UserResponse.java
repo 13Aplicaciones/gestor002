@@ -2,7 +2,7 @@ package com.aplicaciones13.gestor.payload.response;
 
 import java.util.UUID;
 
-import com.aplicaciones13.gestor.payload.common.UserDateAppResponse;
+import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

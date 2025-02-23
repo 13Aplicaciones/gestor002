@@ -1,4 +1,4 @@
-package com.aplicaciones13.gestor.payload.common;
+package com.aplicaciones13.base.payload.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

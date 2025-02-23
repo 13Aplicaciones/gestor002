@@ -1,7 +1,7 @@
 package com.aplicaciones13.gestor.model;
 
 
-import com.aplicaciones13.gestor.model.common.UserDateApp;
+import com.aplicaciones13.base.model.common.UserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

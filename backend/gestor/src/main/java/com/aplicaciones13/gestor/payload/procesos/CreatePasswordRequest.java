@@ -1,7 +1,7 @@
 package com.aplicaciones13.gestor.payload.procesos;
 
-import com.aplicaciones13.gestor.payload.common.AppRequest;
-import com.aplicaciones13.gestor.payload.common.EncryptionType;
+import com.aplicaciones13.base.payload.common.AppRequest;
+import com.aplicaciones13.base.payload.common.EncryptionType;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

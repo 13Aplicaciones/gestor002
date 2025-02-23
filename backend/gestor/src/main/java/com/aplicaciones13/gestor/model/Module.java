@@ -3,7 +3,7 @@ package com.aplicaciones13.gestor.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import com.aplicaciones13.gestor.model.common.UuidUserDateApp;
+import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

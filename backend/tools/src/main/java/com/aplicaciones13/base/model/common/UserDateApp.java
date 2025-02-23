@@ -1,9 +1,8 @@
-package com.aplicaciones13.gestor.model.common;
+package com.aplicaciones13.base.model.common;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -14,17 +13,14 @@ import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 /**
- * Clase abstracta que contiene los campos de auditoría de UUID, user, fecha y programa.
+ * Clase abstracta que contiene los campos de auditoría de user, fecha y programa.
  * 
  * @author omargo33
  * @since 2025-01-24
  */
 @MappedSuperclass
 @Data
-public abstract class UuidUserDateApp {
-
-    @Column(name = "uuid", length = 36, updatable = false)
-    private UUID uuid;
+public abstract class UserDateApp {
 
     @Column(length = 128, nullable = false)
     private String user;
@@ -37,26 +33,13 @@ public abstract class UuidUserDateApp {
     private String userApp;
 
     /**
-     * Método que retorna el UUID.
-     * 
-     * @param uuid
-     */
-    public void setUuid(String uuid) {
-        this.uuid = UUID.fromString(uuid);
-    }
-
-    /**
      * Método que se ejecuta antes de insertar un registro en la base de datos.
      */
     @PrePersist
     protected void onCreate() {
-        if (uuid == null) {
-            uuid = UUID.randomUUID();
-        }
         if (user == null) {
             user = "<anonimo>";
         }
-
         userDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         userApp = ((userApp == null) ? "" : userApp + "-") + getClass().getSimpleName();
     }
@@ -66,11 +49,12 @@ public abstract class UuidUserDateApp {
      */
     @PreUpdate
     protected void onUpdate() {
-
         if (user == null) {
             user = "<anonimo>";
         }
+
         userDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+
         int last = userApp.lastIndexOf("-");
         if (last > 0) {
             userApp = ((userApp == null) ? "" : userApp.substring(0, last) + "-")

@@ -11,7 +11,7 @@ import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.Applica
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserScopeRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
-import com.aplicaciones13.orquestador.service.KeycloakService;
+import com.aplicaciones13.orquestador.services.KeycloakService;
 
 /**
  * 

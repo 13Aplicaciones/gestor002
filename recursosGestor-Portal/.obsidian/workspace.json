@@ -20,8 +20,26 @@
               "icon": "lucide-file",
               "title": "ArquitecturaReact"
             }
+          },
+          {
+            "id": "4ca9c7adb9ef9c14",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "SitiosAyuda.canvas",
+                "viewState": {
+                  "x": -483.5,
+                  "y": 490,
+                  "zoom": -0.24482889883484518
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "SitiosAyuda"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,12 +187,12 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "92dc3ea4efbf000c",
+  "active": "4ca9c7adb9ef9c14",
   "lastOpenFiles": [
+    "mega Check list.md",
     "Muleto.md",
     "documentos/ArquitecturaReact.md",
     "SitiosAyuda.canvas",
-    "mega Check list.md",
     "documentos/CORS.md",
     "documentos/ejemplo toast.md",
     "documentos/Respuesta-REST.md",
