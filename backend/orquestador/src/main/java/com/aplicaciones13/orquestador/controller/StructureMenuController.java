@@ -2,11 +2,13 @@ package com.aplicaciones13.orquestador.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
 import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeGroupResponse;
-import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeResponse;
+import com.aplicaciones13.orquestador.payload.response.UserResponse;
 import com.aplicaciones13.orquestador.services.ParameterService;
 import com.aplicaciones13.orquestador.services.UserDefinedCodeService;
+import com.aplicaciones13.orquestador.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,23 +36,13 @@ public class StructureMenuController {
     @Autowired
     private UserDefinedCodeService userDefinedCodeService;
 
-    /**
-     * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
-     * 
-     * Lista<Modulos>
-     * -> lista<Menus>
-     * -> lista<Persmios>
-     * -> lista<Parametros>
-     * 
-     * @return
-     */
-    @GetMapping("/modules")
-    public String getModules() {
-        // Obtienen los
-        return new String();
-    }
+    @Autowired
+    private UserService userService;
 
-    /**
+    @Autowired
+    private JwtService jwtService;
+   
+   /**
      * Metodo para obtener las configuraciones de un usuario (Oauth2) tiene acceso.
      * 
      * Lista<Configuraciones>
@@ -95,6 +87,22 @@ public class StructureMenuController {
     @GetMapping("/udc/module={module}")
     public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String module) {
         List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(module);        
+        return ResponseEntity.ok(response);
+    }
+
+     /**
+     * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
+     * 
+     * Lista<Modulos>
+     * -> lista<Menus>
+     * -> lista<Persmios>
+     * 
+     * @return
+     */
+    @GetMapping("/modules")
+    public ResponseEntity<UserResponse> getModules() {
+        String nick = jwtService.getUsername();
+        UserResponse response = userService.findByNick(nick);
         return ResponseEntity.ok(response);
     }
 }

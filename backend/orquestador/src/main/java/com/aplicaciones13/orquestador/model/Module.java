@@ -46,9 +46,6 @@ public class Module extends UuidUserDateApp {
     private String status;
 
     @OneToMany(mappedBy = "module")
-    private List<Menu> menus;
-
-    @OneToMany(mappedBy = "module")
     private List<Parameter> parameters;
 
     @OneToMany(mappedBy = "module")

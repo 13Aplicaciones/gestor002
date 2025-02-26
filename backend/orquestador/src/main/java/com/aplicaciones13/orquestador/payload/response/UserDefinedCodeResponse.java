@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Clase que representa la entidad UserDefinedCode.
@@ -15,7 +14,6 @@ import lombok.EqualsAndHashCode;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Schema(description = "DTO para la respuesta de la entidad user defined code")
 public class UserDefinedCodeResponse implements Serializable {
 

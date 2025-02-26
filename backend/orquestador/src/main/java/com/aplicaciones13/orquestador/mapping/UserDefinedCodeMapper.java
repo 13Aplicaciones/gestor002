@@ -10,5 +10,5 @@ import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeResponse;
 public interface UserDefinedCodeMapper {
     UserDefinedCodeMapper INSTANCE = Mappers.getMapper(UserDefinedCodeMapper.class);
 
-    UserDefinedCodeResponse toResponse(UserDefinedCode parameter);
+    UserDefinedCodeResponse toResponse(UserDefinedCode userDefinedCode);
 }

@@ -32,7 +32,7 @@ public class User extends UuidUserDateApp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private Long idUser;
-
+    
     @Column(length = 128, nullable = false)
     private String nick;
 

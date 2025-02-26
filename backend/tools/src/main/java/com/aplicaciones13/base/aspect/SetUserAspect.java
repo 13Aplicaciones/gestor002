@@ -28,7 +28,7 @@ public class SetUserAspect {
     @Autowired
     private JwtService jwtService;
                          
-    @Around("@annotation(com.aplicaciones13.gestor.anotacion.InvokeUser)")
+    @Around("@annotation(com.aplicaciones13.base.anotacion.InvokeUser)")
     public Object setUsuer(ProceedingJoinPoint joinPoint) throws Throwable  {
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {

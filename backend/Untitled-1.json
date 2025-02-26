@@ -1,0 +1,366 @@
+{
+  "uuid": "65333634-3365-3437-2d65-3164652d3131",
+  "nick": "root",
+  "name": "Usuario Principal",
+  "lastName": "SIC",
+  "validator": "3506402",
+  "status": "A",
+  "roleUsers": [
+    {
+      "idRolUser": 39,
+      "idRol": 1,
+      "idUser": 15,
+      "rol": {
+        "idRol": 1,
+        "idModule": 2,
+        "name": "Root-SuperUsuarios",
+        "type": "ROOT",
+        "status": "A"
+      },
+      "permissions": [
+        {
+          "idPermission": 4,
+          "idMenu": 6,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 6,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-RL-001",
+            "name": "Roles",
+            "taskFlow": "/WEB-INF/rol-task-flow.xml#rol-task-flow",
+            "status": "A",
+            "order": 3
+          }
+        },
+        {
+          "idPermission": 12,
+          "idMenu": 10,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 10,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-CD-001",
+            "name": "Códigos Definidos",
+            "taskFlow": "/WEB-INF/cdu-task-flow.xml#cdu-task-flow",
+            "status": "A",
+            "order": 4
+          }
+        },
+        {
+          "idPermission": 15,
+          "idMenu": 11,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 11,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-ER-001",
+            "name": "Errores",
+            "taskFlow": "/WEB-INF/error-task-flow.xml#error-task-flow",
+            "status": "A",
+            "order": 6
+          }
+        },
+        {
+          "idPermission": 17,
+          "idMenu": 12,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 12,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-IN-001",
+            "name": "Información",
+            "taskFlow": "/WEB-INF/informacion-task-flow.xml#informacion-task-flow",
+            "status": "A",
+            "order": 7
+          }
+        },
+        {
+          "idPermission": 19,
+          "idMenu": 13,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 13,
+            "idModule": 3,
+            "type": "P",
+            "index": "IW-EN-001",
+            "name": "Reportes",
+            "taskFlow": "/WEB-INF/reporte-task-flow.xml#reporte-task-flow",
+            "status": "A",
+            "order": 1
+          }
+        },
+        {
+          "idPermission": 23,
+          "idMenu": 15,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 15,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-US-001",
+            "name": "Usuarios",
+            "taskFlow": "/WEB-INF/usuario-task-flow.xml#usuario-task-flow",
+            "status": "A",
+            "order": 5
+          }
+        },
+        {
+          "idPermission": 25,
+          "idMenu": 3,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 3,
+            "idModule": 1,
+            "type": "P",
+            "index": "LG-US-001",
+            "name": "Usuario",
+            "taskFlow": "/WEB-INF/usuario-task-flow.xml#usuario-task-flow",
+            "status": "A",
+            "order": 1
+          }
+        },
+        {
+          "idPermission": 72,
+          "idMenu": 21,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 21,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_AL_001",
+            "name": "Cierre de Vuelo",
+            "taskFlow": "/WEB-INF/manifiesto-usuario-task-flow.xml#manifiesto-usuario-task-flow",
+            "status": "A",
+            "order": 2
+          }
+        },
+        {
+          "idPermission": 78,
+          "idMenu": 23,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 23,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_TT_001",
+            "name": "Tasas Timbres",
+            "taskFlow": "/WEB-INF/tasa-task-flow.xml#tasa-task-flow",
+            "status": "A",
+            "order": 6
+          }
+        },
+        {
+          "idPermission": 81,
+          "idMenu": 16,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 16,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-MD-001",
+            "name": "Módulos",
+            "taskFlow": "/WEB-INF/modulo-task-flow.xml#modulo-task-flow",
+            "status": "A",
+            "order": 1
+          }
+        },
+        {
+          "idPermission": 82,
+          "idMenu": 9,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 9,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-MN-001",
+            "name": "Menús",
+            "taskFlow": "/WEB-INF/menu-task-flow.xml#menu-task-flow",
+            "status": "A",
+            "order": 2
+          }
+        },
+        {
+          "idPermission": 83,
+          "idMenu": 22,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 22,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_LD_001",
+            "name": "Libro Direcciones",
+            "taskFlow": "/WEB-INF/libro-direccion-task-flow.xml#libro-direccion-task-flow",
+            "status": "A",
+            "order": 5
+          }
+        },
+        {
+          "idPermission": 84,
+          "idMenu": 20,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 20,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_RG_001",
+            "name": "Cierre de Vuelo ADM",
+            "taskFlow": "/WEB-INF/manifiesto-usuario-task-flow.xml#manifiesto-usuario-task-flow",
+            "status": "A",
+            "order": 1
+          }
+        },
+        {
+          "idPermission": 101,
+          "idMenu": 24,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 24,
+            "idModule": 2,
+            "type": "P",
+            "index": "GS-CC-001",
+            "name": "Cambio Clave",
+            "taskFlow": "/WEB-INF/clave-task-flow.xml#clave-task-flow",
+            "status": "A",
+            "order": 8
+          }
+        },
+        {
+          "idPermission": 103,
+          "idMenu": 25,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 25,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_ER_001",
+            "name": "Envio Cierre Vuelo",
+            "taskFlow": "/WEB-INF/error-rest-task-flow.xml#error-rest-task-flow",
+            "status": "A",
+            "order": 7
+          }
+        },
+        {
+          "idPermission": 108,
+          "idMenu": 26,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 26,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_PL_001",
+            "name": "Preliquidación",
+            "taskFlow": "/WEB-INF/preliquidacion-task-flow.xml#preliquidacion-task-flow",
+            "status": "A",
+            "order": 4
+          }
+        },
+        {
+          "idPermission": 111,
+          "idMenu": 27,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 27,
+            "idModule": 6,
+            "type": "P",
+            "index": "MV_UP_001",
+            "name": "Proceso Lotes",
+            "taskFlow": "/WEB-INF/manifiesto-up-task-flow.xml#manifiesto-up-task-flow",
+            "status": "A",
+            "order": 3
+          }
+        },
+        {
+          "idPermission": 118,
+          "idMenu": 28,
+          "idRol": 1,
+          "create": "S",
+          "update": "S",
+          "delete": "S",
+          "audit": "S",
+          "menu": {
+            "idMenu": 28,
+            "idModule": 6,
+            "type": "P",
+            "index": "FA_CL_001",
+            "name": "Filiales",
+            "taskFlow": "/WEB-INF/filial-task-flow.xml#filial-task-flow",
+            "status": "A",
+            "order": 3
+          }
+        }
+      ]
+    }
+  ]
+}

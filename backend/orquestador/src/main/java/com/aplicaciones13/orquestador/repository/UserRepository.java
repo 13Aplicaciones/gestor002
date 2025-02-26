@@ -6,4 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    /**
+     * Método que permite buscar un usuario por su nick.
+     * 
+     */
+    User findByNick(String nick);
 }

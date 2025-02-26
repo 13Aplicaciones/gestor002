@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * DTO para la respuesta de la entidad Parameter
@@ -13,7 +12,6 @@ import lombok.EqualsAndHashCode;
  * @since 2025-01-10
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Schema(description = "DTO para la respuesta de la entidad Parameter")
 public class ParameterResponse implements Serializable {
 
