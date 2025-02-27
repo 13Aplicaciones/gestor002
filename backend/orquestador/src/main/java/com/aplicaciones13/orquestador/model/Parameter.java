@@ -44,8 +44,8 @@ public class Parameter extends UuidUserDateApp {
     @Column(length = 32, nullable = false, unique = true)
     private String index;
 
-    @Column(length = 8)
-    private String encrypted;
+    @Column(name = "encrypted", length = 8)
+    private String encrypt;
 
     @Column(length = 128, nullable = false)
     private String name;

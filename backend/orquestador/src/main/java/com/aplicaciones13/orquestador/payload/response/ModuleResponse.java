@@ -6,6 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * DTO para la respuesta de la entidad Module
@@ -15,6 +16,7 @@ import java.util.UUID;
  */
 @Data
 @Schema(description = "DTO para la respuesta de la entidad Module")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ModuleResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,4 +41,7 @@ public class ModuleResponse implements Serializable {
 
     @Schema(description = "Listado de user defined code asociados al módulo")
     private List<UserDefinedCodeResponse> userDefinedCodes;
+
+    @Schema(description = "Listado de menús asociados al módulo")
+    private List<MenuResponse> menus;
 }

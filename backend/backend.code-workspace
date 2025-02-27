@@ -8,7 +8,7 @@
 	"settings": {
 		"files.exclude": {
 			"aplicaciones13": true,
-			"gestor":true,
+			"gestor": false,
 			"orquestador": false,
 			"tools": true,
 			"**/target": true,

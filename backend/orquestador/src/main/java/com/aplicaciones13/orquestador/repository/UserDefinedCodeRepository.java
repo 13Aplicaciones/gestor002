@@ -6,6 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repositorio de User Defined Code
+ * 
+ * Se encarga de realizar las consultas a la base de datos
+ * 
+ * @author omargo33
+ * @since 2025-02-26
+ */
 @Repository
 public interface UserDefinedCodeRepository extends JpaRepository<UserDefinedCode, Long> {
     List<UserDefinedCode> findByModule_IndexAndGroupNotOrderByGroupAscOrderAsc(String moduleIndex, String group);

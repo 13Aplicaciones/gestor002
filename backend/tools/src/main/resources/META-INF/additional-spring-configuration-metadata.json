@@ -1,0 +1,55 @@
+{
+    "properties": [
+        {
+            "name": "openapi.info.title",
+            "type": "java.lang.String",
+            "description": "A description for 'openapi.info.title'"
+        },
+
+        {
+            "name": "openapi.info.version",
+            "type": "java.lang.String",
+            "description": "A version  for OpenAPI"
+        },
+        {
+            "name": "openapi.info.description",
+            "type": "java.lang.String",
+            "description": "A description for OpenAPI"
+        },
+        {
+            "name": "openapi.info.contact.name",
+            "type": "java.lang.String",
+            "description": "name of the contact"
+        },
+        {
+            "name": "openapi.info.contact.url",
+            "type": "java.lang.String",
+            "description": "url of the contact"
+        },
+        {
+            "name": "openapi.info.contact.email",
+            "type": "java.lang.String",
+            "description": "email of the contact"
+        },
+        {
+            "name": "contexts.excluded-security",
+            "type": "java.lang.String",
+            "description": "A list of contexts that will be excluded from security"
+        },
+        {
+            "name": "cors.allowed-origins",
+            "type": "java.lang.String",
+            "description": "A list of cors allowed origins"
+        },
+        {
+            "name": "cors.allowed-methods",
+            "type": "java.lang.String",
+            "description": "A list of methods allowed by cors"
+        }
+
+
+
+
+
+    ]
+}

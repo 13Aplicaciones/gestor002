@@ -21,7 +21,7 @@ public class ParameterResponse extends UserDateAppResponse {
     private String index;
 
     @Schema(description = "Listado de CDU + E=encriptado, TP=texto plano", example = "TP")
-    private String encryted;
+    private String encryt;
 
     @Schema(description = "Name del parameter", example = "Name del Parámetro")
     private String name;

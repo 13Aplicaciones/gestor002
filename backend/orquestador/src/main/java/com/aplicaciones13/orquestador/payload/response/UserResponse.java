@@ -1,7 +1,10 @@
 package com.aplicaciones13.orquestador.payload.response;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -14,6 +17,7 @@ import lombok.Data;
  */
 @Data
 @Schema(description = "DTO para la respuesta de la entidad user")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,5 +39,8 @@ public class UserResponse implements Serializable {
 
     @Schema(description = "Status del user", example = "activo")
     private String status;
-    
+
+    @Schema(description = "Listado de modulos asociados al user")
+    private List<ModuleResponse> modules;
+ 
 }

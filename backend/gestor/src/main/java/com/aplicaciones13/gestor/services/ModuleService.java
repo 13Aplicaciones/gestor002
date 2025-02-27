@@ -125,7 +125,7 @@ public class ModuleService {
      */
     private void validateUniqueIndexUuid(String index, String uuid) {
         Optional<Module> existingModule = moduleRepository.findByIndex(index);
-        if (existingModule.isPresent() && !existingModule.get().getUuid().equals(uuid)) {
+        if (existingModule.isPresent() && !existingModule.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El index ya existe");
         }
     }

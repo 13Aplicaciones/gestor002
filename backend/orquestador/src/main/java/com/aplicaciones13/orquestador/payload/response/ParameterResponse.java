@@ -21,7 +21,7 @@ public class ParameterResponse implements Serializable {
     private String index;
 
     @Schema(description = "Listado de CDU + E=encriptado, TP=texto plano", example = "TP")
-    private String encryted;
+    private String encryt;
 
     @Schema(description = "Valor texto del parameter", example = "Valor Text 01")
     private String valueText01;

@@ -13,26 +13,17 @@ import jakarta.persistence.Table;
 public class ConfigPermission {
 
     @Id
-    @Column(name = "user_id_user")
-    private Long idUser;
-
-    @Column(name = "user_nick")
-    private String nick;
-
-    @Column(name = "user_name")
-    private String name;
-
-    @Column(name = "user_last_name")
-    private String lastName;
-
-    @Column(name = "user_status")
-    private String status;
+    @Column(name = "row_num")
+    private Long rowNum;
 
     @Column(name = "rol_user_id_rol_user")
     private Long idRolUser;
 
     @Column(name = "rol_user_id_rol")
     private Long idRol;
+
+    @Column(name = "rol_user_id_user")
+    private Long idUser;
 
     @Column(name = "permission_id_permission")
     private Long idPermission;

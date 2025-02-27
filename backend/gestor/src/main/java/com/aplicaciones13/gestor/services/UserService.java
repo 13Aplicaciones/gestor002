@@ -43,7 +43,7 @@ public class UserService {
      */
     public void validateUniqueNickUuid(String nick, String uuid) {
         Optional<User> existingError = userRepository.findByNick(nick);
-        if (existingError.isPresent() && !existingError.get().getUuid().equals(uuid)) {
+        if (existingError.isPresent() && !existingError.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El Nick ya existe");
         }
     }

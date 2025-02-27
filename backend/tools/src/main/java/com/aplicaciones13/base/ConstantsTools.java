@@ -1,4 +1,4 @@
-package com.aplicaciones13;
+package com.aplicaciones13.base;
 
 /**
  *  Constantes de seguridades.
