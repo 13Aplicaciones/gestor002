@@ -4,10 +4,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserScopeRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +28,7 @@ import org.springframework.util.MultiValueMap;
  * @since 2024-12-22
  * 
  */
+@Slf4j
 @Component
 public class KeycloakClient {
     private final RestTemplate restTemplate;
@@ -101,6 +105,22 @@ public class KeycloakClient {
     }
 
     /**
+     * Metodo para obtener un token de acceso a partir de un refresh token
+     * 
+     * @param url
+     * @param clientId
+     * @param refreshToken
+     * @return
+     */
+    public KeycloakTokenResponse refreshToken(String url, String clientId, String refreshToken) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("refresh_token", refreshToken);
+        body.add("client_id", clientId);
+        body.add("grant_type", "refresh_token");
+        return fetchFormUrlEncoded(url, body, KeycloakTokenResponse.class);
+    }
+
+    /**
      * Metodo para obtener un token de acceso a partir de un cliente, un secreto; un
      * 
      * @param <V>
@@ -122,14 +142,13 @@ public class KeycloakClient {
                     responseType);
 
             if (response.getStatusCode() != HttpStatus.OK) {
-                //TODO
-                //throw new ResourceHttpStatusException("Failed to fetch token", response.getStatusCode());
+                log.warn("Failed to fetch token {}", response.getStatusCode());
+                throw new ResourceHttpStatusException("Failed to fetch token", response.getStatusCode());
             }
             return response.getBody();
          } catch (HttpClientErrorException e) {
-            //TODO
-            //throw new ResourceHttpStatusException(e.getStatusText(), e.getStatusCode());
-            return null;
+            log.error("Error {}", e.getStatusText());                
+            throw new ResourceHttpStatusException(e.getStatusText(), e.getStatusCode());
         } 
     }
 }

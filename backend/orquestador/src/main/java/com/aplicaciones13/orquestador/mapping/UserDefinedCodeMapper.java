@@ -6,6 +6,12 @@ import org.mapstruct.factory.Mappers;
 import com.aplicaciones13.orquestador.model.UserDefinedCode;
 import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeResponse;
 
+/**
+ * Mapper para la entidad UserDefinedCode
+ * 
+ * @autor omargo33
+ * @since 2025-01-10
+ */
 @Mapper
 public interface UserDefinedCodeMapper {
     UserDefinedCodeMapper INSTANCE = Mappers.getMapper(UserDefinedCodeMapper.class);

@@ -9,6 +9,12 @@ import com.aplicaciones13.orquestador.payload.response.ModuleResponse;
 
 import java.util.UUID;
 
+/**
+ * Mapper para la entidad Module
+ * 
+ * @autor omargo33
+ * @since 2025-01-10
+ */
 @Mapper
 public interface ModuleMapper {
     
@@ -23,5 +29,6 @@ public interface ModuleMapper {
     @Mapping(target = "index", source = "moduleIndex")
     @Mapping(target = "context", source = "moduleContext")
     @Mapping(target = "status", source = "moduleStatus")
+    @Mapping(target = "icon", source = "moduleIcon")
     ModuleResponse toResponse(ConfigPermission configPermission);
 }

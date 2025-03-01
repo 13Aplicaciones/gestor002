@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertColor, Alerts, BannerInformation } from "api-fetch";
-import { Avatar, Card, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, Text, TextArea, } from "@radix-ui/themes";
-import { AvatarIcon, CalendarIcon, ExclamationTriangleIcon, EnvelopeOpenIcon, GearIcon, HamburgerMenuIcon, HomeIcon, UpdateIcon, ExitIcon } from "@radix-ui/react-icons";
+import { alertColor, Alerts, BannerInformation, useToastContext } from "ux-ui";
+import { Card, Flex, TextArea, } from "@radix-ui/themes";
+import { ExclamationTriangleIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { getStructure } from "./services/APIPortal";
 import { globalStore } from "orchestrator_remote/globalStore";
-import { userStore, State as StateUser } from "orchestrator_remote/userStore";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
 import { lazy, Suspense } from "react";
 import { MainFrame, WorkFrame } from "./layouts/MainFrame";
+import { structureStore } from "orchestrator_remote/structureStore";
+import { StructureStoreProvider } from "./context/StoreProvider";
 import { useEffect, useState } from 'react';
+import { userStore, State as StateUser } from "orchestrator_remote/userStore";
 import { useTranslation } from "react-i18next";
 import CatchErrorLoadElement from "./utils/CatchErrorLoadElement";
+import Header from "./pages/Home/Header";
+import { useStructureStore } from "./context/StoreHook";
 
 /**
  * Componente principal de la aplicación.
@@ -19,20 +24,16 @@ import CatchErrorLoadElement from "./utils/CatchErrorLoadElement";
  */
 const App = () => {
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
-  const [sharedData, setSharedData] = useState(globalStore.getState().sharedData);
+
+  const [sharedGlobal, setSharedGlobal] = useState(globalStore.getState().sharedGlobal);
   const [sharedUser, setSharedUser] = useState(userStore.getState());
-  const [sharedState] = useState<StateUser>({
-    sharedUser: "",
-    sharedAccessTolken: "",
-    sharedRefreshTolken: "",
-    sharedExpiresAt: 0,
-    sharedIdToken: "",
-    sharedEmail: "",
-    sharedName: ""
-  });
+  const [sharedStructure, setSharedStructure] = useState(structureStore.getState().sharedStructure);
+  //const [setSharedStructure1] = useStructureStore();
+
 
   const [t] = useTranslation("global");
   const auth = useAuth();
+
   const Button = lazy(() => import("demo_remote/Button"));
   const Dashboard = lazy(() => import("dashboard_remote/Dashboard"));
   const EncabezadoWrapper = lazy(() => import("marco_remote/EncabezadoWrapper"));
@@ -40,7 +41,9 @@ const App = () => {
   const Footer = lazy(() => import("demo_remote/Footer"));
   const Usuario = lazy(() => import("usuario_remote/Usuario"));
 
-
+  const { showToast } = useToastContext();
+  
+  
 
   /**
    * Use effect para manejar la autenticación
@@ -54,51 +57,79 @@ const App = () => {
 
   /**
    * Use effect para manejar el estado compartido de datos genericos
+   * 
+   * Al unSuscribirse al globalStore se pasa los datos vacios
+   * 
    */
   useEffect(() => {
-    const unsubscribe = globalStore.subscribe((state: { sharedData: any; }) => {
-      setSharedData(state.sharedData);
+    const unsubscribe = globalStore.subscribe((state: { sharedGlobal: any; }) => {
+      setSharedGlobal(state.sharedGlobal);
     });
+
     return () => unsubscribe();
   }, []);
 
   /**
    * Use effect para manejar el estado compartido de datos de usuario y tokens
    * 
-   * Al suscribirse al userStore se pasa los datos vacios
    * Al iniciar el componente se obtienen los datos del usuario desde el auth
+   * Al unSuscribirse al userStore se pasa los datos vacios
    * 
    */
-  useEffect(() => {    
-    
-    console.log("Data shared 001: ", JSON.stringify(auth.user?.profile));
-    console.log("Data shared 002: ", JSON.stringify(sharedUser));
+  useEffect(() => {
+    if (auth.user) {
+      const sharedState: StateUser = {
+        sharedUser: auth.user?.profile?.preferred_username || "",
+        sharedAccessTolken: auth.user?.access_token || "",
+        sharedRefreshTolken: auth.user?.refresh_token || "",
+        sharedExpiresAt: auth.user?.expires_at || 0,
+        sharedIdToken: auth.user?.id_token || "",
+        sharedEmail: auth.user?.profile?.email || "",
+        sharedName: auth.user?.profile?.name || ""
+      };
 
+      setSharedUser(sharedState);
+    }
 
-    const unsubscribe = userStore.subscribe((state: StateUser) => {      
-      state.sharedUser = "";
-      state.sharedAccessTolken =  "";
-      state.sharedRefreshTolken ="";
-      state.sharedExpiresAt = 0;
-      state.sharedIdToken = "";
-      state.sharedEmail = "";
-      state.sharedName = "";
+    const unsubscribe = userStore.subscribe((state: StateUser) => {
       setSharedUser(state);
     });
 
-    sharedState.sharedUser = auth.user?.profile?.preferred_username || "";
-    sharedState.sharedAccessTolken = auth.user?.access_token || "";
-    sharedState.sharedRefreshTolken = auth.user?.refresh_token || "";
-    sharedState.sharedExpiresAt = auth.user?.expires_at || 0;
-    sharedState.sharedIdToken = auth.user?.id_token || "";
-    sharedState.sharedEmail = auth.user?.profile?.email || "";
-    sharedState.sharedName = auth.user?.profile?.name || "";
-    setSharedUser(sharedState);
-    
     return () => unsubscribe();
-  }, []);
+  }, [auth.user]);
 
-  
+
+  /**
+   * Use effect para manejar el estado compartido de la estructura
+   * 
+   */
+  useEffect(() => {
+    if (sharedUser.sharedAccessTolken) {
+      const fetchData = async () => {
+        const data = await getStructure({ token: sharedUser.sharedAccessTolken +"123" });
+        if (data) {
+          if (data.error) {
+            showToast(
+              data.error + " (" + data.status + ") " ,
+              data.statusDescription || "",
+              Alerts.error
+            );
+          } else {
+            setSharedStructure(data.response);
+            //setSharedStructure1(data.response);
+          }
+        }
+      };
+      fetchData();
+    }
+
+    const unsubscribe = structureStore.subscribe((state: { sharedStructure: any; }) => {
+      setSharedStructure(state.sharedStructure);
+    });
+
+    return () => unsubscribe();
+  }, [sharedUser.sharedAccessTolken, showToast]);
+
 
   if (auth.isLoading) {
     return (
@@ -143,165 +174,71 @@ const App = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    globalStore.setState({ sharedData: e.target.value });
+    globalStore.setState({ sharedGlobal: e.target.value });
   };
 
   return (
-    <WorkFrame header={<Header />}>
-      <input
-        type="text"
-        value={sharedData}
-        onChange={handleChange}
-        placeholder="Escribe algo..."
-      />
-      <p>Datos compartidos: {sharedData}</p>
-      <CatchErrorLoadElement titleName="Button">
-        <Suspense fallback={t("messages.loading")}>
-          <Button />
-        </Suspense>
-      </CatchErrorLoadElement>
+    <StructureStoreProvider>
+      <WorkFrame header={<Header />}>
+        <input
+          type="text"
+          value={sharedGlobal}
+          onChange={handleChange}
+          placeholder="Escribe algo..."
+        />
 
-      <CatchErrorLoadElement titleName="EncabezadoWrapper">
-        <Suspense fallback={t("messages.loading")}>
-          <EncabezadoWrapper />
-        </Suspense>
-      </CatchErrorLoadElement>
-            
-      <CatchErrorLoadElement titleName="Usuario">
-        <Suspense fallback={t("messages.loading")}>
-          <Usuario />
-        </Suspense>
-      </CatchErrorLoadElement>
-      <CatchErrorLoadElement titleName="Flujo">
-        <Suspense fallback={t("messages.loading")}>
-          <Flujo />
-        </Suspense>
-      </CatchErrorLoadElement>
-      <CatchErrorLoadElement titleName="Dashboard">
-        <Suspense fallback={t("messages.loading")}>
-          <Dashboard />
-        </Suspense>
-      </CatchErrorLoadElement>
+        <p>Datos compartidos: {sharedGlobal}</p>
 
-      <TextArea rows={15} variant="soft"
-        value={JSON.stringify(auth)}
-      />
+        <TextArea rows={15} variant="soft"
+          value={JSON.stringify(sharedUser)}
+          readOnly
+        />
 
-      <CatchErrorLoadElement titleName="Footer">
-        <Suspense fallback={t("messages.loading")}>
-          <Footer />
-        </Suspense>
-      </CatchErrorLoadElement>
+        <TextArea rows={15} variant="soft"
+          value={JSON.stringify(sharedStructure)}
+          readOnly
+        />
+        {/* 
+          <CatchErrorLoadElement titleName="Button">
+            <Suspense fallback={t("messages.loading")}>
+              <Button />
+            </Suspense>
+          </CatchErrorLoadElement>
 
-    </WorkFrame>
+          <CatchErrorLoadElement titleName="EncabezadoWrapper">
+            <Suspense fallback={t("messages.loading")}>
+              <EncabezadoWrapper />
+            </Suspense>
+          </CatchErrorLoadElement>
+
+          <CatchErrorLoadElement titleName="Usuario">
+            <Suspense fallback={t("messages.loading")}>
+              <Usuario />
+            </Suspense>
+          </CatchErrorLoadElement>
+
+          <CatchErrorLoadElement titleName="Flujo">
+            <Suspense fallback={t("messages.loading")}>
+              <Flujo />
+            </Suspense>
+          </CatchErrorLoadElement>
+
+          <CatchErrorLoadElement titleName="Dashboard">
+            <Suspense fallback={t("messages.loading")}>
+              <Dashboard />
+            </Suspense>
+          </CatchErrorLoadElement>
+
+          <CatchErrorLoadElement titleName="Footer">
+            <Suspense fallback={t("messages.loading")}>
+              <Footer />
+            </Suspense>
+          </CatchErrorLoadElement>
+
+          */}
+      </WorkFrame>
+    </StructureStoreProvider>
   );
 };
 
-
-const Header = () => {
-  const auth = useAuth();
-  const [name, setName] = useState<string | "o.velez">();
-  const [abreviatura, setAbreviatura] = useState<string>("Ov");
-  const [avatarUrl] = useState<string>("https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop");
-
-  useEffect(() => {
-    setName(auth.user?.profile?.preferred_username);
-    if (name) {
-      setAbreviatura(name.substring(0, 2));
-      // TODO: fetchApi para obtener la imagen del avatar
-      // setAvatarUrl(`https://avatars.dicebear.com/api/avataaars/${name}.svg`);
-    }
-  }, [auth.user?.profile?.preferred_username, name]);
-
-  return (
-    <Flex direction="row" px="4" align="center" justify="between" style={{ height: '6vh', backgroundColor: 'var(--gray-a2)', borderBottom: '1px solid var(--gray-a6)' }}>
-      <Flex direction="row" align="center" gap="2">
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <IconButton size="3" variant="ghost">
-              <HamburgerMenuIcon width="24" height="24" />
-            </IconButton>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
-            <DropdownMenu.Item shortcut="⌘ D">Duplicate</DropdownMenu.Item>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item shortcut="⌘ N">Archive</DropdownMenu.Item>
-            <DropdownMenu.Sub>
-              <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
-              <DropdownMenu.SubContent>
-                <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
-                <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
-                <DropdownMenu.Separator />
-                <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
-              </DropdownMenu.SubContent>
-            </DropdownMenu.Sub>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item>Share</DropdownMenu.Item>
-            <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
-              Delete
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-        <Heading size="5">Portal</Heading>
-      </Flex>
-
-      <SegmentedControl.Root defaultValue="inbox">
-        <SegmentedControl.Item value="inbox">
-          <Flex align="center" gap="2">
-            <HomeIcon height="22" width="22" />
-          </Flex>
-        </SegmentedControl.Item>
-        <SegmentedControl.Item value="drafts">
-          <Flex align="center" gap="2">
-            <CalendarIcon height="22" width="22" />
-          </Flex>
-        </SegmentedControl.Item>
-        <SegmentedControl.Item value="sent">
-          <Flex align="center" gap="2">
-            <GearIcon height="22" width="22" />
-          </Flex>
-        </SegmentedControl.Item>
-      </SegmentedControl.Root>
-
-      <Flex direction="row" align="center" justify="center" gap="2">
-
-        <Text>{name}</Text>
-
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <Avatar size="3"
-              src={avatarUrl}
-              fallback={abreviatura || "Ov"}
-            />
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item
-
-              onClick={() => console.log("mi final token pasado")}
-            >
-              <AvatarIcon height="18" width="18" />
-              Perfil {name}
-            </DropdownMenu.Item>
-            <DropdownMenu.Item
-              color="red"
-              onClick={() => auth.signoutRedirect()}>
-              <ExitIcon height="18" width="18" />
-              Salir
-            </DropdownMenu.Item>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item>
-              <EnvelopeOpenIcon height="18" width="18" />
-              Enviar Comentario
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </Flex>
-    </Flex>
-  );
-}
-
 export default App;
- 

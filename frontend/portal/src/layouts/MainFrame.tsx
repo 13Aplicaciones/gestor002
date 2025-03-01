@@ -51,7 +51,7 @@ const MainFrame = ({ children }: { children: ReactNode }) => {
  * @param children 
  * @returns 
  */
-const WorkFrame = ({ header, children }: { header?: ReactNode, children: ReactNode }) => {
+const WorkFrame = ({ header, children }: { header?: ReactNode, children?: ReactNode }) => {
     return (
         <Flex direction="column">
             {header}

@@ -18,17 +18,31 @@ public class ParameterService {
     private ParameterRepository parameterRepository;
 
     /**
-     * Busca los parámetros de un módulo en particular a partir del índice del módulo.
+     * Busca los parámetros de un módulo en particular a partir del índice del
+     * módulo.
      *
      * @param moduleIndex el índice del módulo
      * @return una lista de parámetros asociados al módulo
      */
     @Cacheable(value = "parameters", key = "#moduleIndex")
     public List<ParameterResponse> findParametersByModuleIndex(String moduleIndex) {
-        List<Parameter> resp =  parameterRepository.findByModule_Index(moduleIndex);
-   
+        List<Parameter> resp = parameterRepository.findByModule_Index(moduleIndex);
+
         return resp.stream()
-               .map(ParameterMapper.INSTANCE::toResponse)
-               .collect(Collectors.toList());
-        }
+                .map(ParameterMapper.INSTANCE::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Busca un parámetro a partir de su índice y el índice del módulo al que pertenece.
+     * 
+     * @param index
+     * @param moduleIndex
+     * @return
+     */
+    @Cacheable(value = "parameters", key = "{#index, #moduleIndex}")
+    public ParameterResponse findParameterByIndexAndModuleIndex(String index, String moduleIndex) {
+        Parameter resp = parameterRepository.findByIndexAndModule_Index(index, moduleIndex);
+        return ParameterMapper.INSTANCE.toResponse(resp);
+    }
 }

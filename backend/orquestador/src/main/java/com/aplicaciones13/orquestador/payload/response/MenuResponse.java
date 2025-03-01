@@ -17,12 +17,6 @@ import lombok.EqualsAndHashCode;
 @Schema(description = "DTO para la respuesta de la entidad Menu")
 public class MenuResponse implements Serializable {
 
-    @Schema(description = "Identificador único del menú", example = "1")
-    private Long idMenu;
-
-    @Schema(description = "Identificador del módulo al que pertenece el menú", example = "2")
-    private Long idModule;
-
     @Schema(description = "Type de menú", example = "principal")
     private String type;
 
@@ -40,6 +34,9 @@ public class MenuResponse implements Serializable {
 
     @Schema(description = "Order de visualización del menú", example = "1")
     private Long order;
+
+    @Schema(description = "Icon Presentacion", example = "QuestionMarkIcon")
+    private String icon;
 
     @Schema(description = "Create")
     private String create;

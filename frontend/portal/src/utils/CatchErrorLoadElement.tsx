@@ -1,4 +1,4 @@
-import { alertIcon, Alerts } from 'api-fetch';
+import { alertIcon, Alerts } from 'ux-ui';
 import { Text } from '@radix-ui/themes';
 import React, { Component, ReactNode } from 'react';
 

@@ -30,7 +30,7 @@
                 "file": "SitiosAyuda.canvas",
                 "viewState": {
                   "x": -483.5,
-                  "y": 490,
+                  "y": 747.740668789809,
                   "zoom": -0.24482889883484518
                 }
               },
@@ -191,10 +191,10 @@
   "lastOpenFiles": [
     "mega Check list.md",
     "Muleto.md",
-    "documentos/ArquitecturaReact.md",
     "SitiosAyuda.canvas",
-    "documentos/CORS.md",
     "documentos/ejemplo toast.md",
+    "documentos/CORS.md",
+    "documentos/ArquitecturaReact.md",
     "documentos/Respuesta-REST.md",
     "documentos/Seguridades.pdf"
   ]

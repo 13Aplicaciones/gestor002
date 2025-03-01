@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 
@@ -27,7 +28,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @since 20024-12-18
  */
 @Slf4j
-@RestController(value = "/structure")
+@RestController()
+@RequestMapping("/structure")
 public class StructureMenuController {
 
     @Autowired
@@ -41,33 +43,7 @@ public class StructureMenuController {
 
     @Autowired
     private JwtService jwtService;
-   
-   /**
-     * Metodo para obtener las configuraciones de un usuario (Oauth2) tiene acceso.
-     * 
-     * Lista<Configuraciones>
-     * -> FormatoTabla
-     * -> Tokens de seguridad
-     * 
-     * @return
-     */
-    @GetMapping("/settings")
-    public String getUserSettings() {
-        // Obtienen los
-        return new String();
-    }
-
-    /**
-     * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
-     * 
-     * @return
-     */
-    @GetMapping("/udc/udc={udc}")
-    public String getUdc1() {
-        // Obtienen los
-        return new String();
-    }
-
+  
     /**
      * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
      * 

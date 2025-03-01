@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
 import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserRequest;
@@ -21,11 +24,23 @@ import com.aplicaciones13.orquestador.services.KeycloakService;
  * @since 20024-12-18
  */
 @Validated
-@RestController(value = "/login")
+@RestController()
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
     private KeycloakService keycloakService;
+
+    /**
+     * Metodo para obtener un token de acceso a partir de un refreshToken
+     * 
+     * @param refreshToken
+     * @return
+     */
+    @GetMapping("/refreshToken/{refreshToken}")
+    public KeycloakTokenResponse refresToken(@PathVariable String refreshToken) {
+        return keycloakService.refreshToken(refreshToken);
+    }
 
     /**
      * Metodo para obtener un token de acceso a partir de un user y contraseña

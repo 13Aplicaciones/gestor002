@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import federation from "@originjs/vite-plugin-federation";
+import react from '@vitejs/plugin-react'
 
 /**
 * Configuración de Vite para el proyecto remoto.
@@ -15,29 +15,37 @@ import federation from "@originjs/vite-plugin-federation";
 export default defineConfig({
 	base: '/',
 	plugins: [
-	// Plugin de React para Vite
-	react(),
-	// Plugin de federación de módulos
-	federation({
-		name: "orchestrator_remote",
-		filename: "orchestratorRemoteEntry.js",
-		exposes: {
-			"./globalStore": "./src/GlobalStore",
-			"./userStore": "./src/UserStore",			
-		},
-		remotes: {
-			portal: 'http://localhost:5050/assets/orchestratorRemoteEntry.js',
-		},
-		shared: ["react", "react-dom"],
+		// Plugin de React para Vite
+		react(),
+		// Plugin de federación de módulos
+		federation({
+			name: "orchestrator_remote",
+			filename: "orchestratorRemoteEntry.js",
+			exposes: {
+				"./globalStore": "./src/store/GlobalStore",
+				"./structureStore": "./src/store/StructureStore",
+				"./userStore": "./src/store/UserStore",
+				/*
+				"./contex": "./src/context/StoreContext",
+				"./provider": "./src/context/StoreProvider",
+				"./use": "./src/context/StoreHook",
+				*/
+			},
+			/*
+			remotes: {
+				portal: 'http://localhost:5050/assets/orchestratorRemoteEntry.js',
+			},
+			*/
+			shared: ["react", "react-dom"],
 		}),
 	],
 
-// Configuración de construcción
+	// Configuración de construcción
 	build: {
 		modulePreload: false,
 		target: "esnext",
 		minify: false,
 		cssCodeSplit: false,
-		},
-	}
+	},
+}
 );

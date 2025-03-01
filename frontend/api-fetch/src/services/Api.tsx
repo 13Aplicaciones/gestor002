@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { generateParametersUrl, generateRequestBody } from "./CommonAPI";
 import { MethodREST, TypeBody } from "../APIConstants";
-import i18next from "i18next";
+import globalApiFetchEs from "../locales/es/global-api-fetch.json";
 
 /**
  * Funciones consultas a API Rest.
@@ -20,7 +20,24 @@ export interface IFetchData {
   response: any;
   status: number;
   error: string | null;
+  statusDescription?: string | null;
 }
+
+/**
+ * Función para instanciar un objeto IFetchData.
+ * 
+ * @returns devuelve un objeto IFetchData inicializado
+ */
+export const createFetchData = (): IFetchData => {
+  return {
+    responseErrorJSON: null,
+    responseErrorText: null,
+    response: null,
+    status: 200,
+    error: null,
+    statusDescription: null
+  };
+};
 
 /**
  * Funcion para consumir un REST API.
@@ -40,14 +57,7 @@ export const fetchData = async (
   { url, methodRest, typeBody, bodyParameter, token }:
     { url: string, methodRest: MethodREST, typeBody: TypeBody, bodyParameter?: any, token?: string }
 ) => {
-  const iFetchData: IFetchData = {
-    responseErrorJSON: null,
-    responseErrorText: null,
-    response: null,
-    status: 200,
-    error: null
-  };
-
+  const iFetchData = createFetchData();
   url = url + generateParametersUrl(typeBody, bodyParameter);
   const requestInit = generateRequestBody(methodRest, typeBody, bodyParameter, token) as RequestInit;
 
@@ -70,12 +80,15 @@ export const fetchData = async (
         iFetchData.responseErrorText = await responseFetch.text();
       }
       iFetchData.status = responseFetch.status;
-      iFetchData.error = i18next.t('httpStatus.' + responseFetch.status, { ns: 'global' });
+      iFetchData.error = globalApiFetchEs.httpStatus[responseFetch.status.toString() as keyof typeof globalApiFetchEs.httpStatus];
+    
     }
-  } catch (e) {
-    iFetchData.error = e instanceof Error ? e.message : String(e);
+  } catch (e) {    
     iFetchData.status = 500;
+    iFetchData.error = e instanceof Error ? e.message : String(e);
   }
+  
+  iFetchData.statusDescription = globalApiFetchEs.httpStatusResolve[iFetchData.status.toString() as keyof typeof globalApiFetchEs.httpStatus];
   return iFetchData;
 }
 

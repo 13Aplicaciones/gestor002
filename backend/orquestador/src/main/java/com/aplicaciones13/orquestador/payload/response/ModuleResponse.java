@@ -36,6 +36,9 @@ public class ModuleResponse implements Serializable {
     @Schema(description = "Status del listado A=Activo, I=Inactivo y X=Eliminado", example = "A")
     private String status;
 
+    @Schema(description = "Icon Presentacion", example = "QuestionMarkIcon")
+    private String icon;
+
     @Schema(description = "Listado de parametros asociados al módulo")
     private List<ParameterResponse> parameters;
 
