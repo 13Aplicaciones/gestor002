@@ -6,7 +6,6 @@ import { fetchData } from "api-fetch";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { InputSearchDynamic, InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "api-fetch";
-import { fetchRequestToken } from "api-fetch";
 import { TableConfigurable, TableSkeleton } from "./Table";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -50,7 +49,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const { showToast } = useToastContext();
-      
+
   /** 
     * Validacion de los fields del formulario.
     */
@@ -100,44 +99,37 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
     setCurrentPage(0);
     setTotalItems(0);
 
-    let token = "";
-
     //TODO: Revisar para tomar el token de la sesion o de otro metodo.
-    await fetchRequestToken({urlRefresh:'url', tokenRefresh:'to'}).then((credencial) => {
-      if (credencial?.accessToken) {
-        token = credencial.accessToken;
-        fetchData({
-          url: apiUrl,
-          methodRest: MethodREST.GET,
-          typeBody: TypeBody.URL_PARAMS,
-          bodyParameter: parametersApi,
-          token: token
-        })
-          .then(response => {
-            if (response.error) {
-              showToast(
-                response.error + " (" + response.status.toString() + ")" ,
-                t('httpStatusResolve.' + response.status.toString()),
-                Alerts.warning
-              );
-              return;
-            } else {
-              const items = response.response.items;
-              setItems(items);
-              setTotalPages(response.response.totalPages);
-              setCurrentPage(response.response.currentPage);
-              setTotalItems(response.response.totalItems);
-            }
-          }).catch(error => {
-            showToast(
-              "Error",
-               error,
-               Alerts.error
-            );
-          });
-      }
-    });
+    fetchData({
+      url: apiUrl,
+      methodRest: MethodREST.GET,
+      typeBody: TypeBody.URL_PARAMS,
+      bodyParameter: parametersApi,
+    })
+      .then(response => {
+        if (response.error) {
+          showToast(
+            response.error + " (" + response.status.toString() + ")",
+            t('httpStatusResolve.' + response.status.toString()),
+            Alerts.warning
+          );
+          return;
+        } else {
+          const items = response.response.items;
+          setItems(items);
+          setTotalPages(response.response.totalPages);
+          setCurrentPage(response.response.currentPage);
+          setTotalItems(response.response.totalItems);
+        }
+      }).catch(error => {
+        showToast(
+          "Error",
+          error,
+          Alerts.error
+        );
+      });
   }
+
 
   /**
    * Ejecuta al iniciar de user effect.

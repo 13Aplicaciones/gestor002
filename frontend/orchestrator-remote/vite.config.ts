@@ -25,6 +25,8 @@ export default defineConfig({
 				"./globalStore": "./src/store/GlobalStore",
 				"./structureStore": "./src/store/StructureStore",
 				"./userStore": "./src/store/UserStore",
+				"./service/Structure": "./src/service/Structure",
+				"./service/Tokens": "./src/service/Tokens",
 				/*
 				"./contex": "./src/context/StoreContext",
 				"./provider": "./src/context/StoreProvider",

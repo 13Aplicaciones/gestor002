@@ -10,16 +10,23 @@
  * @see https://dlcastillop.com/blog/libreria-hooks-react
  */
 
-// Exportar elementos de la libreria para Store redux
-export { store } from './store/ConfigStore';
+/**
+ * API fetch
+ */
+export { createFetchData } from './services/Api.tsx';
+export { fetchData } from './services/Api.tsx';
+export { TypeBody, MethodREST } from './APIConstants';
+export type { IFetchData } from './services/Api.tsx';
+
+/**
+ * Store de redux
+ */
 export { showDialogDinamico, hideDialogDinamico } from './store/DialogSlice';
+export { addObject, deleteObject } from './store/ObjectSlice';
+export { store } from './store/ConfigStore';
 export type { RootState, AppDispatch } from "./store/ConfigStore";
 
-export {TypeBody, MethodREST} from './APIConstants';
-
-// Exportar elementos de la libreria para servicios
-export { fetchData } from './services/Api.tsx';
-export { fetchRequestToken } from './services/Token.tsx';
-export { createFetchData } from './services/Api.tsx';
-export type { ICredencialKeycloak } from './services/Token.tsx';
-export type { IFetchData } from './services/Api.tsx';
+/**
+ * Storage de indexedDB
+ */
+export { addDataToIndexedDB, saveDataToIndexedDB, getDataFromIndexedDB, deleteDataById } from './store/DataBaseStore';

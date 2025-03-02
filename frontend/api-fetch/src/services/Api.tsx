@@ -41,6 +41,37 @@ export const createFetchData = (): IFetchData => {
 
 /**
  * Funcion para consumir un REST API.
+ * 
+ * Con pre-configuración de token y función personalizada para obtener un nuevo token.
+ * 
+ * @param url Dirección del servicio 
+ * @param methodRest Metodo de consumo 
+ * @param typeBody Tipo de body o parametros que se envian 
+ * @param bodyParameter Body o Parametros que se envian
+ * @param token Token de autenticación
+ * @param customFunction Función personalizada para obtener un nuevo token
+ * @returns devuelve un objeto con la iFetchData del servicio
+ */
+export const fetchData = async (
+  { url, methodRest, typeBody, bodyParameter, token, getToken }:
+    { url: string, methodRest: MethodREST, typeBody: TypeBody, bodyParameter?: any, token?: string, getToken?: (() =>  Promise<string>) | undefined;  }
+) => {
+  if (!token) {
+    return await fetchDataConfigurated({ url, methodRest, typeBody, bodyParameter });
+  } else {
+    const iFetchData: IFetchData = await fetchDataConfigurated({ url, methodRest, typeBody, bodyParameter, token });
+
+    if (iFetchData.status === 401 && getToken ) {
+        const newToken: string = await getToken();
+        return await fetchDataConfigurated({ url, methodRest, typeBody, bodyParameter, token: newToken });
+      }
+
+    return iFetchData;    
+  }
+}
+
+/**
+ * Funcion para consumir un REST API.
  *
  * Este elemento esta basado en el uso de fetch para consumir un servicio REST.
  * 
@@ -53,7 +84,7 @@ export const createFetchData = (): IFetchData => {
  * @param token Token de autenticación
  * @returns devuelve un objeto con la iFetchData del servicio
  */
-export const fetchData = async (
+const fetchDataConfigurated = async (
   { url, methodRest, typeBody, bodyParameter, token }:
     { url: string, methodRest: MethodREST, typeBody: TypeBody, bodyParameter?: any, token?: string }
 ) => {
@@ -62,9 +93,8 @@ export const fetchData = async (
   const requestInit = generateRequestBody(methodRest, typeBody, bodyParameter, token) as RequestInit;
 
   try {
-
     const responseFetch = await fetch(url, requestInit);
-    if ( responseFetch.ok) {
+    if (responseFetch.ok) {
       if (responseFetch.status === 204) {
         iFetchData.response = null;
       } else {
@@ -81,14 +111,12 @@ export const fetchData = async (
       }
       iFetchData.status = responseFetch.status;
       iFetchData.error = globalApiFetchEs.httpStatus[responseFetch.status.toString() as keyof typeof globalApiFetchEs.httpStatus];
-    
     }
-  } catch (e) {    
+  } catch (e) {
     iFetchData.status = 500;
     iFetchData.error = e instanceof Error ? e.message : String(e);
   }
-  
+
   iFetchData.statusDescription = globalApiFetchEs.httpStatusResolve[iFetchData.status.toString() as keyof typeof globalApiFetchEs.httpStatus];
   return iFetchData;
 }
-

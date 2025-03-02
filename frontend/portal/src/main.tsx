@@ -7,10 +7,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes';
 import { ToastContextProvider } from "ux-ui";
-import App from './App.tsx'
 import global_en from './locales/en/global.json';
 import global_es from './locales/es/global.json';
 import i18next from 'i18next';
+import Home from "./pages/Home/Home.tsx";
 
 /**
  * Inicialización de i18next.
@@ -57,9 +57,9 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18next}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-          <Theme accentColor="yellow" grayColor="auto" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
+          <Theme accentColor="lime" grayColor="auto" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
             <ToastContextProvider>
-              <App />
+              <Home />
             </ToastContextProvider>
           </Theme>
         </AuthProvider>

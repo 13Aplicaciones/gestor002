@@ -10,7 +10,6 @@ import { FooterForm, FormState } from "../components/form/Form";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch";
 import { IRowDataError } from "./ErroresVistaPrevia";
 import { MethodREST, TypeBody } from "api-fetch";
-import { fetchRequestToken } from "api-fetch";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -68,59 +67,52 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
         data = { ...data, usuarioPrograma: nombreAplicativo };
 
         setTimeout(async () => {
-            let token = "";
-            await fetchRequestToken({urlRefresh:"u", tokenRefresh:''}).then((credencial) => {
-                if (credencial?.accessToken) {
-                    token = credencial.accessToken;
-                    if (stateFormulario === EstadoEdicion.create) {
-                        fetchData({
-                            url: "http://localhost:8090/gestor-ws/api/errors",
-                            methodRest: MethodREST.POST,
-                            typeBody: TypeBody.JSON,
-                            bodyParameter: data,
-                            token: token
-                        }).then(response => {
-                            analizarAccionar(response);
-                            setFormStateulario(EstadoEdicion.edit);
-                        }).catch(error => {
-                            setMessageForm("Error al crear el registro: " + error);
-                            return null;
-                        });
-                    }
-                    if (stateFormulario === EstadoEdicion.edit) {
-                        fetchData({
-                            url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
-                            methodRest: MethodREST.PUT,
-                            typeBody: TypeBody.JSON,
-                            bodyParameter: data,
-                            token: token
-                        }).then(response => {
-                            analizarAccionar(response);
-                        }).catch(error => {
-                            setMessageForm("Error al accionar el registro " + error);
-                            return null;
-                        });
-                    }
-                    if (stateFormulario === EstadoEdicion.block) {
-                        fetchData({
-                            url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
-                            methodRest: MethodREST.DELETE,
-                            typeBody: TypeBody.NONE,
-                            bodyParameter: null,
-                            token: token
-                        }).then(response => {
-                            analizarAccionar(response);
-                            setFormStateulario(EstadoEdicion.find);
-                            dispatch(hideDialogDinamico('1'));
-                            onAtras();
-                        }).catch(error => {
-                            setMessageForm("Error al borrar el registro " + error);
-                            return null;
-                        });
-                    }
-                }
-            });
-
+            if (stateFormulario === EstadoEdicion.create) {
+                fetchData({
+                    url: "http://localhost:8090/gestor-ws/api/errors",
+                    methodRest: MethodREST.POST,
+                    typeBody: TypeBody.JSON,
+                    bodyParameter: data,
+                    token: "token"
+                }).then(response => {
+                    analizarAccionar(response);
+                    setFormStateulario(EstadoEdicion.edit);
+                }).catch(error => {
+                    setMessageForm("Error al crear el registro: " + error);
+                    return null;
+                });
+            }
+            if (stateFormulario === EstadoEdicion.edit) {
+                fetchData({
+                    url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
+                    methodRest: MethodREST.PUT,
+                    typeBody: TypeBody.JSON,
+                    bodyParameter: data,
+                    token: "token"
+                }).then(response => {
+                    analizarAccionar(response);
+                }).catch(error => {
+                    setMessageForm("Error al accionar el registro " + error);
+                    return null;
+                });
+            }
+            if (stateFormulario === EstadoEdicion.block) {
+                fetchData({
+                    url: "http://localhost:8090/gestor-ws/api/errors/" + uuid,
+                    methodRest: MethodREST.DELETE,
+                    typeBody: TypeBody.NONE,
+                    bodyParameter: null,
+                    token: "token"
+                }).then(response => {
+                    analizarAccionar(response);
+                    setFormStateulario(EstadoEdicion.find);
+                    dispatch(hideDialogDinamico('1'));
+                    onAtras();
+                }).catch(error => {
+                    setMessageForm("Error al borrar el registro " + error);
+                    return null;
+                });
+            }
             setLoading(false);
         }, 333);
     }
@@ -131,13 +123,13 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                 showToast(
                     response.error + ' ' + response.status.toString(),
                     response.responseErrorJSON.message,
-                     Alerts.warning
+                    Alerts.warning
                 );
             } else {
                 showToast(
-                     response.status.toString(),
-                     response.error,
-                     Alerts.warning
+                    response.status.toString(),
+                    response.error,
+                    Alerts.warning
                 );
             }
             return;
@@ -147,8 +139,8 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: EstadoEdicion
                 setUuid(respuesta.response.uuid);
             }
             showToast(
-                 respuesta.status.toString(),
-                 "Accion realizada con exito",
+                respuesta.status.toString(),
+                "Accion realizada con exito",
                 Alerts.success
             );
         }

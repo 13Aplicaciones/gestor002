@@ -10,7 +10,7 @@
 			"api-fetch": false,			
 			"demo-remote": true,
 			"frontend-oauth2": true,
-			"gestor-remote": false,
+			"gestor-remote": true,
 			"marco-remote": true,
 			"orchestrator-remote": false,
 			"portal": false,

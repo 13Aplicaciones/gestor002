@@ -1,7 +1,6 @@
 import { Badge, DataList, Flex, Heading } from "@radix-ui/themes";
 import { fetchData } from "api-fetch";
 import { MethodREST, TypeBody } from "api-fetch";
-import { fetchRequestToken } from "api-fetch";
 import { useCallback, useEffect, useState } from "react";
 import { BannerInformation } from "../components/callout/Information";
 import { Alerts } from "../ConstantsPresentation";
@@ -24,23 +23,17 @@ const VistaPrevia = ({ indice }: { indice: string }) => {
     const [row, setRow] = useState<IRowDataError | null>(null);
 
     const cargarVistaPrevia = useCallback(async () => {
-        let token = "";
-        await fetchRequestToken({urlRefresh:'d',tokenRefresh:'ddd'}).then((credencial) => {
-            if (credencial?.accessToken) {
-                token = credencial.accessToken;
-                fetchData({
-                    url: "http://localhost:8090/gestor-ws/api/errors/indice=" + indice,
-                    methodRest: MethodREST.GET,
-                    typeBody: TypeBody.NONE,
-                    bodyParameter: null,
-                    token: token
-                }).then(response => {
-                    setRow(response.response);
-                }).catch(error => {
-                    setMessageForm("Error al consultar " + error);
-                    return null;
-                });
-            }
+        fetchData({
+            url: "http://localhost:8090/gestor-ws/api/errors/indice=" + indice,
+            methodRest: MethodREST.GET,
+            typeBody: TypeBody.NONE,
+            bodyParameter: null,
+            token: "token"
+        }).then(response => {
+            setRow(response.response);
+        }).catch(error => {
+            setMessageForm("Error al consultar " + error);
+            return null;
         });
     }, [indice]);
 
