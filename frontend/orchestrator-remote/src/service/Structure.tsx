@@ -1,8 +1,8 @@
 import { addDataToIndexedDB, createFetchData, deleteDataById, getDataFromIndexedDB } from "api-fetch";
 import { fetchData } from "api-fetch";
+import { getToken, ITokenRoot, refreshToken } from "./Tokens";
 import { MethodREST, TypeBody } from 'api-fetch'
 import { STORE } from "../Constants";
-import { getToken, ITokenRoot, refreshToken } from "./Tokens";
 
 /**
  * Función para obtener la estructura de los módulos.
@@ -13,7 +13,7 @@ import { getToken, ITokenRoot, refreshToken } from "./Tokens";
  * @returns 
  */
 const getStructure = async () => {
-  const iRootData = await getDataFromIndexedDB(STORE.db.structure.name, STORE.db.structure.id);
+  const iRootData = await getDataFromIndexedDB(STORE, STORE.ddl.structure.name);
 
   if (iRootData) {
     return iRootData;
@@ -35,7 +35,8 @@ const getStructure = async () => {
       }
     });
     if (!iFetchData.error) {
-      await addDataToIndexedDB(STORE.db.structure.name, STORE.db.structure.id, iFetchData);
+      await addDataToIndexedDB(STORE, STORE.ddl.structure.name, iFetchData.response);
+      return iFetchData.response;
     }
   }
   return iFetchData;
@@ -49,8 +50,8 @@ const getStructure = async () => {
  */
 const getFirtsModule = async () => {
   const iRootData = await getStructure().then((data) => {
-    if (data.response) {
-      return data.response.modules[0];
+    if (data) {
+      return data.modules[0];
     }
   });
 
@@ -63,12 +64,63 @@ const getFirtsModule = async () => {
  * @param token Token de autenticación
  * @returns
  */
-const refresh = async () => {
-  await deleteDataById(STORE.db.structure.name, STORE.db.structure.id).then(async () => {
+const refreshStructure = async () => {
+  await deleteDataById(STORE, STORE.ddl.structure.name).then(async () => {
     return await getStructure();
   });
 
   return null;
 }
 
-export { getStructure, getFirtsModule, refresh };
+/**
+ * Función para seleccionar un módulo.
+ * 
+ * @param index index del modulo seleccionado
+ */
+const setSelectModule = async (index: string) => {
+  const structure = await getStructure();
+  if (structure) {
+    const module = structure.modules[index];
+    if (module) {
+      await addDataToIndexedDB(STORE, STORE.ddl.moduleSelect.name, module);
+      await setSelectMenu("0");
+    }
+  }
+}
+
+/**
+ * Función para obtener el módulo seleccionado.
+ * 
+ * @returns 
+ */
+const getSelectModule = async () => {
+  const module = await getDataFromIndexedDB(STORE, STORE.ddl.moduleSelect.name);
+  return module;
+}
+
+/**
+ * Función para seleccionar un menú.
+ * 
+ * @param index index del menu que se usa sobre el modulo seleccionado
+ */
+const setSelectMenu = async (index: string) => {
+  const module = await getDataFromIndexedDB(STORE, STORE.ddl.moduleSelect.name);
+  if (module) {
+    const menuSelect = module.menus[index];
+    if (menuSelect) {
+      await addDataToIndexedDB(STORE, STORE.ddl.menuSelect.name, menuSelect);
+    }
+  }
+}
+
+/**
+ * Función para obtener el menú seleccionado.
+ * 
+ * @returns 
+ */
+const getSelectMenu = async () => {
+  const menu = await getDataFromIndexedDB(STORE, STORE.ddl.menuSelect.name);
+  return menu;
+}
+
+export { getStructure, getFirtsModule, refreshStructure, setSelectModule, getSelectModule, setSelectMenu, getSelectMenu };

@@ -21,9 +21,13 @@ declare module 'orchestrator_remote/structureStore' {
 declare module 'orchestrator_remote/service/Structure' {
   import { StructureService } from 'orchestrator_remote/service/Structure';
   export const structureService: StructureService;
-  export function getStructure({token}:{token: string}): Promise<any>;
-  export function getFirtsModule({token}:{token: string}): Promise<any>;
-  export function refresh({token}:{token: string}): Promise<any>;  
+  export function getFirtsModule(): Promise<any>;
+  export function getStructure(): Promise<any>;
+  export function refreshStructure(): Promise<any>;
+  export function setSelectModule(index: string): void; 
+  export function getSelectModule(): Promise<any>;
+  export function setSelectMenu(index: string): void; 
+  export function getSelectMenu(): Promise<any>;
 }
 
 declare module 'orchestrator_remote/service/Tokens' {

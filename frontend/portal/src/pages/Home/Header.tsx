@@ -2,8 +2,7 @@
 import { Avatar, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, Text } from "@radix-ui/themes";
 import { AvatarIcon, EnvelopeOpenIcon, ExitIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { getIconComponent } from "ux-ui";
-import { getStructure } from "orchestrator_remote/service/Structure";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getSelectModule, getStructure, setSelectModule } from "orchestrator_remote/service/Structure";
 import { Tooltip } from "@radix-ui/themes/components/tooltip";
 import { useAuth } from "react-oidc-context";
 import { useEffect, useState } from "react";
@@ -75,11 +74,19 @@ const MenuApp = (
  * @param selectModule modulo seleccionado
  * @returns 
  */
-const MenuModule = (
-  { dataModule, selectModule }:
-    { dataModule: Record<string, IModuleRoot>, selectModule: string, }
-) => {
-  const title = dataModule[selectModule]?.name || "Portal";
+const MenuModule = ({ refreshModule }: { refreshModule: number }) => {
+  const [title, setTitle] = useState<string>("Portal");
+  const [module, setModule] = useState<IModuleRoot>();
+
+  const executeSelectModule = async () => {
+    const module = await getSelectModule();
+    setModule(module);
+    setTitle(module?.name || "Portal");
+  };
+
+  useEffect(() => {
+    executeSelectModule();
+  }, [refreshModule]);
 
   return (
     <Flex direction="row" align="center" gap="2">
@@ -90,7 +97,7 @@ const MenuModule = (
           </IconButton>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          {dataModule[selectModule]?.menus.map((menu) => (
+          {module?.menus.map((menu) => (
             <DropdownMenu.Item key={menu.index} onClick={() => console.log(menu.taskFlow)}>
               {getIconComponent(menu.icon, "18", "18")}
               {menu.name}
@@ -154,28 +161,41 @@ const MenuUser = () => {
  * 
  * @returns 
  */
-const Header = () => {
+  const Header = ({onSelect}:{onSelect: ()=>void }) => {
+  const [refreshKey, setRefreshKey] = useState(0); // Estado para forzar el refresco
   const [dataModule, setDataModule] = useState<Record<string, IModuleRoot>>({});
-  const [selectModule, setSelectModule] = useState("0");
+  const [indexSelectModule, setIndexSelectModule] = useState("0");
 
   useEffect(() => {
     const queryModules = async () => {
-      const token: ITokenRoot = getToken();
-      await getStructure({ token: token.accessToken }).then((data) => {
-        setDataModule(data.response.modules);
+      await getStructure().then((data) => {
+        setDataModule(data.modules);
       });
     }
     queryModules();
   }, []);
 
+  /**
+   * Función para manejar el evento click de los modulos
+   * 
+   * @param index 
+   */
   const handleSelectModule = (index: string) => {
-    setSelectModule(index);
+    setIndexSelectModule(index);
+
+    const executeSelectModule = async () => {
+      await setSelectModule(index);
+      setRefreshKey((prevKey) => prevKey + 1); // Forzar el refresco de MenuModule
+      onSelect();
+    }
+
+    executeSelectModule();
   }
 
   return (
     <Flex direction="row" px="4" align="center" justify="between" style={{ height: '6vh', backgroundColor: 'var(--gray-a2)', borderBottom: '1px solid var(--gray-a6)' }}>
-      <MenuModule dataModule={dataModule} selectModule={selectModule} />
-      <MenuApp dataModule={dataModule} selectModule={selectModule} onClick={handleSelectModule} />
+      <MenuModule refreshModule={refreshKey} />
+      <MenuApp dataModule={dataModule} selectModule={indexSelectModule} onClick={handleSelectModule} />
       <MenuUser />
     </Flex>
   );
