@@ -2,7 +2,8 @@ import "@radix-ui/themes/styles.css";
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from "react-redux";
-import { store, ToastContextProvider } from "api-fetch";
+import { store } from "api-fetch";
+import { ToastContextProvider } from "ux-ui"; 
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
 import App from './App.tsx'

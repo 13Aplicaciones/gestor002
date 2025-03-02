@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 /**
  * Interfaz para manejar los modulos
  */
-interface IModuleRoot {
+export interface IModuleRoot {
   index: string;
   icon: string;
   name: string;

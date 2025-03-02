@@ -4,7 +4,7 @@ import Error from '../pages/Error';
 import Information from '../pages/Information';
 import Module from '../pages/Module';
 import User from '../pages/User';
-import { NotFound } from 'api-fetch';
+import { NotFound } from 'ux-ui';
 
 const AppRouter = () => {
     return (

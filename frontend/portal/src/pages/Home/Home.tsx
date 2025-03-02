@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { addToken, getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
-import { alertColor, Alerts, BannerInformation, useToastContext } from "ux-ui";
+import { alertColor, Alerts, BannerInformation, CardGrid, GridDashboard, useToastContext } from "ux-ui";
 import { Card, Flex, TextArea, } from "@radix-ui/themes";
 import { ExclamationTriangleIcon, UpdateIcon } from "@radix-ui/react-icons";
-import { getStructure } from "orchestrator_remote/service/Structure";
+import { getFirtsModule, getStructure } from "orchestrator_remote/service/Structure";
 import { hasAuthParams, useAuth } from 'react-oidc-context';
-
+import { MainFrame, WorkFrame } from "../../layouts/MainFrame";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
-import Header from "./Header";
-import { MainFrame, WorkFrame } from "../../layouts/MainFrame";
+import Header, { IModuleRoot } from "./Header";
 
 /**
  * Componente principal de la aplicación.
@@ -24,6 +23,9 @@ const Home = () => {
   const [t] = useTranslation("global");
   const { showToast } = useToastContext();
   const auth = useAuth();
+
+  const [dataModuleSelect, setDataModuleSelect] = useState<Record<string, IModuleRoot>>({});
+
 
   /**
    * Use effect para manejar la autenticación
@@ -75,16 +77,23 @@ const Home = () => {
       if (token) {
         const data = await getStructure({ token: token.accessToken });
         if (data?.error) {
-            showToast(
-              data.error + " (" + data.status + ") ",
-              data.statusDescription || "",
-              Alerts.error
-            );
-          }
+          showToast(
+            data.error + " (" + data.status + ") ",
+            data.statusDescription || "",
+            Alerts.error
+          );
+        }
 
         const module = await getStructure({ token: token.accessToken });
         if (module) {
           setDataModule(module);
+        }
+
+        const moduleSelect = await getFirtsModule({ token: token.accessToken });
+        if (moduleSelect) {
+          setDataModuleSelect(moduleSelect);
+
+          console.log("data" + JSON.stringify( moduleSelect.menus));
         }
       }
     };
@@ -140,15 +149,31 @@ const Home = () => {
       <p>Datos compartidos:</p>
 
       <TextArea rows={5} variant="soft"
-      value={JSON.stringify(dataUser).substring(0, 200)}
-      readOnly
+        value={JSON.stringify(dataUser).substring(0, 200)}
+        readOnly
       />
 
       <TextArea rows={15} variant="soft"
-      value={JSON.stringify(dataModule)}
-      readOnly
+        value={JSON.stringify(dataModule)}
+        readOnly
       />
 
+      {
+        
+      <GridDashboard >
+        {Array.isArray(dataModuleSelect.menus) && dataModuleSelect.menus.map((item, index) => {
+          return (
+            <CardGrid
+              key={index}
+              title={"item.index"}
+              description={"item.name"}
+              iconName={"item.icon"}
+              data={[]} />
+          );
+        })}
+      </GridDashboard>
+        
+    }
     </WorkFrame>
   );
 };

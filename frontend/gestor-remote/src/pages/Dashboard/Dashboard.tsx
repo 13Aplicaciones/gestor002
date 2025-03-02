@@ -1,4 +1,4 @@
-import { Alerts, CardGrid, CardGridSkeleton, DataItemBadge, GridDashboard, useToastContext } from "api-fetch";
+import { Alerts, CardGrid, CardGridSkeleton, DataItemBadge, GridDashboard, useToastContext } from "ux-ui";
 import { Flex, Heading, Text } from "@radix-ui/themes";
 //import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -41,7 +41,7 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    const menus = t("menus", { returnObjects: true });
+    const menus: { title: string; description: string; icon: string; firtsColor: string }[] = t("menus", { returnObjects: true });
     const data1: DataItemBadge[] = [
         { valor: "53", descripcion: "Activos chancedjflkajsdlkf", status: "info" },
         { valor: "11", descripcion: "Borrados", status: "success" },
