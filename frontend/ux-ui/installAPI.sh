@@ -2,5 +2,4 @@
 npm remove api-fetch
 npm install ../api-fetch
 npm link ../api-fetch/node_modules/react
-
-npm run serve
+echo -e "\e[32m---------------- install api-fetch finished ---------------- \e[0m"

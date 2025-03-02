@@ -4,7 +4,7 @@ import { Badge, Box, Card, Flex, Heading, Link, Text, Skeleton } from "@radix-ui
 import { getIconComponent } from "../icon/IconDynamic";
 import { MouseEventHandler } from "react";
 import { Pencil1Icon } from "@radix-ui/react-icons";
-import { useThemeContext } from "@radix-ui/themes/components/theme";
+import { useThemeContext } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { whiteA, blackA } from "@radix-ui/colors"
 
