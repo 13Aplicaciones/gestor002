@@ -9,7 +9,8 @@ import logo from '../assets/13_512x512.svg';
  * @returns 
  */
 const Footer = () => {
-    const [t] = useTranslation("global");
+    const [t] = useTranslation("global_portal");
+    
 
     return (
         <Flex width="100%" direction="row" justify="between" p="4" align="center" style={{ background: "var(--white-a3)", borderTop: "1px solid var(--gray-a6)" }}>

@@ -1,26 +1,27 @@
 {
     "portal": {
-        "title": "Cash Register"
+        "title": "Portal"
     },
-
-    "messages":{
+    "messages": {
         "loading": "Cargando..."
     },
-
-    "frame":{
+    "frame": {
         "footer": {
             "title": "Powered by 13Aplicaciones",
             "copyright": "Copyright © 2020 - {{year}}",
             "all_rights_reserved": "Todos los derechos reservados "
+        },
+        "header": {
+            "profile": "Mi Perfil",
+            "logout": "Cerrar sesión",
+            "feedback": "Enviar Comentario"
         }
     },
-
-    "app":{
+    "app": {
         "error": {
             "error": "Ha ocurrido el siguiente error: {{error}}, verifica la configuración de tu aplicación",
             "no_authorization": "No tienes autorización para acceder a esta página"
         },
         "loading": "Cargando... (puede que tarde un poco la primera vez)"
-   
     }
 }

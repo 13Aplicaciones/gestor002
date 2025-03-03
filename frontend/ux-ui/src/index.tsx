@@ -31,3 +31,10 @@ export { useToastContext } from './components/toast/useToastContext.tsx';
 
 // Exportar elementos de la libreria Pages basicas
 export { NotFound } from './pages/NotFound.tsx';
+
+// Exportar elementos de i18n
+import global_ux_en from './locales/en/global_ux.json';
+export {global_ux_en}
+
+import global_ux_es from './locales/es/global_ux.json';
+export {global_ux_es}

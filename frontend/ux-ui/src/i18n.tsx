@@ -1,7 +1,6 @@
-
 import { initReactI18next } from 'react-i18next';
-import global_en from './locales/en/global-api-fetch.json';
-import global_es from './locales/es/global-api-fetch.json';
+import global_en from './locales/en/global_ux.json';
+import global_es from './locales/es/global_ux.json';
 import i18n from 'i18next';
 
 /**
@@ -18,11 +17,11 @@ i18n
     lng: 'es',
     resources: {
       es: {
-        global: global_es
+        global_ux: global_es,
       },
       en: {
-        global: global_en
-      },
+        global_ux: global_en,
+      }
     },
   });
 

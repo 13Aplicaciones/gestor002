@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  toolTip: string, disabled?:boolean, onClick?: () => void }) => {
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
         
     if (disabled)
         return (

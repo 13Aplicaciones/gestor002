@@ -92,7 +92,7 @@ const DialogForm = ({ id, title, description, cancel = true, children, buttons }
     }) => {
 
     const dispatch = useDispatch();
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
     const open = useSelector((state: IRootState) => {
         const dialog = state.dynamicDialogSlice.find(dialogA => dialogA.id === id);
         return dialog ? dialog.value : false;
@@ -145,7 +145,7 @@ const DialogAlerts = ({ id, title, description, cancel = true, alert, children, 
     }) => {
 
     const dispatch = useDispatch();
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
     const open = useSelector((state: IRootState) => {
         const dialog = state.dynamicDialogSlice.find(dialog => dialog.id === id);
         return dialog ? dialog.value : false;

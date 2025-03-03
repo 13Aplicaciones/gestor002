@@ -6,6 +6,7 @@ import { getSelectModule, getStructure, setSelectModule } from "orchestrator_rem
 import { Tooltip } from "@radix-ui/themes/components/tooltip";
 import { useAuth } from "react-oidc-context";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 /**
  * Interfaz para manejar los modulos, menus y usuario
@@ -77,11 +78,12 @@ const MenuApp = (
 const MenuModule = ({ refreshModule }: { refreshModule: number }) => {
   const [title, setTitle] = useState<string>("Portal");
   const [module, setModule] = useState<IModuleRoot>();
+  const [t] = useTranslation("global_portal");
 
   const executeSelectModule = async () => {
     const module = await getSelectModule();
     setModule(module);
-    setTitle(module?.name || "Portal");
+    setTitle(module?.name || t("portal.title"));
   };
 
   useEffect(() => {
@@ -123,6 +125,7 @@ const MenuUser = () => {
   const [userName, setUserName] = useState<string | "o.velez">();
   const [abreviatura, setAbreviatura] = useState<string>("Ov");
   const [avatarUrl] = useState<string>("https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop");
+  const [t] = useTranslation("global_portal");
 
   useEffect(() => {
     setName(auth.user?.profile?.name || "o.velez");
@@ -142,13 +145,17 @@ const MenuUser = () => {
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Item onClick={() => console.log("mi final token pasado")}>
-            <AvatarIcon height="18" width="18" />Perfil</DropdownMenu.Item>
+            <AvatarIcon height="18" width="18" />
+            {t("frame.header.profile")}
+            </DropdownMenu.Item>
           <DropdownMenu.Item>
-            <EnvelopeOpenIcon height="18" width="18" />Enviar Comentario</DropdownMenu.Item>
+            <EnvelopeOpenIcon height="18" width="18" />
+            {t("frame.header.feedback")}            
+            </DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item color="red" onClick={() => auth.signoutRedirect()}>
             <ExitIcon height="18" width="18" />
-            Salir
+            {t("frame.header.logout")}
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

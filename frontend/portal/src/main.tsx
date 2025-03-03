@@ -7,26 +7,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes';
 import { ToastContextProvider } from "ux-ui";
-import global_en from './locales/en/global.json';
-import global_es from './locales/es/global.json';
-import i18next from 'i18next';
 import Home from "./pages/Home/Home.tsx";
-
-/**
- * Inicialización de i18next.
- */
-i18next.init({
-  interpolation: { escapeValue: false },
-  lng: 'es',
-  resources: {
-    es: {
-      global: global_es
-    },
-    en: {
-      global: global_en
-    },
-  },
-});
+import i18n from "./i18n.tsx";
 
 /**
  * See: {@link https://authts.github.io/oidc-client-ts/classes/UserManager.html}
@@ -54,7 +36,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <I18nextProvider i18n={i18next}>
+    <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
           <Theme accentColor="mint" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">

@@ -21,7 +21,7 @@ const Home = () => {
   const [refreshKey, setRefreshKey] = useState(0); // Estado para forzar el refresco
   
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
-  const [t] = useTranslation("global");
+  const [t] = useTranslation("global_portal");
   const { showToast } = useToastContext();
   const auth = useAuth();
 

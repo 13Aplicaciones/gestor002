@@ -45,7 +45,7 @@ const FooterForm = ({ columns, directionLabel, children }:
  * @returns 
  */
 const FormState = ({ statusEdit }: { statusEdit: EstadoEdicion }) => {
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
 
     return (
         <Flex>

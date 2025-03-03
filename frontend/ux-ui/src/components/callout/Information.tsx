@@ -53,7 +53,7 @@ const BannerInformation = ({ alert, message }: { alert: Alerts, message?: string
  * @returns 
  */
 const InformationPanelRegistration = ({ row }: { row: any }) => {
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
 
     if (row === undefined || row === null || Object.keys(row).length === 0 || row.usuarioPrograma === "") {
         return (

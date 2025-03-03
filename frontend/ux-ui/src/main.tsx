@@ -1,12 +1,13 @@
 import "@radix-ui/themes/styles.css";
 import { createRoot } from 'react-dom/client'
+import { I18nextProvider } from "react-i18next";
 import { Provider } from 'react-redux'
 import { store } from 'api-fetch'
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
-import App from './App.tsx'
 import { ToastContextProvider } from "./components/toast/ToastContextProvider.tsx";
-
+import App from './App.tsx'
+import i18n from "./i18n.tsx";
 /**
  * Componente principal de la aplicación
  * 
@@ -18,12 +19,14 @@ import { ToastContextProvider } from "./components/toast/ToastContextProvider.ts
  */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={store}>
-      <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="light">
-        <ToastContextProvider >
-          <App />
-        </ToastContextProvider >
-      </Theme>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="light">
+          <ToastContextProvider >
+            <App />
+          </ToastContextProvider >
+        </Theme>
+      </Provider>
+    </I18nextProvider>
   </StrictMode>,
 )

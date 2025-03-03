@@ -29,7 +29,7 @@ const TableConfigurable = ({ presentation, data, isHeader, isLineNumber, isBand 
     { presentation: any, data: any, isHeader?: boolean, isLineNumber?: boolean, isBand?: boolean }) => {
 
     const header = Array.isArray(presentation) ? presentation.map((field: any) => field.title) : [];
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
 
     /**
      * Funcion para justify el contenido de la celda en base a la presentation.

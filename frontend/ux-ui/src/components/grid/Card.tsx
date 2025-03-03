@@ -101,7 +101,7 @@ const CardGrid = (
     { title, description, iconName, descriptionLength = 80, firtsColor = false, onClick, data }:
         { title: string, description: string, iconName: string, descriptionLength?: number, firtsColor?: boolean, onClick?: MouseEventHandler<HTMLDivElement>, data: DataItemBadge[] }) => {
 
-    const [t] = useTranslation("global-api-fetch");
+    const [t] = useTranslation("global_ux");
     const theme = useThemeContext();
     const colorBackground = (theme.appearance === "light") ? firtsColor ? blackA.blackA3 : blackA.blackA1 : firtsColor ? whiteA.whiteA3 : whiteA.whiteA1;
 
