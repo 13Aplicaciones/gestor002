@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { addToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
 import { alertColor, Alerts, BannerInformation, useToastContext } from "ux-ui";
 import { Card, Flex } from "@radix-ui/themes";

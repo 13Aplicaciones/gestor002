@@ -1,9 +1,11 @@
 package com.aplicaciones13.orquestador.model;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.Date;
+
+import org.hibernate.annotations.Immutable;
 
 import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
@@ -24,8 +26,9 @@ import jakarta.persistence.TemporalType;
  * @since 2025-01-12
  */
 @Entity
+@Immutable
 @Table(name = "user")
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class User extends UuidUserDateApp {
     @Id

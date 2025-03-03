@@ -4,9 +4,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
+import com.aplicaciones13.orquestador.payload.response.StaticResponse;
+import com.aplicaciones13.orquestador.payload.response.StaticsResponse;
 import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeGroupResponse;
 import com.aplicaciones13.orquestador.payload.response.UserResponse;
 import com.aplicaciones13.orquestador.services.ParameterService;
+import com.aplicaciones13.orquestador.services.StaticsService;
 import com.aplicaciones13.orquestador.services.UserDefinedCodeService;
 import com.aplicaciones13.orquestador.services.UserService;
 
@@ -19,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 
@@ -42,8 +46,11 @@ public class StructureMenuController {
     private UserService userService;
 
     @Autowired
+    private StaticsService staticsService;
+
+    @Autowired
     private JwtService jwtService;
-  
+
     /**
      * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.
      * 
@@ -62,11 +69,11 @@ public class StructureMenuController {
      */
     @GetMapping("/udc/module={module}")
     public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String module) {
-        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(module);        
+        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(module);
         return ResponseEntity.ok(response);
     }
 
-     /**
+    /**
      * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
      * 
      * Lista<Modulos>
@@ -79,6 +86,18 @@ public class StructureMenuController {
     public ResponseEntity<UserResponse> getModules() {
         String nick = jwtService.getUsername();
         UserResponse response = userService.findByNick(nick);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Metodo para obtener las estadisticas de los menus.
+     * 
+     * @param index
+     * @return
+     */
+    @GetMapping("/menu/static={index}")
+    public ResponseEntity<List<StaticResponse>> getMethodName(@PathVariable String index) {
+        List<StaticResponse> response = staticsService.executeDynamicQuery(index);
         return ResponseEntity.ok(response);
     }
 }

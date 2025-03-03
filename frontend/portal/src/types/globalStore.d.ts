@@ -30,6 +30,13 @@ declare module 'orchestrator_remote/service/Structure' {
   export function getSelectMenu(): Promise<any>;
 }
 
+declare module 'orchestrator_remote/service/Statics' {
+  /*import { StaticsService } from 'orchestrator_remote/service/Statics';
+  export const staticsService: StaticsService;*/
+  export function getStatic( index: string): Promise<any>;
+}
+
+
 declare module 'orchestrator_remote/service/Tokens' {
   import { TokensService } from 'orchestrator_remote/service/Tokens';
   export const tokensService: TokensService;

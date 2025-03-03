@@ -11,8 +11,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import net.jcip.annotations.Immutable;
 
 /**
  * Clase que representa la entidad UserDefinedCode.
@@ -23,8 +24,9 @@ import lombok.EqualsAndHashCode;
  *
  */
 @Entity
+@Immutable
 @Table(name = "user_defined_code")
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class UserDefinedCode extends UserDateApp {
 

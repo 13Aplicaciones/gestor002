@@ -22,11 +22,12 @@ export default defineConfig({
 			name: "orchestrator_remote",
 			filename: "orchestratorRemoteEntry.js",
 			exposes: {
-				"./globalStore": "./src/store/GlobalStore",
-				"./structureStore": "./src/store/StructureStore",
-				"./userStore": "./src/store/UserStore",
-				"./service/Structure": "./src/service/Structure",
-				"./service/Tokens": "./src/service/Tokens",
+				"./globalStore": 		"./src/store/GlobalStore",
+				"./structureStore": 	"./src/store/StructureStore",
+				"./userStore": 			"./src/store/UserStore",
+				"./service/Statics": 	"./src/service/Statics",
+				"./service/Structure": 	"./src/service/Structure",
+				"./service/Tokens": 	"./src/service/Tokens",
 				/*
 				"./contex": "./src/context/StoreContext",
 				"./provider": "./src/context/StoreProvider",

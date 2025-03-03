@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar, DropdownMenu, Flex, Heading, IconButton, SegmentedControl, Text } from "@radix-ui/themes";
 import { AvatarIcon, EnvelopeOpenIcon, ExitIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { getIconComponent } from "ux-ui";

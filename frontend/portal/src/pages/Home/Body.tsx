@@ -1,5 +1,6 @@
-import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
+import { Alerts, CardGrid, CardGridSkeleton, GridDashboard, useToastContext } from "ux-ui";
 import { getSelectModule } from "orchestrator_remote/service/Structure";
+import { getStatic } from "orchestrator_remote/service/Statics";
 import { IModuleRoot } from "./Header";
 import { useEffect, useState } from "react";
 
@@ -11,6 +12,48 @@ import { useEffect, useState } from "react";
  * 
 */
 
+const Card = (
+  {key, indexMenu, title, description, iconName }:
+  {key: number, indexMenu:string, title: string, description: string, iconName: string }
+) => {
+  const { showToast } = useToastContext();
+  const [data, setData] = useState([]);
+
+  const executeFindStatics = async (indexMenu: string) => {
+    const dataStatic = await getStatic( indexMenu )
+
+    setData(dataStatic);
+    
+    if (dataStatic?.error) {
+      showToast(
+        dataStatic.error,
+        dataStatic.statusDescription,
+        Alerts.error,
+      );
+      return [];
+    }
+    return dataStatic;
+    
+  }
+
+  useEffect(() => { 
+    executeFindStatics(indexMenu);
+    if(key === 0){  
+      console.log("key", key);
+    }
+  }, [key]);
+  
+  return (
+    <CardGrid
+      key={key}
+      title={title}
+      description={description}
+      iconName={iconName}
+      firtsColor={key === 0}
+      data={data} />   
+  );
+}
+
 /**
  * Funcion que renderiza el cuerpo de la pagina principal
  * 
@@ -20,6 +63,7 @@ import { useEffect, useState } from "react";
 const Body = ({ refreshModule }: { refreshModule: number }) => {
   const [dataModuleSelect, setDataModuleSelect] = useState<Record<string, IModuleRoot>>({});
   const [loading, setLoading] = useState(true);
+  
   const fetchData = async () => {
     const moduleSelect = await getSelectModule();
     if (moduleSelect) {
@@ -27,7 +71,7 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -40,17 +84,15 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
     <>
       {!loading &&
         <GridDashboard >
-          {Array.isArray(dataModuleSelect.menus) && dataModuleSelect.menus.map((item, index) => {
-            return (
-              <CardGrid
-                key={index}
-                title={item.name}
-                description={item.index}
-                iconName={item.icon}
-                firtsColor={ index===0 }
-                data={[]} />
-            );
-          })}
+          {Array.isArray(dataModuleSelect.menus) && dataModuleSelect.menus.map((item, index) => (
+            <Card 
+              key={index}
+              indexMenu={item.index}
+              title={item.name}
+              description={"pendiente"}
+              iconName={item.icon}
+            />
+          ))}
         </GridDashboard>
       }
       {

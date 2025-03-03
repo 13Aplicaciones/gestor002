@@ -1,0 +1,65 @@
+package com.aplicaciones13.orquestador.services;
+
+import com.aplicaciones13.orquestador.mapping.StaticMapper;
+import com.aplicaciones13.orquestador.model.Menu;
+import com.aplicaciones13.orquestador.model.Static;
+import com.aplicaciones13.orquestador.payload.response.StaticResponse;
+import com.aplicaciones13.orquestador.payload.response.StaticsResponse;
+import com.aplicaciones13.orquestador.repository.MenuRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * Servicio para la gestión de estadísticas
+ * 
+ * @autor omargo33
+ * @since 2025-03-03
+ */
+@Service
+public class StaticsService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Autowired
+    private MenuService menuService;
+
+    /**
+     * Metodo para ejecutar una consulta dinamica
+     * 
+     * @param indexMenu
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @Cacheable(value = "StaticsService", key = "#indexMenu", cacheManager = "cacheManagerWithTtl")
+    public List<StaticResponse> executeDynamicQuery(String indexMenu) {
+
+        Optional<Menu> menu = menuService.findByIndex(indexMenu);
+
+        if (!menu.isPresent()) {
+            return new ArrayList<StaticResponse>();
+        }
+
+        if (menu.get().getStatisticsQuery() == null || menu.get().getStatisticsQuery().isEmpty()) {
+            return new ArrayList<StaticResponse>();
+        }
+
+        Query query = entityManager.createNativeQuery(menu.get().getStatisticsQuery(), Static.class);
+        List<Static> responseStatic = query.getResultList();
+
+        return responseStatic.stream()
+                .map(StaticMapper.INSTANCE::toResponse)
+                .collect(Collectors.toList());
+    }
+}

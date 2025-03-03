@@ -1,7 +1,9 @@
 package com.aplicaciones13.orquestador.model;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
+import org.hibernate.annotations.Immutable;
 
 import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
@@ -24,8 +26,9 @@ import jakarta.persistence.Table;
  * 
  */
 @Entity
+@Immutable
 @Table(name = "parameter")
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class Parameter extends UuidUserDateApp {
 

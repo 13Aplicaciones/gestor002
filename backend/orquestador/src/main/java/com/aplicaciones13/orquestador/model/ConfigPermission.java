@@ -1,6 +1,9 @@
 package com.aplicaciones13.orquestador.model;
 
 import lombok.Data;
+import lombok.Getter;
+
+import org.hibernate.annotations.Immutable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+@Immutable
 @Table(name = "view_config_permission")
 @Data
 public class ConfigPermission {

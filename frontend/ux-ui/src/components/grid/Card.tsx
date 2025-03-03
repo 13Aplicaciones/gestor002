@@ -15,8 +15,8 @@ import { whiteA, blackA } from "@radix-ui/colors"
  * @see mapStatusToAlert
  */
 type DataItemBadge = {
-    valor: string;
-    descripcion: string;
+    value: string;
+    description: string;
     status: "info" | "warning" | "success" | "error";
 };
 
@@ -38,10 +38,10 @@ const BadgeCard = (
         <Flex gap="2" direction={{ xs: "row", sm: "row", md: "column", lg: "column", xl: "column" }} >
             {data.map((item, index) => (
                 <Badge key={index} size="3" color={alertColor({ alert: mapStatusToAlert(item.status) })}>
-                    <strong>{item.valor}</strong>
-                    {item.descripcion &&
+                    <strong>{item.value}</strong>
+                    {item.description &&
                         <Text as="p" size="2" color="gray">
-                            {item.descripcion.length > descriptionLength ? `${item.descripcion.substring(0, descriptionLength)}...` : item.descripcion}
+                            {item.description.length > descriptionLength ? `${item.description.substring(0, descriptionLength)}...` : item.description}
                         </Text>
                     }
                 </Badge>
@@ -49,7 +49,6 @@ const BadgeCard = (
         </Flex>
     );
 };
-
 
 /**
  * Función que muestra el valor y la descripción.
@@ -133,8 +132,8 @@ const CardGrid = (
                     {data && (
                         data.length === 1 ? (
                             <ValueDescriptionCard
-                                title={data[0].valor}
-                                description={data[0].descripcion}
+                                title={data[0].value}
+                                description={data[0].description}
                                 alert={mapStatusToAlert(data[0].status)}
                             />
                         ) : (
