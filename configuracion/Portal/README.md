@@ -26,6 +26,8 @@ La base de dato se encuentra en la carpeta `baseDatos` y esta configurada para q
 
 #### Respaldo de la base de datos GESTOR 002
 
+mysqldump -u root -p GS_002_01 > gs_002_01.sql
+
 Siempre que ese realicen cambios en la base de datos se debe realizar un respaldo de la misma y actualizar el repositorio git con el archivo `02-init-gestor002.sql`.
 
 Para realizar el respaldo de la base de datos se debe ejecutar los siguientes comandos:
