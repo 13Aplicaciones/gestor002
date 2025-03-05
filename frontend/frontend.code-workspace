@@ -8,7 +8,7 @@
 "settings": {
 		"files.exclude": {
 			"api-fetch": false,			
-			"demo-remote": true,
+			"demo-remote": false,
 			"frontend-oauth2": false,
 			"gestor-remote": false,
 			"marco-remote": true,
@@ -39,5 +39,15 @@
 			"titleBar.inactiveForeground": "#e7e7e799"
 		},
 		"peacock.color": "#1857a4"
+	},
+	"extensions": {
+		"recommendations": [
+			"dbaeumer.vscode-eslint",
+			"esbenp.prettier-vscode",
+			"ms-vscode.vscode-typescript-tslint-plugin",
+			"eamodio.gitlens",
+			"ms-azuretools.vscode-docker",
+			"EbenezerDon.npm-studio",
+		]
 	}
 }

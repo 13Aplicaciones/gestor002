@@ -41,10 +41,11 @@
 			<version>6.5.1.RELEASE</version>
 		</dependency>
 
-		<!-- uso de cache manager personalizado -->
+		<!-- uso de cache manager personalizado 
 		<dependency>
 			<groupId>com.github.ben-manes.caffeine</groupId>
 			<artifactId>caffeine</artifactId>
 		</dependency>
+		-->
 	</dependencies>
 </project>

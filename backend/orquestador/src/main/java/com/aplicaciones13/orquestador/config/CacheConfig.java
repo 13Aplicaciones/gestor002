@@ -4,7 +4,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
+//import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 
 import java.util.concurrent.TimeUnit;
@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  * @autor omargo33
  * @since 2025-03-03
  */
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 public class CacheConfig {
 
     /**
@@ -27,6 +27,8 @@ public class CacheConfig {
      * 
      * @return
      */
+
+     /* 
     @Bean
     public CaffeineCacheManager cacheManagerWithTtl() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager("menuService", "StaticsService");
@@ -34,4 +36,5 @@ public class CacheConfig {
                 .expireAfterWrite(5, TimeUnit.MINUTES)); // Configura el TTL a 5 minutos
         return cacheManager;
     }
+        */
 }

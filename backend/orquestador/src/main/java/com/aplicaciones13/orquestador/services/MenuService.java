@@ -15,7 +15,9 @@ public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-    @Cacheable(value = "menuService", key = "#index", cacheManager = "cacheManagerWithTtl")
+    //TODO: validar si se puede cachear
+    //@Cacheable(value = "menuService", key = "#index", cacheManager = "cacheManagerWithTtl")
+    @Cacheable(value = "menuService", key = "#index")
     public Optional<Menu> findByIndex(String index) {
         return menuRepository.findByIndex(index);
     }

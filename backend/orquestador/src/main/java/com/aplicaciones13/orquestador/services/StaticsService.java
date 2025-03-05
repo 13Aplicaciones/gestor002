@@ -4,8 +4,6 @@ import com.aplicaciones13.orquestador.mapping.StaticMapper;
 import com.aplicaciones13.orquestador.model.Menu;
 import com.aplicaciones13.orquestador.model.Static;
 import com.aplicaciones13.orquestador.payload.response.StaticResponse;
-import com.aplicaciones13.orquestador.payload.response.StaticsResponse;
-import com.aplicaciones13.orquestador.repository.MenuRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -42,7 +40,9 @@ public class StaticsService {
      * @return
      */
     @SuppressWarnings("unchecked")
-    @Cacheable(value = "StaticsService", key = "#indexMenu", cacheManager = "cacheManagerWithTtl")
+    //TODO: validar si se puede cachear con tiempo diferenciado si se puede borrar.
+    //@Cacheable(value = "StaticsService", key = "#indexMenu", cacheManager = "cacheManagerWithTtl")
+    @Cacheable(value = "StaticsService", key = "#indexMenu")
     public List<StaticResponse> executeDynamicQuery(String indexMenu) {
 
         Optional<Menu> menu = menuService.findByIndex(indexMenu);
