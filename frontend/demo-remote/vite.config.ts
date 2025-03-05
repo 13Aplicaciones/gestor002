@@ -28,7 +28,7 @@ export default defineConfig({
       remotes: {
         orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",
       },
-      shared: ["react", "react-dom", "jotai"],
+      shared: ["react", "react-dom"],
     }),
   ],
 

@@ -7,12 +7,10 @@ export default defineConfig({
     react(),    
     federation({
       name: "portal",      
-      remotes: {
-        dashboard_remote: "http://localhost:5000/assets/assets/dashboardRemoteEntry.js",
-        demo_remote: "http://localhost:5001/assets/demoRemoteEntry.js",
-        marco_remote: "http://localhost:5002/assets/assets/marcoRemoteEntry.js",        
-        orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",
-        usuario_remote: "http://localhost:5003/assets/assets/usuarioRemoteEntry.js",
+      remotes: {        
+        demo_remote: "http://localhost:5001/assets/demoRemoteEntry.js",        
+        gestor_remote: "http://localhost:5002/assets/assets/gestorRemoteEntry.js",        
+        orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",        
       },      
       shared: ["react", "react-dom"],
     }),

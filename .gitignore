@@ -1,3 +1,10 @@
 configuracion/Portal/.env
 configuracion/Portal/baseDatos/mysql-files/.clave.txt
 configuracion/Portal/baseDatos/mysql-data
+frontend/ux-ui/package-lock.json
+frontend/portal/package-lock.json
+frontend/ux-ui/package-lock.json
+frontend/orchestrator-remote/package-lock.json
+frontend/gestor-remote/package-lock.json
+frontend/frontend-oauth2/package-lock.json
+frontend/demo-remote/package-lock.json

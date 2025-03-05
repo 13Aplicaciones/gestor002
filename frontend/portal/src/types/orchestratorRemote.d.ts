@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 declare module 'orchestrator_remote/globalStore' {
   import { GlobalStore } from 'orchestrator_remote/globalStore';
   export const globalStore: GlobalStore;
@@ -31,11 +30,8 @@ declare module 'orchestrator_remote/service/Structure' {
 }
 
 declare module 'orchestrator_remote/service/Statics' {
-  /*import { StaticsService } from 'orchestrator_remote/service/Statics';
-  export const staticsService: StaticsService;*/
   export function getStatic( index: string): Promise<any>;
 }
-
 
 declare module 'orchestrator_remote/service/Tokens' {
   import { TokensService } from 'orchestrator_remote/service/Tokens';
