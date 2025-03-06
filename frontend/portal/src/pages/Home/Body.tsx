@@ -10,7 +10,7 @@ import { getStatic } from "orchestrator_remote/service/Statics";
 import { IModuleRoot } from "./Header";
 import { useEffect, useState } from "react";
 
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
 import { useTranslation } from "react-i18next";
 import * as Temp from "./Demo";

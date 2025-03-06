@@ -13,6 +13,12 @@ npm run build
 cd ..
 echo -e "\e[32m---------------- api-fetch finished ---------------- \e[0m"
 
+cd ux-ui
+rm -rf dist node_modules package-lock.json
+npm install 
+./installAPI.sh
+cd ..
+echo -e "\e[32m---------------- ux-ui finished ---------------- \e[0m"
 
 cd demo-remote
 rm -rf dist node_modules package-lock.json
@@ -51,10 +57,3 @@ npm install
 cd ..
 echo -e "\e[32m---------------- portal finished ---------------- \e[0m"
 
-
-cd ux-ui
-rm -rf dist node_modules package-lock.json
-npm install 
-./installAPI.sh
-cd ..
-echo -e "\e[32m---------------- ux-ui finished ---------------- \e[0m"
