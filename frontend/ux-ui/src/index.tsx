@@ -26,11 +26,11 @@ export { TableConfigurable } from './components/table/Table';
 export { CreateSearchField } from './components/table/TableSearch';
 
 // Exportar elementos de la libreria para Toast
-export { ToastContextProvider  } from './components/toast/ToastContextProvider.tsx';
-export { useToastContext } from './components/toast/useToastContext.tsx';
+export { ToastContextProvider  } from './components/toast/ToastContextProvider';
+export { useToastContext } from './components/toast/useToastContext';
 
 // Exportar elementos de la libreria Pages basicas
-export { NotFound } from './pages/NotFound.tsx';
+export { NotFound } from './pages/NotFound';
 
 // Exportar elementos de i18n
 import global_ux_en from './locales/en/global_ux.json';

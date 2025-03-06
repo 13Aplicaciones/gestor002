@@ -12,11 +12,8 @@ createRoot(document.getElementById("root")!).render(
       scaling="100%"
       radius="medium"
       panelBackground="translucent"
-      appearance="light"
-    >
-        
-          <App structure={{element:"Information"}} />
-        
+      appearance="light">
+      <App />
     </Theme>
   </StrictMode>
 );
