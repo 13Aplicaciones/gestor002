@@ -1,37 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ToastContextProvider } from "ux-ui";
 import Error from "./pages/Error.tsx";
 import Information from "./pages/Information.tsx";
 import Module from "./pages/Module.tsx";
 import User from "./pages/User.tsx";
-
-/**
- * Funcion para renderizar el flujo de la aplicación.
- *
- * @param structure estructura de la aplicación.
- * @returns
- */
-interface Structure {
-  element?: string;
-}
-
-const commutator = ( structure?: Structure ) => {
-  switch (structure?.element) {
-    case "Error":
-      return <Error />;
-    case "Information":
-      return <Information />;
-    case "Module":
-      return <Module />;
-    case "User":
-      return <User />;
-    default:
-const App = ({ structure }: { structure?: Structure }) => {
-  }
-};
+import i18next from "i18next";
+import { I18nextProvider } from "react-i18next";
 
 const App = ({ structure }: { structure?: any }) => {
-  return (    
-      {commutator( structure )}
+  console.log("structure ", JSON.stringify(structure));
+
+  const flow = (structure: any) => {
+    switch (structure?.element) {
+      case "Error":
+        return <Error />;
+      case "Information":
+        return <Information />;
+      case "Module":
+        return <Module />;
+      case "User":
+        return <User />;
+      default:
+    }
+
+    return <User />;
+
+  };
+
+  return (
+    <div>
+      <I18nextProvider i18n={i18next}>
+        <ToastContextProvider>{flow(structure)}</ToastContextProvider>
+      </I18nextProvider>
+    </div>
   );
 };
 

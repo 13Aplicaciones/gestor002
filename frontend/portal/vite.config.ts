@@ -9,7 +9,7 @@ export default defineConfig({
       name: "portal",      
       remotes: {        
         demo_remote: "http://localhost:5001/assets/demoRemoteEntry.js",        
-        gestor_remote: "http://localhost:5002/assets/assets/gestorRemoteEntry.js",        
+        gestor_remote: "http://localhost:5002/assets/gestorRemoteEntry.js",        
         orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",        
       },      
       shared: ["react", "react-dom"],

@@ -1,19 +1,14 @@
-declare module "gestor_remote/Error" {
-    const Error: React.ComponentType;
-    export default Error;
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/**
+ * El componente App de gestor_remote tiene un estructura generica para pasar argumentos.
+ */
+declare module "gestor_remote/App" {
+    import React from 'react';
 
-declare module "gestor_remote/Information" {
-    const Information: React.ComponentType;
-    export default Information;
-}
+    interface AppProps {
+        structure: any;
+    }
 
-declare module "gestor_remote/Module" {
-    const Module: React.ComponentType;
-    export default Module;
-}
-
-declare module "gestor_remote/User" {
-    const User: React.ComponentType;
-    export default User;
+    const App: React.ComponentType<AppProps>;
+    export default App;
 }

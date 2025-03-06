@@ -15,7 +15,7 @@ import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
 import { useTranslation } from "react-i18next";
 import * as Temp from "./Demo";
 
-
+import { AppGestor } from "./Demo";
 
 import { Button as MiB } from "@radix-ui/themes";
 
@@ -120,51 +120,55 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
   const [flag, setFlag] = useState(false);
   const [contenidoName, setContenidoName] = useState("Button");
 
-const getCustomComponent = (name: string) => {
+  const getCustomComponent = (name: string) => {
     const MiComponent = Temp[name as keyof typeof Temp];
     return MiComponent ? <MiComponent /> : <Temp.Button />;
-};
-
+  };
 
   const handleSwitch = () => {
     setFlag(!flag);
     setContenidoName(flag ? "Button" : "Footer");
   };
 
-
   return (
     <>
-        <>
-          {!loading && (
-            <GridDashboard>
-              {Array.isArray(dataModuleSelect.menus) &&
-                dataModuleSelect.menus.map((item, index) => (
-                  <Card
-                    index={index}
-                    indexMenu={item.index}
-                    title={item.name}
-                    description={"pendiente"}
-                    iconName={item.icon}
-                  />
-                ))}
-            </GridDashboard>
-          )}
-          {loading && (
-            <GridDashboard>
-              {[...Array(4)].map((_, index) => (
-                <CardGridSkeleton key={index} />
+      <>
+        {!loading && (
+          <GridDashboard>
+            {Array.isArray(dataModuleSelect.menus) &&
+              dataModuleSelect.menus.map((item, index) => (
+                <Card
+                  index={index}
+                  indexMenu={item.index}
+                  title={item.name}
+                  description={"pendiente"}
+                  iconName={item.icon}
+                />
               ))}
-            </GridDashboard>
-          )}
-        </>
-       
-        <CatchErrorLoadElement titleName="Button">
-          <Suspense fallback={t("messages.loading")}>
-            {getCustomComponent(contenidoName)}
-          </Suspense>
-        </CatchErrorLoadElement>
-      
+          </GridDashboard>
+        )}
+        {loading && (
+          <GridDashboard>
+            {[...Array(4)].map((_, index) => (
+              <CardGridSkeleton key={index} />
+            ))}
+          </GridDashboard>
+        )}
+      </>
+
+      <CatchErrorLoadElement titleName="Button">
+        <Suspense fallback={t("messages.loading")}>
+          {getCustomComponent(contenidoName)}
+        </Suspense>
+      </CatchErrorLoadElement>
+
       <MiB onClick={handleSwitch}>Button</MiB>
+
+      <CatchErrorLoadElement titleName="gestor">
+        <Suspense fallback={t("messages.loading")}>
+          <AppGestor structure={{ element: "Error" }} />
+        </Suspense>
+      </CatchErrorLoadElement>
     </>
   );
 };
