@@ -1,9 +1,11 @@
+import { Flex, Heading } from "@radix-ui/themes";
+
 const Information = () => {
-    return (
-        <div>
-            <h1>Information</h1>
-        </div>
-    );
-}
+  return (
+    <Flex direction="column" gap="2">
+      <Heading>Information</Heading>
+    </Flex>
+  );
+};
 
 export default Information;

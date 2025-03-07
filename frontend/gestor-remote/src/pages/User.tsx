@@ -1,9 +1,11 @@
+import { Flex, Heading } from "@radix-ui/themes";
+
 const User = () => {
-    return (
-        <div>
-            <h1>User</h1>
-        </div>
-    );
-}
+  return (
+    <Flex direction="column" gap="2">
+      <Heading>User</Heading>
+    </Flex>
+  );
+};
 
 export default User;

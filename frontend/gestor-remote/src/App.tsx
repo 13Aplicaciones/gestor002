@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { addToken } from "orchestrator_remote/service/Tokens";
+import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { I18nextProvider } from "react-i18next";
+import { Origin, OriginProps } from "./pages/Origin";
 import { ToastContextProvider } from "ux-ui";
+import { useState } from "react";
 import i18next from "i18next";
-import Origin from "./pages/Origin";
 
 /**
  * Funcion principal de la aplicacion en developer
@@ -12,8 +14,9 @@ import Origin from "./pages/Origin";
  * @param param0
  * @returns
  */
-const App = ({ structure = { element: "Error" } }: { structure?: any }) => {
-  
+const App = ({ structure }: { structure?: OriginProps }) => {
+  const [structureTest, setStructureTest] = useState<OriginProps | undefined>();
+
   /**
    * Funcion para ejecutar una api.
    *
@@ -35,9 +38,9 @@ const App = ({ structure = { element: "Error" } }: { structure?: any }) => {
       bodyParameter: data,
     })
       .then(async (response) => {
-        if (response.error) {          
-          console.error("Error: " + response );    
-        } else {          
+        if (response.error) {
+          console.error("Error: " + response);
+        } else {
           await addToken({ token: response.response });
         }
       })
@@ -47,24 +50,36 @@ const App = ({ structure = { element: "Error" } }: { structure?: any }) => {
       });
   };
 
-
-
-  const heandleToken = () => {    
+  const heandleToken = (panelName: string) => {
     runApi();
-    if (structure.refreshToken) {
-      structure.refreshToken = structure.refreshToken + 1;
-    } else {
-      structure.refreshToken = 1;
-    }
-
-    console.log("structure ", JSON.stringify(structure));
+    setStructureTest({
+      refreshToken: structureTest?.refreshToken
+        ? structureTest.refreshToken + 1
+        : 1,
+      element: panelName,
+      id: 1,
+      name: panelName,
+    });
   };
 
   return (
     <I18nextProvider i18n={i18next}>
       <ToastContextProvider>
-        <button onClick={heandleToken}>Token</button>
-        <Origin structure={structure} />
+        <Flex direction="row" align={"center"} gap="2">
+          <Button size="3" onClick={() => heandleToken("Error")}>
+            Error
+          </Button>
+          <Button size="3" onClick={() => heandleToken("Information")}>
+            Information
+          </Button>
+          <Button size="3" onClick={() => heandleToken("Module")}>
+            Module
+          </Button>
+          <Button size="3" onClick={() => heandleToken("User")}>
+            User
+          </Button>
+        </Flex>
+        <Origin structure={structureTest} />
       </ToastContextProvider>
     </I18nextProvider>
   );

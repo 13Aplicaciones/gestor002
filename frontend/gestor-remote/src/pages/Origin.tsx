@@ -1,13 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { use } from "i18next";
+import { useEffect } from "react";
 import Error from "./Error";
 import Information from "./Information";
 import Module from "./Module";
 import User from "./User";
-import { useEffect } from "react";
 
-const Origin = ({ structure }: { structure?: any }) => {
-  console.log("structure ", JSON.stringify(structure));
+type OriginProps = {  
+  id?: number | 0;
+  name?: string;
+  description?: string;
+  element?: string | "Base";  
+  refreshToken?: number | 0;
+  [key: string]: any;
+};
+
+const Origin = (
+  { structure }: 
+  {structure?:OriginProps}
+) => {  
   const flow = (structure: any) => {
     switch (structure?.element) {
       case "Error":
@@ -19,6 +29,7 @@ const Origin = ({ structure }: { structure?: any }) => {
       case "User":
         return <User />;
       default:
+        return <><h1>Base</h1></>;
     }
     return <User />;
   };
@@ -26,7 +37,7 @@ const Origin = ({ structure }: { structure?: any }) => {
   useEffect(() => {
     console.log("structure hola taroja ", JSON.stringify(structure));
   }
-  , [structure.refreshToken]);
+  , [structure?.refreshToken]);
 
   return (
     <div>
@@ -35,4 +46,5 @@ const Origin = ({ structure }: { structure?: any }) => {
   );
 };
 
-export default Origin;
+export { Origin };
+export type { OriginProps };

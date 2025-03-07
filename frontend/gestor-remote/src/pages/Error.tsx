@@ -1,8 +1,10 @@
 import { Alerts, useToastContext } from "ux-ui";
+import { Button, Flex, Heading } from "@radix-ui/themes";
 import { getToken } from "orchestrator_remote/service/Tokens";
+import { OriginProps } from "./Origin";
 import { useEffect, useState } from "react";
 
-const Error = ({ structure }: { structure?: any }) => {
+const Error = ({ structure }: { structure?: OriginProps }) => {
   const [token, setToken] = useState({});
   const { showToast } = useToastContext();
 
@@ -15,20 +17,20 @@ const Error = ({ structure }: { structure?: any }) => {
       }
     };
     token1();
-  }, [structure.refreshToken]);
+  }, [structure?.refreshToken]);
 
   const heandleError = () => {
     showToast("Error", "Error", Alerts.info);
   };
 
   return (
-    <div>
-      <h1>Error hola taraola</h1>
+    <Flex direction="column" gap="2">
+      <Heading>Error</Heading>
       {JSON.stringify(token)}
-      <br />
-
-      <button onClick={heandleError}>Error</button>
-    </div>
+      <Button size="3" onClick={heandleError}>
+        Click me
+      </Button>
+    </Flex>
   );
 };
 
