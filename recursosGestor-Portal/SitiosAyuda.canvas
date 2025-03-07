@@ -1,12 +1,15 @@
 {
 	"nodes":[
-		{"id":"bf602e45fb880bae","type":"link","url":"https://dlcastillop.com/blog/libreria-hooks-react","x":-207,"y":220,"width":400,"height":391},
-		{"id":"9954e6e3ac596141","type":"link","url":"https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9","x":-1160,"y":360,"width":400,"height":400},
 		{"id":"fba36e81cc92d847","type":"text","text":"reactLibreria","x":-641,"y":314,"width":250,"height":60},
-		{"id":"ba67c3a75523e010","x":-680,"y":611,"width":400,"height":400,"type":"link","url":"https://springdoc.org/#swagger-ui-properties"}
+		{"id":"bf602e45fb880bae","type":"link","url":"https://dlcastillop.com/blog/libreria-hooks-react","x":-316,"y":280,"width":400,"height":391},
+		{"id":"9954e6e3ac596141","type":"link","url":"https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9","x":-1116,"y":280,"width":400,"height":400},
+		{"id":"7af63c133e045019","x":-716,"y":-380,"width":400,"height":400,"type":"link","url":"https://www.javacodegeeks.com/2025/03/optimize-spring-boot-startup-time-tips-techniques.html"},
+		{"id":"ba67c3a75523e010","type":"link","url":"https://springdoc.org/#swagger-ui-properties","x":-716,"y":800,"width":400,"height":400}
 	],
 	"edges":[
 		{"id":"4a735d99ce063e54","fromNode":"9954e6e3ac596141","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"},
-		{"id":"e0855aac6b8eee6e","fromNode":"bf602e45fb880bae","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"}
+		{"id":"e0855aac6b8eee6e","fromNode":"bf602e45fb880bae","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"},
+		{"id":"6b193f701de2ffd5","fromNode":"fba36e81cc92d847","fromSide":"bottom","toNode":"ba67c3a75523e010","toSide":"top"},
+		{"id":"bc83755f1f93248e","fromNode":"fba36e81cc92d847","fromSide":"top","toNode":"7af63c133e045019","toSide":"bottom"}
 	]
 }
