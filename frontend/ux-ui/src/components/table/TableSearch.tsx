@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alerts, BandPresentation, Direccion } from "../../ConstantsPresentation";
+import { Alerts, BandPresentation, Direction } from "../../ConstantsPresentation";
 import { ChevronLeftIcon, ChevronRightIcon, DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
 import { fetchData } from "api-fetch";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
@@ -33,13 +33,16 @@ import * as yup from "yup";
 * 
 * @returns 
 */
-const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem, children }:
+const CreateSearchField = (
+  { apiUrl, nameIndex, parametersApi, presentationItem, children, token, getToken  }:
   {
     apiUrl: string,
     nameIndex: string,
     parametersApi: any,
     presentationItem: any,
-    children?: any
+    children?: any,
+    token?: string,
+    getToken?: (() =>  Promise<string>) | undefined;
   }) => {
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -99,12 +102,13 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
     setCurrentPage(0);
     setTotalItems(0);
 
-    //TODO: Revisar para tomar el token de la sesion o de otro metodo.
     fetchData({
       url: apiUrl,
       methodRest: MethodREST.GET,
       typeBody: TypeBody.URL_PARAMS,
       bodyParameter: parametersApi,
+      token: token,
+      getToken: getToken,
     })
       .then(response => {
         if (response.error) {
@@ -271,7 +275,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               <form onSubmit={handleSubmitPagina(consultPage)}>
                 <InputSubmit
                   placeholder={t("page.pagePlaceholder")}
-                  directionLabel={Direccion.vertical}
+                  directionLabel={Direction.vertical}
                   columna={BandPresentation.column_6}
                   register={registerPage("page", { required: true })}
                   messageError={errorsPagina.page?.message}
@@ -312,7 +316,7 @@ const CreateSearchField = ({ apiUrl, nameIndex, parametersApi, presentationItem,
               isBand={presentationItem.banding}
               presentation={presentationItem.items}
               isHeader={presentationItem.headers}
-              isLineNumber={presentationItem.numeroLinea}
+              isLineNumber={presentationItem.numberLinea}
             />
             {pageForm()}
           </>

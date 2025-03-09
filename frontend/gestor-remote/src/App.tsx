@@ -6,7 +6,7 @@ import { I18nextProvider } from "react-i18next";
 import { Origin, OriginProps } from "./pages/Origin";
 import { ToastContextProvider } from "ux-ui";
 import { useState } from "react";
-import i18next from "i18next";
+import i18next from "./i18n";
 
 /**
  * Funcion principal de la aplicacion en developer
@@ -15,7 +15,7 @@ import i18next from "i18next";
  * @returns
  */
 const App = ({ structure }: { structure?: OriginProps }) => {
-  const [structureTest, setStructureTest] = useState<OriginProps | undefined>();
+  const [structureTest, setStructureTest] = useState<OriginProps | undefined>(structure);
 
   /**
    * Funcion para ejecutar una api.
@@ -39,17 +39,23 @@ const App = ({ structure }: { structure?: OriginProps }) => {
     })
       .then(async (response) => {
         if (response.error) {
-          console.error("Error: " + response);
+          console.warn("Error:", response.error);
         } else {
+          //Cargo el token en el local storage para su uso.
           await addToken({ token: response.response });
         }
       })
       .catch((error) => {
+        console.error("Failed to fetch token:", error);
         throw new Error("Failed to fetch token: " + JSON.stringify(error));
-        console.error("Error: " + error);
       });
   };
 
+  /**
+   * Funcion para manejar el token y refrescar el panel.
+   * 
+   * @param panelName 
+   */
   const heandleToken = (panelName: string) => {
     runApi();
     setStructureTest({
@@ -66,17 +72,20 @@ const App = ({ structure }: { structure?: OriginProps }) => {
     <I18nextProvider i18n={i18next}>
       <ToastContextProvider>
         <Flex direction="row" align={"center"} gap="2">
-          <Button size="3" onClick={() => heandleToken("Error")}>
+          <Button size="3" onClick={() => heandleToken("error")}>
             Error
           </Button>
-          <Button size="3" onClick={() => heandleToken("Information")}>
+          <Button size="3" onClick={() => heandleToken("information")}>
             Information
           </Button>
-          <Button size="3" onClick={() => heandleToken("Module")}>
+          <Button size="3" onClick={() => heandleToken("module")}>
             Module
           </Button>
-          <Button size="3" onClick={() => heandleToken("User")}>
+          <Button size="3" onClick={() => heandleToken("user")}>
             User
+          </Button>
+          <Button size="3" onClick={() => heandleToken("vacio")}>
+            Vacio
           </Button>
         </Flex>
         <Origin structure={structureTest} />

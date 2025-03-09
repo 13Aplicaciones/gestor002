@@ -42,4 +42,4 @@ const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  t
     )
 }
 
-export default ButtonCreateRecordFloating;
+export { ButtonCreateRecordFloating };

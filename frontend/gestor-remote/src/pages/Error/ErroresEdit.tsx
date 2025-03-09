@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertColor } from "../components/IconosColoresAlerts";
-import { Alerts, BandPresentation, Direction, StatusEdit } from "../ConstantsPresentation";
-import { AreaField, InputField } from "../components/input/Input";
-import { BannerInformation, InformationPanelRegistration } from "../components/callout/Information";
+import { alertColor, useToastContext,  } from "ux-ui";
+import { Alerts, BandPresentation, Direction, StatusEdit } from "ux-ui";
+import { AreaField, InputField } from "ux-ui";
+import { BannerInformation, InformationPanelRegistration } from "ux-ui";
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogAlerts } from "../components/dialog/Dialog";
+import { DialogAlerts } from "ux-ui";
 import { fetchData, IFetchData } from "api-fetch";
-import { FooterForm, FormState } from "../components/form/Form";
+import { FooterForm, FormState } from "ux-ui";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch";
 import { IRowDataError } from "./ErroresVistaPrevia";
 import { MethodREST, TypeBody } from "api-fetch";
@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { useToastContext } from "../components/toast/useToastContext";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -26,8 +25,8 @@ import { useToastContext } from "../components/toast/useToastContext";
  * @returns 
  */
 const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: StatusEdit, row?: IRowDataError, onAtras?: () => void }) => {
-
     const { showToast } = useToastContext();
+  
     const [stateFormulario, setFormStateulario] = useState<StatusEdit>(estado || StatusEdit.create);
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
@@ -120,17 +119,26 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: StatusEdit, r
     const analizarAccionar = (response: IFetchData) => {
         if (response.error) {
             if (response.status === 400) {
+                console.log(response.responseErrorJSON);
+                //TODO: Cambiar el mensaje de error
+                
                 showToast(
                     response.error + ' ' + response.status.toString(),
                     response.responseErrorJSON.message,
                     Alerts.warning
                 );
+                
+               console.log(response.error + ' ' + response.status.toString());
             } else {
+                //TODO: Cambiar el mensaje de error
+                
                 showToast(
                     response.status.toString(),
                     response.error,
                     Alerts.warning
                 );
+                
+                console.log(response.status.toString());
             }
             return;
         } else {
@@ -138,11 +146,14 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: StatusEdit, r
             if (respuesta.response && respuesta.response.uuid) {
                 setUuid(respuesta.response.uuid);
             }
+            //TODO: Cambiar el mensaje de error
+            
             showToast(
                 respuesta.status.toString(),
                 "Accion realizada con exito",
                 Alerts.success
             );
+            console.log(respuesta.status.toString());
         }
     }
 

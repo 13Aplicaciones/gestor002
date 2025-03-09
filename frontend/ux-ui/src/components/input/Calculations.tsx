@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import { BandPresentation, Direccion } from '../../ConstantsPresentation';
+import { BandPresentation, Direction } from '../../ConstantsPresentation';
 
 /**
  * Funciones de calculos para la presentation dinamica.
@@ -17,7 +17,7 @@ import { BandPresentation, Direccion } from '../../ConstantsPresentation';
 interface IPresentation {
     align: string;
     justify: string;
-    direction: Direccion;
+    direction: Direction;
     width: string | undefined;
 }
 
@@ -30,16 +30,16 @@ interface IPresentation {
  *  
  * @returns 
  */
-const useCalculatePresentation = (directionLabel: Direccion | Direccion.horizontal, columns?: BandPresentation, width?: string) => {
+const useCalculatePresentation = (directionLabel: Direction | Direction.horizontal, columns?: BandPresentation, width?: string) => {
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
     const iPresentation: IPresentation = {
         align: "end",
         justify: "end",
-        direction: Direccion.horizontal,
+        direction: Direction.horizontal,
         width: ''
     };
     
-    if (directionLabel === Direccion.vertical) {
+    if (directionLabel === Direction.vertical) {
         iPresentation.align = "start";
         iPresentation.justify = "start";
     } else {
@@ -47,7 +47,7 @@ const useCalculatePresentation = (directionLabel: Direccion | Direccion.horizont
         iPresentation.justify = isPortrait ? "start" : "end";
     }
 
-    iPresentation.direction = isPortrait ? Direccion.vertical : directionLabel;
+    iPresentation.direction = isPortrait ? Direction.vertical : directionLabel;
     iPresentation.width = isPortrait ? width : 'calc(100vw * ' + (columns ? columns : BandPresentation.column_1) + ')'
 
     return iPresentation;

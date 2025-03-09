@@ -1,5 +1,5 @@
 import { alertColor } from "../IconosColoresAlerts";
-import { Alerts, BandPresentation, Direccion, EstadoEdicion } from "../../ConstantsPresentation";
+import { Alerts, BandPresentation, Direction, StatusEdit } from "../../ConstantsPresentation";
 import { Badge, Flex } from "@radix-ui/themes";
 import { EyeOpenIcon, LockClosedIcon, Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
 import { ReactNode } from "react";
@@ -24,7 +24,7 @@ import useCalculatePresentation from "../input/Calculations";
  * @returns 
  */
 const FooterForm = ({ columns, directionLabel, children }:
-    { columns?: BandPresentation, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode }) => {
+    { columns?: BandPresentation, directionLabel: Direction | Direction.horizontal, children?: ReactNode }) => {
 
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
@@ -44,27 +44,27 @@ const FooterForm = ({ columns, directionLabel, children }:
  * @param statusEdit Estado de edición del formulario
  * @returns 
  */
-const FormState = ({ statusEdit }: { statusEdit: EstadoEdicion }) => {
+const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
     const [t] = useTranslation("global_ux");
 
     return (
         <Flex>
-            {(statusEdit === EstadoEdicion.create) &&
+            {(statusEdit === StatusEdit.create) &&
                 <Badge color={alertColor({ alert: Alerts.info })} radius="full" size="1" variant="soft">
                     <PlusIcon />{t('stateForm.create')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.edit) &&
+            {(statusEdit === StatusEdit.edit) &&
                 <Badge color={alertColor({ alert: Alerts.success })} radius="full" size="1" variant="soft">
                     <Pencil1Icon />{t('stateForm.edit')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.block) &&
+            {(statusEdit === StatusEdit.block) &&
                 <Badge color={alertColor({ alert: Alerts.warning })} radius="full" size="1" variant="soft">
                     <LockClosedIcon />{t('stateForm.block')}
                 </Badge>
             }
-            {(statusEdit === EstadoEdicion.see) &&
+            {(statusEdit === StatusEdit.see) &&
                 <Badge color={alertColor({ alert: Alerts.success })} radius="full" size="1" variant="soft"> 
                     <EyeOpenIcon />{t('stateForm.see')}
                 </Badge>

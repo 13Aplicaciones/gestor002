@@ -1,35 +1,55 @@
 {
-    "title": "Gestor de tareas",
-    "menus": [
-        {
-            "index": "001",
-            "icon": "PersonIcon",
-            "title": "Usuarios",
-            "description": "Usuarios del sistema, roles, y permisos",
-            "path": "/users",
-            "firtsColor": true
-        },
-        {
-            "index": "002",
-            "icon": "CubeIcon",
-            "title": "Modulos",
-            "description": "Modulos del sistema",
-            "path": "/modules",
-            "firtsColor": false
-        },
-        {
-            "index": "003",
-            "icon": "InfoCircledIcon",
-            "title": "Información",
-            "description": "Información del sistema, versiones, etc.",
-            "path": "/info"            
-        },
-        {
-            "index": "004",
-            "icon": "MinusCircledIcon",
-            "title": "Errores",
-            "description": "Errores del sistema y descripción",
-            "path": "/errors"
-        }
-    ]
+  "title": "Gestor de tareas",
+  "icon": "GestorIcon",
+  "description": "Gestor de tareas y errores",
+  "modules": {
+    "module": {
+      "icon": "CubeIcon",
+      "title": "Módulos",
+      "description": "Modulos del Sistema",
+      "path": "Module"
+    },
+    "menu": {
+      "icon": "DropdownMenuIcon",
+      "title": "Menús",
+      "description": "Menús del sistema",
+      "path": "Menu"
+    },
+    "rol": {
+      "icon": "Link2Icon",
+      "title": "Roles",
+      "description": "Roles de los usuarios",
+      "path": "Role"
+    },
+    "cdu": {
+      "icon": "ListBulletIcon",
+      "title": "Códigos Definidos",
+      "description": "Códigos definidos del sistema",
+      "path": "DefinedCodes"
+    },
+    "user": {
+      "icon": "PersonIcon",
+      "title": "Usuarios",
+      "description": "Usuarios del sistema",
+      "path": "User"
+    },
+    "error": {
+      "icon": "Cross1Icon",
+      "title": "Errores",
+      "description": "Información de errores del sistema y cómo se pueden solucionar",
+      "path": "Error"
+    },
+    "information": {
+      "icon": "InfoCircledIcon",
+      "title": "Información",
+      "description": "Datos de información del módulo",
+      "path": "Information"
+    },
+    "changePassword": {
+      "icon": "LockClosedIcon",
+      "title": "Cambio Clave",
+      "description": "Cambio de clave del usuario",
+      "path": "ChangePassword"
+    }
+  }
 }

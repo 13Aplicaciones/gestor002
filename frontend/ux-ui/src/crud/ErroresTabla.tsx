@@ -1,8 +1,8 @@
 import { Button } from "@radix-ui/themes";
 import { CreateSearchField } from "../components/table/TableSearch";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { TextFormat, JustificationText, SortColumn } from "../ConstantsPresentation";
 import { IRowDataError } from "./ErroresVistaPrevia";
+import { TextFormat, JustificationText, SortColumn } from "../ConstantsPresentation";
 
 /**
  * Propiedades de la tabla de errores.
@@ -21,14 +21,14 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
     const parametros = {
         page: 0,
         size: 10,
-        indice: '',
+        index: '',
         message: '',
     };
 
     const presentationItems = {
         banding: false,
         headers: true,
-        numeroLinea: false,
+        numberLine: false,
         skeleton: {
             with: "90vw",
         },
@@ -78,7 +78,7 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
                     format: "empty",
                     width: "6vw",
                     componente: (row: IRowDataError) => (
-                        <Button size="1" variant='ghost' onClick={() => console.log("nombre " + row.indice)}>
+                        <Button size="1" variant='ghost' onClick={() => console.log("index", row.index)}>
                             <DotsVerticalIcon width="16" height="16" />
                         </Button>
                     )
@@ -89,7 +89,7 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
     return (
         <CreateSearchField
             apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-            nameIndex="indice"
+            nameIndex="index"
             presentationItem={presentationItems}
             parametersApi={parametros} >
         </CreateSearchField>

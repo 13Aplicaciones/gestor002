@@ -11,13 +11,15 @@
  */
 // Exportar elementos de la libreria UI
 export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant, mapStatusToAlert } from './components/IconosColoresAlerts';
-export { Alerts, BandPresentation, Direccion } from './ConstantsPresentation.tsx';
+export { Alerts, BandPresentation, Direction, TextFormat, JustificationText, SortColumn, StatusEdit } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { GridDashboard } from './components/grid/GridDynamic';
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';
 export { getIconComponent } from './components/icon/IconDynamic';
-
+export { ButtonCreateRecordFloating } from './components/button/Button';
+export { AreaField, InputField } from './components/input/Input';
+export { FormState, FooterForm } from './components/form/Form';
 // Exportar elementos Tipos de datos
 export type { DataItemBadge } from './components/grid/Card';
 

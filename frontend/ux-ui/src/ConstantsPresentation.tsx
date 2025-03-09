@@ -29,7 +29,7 @@ const enum BandPresentation {
  * 
  * @returns 
  */
-const enum Direccion{
+const enum Direction{
     vertical = "column",
     horizontal = "row"
 }
@@ -73,7 +73,7 @@ const enum SortColumn{
  * 
  * @returns
  */
-const enum EstadoEdicion{
+const enum StatusEdit{
     create = "create",
     edit = "edit",
     see = "see",
@@ -81,4 +81,4 @@ const enum EstadoEdicion{
     find = "find",
 }
 
-export {Alerts, BandPresentation, Direccion, TextFormat, JustificationText, SortColumn, EstadoEdicion};
+export {Alerts, BandPresentation, Direction, TextFormat, JustificationText, SortColumn, StatusEdit};

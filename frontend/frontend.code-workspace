@@ -7,10 +7,9 @@
   "settings": {    
     "files.exclude": {
       "api-fetch": false,
-      "demo-remote": false,
+      "demo-remote": true,
       "frontend-oauth2": true,
       "gestor-remote": false,
-      "marco-remote": true,
       "orchestrator-remote": false,
       "portal": false,
       "ux-ui": false,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alerts, BandPresentation, Direccion } from "../../ConstantsPresentation";
+import { Alerts, BandPresentation, Direction } from "../../ConstantsPresentation";
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
 import { MessageField } from "./Menssages";
@@ -29,7 +29,7 @@ import useCalculatePresentation from "./Calculations";
  * @returns 
  */
 const InputField = ({ title, placeholder, messageError, columns, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direction | Direction.horizontal, children?: ReactNode, register?: any }) => {
 
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
@@ -63,7 +63,7 @@ const InputField = ({ title, placeholder, messageError, columns, directionLabel,
  * @returns 
  */
 const InputFieldDate = ({ title, placeholder, messageError, columns, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direction | Direction.horizontal, children?: ReactNode, register?: any }) => {
 
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
@@ -99,7 +99,7 @@ const InputFieldDate = ({ title, placeholder, messageError, columns, directionLa
  * @returns 
  */
 const InputSecretField = ({ title, placeholder, messageError, columns, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direccion | Direccion.horizontal, children?: ReactNode, register?: any }) => {
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, directionLabel: Direction | Direction.horizontal, children?: ReactNode, register?: any }) => {
 
     const [visible, setVisible] = useState(false);
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
@@ -145,7 +145,7 @@ const InputSecretField = ({ title, placeholder, messageError, columns, direction
  * @returns 
  */
 const AreaField = ({ title, placeholder, messageError, columns, rows, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation,  rows?:number | 2,  directionLabel: Direccion | Direccion.horizontal, register?: any }) => {
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation,  rows?:number | 2,  directionLabel: Direction | Direction.horizontal, register?: any }) => {
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
@@ -186,7 +186,7 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
         register?: any;
         children?: ReactNode
     }) => {
-    const presentation = useCalculatePresentation(Direccion.horizontal, columna, '30vw');
+    const presentation = useCalculatePresentation(Direction.horizontal, columna, '30vw');
 
     return (
         <Flex direction={"row"} >
@@ -225,7 +225,7 @@ const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLab
         columna?: BandPresentation;
         messageError?: string;
         onClick?: MouseEventHandler<HTMLDivElement>;
-        directionLabel: Direccion;
+        directionLabel: Direction;
         register?: any;
         children?: ReactNode,
         size?: string | "3"

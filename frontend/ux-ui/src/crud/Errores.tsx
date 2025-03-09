@@ -1,8 +1,8 @@
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
-import { EstadoEdicion } from "../ConstantsPresentation";
+import { StatusEdit } from "../ConstantsPresentation";
 import { useState } from "react";
-import ButtonCreateRecordFloating from "../components/button/Button";
+import {ButtonCreateRecordFloating} from "../components/button/Button";
 import ErrorEdit from "./ErroresEdit";
 import Tabla from "./ErroresTabla";
 import VistaPrevia, { IRowDataError } from "./ErroresVistaPrevia";
@@ -15,7 +15,7 @@ import VistaPrevia, { IRowDataError } from "./ErroresVistaPrevia";
  * 
  */
 const ErrorPage = () => {
-    const [estado, setEstado] = useState(EstadoEdicion.create);
+    const [estado, setEstado] = useState(StatusEdit.create);
     const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>({
         mensaje: '',
         descripcion: '',
@@ -27,11 +27,11 @@ const ErrorPage = () => {
     });
 
     const onEditarRow = (row: IRowDataError) => {
-        setEstado(EstadoEdicion.edit);
+        setEstado(StatusEdit.edit);
         setRowSelecionado(row);
     }
 
-    if (estado === EstadoEdicion.find) {
+    if (estado === StatusEdit.find) {
         return (
             <Flex direction="column" gap="3" p="3">
                 <Heading>Listar Errores del sistema</Heading>
@@ -43,7 +43,7 @@ const ErrorPage = () => {
                 <ButtonCreateRecordFloating
                     toolTip="Error"
                     onClick={() => {
-                        setEstado(EstadoEdicion.create);
+                        setEstado(StatusEdit.create);
                         setRowSelecionado({
                             mensaje: '',
                             descripcion: '',
@@ -67,11 +67,11 @@ const ErrorPage = () => {
                     <ErrorEdit estado={estado}
                         row={rowSelecionado}
                         onAtras={() => {
-                            setEstado(EstadoEdicion.find)
+                            setEstado(StatusEdit.find)
                         }} />
                 </Flex>
                 <Flex gap="3">
-                    <Button onClick={() => { setEstado(EstadoEdicion.find) }}>
+                    <Button onClick={() => { setEstado(StatusEdit.find) }}>
                         <ChevronLeftIcon />Atras</Button>
                 </Flex>
             </Flex>

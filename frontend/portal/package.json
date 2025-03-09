@@ -23,7 +23,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^15.4.0",
-    "react-oidc-context": "^3.2.0"
+    "react-oidc-context": "^3.2.0",
+    "ux-ui": "file:../ux-ui"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

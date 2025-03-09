@@ -1,11 +1,14 @@
-import { Flex, Heading } from "@radix-ui/themes";
+import { Flex, } from "@radix-ui/themes";
+import { OriginProps } from "./Origin";
+import { useEffect } from "react";
 
-const Module = () => {
-    return (
-        <Flex direction="column" gap="2">
-            <Heading>Module</Heading>
-        </Flex>
-    );
-}
+const Module = ({ structure }: { structure?: OriginProps }) => {
+  useEffect(() => {}, [structure?.refreshToken]);
+
+  return (
+    <Flex direction="column" gap="2">
+    </Flex>
+  );
+};
 
 export default Module;

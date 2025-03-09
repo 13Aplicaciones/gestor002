@@ -12,7 +12,7 @@ export interface IRowDataError {
     mensaje: string;
     descripcion: string;
     uuid: string;
-    indice: string;
+    index: string;
     usuario: string;
     usuarioFecha: string;
     usuarioPrograma: string;
@@ -69,7 +69,7 @@ const VistaPrevia = ({ indice }: { indice: string }) => {
                 <DataList.Item >
                     <DataList.Label minWidth="88px">Indice</DataList.Label>
                     <DataList.Value>
-                        {row?.indice || ''}
+                        {row?.index || ''}
                     </DataList.Value>
                 </DataList.Item>
                 <DataList.Item >
