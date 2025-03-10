@@ -47,7 +47,7 @@ interface IPresentationTable {
     title: string;
     width: string;
     order?: SortColumn;
-    action?: { onAction: (row: any) => void };
+    onAction?: { onAction: (row: any) => void };
     component?: (row: any, children: ReactNode) => ReactNode;
   }>;
 }
@@ -82,7 +82,7 @@ const Cell = ({
   width,
   justification,
   textFormat,
-  action,
+  onAction,
   component,
 }: {
   value: any;
@@ -91,10 +91,9 @@ const Cell = ({
   width: string;
   justification: JustificationText;
   textFormat: TextFormat;
-  action?: { onAction: (row: any) => void };
+  onAction?: { onAction: (row: any) => void };
   component?: (row: any, children: ReactNode) => ReactNode;
 }) => {
-  
   /**
    * Funcion para format el contenido de la celda en base a la presentation.
    *
@@ -135,10 +134,10 @@ const Cell = ({
     >
       <Flex gap="2" justify={justify(justification)}>
         {component?.(row, null)}
-        {(action && (
+        {(onAction && (
           <Link
             truncate
-            onClick={() => action?.onAction(row)}
+            onClick={() => onAction?.onAction(row)}
             style={{ cursor: "pointer" }}
           >
             <Text weight="regular">{format(textFormat, value)}</Text>
@@ -157,8 +156,20 @@ const Cell = ({
  *
  * @returns
  */
-const Title = ({ text, sort }: { text: string; sort?: SortColumn }) => {
+const Title = ({
+  text,
+  sort,
+  onOrder,
+}: {
+  text: string;
+  sort?: SortColumn;
+  onOrder?: (text: string, sort?: SortColumn) => void;
+}) => {
   const [t] = useTranslation("global_ux");
+
+  useEffect(() => {
+    console.log("Title: ", text, sort);
+  }, [text, sort]);
 
   return (
     <>
@@ -182,6 +193,7 @@ const Title = ({ text, sort }: { text: string; sort?: SortColumn }) => {
             <DropdownMenu.Item
               onClick={() => {
                 sort = SortColumn.asc;
+                onOrder?.(text, sort);
                 console.log("presentation ASC: ", sort, text);
               }}
             >
@@ -191,6 +203,7 @@ const Title = ({ text, sort }: { text: string; sort?: SortColumn }) => {
             <DropdownMenu.Item
               onClick={() => {
                 sort = SortColumn.desc;
+                onOrder?.(text, sort);
                 console.log("presentation DESC: ", sort, text);
               }}
             >
@@ -201,6 +214,7 @@ const Title = ({ text, sort }: { text: string; sort?: SortColumn }) => {
             <DropdownMenu.Item
               onClick={() => {
                 sort = SortColumn.neutral;
+                onOrder?.(text, sort);
                 console.log("presentation NONE: ", sort, text);
               }}
             >
@@ -231,15 +245,18 @@ const TableConfigurable = ({
   isHeader,
   isLineNumber,
   isBand,
+  onOrder,
 }: {
   presentationTable: IPresentationTable;
   data: any;
   isHeader?: boolean;
   isLineNumber?: boolean;
   isBand?: boolean;
+  onOrder?: { onOrder: (row: any) => void };
 }) => {
   const [t] = useTranslation("global_ux");
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
 
   /**
    * Funcion para generar el header de la tabla.
@@ -262,7 +279,11 @@ const TableConfigurable = ({
               justify={justify(item.justification)}
               align="center"
             >
-              <Title text={item.title} sort={item.order} />
+              <Title
+                text={item.title}
+                sort={item.order}
+                onOrder={onOrder?.onOrder}
+              />
             </Table.ColumnHeaderCell>
           ))}
         </Table.Row>
@@ -276,7 +297,7 @@ const TableConfigurable = ({
   useEffect(() => {
     setPresentation(presentationTable);
     console.log(
-      "presentationTable: ",
+      "useEffect: ",
       JSON.stringify(presentationTable).substring(0, 100)
     );
   }, [presentationTable]);
@@ -313,7 +334,7 @@ const TableConfigurable = ({
                     textFormat={presentation.items[cellIndex].format}
                     value={row[field.name]}
                     width={presentation.items[cellIndex].width}
-                    action={presentation.items[cellIndex].action}
+                    onAction={presentation.items[cellIndex].onAction}
                     component={presentation.items[cellIndex].component}
                   />
                 ))}

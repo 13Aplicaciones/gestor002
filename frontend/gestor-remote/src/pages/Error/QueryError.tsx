@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
  * Propiedades de la tabla de errores.
  */
 interface ITablaProps {
-  onAction: (row: IRowDataError) => void;
+  onEdit: (row: IRowDataError) => void;
 }
 
 /**
@@ -23,7 +23,7 @@ interface ITablaProps {
  * @param param0
  * @returns
  */
-const Tabla: React.FC<ITablaProps> = ({ onAction }) => {
+const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
   /**
    * Presentación de los items de la tabla.
    */
@@ -47,14 +47,14 @@ const Tabla: React.FC<ITablaProps> = ({ onAction }) => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
-        action: {
+        onAction: {
           onAction: (row: IRowDataError) => {
             console.log("Editar", row);
-            /*
-            if (onEditar) {
-              onEditar(row);
+            
+            if (onEdit) {
+              onEdit(row);
               console.log("Editar", row);
-            }*/
+            }
           },
         },
       },
@@ -134,7 +134,7 @@ const Tabla: React.FC<ITablaProps> = ({ onAction }) => {
         }}
       >
         Generar
-        </Button>
+      </Button>
     </Flex>
   );
 };

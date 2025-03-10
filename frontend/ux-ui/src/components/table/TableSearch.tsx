@@ -76,7 +76,8 @@ const CreateSearchField = ({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [parameters, setParameters] = useState<IParameters>(parametersApi);
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
   const [shorts, setShorts] = useState<string[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -173,7 +174,7 @@ const CreateSearchField = ({
     setParameters(parameters);
     setPresentation(presentationTable);
 
-    const shortsFind: string[] = []; 
+    const shortsFind: string[] = [];
     presentation.items
       .filter((item: { order?: SortColumn }) => item.order !== undefined)
       .forEach((item: { name: string; order?: SortColumn }) => {

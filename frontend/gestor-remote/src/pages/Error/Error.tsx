@@ -26,7 +26,7 @@ const Error = ({ structure }: { structure?: OriginProps }) => {
     <Flex direction="column" gap="2">
       {(status==StatusEdit.find) && (
         <Flex direction="column" gap="3" p="3">
-          <Tabla onEditar={onEditarRow} />
+          <Tabla onEdit={onEditarRow} />
           <VistaPrevia index="268" />
           <ButtonCreateRecordFloating
             toolTip="Error"
