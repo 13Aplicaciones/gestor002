@@ -93,6 +93,7 @@ const fetchDataConfigurated = async (
   const requestInit = generateRequestBody(methodRest, typeBody, bodyParameter, token) as RequestInit;
 
   try {
+    console.log("URL: ", url);
     const responseFetch = await fetch(url, requestInit);
     if (responseFetch.ok) {
       if (responseFetch.status === 204) {

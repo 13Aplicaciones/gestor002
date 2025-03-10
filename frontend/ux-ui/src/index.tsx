@@ -23,6 +23,10 @@ export { FormState, FooterForm } from './components/form/Form';
 // Exportar elementos Tipos de datos
 export type { DataItemBadge } from './components/grid/Card';
 
+// Exportar elementos Tipos de Tablas
+export type { IPresentationTable } from './components/table/Table';
+export type { IParameters } from './components/table/TableSearch';
+
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from './components/table/Table';
 export { CreateSearchField } from './components/table/TableSearch';

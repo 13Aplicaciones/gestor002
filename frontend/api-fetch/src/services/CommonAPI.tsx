@@ -1,5 +1,8 @@
 import { MethodREST, TypeBody } from "../APIConstants";
+//import { convertArrayJsontToUrlParams, convertJsontToUrlParams, removeEmptyFields } from "../utils/ToolsJSON";
+
 import { convertJsontToUrlParams, removeEmptyFields } from "../utils/ToolsJSON";
+
 
 /**
  * Funciones comunes para las consultas a API Rest.
@@ -159,6 +162,11 @@ const generateParametersUrl = (typeBody: TypeBody, bodyParameter: any) => {
    }
    const cleanedData = removeEmptyFields(bodyParameter);
    const parametrosURL = convertJsontToUrlParams(cleanedData);
+   //const parametrosArray =  convertArrayJsontToUrlParams(cleanedData.params);
+
+
+
+
    return "?" + parametrosURL;
 }
 export { generateRequestBody, generateParametersUrl };

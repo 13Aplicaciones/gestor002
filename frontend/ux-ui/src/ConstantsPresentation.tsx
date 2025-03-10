@@ -40,9 +40,10 @@ const enum Direction{
  * @returns
  */
 const enum TextFormat{
-    none = "none",
-    decimal2 = "##.##",
     date = "date",
+    decimal2 = "##.##",
+    action = "action",
+    none = "none",
     //TODO: Agregar mas formats de texto.
 }
 

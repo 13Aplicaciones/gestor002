@@ -11,7 +11,6 @@ import { miTablaDemo } from "./demos/Tablas";
 import { MiToast } from "./demos/Toast";
 import { useTranslation } from "react-i18next";
 import ConsolaPantalla from "./demos/Consola";
-import ErrorPage from "./crud/Errores";
 import miTablaApiDemo from "./demos/TablaApi";
 import runApi from "./demos/Api";
 
@@ -28,11 +27,11 @@ const App = () => {
   const [t] = useTranslation("global_ux");
 
   if (shouldRenderCrear !== 0) {
-    return <ErrorPage />
+    return <>hola</>
   } else {
   return (
     <Flex direction="column" align="center" gap="4" style={{ padding: "var(--space-4)" }}>
-    <ErrorPage />
+    
       <Heading>{t('actions.addDescription', {description:"jajjaja"})}</Heading>
       <Heading>{t('actions.edit')}</Heading>
       <Heading>Tabla con api</Heading>

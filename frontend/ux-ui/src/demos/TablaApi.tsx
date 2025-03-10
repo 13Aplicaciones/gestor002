@@ -1,58 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CreateSearchField } from "../components/table/TableSearch";
-import { GearIcon, MagnifyingGlassIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
+import { CreateSearchField, IParameters } from "../components/table/TableSearch";
+import { IPresentationTable } from "../components/table/Table";
+import {
+  GearIcon,
+  MagnifyingGlassIcon,
+  MixerHorizontalIcon,
+} from "@radix-ui/react-icons";
 import PopoverDemo from "../components/popover/Popover";
+import { JustificationText, TextFormat } from "../ConstantsPresentation";
 
 /**
  * Funcion para crear una tabla que consume un api para la generacion.
- * 
- * @returns 
+ *
+ * @returns
  */
 const miTablaApiDemo = () => {
-  const parametros = {
-    page: '0',
-    size: '10',
-    sort: 'indice',
-    'sort ': 'asc', // Espacio en blanco para que no lo tome como repetido, se recomienda no usarlo en la paginacion.
-    indice: '',
-    message: '',
+  const parametros: IParameters = {
+    page: 0,
+    size: 10,
+    sort: "index",
+    "sort ": "asc", // Espacio en blanco para que no lo tome como repetido, se recomienda no usarlo en la paginacion.
+    index: "",
+    message: "",
   };
 
-  const presentationItems = {
-    skeleton: {
-      with: "50vw",
-    },
-    items:
-      [
-        {
-          name: "indice",
-          title: "Indice",
-          justification: "start",
-          format: "none",
-          width: "10vw",
-          accion: (row: any) => {
+  const presentationItems: IPresentationTable = {
+    banding: false,
+    headers: true,
+    numberLinea: false,
+    skeletonWidth: "50vw",
+    items: [
+      {
+        name: "indice",
+        title: "Indice",
+        justification: JustificationText.start,
+        format: TextFormat.none,
+        width: "10vw",
+        action: {
+          onAction: (row: any) => {
             console.log("indice" + JSON.stringify(row));
           },
         },
-        {
-          name: "message",
-          title: "Mensaje",
-          justification: "start",
-          format: "none",
-          width: "30vw",
+      },
+      {
+        name: "message",
+        title: "Mensaje",
+        justification: JustificationText.start,
+        format: TextFormat.none,
+        width: "30vw",
+      },
+      {
+        name: "usuarioFecha",
+        title: "Fecha",
+        justification: JustificationText.start,
+        format: TextFormat.date,
+        width: "10vw",
+        action: {
+          onAction: (row: any) => {
+            console.log("indice" + JSON.stringify(row));
+          },
         },
-        {
-          name: "usuarioFecha",
-          title: "Fecha",
-          justification: "start",
-          format: "date",
-          width: "10vw",
-          accion: (row: any) => {
-            console.log("fecha " + JSON.stringify(row));
-          }
-        },
-      ]
+      },
+    ],
   };
 
   const panelAvanzdo = () => {
@@ -60,10 +70,19 @@ const miTablaApiDemo = () => {
       <Tabs.Root defaultValue="account">
         <Tabs.List>
           <Tabs.Trigger value="account">
-            <MagnifyingGlassIcon width="14" height="14" style={{ marginRight: "var(--space-2)" }} />
-            Busqueda</Tabs.Trigger>
+            <MagnifyingGlassIcon
+              width="14"
+              height="14"
+              style={{ marginRight: "var(--space-2)" }}
+            />
+            Busqueda
+          </Tabs.Trigger>
           <Tabs.Trigger value="settings">
-            <GearIcon width="14" height="14" style={{ marginRight: "var(--space-2)" }} />
+            <GearIcon
+              width="14"
+              height="14"
+              style={{ marginRight: "var(--space-2)" }}
+            />
             Configuracion
           </Tabs.Trigger>
         </Tabs.List>
@@ -74,25 +93,28 @@ const miTablaApiDemo = () => {
           </Tabs.Content>
 
           <Tabs.Content value="settings">
-            <Text size="2">Edit your profile or update contact information.</Text>
+            <Text size="2">
+              Edit your profile or update contact information.
+            </Text>
           </Tabs.Content>
         </Box>
       </Tabs.Root>
     );
-  }
+  };
 
   /**
    * Funcion para crear e; boton de busqueda avanzado.
-   * @returns 
+   * @returns
    */
   const busquedaPersonalizada = () => {
     return (
       <Flex direction="row" gap="1" align="baseline">
-        <PopoverDemo childrenTigger={
-          <IconButton variant="outline" size="3" >
-            <MixerHorizontalIcon width="16" height="16" />
-          </IconButton>
-        }
+        <PopoverDemo
+          childrenTigger={
+            <IconButton variant="outline" size="3">
+              <MixerHorizontalIcon width="16" height="16" />
+            </IconButton>
+          }
           childrenContent={
             <Flex gap="1" width="20vw" direction="column">
               {panelAvanzdo()}
@@ -101,19 +123,20 @@ const miTablaApiDemo = () => {
         />
       </Flex>
     );
-  }
+  };
 
   return (
     <Flex direction="column" p="5" gap="3">
       <CreateSearchField
         apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
         nameIndex="indice"
-        presentationItem={presentationItems}
-        parametersApi={parametros} >
+        parametersApi={parametros}
+        presentationTable={presentationItems}
+      >
         {busquedaPersonalizada()}
       </CreateSearchField>
     </Flex>
   );
-}
+};
 
 export default miTablaApiDemo;

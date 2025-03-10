@@ -1,20 +1,20 @@
 import { Button, Flex } from "@radix-ui/themes";
-import { CreateSearchField } from "ux-ui";
+import { CreateSearchField, IPresentationTable } from "ux-ui";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { TextFormat, JustificationText, SortColumn } from "ux-ui";
-import { IRowDataError } from "./ErroresVistaPrevia";
 import {
   getToken,
   ITokenRoot,
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
+import { IRowDataError, parametersQuery } from "./ErrorTypes";
+import { TextFormat, JustificationText, SortColumn } from "ux-ui";
 import { useEffect, useState } from "react";
 
 /**
  * Propiedades de la tabla de errores.
  */
 interface ITablaProps {
-  onEditar: (row: IRowDataError) => void;
+  onAction: (row: IRowDataError) => void;
 }
 
 /**
@@ -23,21 +23,15 @@ interface ITablaProps {
  * @param param0
  * @returns
  */
-const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
-  const parametros = {
-    page: 0,
-    size: 10,
-    indice: "",
-    message: "",
-  };
-
-  const presentationItems = {
+const Tabla: React.FC<ITablaProps> = ({ onAction }) => {
+  /**
+   * Presentación de los items de la tabla.
+   */
+  const presentationItems: IPresentationTable = {
     banding: false,
     headers: true,
     numberLinea: false,
-    skeleton: {
-      with: "90vw",
-    },
+    skeletonWidth: "90vw",
     items: [
       {
         name: "index",
@@ -45,7 +39,7 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
-        order: SortColumn.neutral,
+        order: SortColumn.asc,
       },
       {
         name: "message",
@@ -53,13 +47,17 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
-        accion: (row: IRowDataError) => {
-          if (onEditar) {
-            onEditar(row);
-          }
+        action: {
+          onAction: (row: IRowDataError) => {
+            console.log("Editar", row);
+            /*
+            if (onEditar) {
+              onEditar(row);
+              console.log("Editar", row);
+            }*/
+          },
         },
       },
-
       {
         name: "description",
         title: "Descripción",
@@ -67,22 +65,21 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
         format: TextFormat.none,
         width: "40vw",
       },
-
       {
         name: "userDate",
         title: "Fecha",
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
-        order: SortColumn.neutral,
+        order: SortColumn.desc,
       },
       {
         name: "acciones",
         title: "Acci.",
-        justification: "center",
-        format: "empty",
+        justification: JustificationText.center,
+        format: TextFormat.action,
         width: "6vw",
-        componente: (row: IRowDataError) => (
+        component: (row: IRowDataError) => (
           <Button
             size="1"
             variant="ghost"
@@ -97,6 +94,9 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
 
   const [token, setToken] = useState<string>("");
 
+  /**
+   * Función para obtener el token.
+   */
   const fetchToken = async () => {
     const refreshedToken: ITokenRoot = await getToken();
     if (refreshedToken) {
@@ -104,6 +104,9 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
     }
   };
 
+  /**
+   * Efecto para obtener el token.
+   */
   useEffect(() => {
     fetchToken();
   }, []);
@@ -112,14 +115,26 @@ const Tabla: React.FC<ITablaProps> = ({ onEditar }) => {
     <Flex direction="column" gap="3">
       <CreateSearchField
         apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-        nameIndex="in"
-        presentationItem={presentationItems}
-        parametersApi={parametros}
+        nameIndex="index"
+        presentationTable={presentationItems}
+        parametersApi={parametersQuery}
         token={token}
         getToken={async () => {
           return await refreshToken();
         }}
       />
+      <Button
+        size="1"
+        variant="ghost"
+        onClick={async () => {
+          const refreshedToken: ITokenRoot = await getToken();
+          if (refreshedToken) {
+            setToken(refreshedToken.access_token);
+          }
+        }}
+      >
+        Generar
+        </Button>
     </Flex>
   );
 };

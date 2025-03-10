@@ -3,62 +3,36 @@ import { Badge, DataList, Flex, Heading } from "@radix-ui/themes";
 import { BannerInformation } from "ux-ui";
 import { fetchData } from "api-fetch";
 import { MethodREST, TypeBody } from "api-fetch";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { createIRowDataError, IRowDataError } from "./ErrorTypes";
 
-/**
- * Interfaz para el objeto de respuesta de la llamada.
- */
-interface IRowDataError {
-  message: string;
-  description: string;
-  uuid: string;
-  index: string;
-  user: string;
-  userDate: string;
-  userApp: string;
-}
-
-/**
- * Funcion para crear un objeto de respuesta vacio.
- *
- * @returns
- */
-const createIRowDataError = (): IRowDataError => {
-  return {
-    message: "",
-    description: "description",
-    uuid: "",
-    index: "",
-    user: "",
-    userDate: "",
-    userApp: "",
-  };
-};
-
-const VistaPrevia = ({ indice }: { indice: string }) => {
+const VistaPrevia = ({ index }: { index: string }) => {
   const [messageFormulario, setMessageForm] = useState("");
-  const [row, setRow] = useState<IRowDataError | null>(null);
+  const [row, setRow] = useState<IRowDataError | null>(createIRowDataError());
 
-  const cargarVistaPrevia = useCallback(async () => {
-    fetchData({
-      url: "http://localhost:8090/gestor-ws/api/errors/indice=" + indice,
-      methodRest: MethodREST.GET,
-      typeBody: TypeBody.NONE,
-      bodyParameter: null,
-      token: "token",
-    })
-      .then((response) => {
-        setRow(response.response);
-      })
-      .catch((error) => {
-        setMessageForm("Error al consultar " + error);
-        return null;
-      });
-  }, [indice]);
-
+  /**
+   * Cargar la vista previa del registro.
+   */
   useEffect(() => {
-    cargarVistaPrevia();
-  }, [cargarVistaPrevia]);
+    const cargarVistaPrevia = async (index: string) => {
+      fetchData({
+        url: "http://localhost:8090/gestor-ws/api/errors/indice=" + index,
+        methodRest: MethodREST.GET,
+        typeBody: TypeBody.NONE,
+        bodyParameter: null,
+        token: "token",
+      })
+        .then((response) => {
+          setRow(response.response);
+        })
+        .catch((error) => {
+          setMessageForm("Error al consultar " + error);
+          return null;
+        });
+    };
+
+    cargarVistaPrevia(index);
+  }, [index]);
 
   return (
     <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
@@ -74,9 +48,7 @@ const VistaPrevia = ({ indice }: { indice: string }) => {
         <DataList.Item>
           <DataList.Label minWidth="88px">Mensaje</DataList.Label>
           <DataList.Value>
-            <span
-              dangerouslySetInnerHTML={{ __html: row?.description || "" }}
-            />
+            <span dangerouslySetInnerHTML={{ __html: row?.description || "" }} />
           </DataList.Value>
         </DataList.Item>
         <DataList.Item>
@@ -108,5 +80,4 @@ const VistaPrevia = ({ indice }: { indice: string }) => {
   );
 };
 
-export { VistaPrevia, createIRowDataError };
-export type { IRowDataError };
+export { VistaPrevia };

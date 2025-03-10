@@ -35,4 +35,11 @@ const convertJsontToUrlParams = (objeto: any) => {
                   .join('&');
 }
 
-export { removeEmptyFields, convertJsontToUrlParams };
+
+const convertArrayJsontToUrlParams = (objeto: any) => {
+    return Object.keys(objeto)
+                  .map(key => encodeURIComponent(objeto[key]).trim())
+                  .join('&');
+}
+
+export { removeEmptyFields, convertJsontToUrlParams, convertArrayJsontToUrlParams };

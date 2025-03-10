@@ -1,83 +1,67 @@
 import { Button, Flex } from "@radix-ui/themes";
 import { ButtonCreateRecordFloating } from "ux-ui";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { createIRowDataError, IRowDataError } from "./ErrorTypes";
 import { OriginProps } from "../Origin";
-import { StatusEdit } from "ux-ui/src/ConstantsPresentation";
+import { StatusEdit } from "ux-ui";
 import { useEffect, useState } from "react";
-import { VistaPrevia,  IRowDataError } from "./ErroresVistaPrevia";
+import { VistaPrevia } from "./ErroresVistaPrevia";
 import ErrorEdit from "./ErroresEdit";
-import Tabla from "./Query";
+import Tabla from "./QueryError";
 
 const Error = ({ structure }: { structure?: OriginProps }) => {
-  const [estado, setEstado] = useState(StatusEdit.create);
-  const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>({
-    message: "",
-    description: "",
-    uuid: "",
-    index: "",
-    user: "",
-    userDate: "",
-    userApp: "",
-  });
+  const [status, setStatus] = useState(StatusEdit.find);
+  const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>(createIRowDataError());
 
   const onEditarRow = (row: IRowDataError) => {
-    setEstado(StatusEdit.edit);
+    setStatus(StatusEdit.edit);
     setRowSelecionado(row);
   };
 
   useEffect(() => {
-  
+    // Actualizar el token.
   }, [structure?.refreshToken]);
 
   return (
     <Flex direction="column" gap="2">
-      {estado && (
+      {(status==StatusEdit.find) && (
         <Flex direction="column" gap="3" p="3">
           <Tabla onEditar={onEditarRow} />
-          <VistaPrevia indice="268" />
+          <VistaPrevia index="268" />
           <ButtonCreateRecordFloating
             toolTip="Error"
             onClick={() => {
-              setEstado(StatusEdit.create);
-              setRowSelecionado({
-                message: "",
-                description: "",
-                uuid: "",
-                index: "",
-                user: "",
-                userDate: "",
-                userApp: "",
-              });
+              setStatus(StatusEdit.create);
+              setRowSelecionado(createIRowDataError());
             }}
           />
         </Flex>
       )}
 
-      {!estado && (
+      {(status==StatusEdit.create || status==StatusEdit.edit) && (
         <Flex direction="row" justify="between" p="3">
           <Flex direction="column" gap="3">
             <ErrorEdit
-              estado={estado}
+              status={status}
               row={rowSelecionado}
               onAtras={() => {
-                setEstado(StatusEdit.find);
+                setStatus(StatusEdit.find);
               }}
             />
           </Flex>
           <Flex gap="3">
             <Button
               onClick={() => {
-                setEstado(StatusEdit.find);
-              }}
-            >
+                setStatus(StatusEdit.find);
+              }}>
               <ChevronLeftIcon />
-              Atras
+              status
             </Button>
           </Flex>
         </Flex>
       )}
     </Flex>
   );
-};
+}
 
 export default Error;

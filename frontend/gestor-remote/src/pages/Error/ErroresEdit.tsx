@@ -8,7 +8,7 @@ import { DialogAlerts } from "ux-ui";
 import { fetchData, IFetchData } from "api-fetch";
 import { FooterForm, FormState } from "ux-ui";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch";
-import { IRowDataError } from "./ErroresVistaPrevia";
+import { IRowDataError } from "./ErrorTypes";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -24,39 +24,38 @@ import * as yup from "yup";
  * @param param0 
  * @returns 
  */
-const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: StatusEdit, row?: IRowDataError, onAtras?: () => void }) => {
+const ErrorEdit = ({ status, row, onAtras = () => { } }: { status: StatusEdit, row?: IRowDataError, onAtras?: () => void }) => {
     const { showToast } = useToastContext();
-  
-    const [stateFormulario, setFormStateulario] = useState<StatusEdit>(estado || StatusEdit.create);
+    const [stateFormulario, setFormStateulario] = useState<StatusEdit>(status || StatusEdit.create);
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     const schema = yup.object({
-        indice: yup
+        index: yup
             .string()
             .required("El indice es requerido")
             .min(5, "El indice debe tener mínimo 5 caracter")
             .max(128, "El indice debe tener máximo 10 caracteres"),
-        mensaje: yup
+        message: yup
             .string()
             .required("El message es requerido")
             .max(1024, "El message debe tener máximo 124 caracteres"),
-        descripcion: yup
+        description: yup
             .string()
             .max(4098, "La descripción debe tener máximo 4098 caracteres"),
-        usuarioPrograma: yup
+        userApp: yup
             .string(),
     })
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            indice: row?.indice || "",
-            mensaje: row?.mensaje || "",
-            descripcion: row?.descripcion || "",
-            usuarioPrograma: row?.usuarioPrograma || ""
+            index: row?.index || "",
+            message: row?.message || "",
+            description: row?.description || "",
+            userApp: row?.userApp || ""
         }
     });
 
@@ -196,24 +195,24 @@ const ErrorEdit = ({ estado, row, onAtras = () => { } }: { estado: StatusEdit, r
                     columns={BandPresentation.column_3}
                     placeholder="ERR001"
                     directionLabel={Direction.horizontal}
-                    register={register("indice", { required: true })}
-                    messageError={errors.indice?.message} />
+                    register={register("index", { required: true })}
+                    messageError={errors.index?.message} />
                 <AreaField
                     title="Mensaje"
                     columns={BandPresentation.column_2}
                     rows={3}
                     placeholder="Error al procesar la solicitud"
                     directionLabel={Direction.horizontal}
-                    register={register("mensaje", { required: true })}
-                    messageError={errors.mensaje?.message} />
+                    register={register("message", { required: true })}
+                    messageError={errors.message?.message} />
                 <AreaField
                     title="Descripción"
                     columns={BandPresentation.column_1}
                     rows={5}
                     placeholder="Descripción detallada del error"
                     directionLabel={Direction.horizontal}
-                    register={register("descripcion")}
-                    messageError={errors.descripcion?.message} />
+                    register={register("description")}
+                    messageError={errors.description?.message} />
                 <FooterForm directionLabel={Direction.horizontal} columns={BandPresentation.column_2}>
                     <Button type="submit" disabled={loading} >Guardar</Button>
                     <Button type="button" variant="surface"
