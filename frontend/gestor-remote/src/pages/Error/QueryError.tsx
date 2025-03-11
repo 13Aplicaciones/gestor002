@@ -92,7 +92,7 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
     ],
   };
 
-  const [token, setToken] = useState<string>("");
+  const [token, setToken] = useState("");
 
   /**
    * Función para obtener el token.
@@ -120,16 +120,26 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
         parametersApi={parametersQuery}
         token={token}
         getToken={async () => {
-          return await refreshToken();
+
+          const myToken=await refreshToken();
+
+          if(myToken){
+            console.log("myToken",myToken);
+            setToken(myToken);
+          }
+
+          return myToken;
         }}
       />
       <Button
-        size="1"
-        variant="ghost"
+        size="3"
+        variant="solid"
         onClick={async () => {
           const refreshedToken: ITokenRoot = await getToken();
           if (refreshedToken) {
             setToken(refreshedToken.access_token);
+            //console.log("Token: ", refreshedToken.access_token.substring(0, 80));
+            console.log("Token: ",token);
           }
         }}
       >
