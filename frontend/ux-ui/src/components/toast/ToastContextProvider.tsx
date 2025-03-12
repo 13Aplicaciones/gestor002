@@ -69,11 +69,11 @@ export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
             borderColor: alertColor({ alert: alert }),
           }}
         >
-          <ToastTitle className="ToastTitle">
-            <span dangerouslySetInnerHTML={{ __html: title }} />
-          </ToastTitle>
+            <ToastTitle className="ToastTitle">
+            <span style={{ color: "black" }} dangerouslySetInnerHTML={{ __html: title }} />
+            </ToastTitle>
           <ToastDescription asChild className="ToastDescription">
-            <span dangerouslySetInnerHTML={{ __html: description }} />
+            <span style={{ color: "black" }} dangerouslySetInnerHTML={{ __html: description }} />
           </ToastDescription>
           <ToastAction asChild altText="Close Toast">
             <IconButton

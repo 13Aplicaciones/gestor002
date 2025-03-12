@@ -30,7 +30,7 @@ const ErrorEdit = ({ status, row, onAtras = () => { } }: { status: StatusEdit, r
     const [messageFormulario, setMessageForm] = useState("");
     const [uuid, setUuid] = useState(row ? row.uuid : "");
     const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const schema = yup.object({
         index: yup
