@@ -28,6 +28,7 @@ export default defineConfig({
 				"./service/Statics": 	"./src/service/Statics",
 				"./service/Structure": 	"./src/service/Structure",
 				"./service/Tokens": 	"./src/service/Tokens",
+				"./service/Parameter": "./src/service/Parameter",
 				/*
 				"./contex": "./src/context/StoreContext",
 				"./provider": "./src/context/StoreProvider",

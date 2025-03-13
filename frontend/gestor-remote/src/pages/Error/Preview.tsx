@@ -4,7 +4,7 @@ import { BannerInformation } from "ux-ui";
 import { fetchData } from "api-fetch";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
-import { createIRowDataError, IRowDataError } from "./ErrorTypes";
+import { createIRowDataError, IRowDataError } from "./Types";
 
 const VistaPrevia = ({ index }: { index: string }) => {
   const [messageFormulario, setMessageForm] = useState("");

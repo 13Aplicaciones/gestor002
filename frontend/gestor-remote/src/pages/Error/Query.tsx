@@ -1,20 +1,17 @@
 import { Button, Flex } from "@radix-ui/themes";
 import { CreateSearchField, IPresentationTable } from "ux-ui";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
-} from "orchestrator_remote/service/Tokens";
-import { IRowDataError, parametersQuery } from "./ErrorTypes";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import { IRowDataError, parametersQuery } from "./Types";
 import { TextFormat, JustificationText, SortColumn } from "ux-ui";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * Propiedades de la tabla de errores.
  */
 interface ITablaProps {
-  onEdit: (row: IRowDataError) => void;
+  onEditRow: (row: IRowDataError) => void;
+  onSeeRow: (row: IRowDataError) => void;
 }
 
 /**
@@ -23,7 +20,18 @@ interface ITablaProps {
  * @param param0
  * @returns
  */
-const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
+
+const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const refreshedToken: ITokenRoot = await getToken();
+      setToken(refreshedToken.accessToken);
+    };
+
+    fetchToken();
+  }, []);
   /**
    * Presentación de los items de la tabla.
    */
@@ -31,7 +39,7 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
     banding: false,
     headers: true,
     numberLinea: false,
-    skeletonWidth: "90vw",
+    skeletonWidth: "96vw",
     items: [
       {
         name: "index",
@@ -49,11 +57,8 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
         width: "20vw",
         onAction: {
           onAction: (row: IRowDataError) => {
-            console.log("Editar", row);
-            
-            if (onEdit) {
-              onEdit(row);
-              console.log("Editar", row);
+            if (onSeeRow) {
+              onSeeRow(row);
             }
           },
         },
@@ -83,7 +88,11 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
           <Button
             size="1"
             variant="ghost"
-            onClick={() => console.log("index", row.index)}
+            onClick={() => {
+              if (onEditRow) {
+                onEditRow(row);
+              }
+            }}
           >
             <DotsVerticalIcon width="16" height="16" />
           </Button>
@@ -91,25 +100,6 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
       },
     ],
   };
-
-  const [token, setToken] = useState("");
-
-  /**
-   * Función para obtener el token.
-   */
-  const fetchToken = async () => {
-    const refreshedToken: ITokenRoot = await getToken();
-    if (refreshedToken) {
-      setToken(refreshedToken.access_token);
-    }
-  };
-
-  /**
-   * Efecto para obtener el token.
-   */
-  useEffect(() => {
-    fetchToken();
-  }, []);
 
   return (
     <Flex direction="column" gap="3">
@@ -120,33 +110,11 @@ const Tabla: React.FC<ITablaProps> = ({ onEdit }) => {
         parametersApi={parametersQuery}
         token={token}
         getToken={async () => {
-
-          const myToken=await refreshToken();
-
-          if(myToken){
-            console.log("myToken",myToken);
-            setToken(myToken);
-          }
-
-          return myToken;
+          return await refreshToken();
         }}
       />
-      <Button
-        size="3"
-        variant="solid"
-        onClick={async () => {
-          const refreshedToken: ITokenRoot = await getToken();
-          if (refreshedToken) {
-            setToken(refreshedToken.access_token);
-            //console.log("Token: ", refreshedToken.access_token.substring(0, 80));
-            console.log("Token: ",token);
-          }
-        }}
-      >
-        Generar
-      </Button>
     </Flex>
   );
 };
 
-export default Tabla;
+export { Query };

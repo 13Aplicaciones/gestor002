@@ -5,6 +5,7 @@ export const STORE = {
         { name: "token" },
         { name: "moduleSelect" },
         { name: "menuSelect" },
+        { name: "parameters" },
     ],
     ddl: {
         structure: {
@@ -22,6 +23,10 @@ export const STORE = {
         menuSelect: {
             name: "menuSelect",
             id: "menu"
+        },
+        parameters: {
+            name: "parameters",
+            id: "module"
         },
     },
 };

@@ -29,7 +29,7 @@ const getStructure = async () => {
       methodRest: MethodREST.GET,
       typeBody: TypeBody.NONE,
       bodyParameter: null,
-      token: token.accessToken,
+      token: token.access_token,
       getToken: async () => {
         return await refreshToken();
       }

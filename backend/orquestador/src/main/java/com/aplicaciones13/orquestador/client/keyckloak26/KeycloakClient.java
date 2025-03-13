@@ -135,6 +135,8 @@ public class KeycloakClient {
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
+            log.info("Fetching token {}", body);
+
             ResponseEntity<V> response = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
@@ -147,7 +149,7 @@ public class KeycloakClient {
             }
             return response.getBody();
          } catch (HttpClientErrorException e) {
-            log.error("Error {}", e.getStatusText());                
+            log.error("Error {} {}", url, e.getStatusText());                
             throw new ResourceHttpStatusException(e.getStatusText(), e.getStatusCode());
         } 
     }

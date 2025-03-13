@@ -6,10 +6,10 @@ import { STORE } from "../Constants";
  */
 export type ITokenRoot = {
     user: string;
-    accessToken: string;
-    refreshToken: string;
-    expiresAt: number;
-    idToken: string;
+    access_token: string;
+    refresh_token: string;
+    expires_at: number;
+    id_token: string;
     email: string;
     name: string;
 };
@@ -44,7 +44,7 @@ const getToken = async () => {
  */
 const refreshToken = async () => {
     const token: ITokenRoot = await getToken();
-    const url = import.meta.env.VITE_ORQUESTADOR_URL + 'login/refreshToken/' + token.refreshToken;
+    const url = import.meta.env.VITE_ORQUESTADOR_URL + 'login/refreshToken/' + token.refresh_token;
 
     let iFetchData = createFetchData();
     iFetchData = await fetchData({
@@ -55,10 +55,14 @@ const refreshToken = async () => {
     });
 
     if (!iFetchData.error) {
+        console.log("refreshToken -> iFetchData", JSON.stringify(iFetchData));
         await addToken({ token: iFetchData.response });
     }
+    else {
+        console.error("refreshToken -> Error:", JSON.stringify(iFetchData.error));
+    }
 
-    return token.accessToken;
+    return token.access_token;
 }
 
 export { addToken, getToken, refreshToken };

@@ -8,7 +8,7 @@ import { DialogAlerts } from "ux-ui";
 import { fetchData, IFetchData } from "api-fetch";
 import { FooterForm, FormState } from "ux-ui";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch";
-import { IRowDataError } from "./ErrorTypes";
+import { IRowDataError } from "./Types";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";

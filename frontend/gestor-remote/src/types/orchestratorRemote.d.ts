@@ -41,3 +41,10 @@ declare module 'orchestrator_remote/service/Tokens' {
   export function refreshToken(): Promise<any>;  
   export type ITokenRoot = ITokenRoot; 
 }
+
+declare module 'orchestrator_remote/service/Parameter' {
+  export const parameterService: ParameterService;
+  export function getParameters(indexModule:string): Promise<any>;
+  export function getParameter(indexModule:string, indexParameter:string): Promise<any>;
+  export function refreshParameter(): Promise<any>; 
+}

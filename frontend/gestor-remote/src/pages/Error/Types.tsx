@@ -39,5 +39,6 @@ const createIRowDataError = (): IRowDataError => {
   };
 };
 
+
 export { createIRowDataError, parametersQuery };
 export type { IRowDataError };

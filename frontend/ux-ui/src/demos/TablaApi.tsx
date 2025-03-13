@@ -37,7 +37,7 @@ const miTablaApiDemo = () => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
-        action: {
+        onAction: {
           onAction: (row: any) => {
             console.log("indice" + JSON.stringify(row));
           },
@@ -56,7 +56,7 @@ const miTablaApiDemo = () => {
         justification: JustificationText.start,
         format: TextFormat.date,
         width: "10vw",
-        action: {
+        onAction: {
           onAction: (row: any) => {
             console.log("indice" + JSON.stringify(row));
           },

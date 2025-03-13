@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { addToken } from "orchestrator_remote/service/Tokens";
+import { addToken, getToken, refreshToken } from "orchestrator_remote/service/Tokens";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { I18nextProvider } from "react-i18next";
@@ -7,6 +7,7 @@ import { Origin, OriginProps } from "./pages/Origin";
 import { ToastContextProvider } from "ux-ui";
 import { useState } from "react";
 import i18next from "./i18n";
+import { getParameter, getParameters } from "orchestrator_remote/service/Parameter";
 
 /**
  * Funcion principal de la aplicacion en developer
@@ -42,7 +43,27 @@ const App = ({ structure }: { structure?: OriginProps }) => {
           console.warn("Error:", response.error);
         } else {
           //Cargo el token en el local storage para su uso.
+          console.log("Token:", response.response);
           await addToken({ token: response.response });
+          const responseToken = await getToken();
+          console.log("Token:", responseToken.access_token);
+
+
+
+          const miRe = refreshToken();
+            console.log("miRe", JSON.stringify(miRe));
+          
+
+          const midata = await getParameters("GS_001_00");
+          console.log("data", JSON.stringify(midata));
+          
+          const midata1 = await getParameter("GS_001_00", "300");
+          if(midata1){
+          console.log("data", JSON.stringify(midata1));
+          } else
+          {
+            console.log("data vacia ", midata1);
+          }
         }
       })
       .catch((error) => {

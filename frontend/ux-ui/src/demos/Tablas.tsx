@@ -82,7 +82,7 @@ const miTablaDemo = () => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "30vw",
-        action: {
+        onAction: {
           onAction: (row: any) => {
             console.log("Editar", row);
             /*
@@ -106,7 +106,7 @@ const miTablaDemo = () => {
         justification: JustificationText.start,
         format: TextFormat.date,
         width: "10vw",
-        action: {
+        onAction: {
           onAction: (row: any) => {
             console.log("Editar", row);
             /*
@@ -131,7 +131,7 @@ const miTablaDemo = () => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "6vw",
-        action: {
+        onAction: {
           onAction: (row: any) => {
             console.log("Editar", row);
             /*
