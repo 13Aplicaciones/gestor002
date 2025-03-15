@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { addToken, getToken, refreshToken } from "orchestrator_remote/service/Tokens";
+import { addToken, getToken} from "orchestrator_remote/service/Tokens";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { I18nextProvider } from "react-i18next";
@@ -7,7 +7,6 @@ import { Origin, OriginProps } from "./pages/Origin";
 import { ToastContextProvider } from "ux-ui";
 import { useState } from "react";
 import i18next from "./i18n";
-import { getParameter, getParameters } from "orchestrator_remote/service/Parameter";
 
 /**
  * Funcion principal de la aplicacion en developer
@@ -16,7 +15,9 @@ import { getParameter, getParameters } from "orchestrator_remote/service/Paramet
  * @returns
  */
 const App = ({ structure }: { structure?: OriginProps }) => {
-  const [structureTest, setStructureTest] = useState<OriginProps | undefined>(structure);
+  const [structureTest, setStructureTest] = useState<OriginProps | undefined>(
+    structure
+  );
 
   /**
    * Funcion para ejecutar una api.
@@ -40,42 +41,21 @@ const App = ({ structure }: { structure?: OriginProps }) => {
     })
       .then(async (response) => {
         if (response.error) {
-          console.warn("Error:", response.error);
+          console.error("runApi -> Error:", response.error);
         } else {
-          //Cargo el token en el local storage para su uso.
-          console.log("Token:", response.response);
           await addToken({ token: response.response });
-          const responseToken = await getToken();
-          console.log("Token:", responseToken.access_token);
-
-
-
-          const miRe = refreshToken();
-            console.log("miRe", JSON.stringify(miRe));
-          
-
-          const midata = await getParameters("GS_001_00");
-          console.log("data", JSON.stringify(midata));
-          
-          const midata1 = await getParameter("GS_001_00", "300");
-          if(midata1){
-          console.log("data", JSON.stringify(midata1));
-          } else
-          {
-            console.log("data vacia ", midata1);
           }
-        }
       })
       .catch((error) => {
-        console.error("Failed to fetch token:", error);
+        console.error("fetchData -> Error:", error);
         throw new Error("Failed to fetch token: " + JSON.stringify(error));
       });
   };
 
   /**
    * Funcion para manejar el token y refrescar el panel.
-   * 
-   * @param panelName 
+   *
+   * @param panelName
    */
   const heandleToken = (panelName: string) => {
     runApi();
@@ -92,7 +72,7 @@ const App = ({ structure }: { structure?: OriginProps }) => {
   return (
     <I18nextProvider i18n={i18next}>
       <ToastContextProvider>
-        <Flex direction="row" align={"center"} gap="2">
+        <Flex direction="row" align={"center"} gap="1" px="1" py="2">
           <Button size="3" onClick={() => heandleToken("error")}>
             Error
           </Button>

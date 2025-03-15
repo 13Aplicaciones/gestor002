@@ -2,6 +2,7 @@
     "actions": {
         "cancel": "Cancelar",
         "edit": "Editar",
+        "back": "Atrás",
         "addDescription": "Agregar item para {{description}}"
     },
     "stateForm": {

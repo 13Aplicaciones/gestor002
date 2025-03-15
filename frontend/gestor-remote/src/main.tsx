@@ -7,12 +7,12 @@ import App from "./App.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Theme
-      accentColor="lime"
+      accentColor="indigo"
       grayColor="auto"
       scaling="100%"
-      radius="medium"
+      radius="full"
       panelBackground="translucent"
-      appearance="dark">
+      appearance="light">
       <App />
     </Theme>
   </StrictMode>

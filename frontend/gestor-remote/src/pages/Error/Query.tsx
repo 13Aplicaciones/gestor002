@@ -1,10 +1,18 @@
 import { Button, Flex } from "@radix-ui/themes";
 import { CreateSearchField, IPresentationTable } from "ux-ui";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { IRowDataError, parametersQuery } from "./Types";
 import { TextFormat, JustificationText, SortColumn } from "ux-ui";
 import { useState, useEffect } from "react";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
 
 /**
  * Propiedades de la tabla de errores.
@@ -22,12 +30,16 @@ interface ITablaProps {
  */
 
 const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
+  const [parameter, setParameter] = useState<IParameter>({} as IParameter);
 
   useEffect(() => {
     const fetchToken = async () => {
-      const refreshedToken: ITokenRoot = await getToken();
-      setToken(refreshedToken.accessToken);
+      const tokenTemp: ITokenRoot = await getToken();
+      setToken(tokenTemp);
+
+      const parameterTemp: IParameter = await getParameter("GS_001_00", "200");
+      setParameter(parameterTemp);
     };
 
     fetchToken();
@@ -103,16 +115,18 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
 
   return (
     <Flex direction="column" gap="3">
-      <CreateSearchField
-        apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-        nameIndex="index"
-        presentationTable={presentationItems}
-        parametersApi={parametersQuery}
-        token={token}
-        getToken={async () => {
-          return await refreshToken();
-        }}
-      />
+      {token?.access_token && parameter?.valueText01 && (
+        <CreateSearchField
+          apiUrl={parameter?.valueText01 + "/paginado"}
+          nameIndex="index"
+          presentationTable={presentationItems}
+          parametersApi={parametersQuery}
+          token={token.access_token}
+          getToken={async () => {
+            return await refreshToken();
+          }}
+        />
+      )}
     </Flex>
   );
 };

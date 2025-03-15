@@ -39,8 +39,8 @@ const runApi = () => {
       return response;
     }
   }).catch(error => {
+    console.error("fetchData -> Error:", error);
     throw new Error("Failed to fetch token: " + JSON.stringify(error));
-    console.error("Error: " + error);
   });
 }
 

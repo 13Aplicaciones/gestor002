@@ -31,12 +31,12 @@ class CatchErrorLoadElement extends Component<CatchErrorLoadElementProps, CatchE
   }
 
   static getDerivedStateFromError(error: Error) {
-    console.error("Caught an error", error);
+    console.error("getDerivedStateFromError -> Error", error);
     return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("Caught an error", error, errorInfo);
+    console.error("componentDidCatch -> Error", error, errorInfo);
   }
 
   render() {

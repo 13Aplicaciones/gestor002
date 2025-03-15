@@ -1,13 +1,23 @@
 import { Alerts } from "ux-ui";
-import { Badge, DataList, Flex, Heading } from "@radix-ui/themes";
+import { Badge, DataList, Flex } from "@radix-ui/themes";
 import { BannerInformation } from "ux-ui";
+import { createIRowDataError, IRowDataError } from "./Types";
 import { fetchData } from "api-fetch";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
-import { createIRowDataError, IRowDataError } from "./Types";
 
 const VistaPrevia = ({ index }: { index: string }) => {
-  const [messageFormulario, setMessageForm] = useState("");
+  const [messageForm, setMessageForm] = useState<string>("");
+  const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
   const [row, setRow] = useState<IRowDataError | null>(createIRowDataError());
 
   /**
@@ -15,18 +25,30 @@ const VistaPrevia = ({ index }: { index: string }) => {
    */
   useEffect(() => {
     const cargarVistaPrevia = async (index: string) => {
+      const tokenTemp: ITokenRoot = await getToken();
+      const parameterTemp: IParameter = await getParameter("GS_001_00", "200");
+
       fetchData({
-        url: "http://localhost:8090/gestor-ws/api/errors/indice=" + index,
+        url: parameterTemp?.valueText01 + "/index=" + index,
         methodRest: MethodREST.GET,
         typeBody: TypeBody.NONE,
         bodyParameter: null,
-        token: "token",
+        token: tokenTemp.access_token,
+        getToken() {
+          return refreshToken();
+        },
       })
         .then((response) => {
+          if (response.error) {
+            setMessageForm(response?.statusDescription || "");
+            setAlertForm(Alerts.info);
+            return null;
+          }
           setRow(response.response);
         })
         .catch((error) => {
-          setMessageForm("Error al consultar " + error);
+          setMessageForm("Error message: " + error);
+          setAlertForm(Alerts.error);
           return null;
         });
     };
@@ -36,46 +58,52 @@ const VistaPrevia = ({ index }: { index: string }) => {
 
   return (
     <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
-      <BannerInformation message={messageFormulario} alert={Alerts.error} />
-      <Heading size="2">Información del registro</Heading>
-      <DataList.Root>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Mensaje</DataList.Label>
-          <DataList.Value>
-            <span dangerouslySetInnerHTML={{ __html: row?.message || "" }} />
-          </DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Mensaje</DataList.Label>
-          <DataList.Value>
-            <span dangerouslySetInnerHTML={{ __html: row?.description || "" }} />
-          </DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">UUID</DataList.Label>
-          <DataList.Value>
-            <Badge color="crimson" variant="soft" radius="full">
-              {row?.uuid || ""}
-            </Badge>
-          </DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Indice</DataList.Label>
-          <DataList.Value>{row?.index || ""}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Usuario</DataList.Label>
-          <DataList.Value>{row?.user || ""}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Fecha</DataList.Label>
-          <DataList.Value>{row?.userDate || ""}</DataList.Value>
-        </DataList.Item>
-        <DataList.Item>
-          <DataList.Label minWidth="88px">Aplicativo</DataList.Label>
-          <DataList.Value>{row?.userApp || ""}</DataList.Value>
-        </DataList.Item>
-      </DataList.Root>
+      {(messageForm && (
+        <BannerInformation message={messageForm} alert={alertForm} />
+      )) || (
+        <DataList.Root>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">UUID</DataList.Label>
+            <DataList.Value>
+              <Badge color="crimson" variant="soft" radius="full">
+                {row?.uuid || ""}
+              </Badge>
+            </DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Index</DataList.Label>
+            <DataList.Value>
+              <span dangerouslySetInnerHTML={{ __html: row?.index || "" }} />
+            </DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Mensaje</DataList.Label>
+            <DataList.Value>
+              <span dangerouslySetInnerHTML={{ __html: row?.message || "" }} />
+            </DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Descripcion</DataList.Label>
+            <DataList.Value>
+              <span
+                dangerouslySetInnerHTML={{ __html: row?.description || "" }}
+              />
+            </DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Usuario</DataList.Label>
+            <DataList.Value>{row?.user || ""}</DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Fecha</DataList.Label>
+            <DataList.Value>{row?.userDate || ""}</DataList.Value>
+          </DataList.Item>
+          <DataList.Item>
+            <DataList.Label minWidth="88px">Aplicativo</DataList.Label>
+            <DataList.Value>{row?.userApp || ""}</DataList.Value>
+          </DataList.Item>
+        </DataList.Root>
+      )}
     </Flex>
   );
 };

@@ -17,7 +17,7 @@ export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { GridDashboard } from './components/grid/GridDynamic';
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';
 export { getIconComponent } from './components/icon/IconDynamic';
-export { ButtonCreateRecordFloating } from './components/button/Button';
+export { ButtonCreateRecordFloating, ButtonBackFloating } from './components/button/Button';
 export { AreaField, InputField } from './components/input/Input';
 export { FormState, FooterForm } from './components/form/Form';
 // Exportar elementos Tipos de datos

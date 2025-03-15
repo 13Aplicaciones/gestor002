@@ -184,8 +184,6 @@ const CreateSearchField = ({
       });
     setShorts(shortsFind);
 
-    console.log("shorts: ", shorts);
-
     paginationPresentation();
   }, [parametersApi]);
 

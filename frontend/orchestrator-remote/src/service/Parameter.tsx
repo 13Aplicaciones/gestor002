@@ -11,6 +11,18 @@ import { MethodREST, TypeBody } from "api-fetch";
 import { STORE } from "../Constants";
 
 /**
+ * Definicion de los tipos de dato que se van a manejar los parametros.
+ */
+export interface IParameter {
+  index: string;
+  encryt: boolean;
+  valueText01: string;
+  valueText02: string;
+  valueNumber01: number;
+  valueNumber02: number;
+}
+
+/**
  * Función para obtener los parametros de los módulos.
  *
  * Toma la url del orquestador y realiza la consulta de los parametros por index de módulos.
@@ -34,8 +46,6 @@ const getParameters = async (indexModule: string) => {
     indexModule;
   let iFetchData = createFetchData();
   const token: ITokenRoot = await getToken();
-
-  console.log("getParameters -> token", JSON.stringify(token));
 
   if (token) {
     iFetchData = await fetchData({
@@ -72,7 +82,7 @@ const getParameter = async (indexModule: string, indexParameter: string) => {
   await getParameters(indexModule).then((data) => {
     for (let i = 0; i < data.length; i++) {
       if (data[i].index == indexParameter) {
-        rootData =  data[i];
+        rootData = data[i];
       }
     }
   });

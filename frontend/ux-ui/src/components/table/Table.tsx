@@ -167,10 +167,11 @@ const Title = ({
 }) => {
   const [t] = useTranslation("global_ux");
 
-  useEffect(() => {
-    console.log("Title: ", text, sort);
+  //TODO: Agregar useEffect para actualizar el estado de la orden de la columna.
+  /*
+  useEffect(() => {  
   }, [text, sort]);
-
+  */
   return (
     <>
       {(!sort && (
@@ -296,10 +297,6 @@ const TableConfigurable = ({
    */
   useEffect(() => {
     setPresentation(presentationTable);
-    console.log(
-      "useEffect: ",
-      JSON.stringify(presentationTable).substring(0, 100)
-    );
   }, [presentationTable]);
 
   return (

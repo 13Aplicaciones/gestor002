@@ -71,7 +71,7 @@ const Card = ({
   useEffect(() => {
     executeFindStatics(indexMenu);
     if (!indexMenu) {
-      console.error("indexMenu is not defined");
+      console.error("useEffect -> indexMenu is empty");
     }
   }, [index]);
 

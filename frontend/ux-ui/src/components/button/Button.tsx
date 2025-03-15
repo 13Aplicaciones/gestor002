@@ -1,4 +1,4 @@
-import { PlusIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, PlusIcon } from "@radix-ui/react-icons";
 import { IconButton, Tooltip } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 
@@ -42,4 +42,25 @@ const ButtonCreateRecordFloating = ({ toolTip, disabled = false, onClick }: {  t
     )
 }
 
-export { ButtonCreateRecordFloating };
+/**
+ * Botón para volver atrás flotante
+ * 
+ * @param onClick Función que se ejecuta al hacer click en el botón
+ *  
+ * @returns 
+ */
+const ButtonBackFloating = ({ onClick }: { onClick?: () => void }) => {
+    const [t] = useTranslation("global_ux");
+
+    return (
+        <div style={{ position: 'fixed', bottom: '2vh', left: '2vh' }}>
+            <Tooltip content={t("actions.back" )} side="top" align="center" sideOffset={5}>
+                <IconButton onClick={onClick} variant="solid" size="4" radius="full" >
+                    <ArrowLeftIcon />
+                </IconButton>
+            </Tooltip>
+        </div>
+    )
+}
+
+export { ButtonBackFloating, ButtonCreateRecordFloating };

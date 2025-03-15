@@ -55,10 +55,8 @@ const refreshToken = async () => {
     });
 
     if (!iFetchData.error) {
-        console.log("refreshToken -> iFetchData", JSON.stringify(iFetchData));
         await addToken({ token: iFetchData.response });
-    }
-    else {
+    } else {
         console.error("refreshToken -> Error:", JSON.stringify(iFetchData.error));
     }
 

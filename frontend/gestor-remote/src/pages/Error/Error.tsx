@@ -1,15 +1,14 @@
-import { Button, Flex } from "@radix-ui/themes";
-import { ButtonCreateRecordFloating } from "ux-ui";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { ButtonBackFloating, ButtonCreateRecordFloating } from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
+import { Flex, Heading, Separator } from "@radix-ui/themes";
 import { OriginProps } from "../Origin";
+import { Query } from "./Query";
 import { StatusEdit } from "ux-ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { VistaPrevia } from "./Preview";
 import ErrorEdit from "./Edit";
-import { Query } from "./Query";
-import { getParameter } from "orchestrator_remote/service/Parameter";
 
+//TODO tiene el valor de la estructura para cambiar los valores de permisos
 const Error = ({ structure }: { structure?: OriginProps }) => {
   const [status, setStatus] = useState(StatusEdit.find);
   const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>(
@@ -26,70 +25,46 @@ const Error = ({ structure }: { structure?: OriginProps }) => {
     setRowSelecionado(row);
   };
 
-  useEffect(() => {
-    const midata = getParameter("GS_001_00", "300");
-    console.log("data", JSON.stringify(midata));
-    
-
-
-    
-  }, [structure?.refreshToken]);
-
-
-
   return (
-    <Flex direction="column" gap="2">
+    <Flex direction="column" gap="2" p="2">
+      <Separator orientation="horizontal" size="4" />
+
+      <Flex maxWidth="60vw">
+        <Heading size="4" wrap="pretty">
+          {status}
+        </Heading>
+      </Flex>
+
       {status == StatusEdit.find && (
-        <Flex direction="column" gap="3" p="3">
-          <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
-          <ButtonCreateRecordFloating
-            toolTip="Error"
-            onClick={() => {
-              setStatus(StatusEdit.create);
-              setRowSelecionado(createIRowDataError());
-            }}
-          />
-        </Flex>
+        <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
       )}
 
-      {status == StatusEdit.see && (
-        <Flex direction="column" gap="3" p="3">
-          <VistaPrevia index={rowSelecionado.index} />
-          <Flex gap="3">
-            <Button
-              onClick={() => {
-                setStatus(StatusEdit.find);
-              }}
-            >
-              <ChevronLeftIcon />
-              status
-            </Button>
-          </Flex>
-        </Flex>
-      )}
+      {status == StatusEdit.see && <VistaPrevia index={rowSelecionado.index} />}
 
       {(status == StatusEdit.create || status == StatusEdit.edit) && (
-        <Flex direction="row" justify="between" p="3">
-          <Flex direction="column" gap="3">
-            <ErrorEdit
-              status={status}
-              row={rowSelecionado}
-              onAtras={() => {
-                setStatus(StatusEdit.find);
-              }}
-            />
-          </Flex>
-          <Flex gap="3">
-            <Button
-              onClick={() => {
-                setStatus(StatusEdit.find);
-              }}
-            >
-              <ChevronLeftIcon />
-              status
-            </Button>
-          </Flex>
-        </Flex>
+        <ErrorEdit
+          status={status}
+          row={rowSelecionado}
+          onAtras={() => {
+            setStatus(StatusEdit.find);
+          }}
+        />
+      )}
+
+      {(status == StatusEdit.find && (
+        <ButtonCreateRecordFloating
+          toolTip="Error"
+          onClick={() => {
+            setStatus(StatusEdit.create);
+            setRowSelecionado(createIRowDataError());
+          }}
+        />
+      )) || (
+        <ButtonBackFloating
+          onClick={() => {
+            setStatus(StatusEdit.find);
+          }}
+        />
       )}
     </Flex>
   );
