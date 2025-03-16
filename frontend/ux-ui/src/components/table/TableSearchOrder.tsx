@@ -18,7 +18,7 @@ import { InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
-import { get, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useToastContext } from "../toast/useToastContext";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -139,6 +139,8 @@ const CreateSearchFieldOrder = ({
     const sortsAnility = createSorts();
     const parametersComplete = { ...parametersQuery, ...sortsAnility };
 
+    console.log("parametersComplete: ", JSON.stringify(parametersComplete));
+
     fetchData({
       url: apiUrl,
       methodRest: MethodREST.GET,
@@ -186,9 +188,20 @@ const CreateSearchFieldOrder = ({
       return text;
     };
 
+    /**
+     * Funcion para crear los parametros de ordenamiento en formato de URL y sort para la API.
+     * 
+     * Se toma en cuenta la configuracion de la presentacion de la tabla. Para campos ordenados que tienen un nombre de columna diferente al nombre del campo, se toma el nombre de la columna.
+     * 
+     */
     const sortsTemp = Object.keys(sorts).reduce((object, key) => {
       if (sorts[key] !== SortColumn.neutral) {
-        object[`sort` + lpad(i)] = key;
+        const item = presentationTable.items.find((item) => item.name === key);
+        if (item?.orderNameColumn) {
+          object[`sort` + lpad(i)] = item.orderNameColumn;
+        } else {
+          object[`sort` + lpad(i)] = key;
+        }
         i++;
         object[`sort` + lpad(i)] = sorts[key];
         i++;

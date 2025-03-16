@@ -49,6 +49,7 @@ interface IPresentationTable {
     title: string;
     width: string;
     order?: SortColumn;
+    orderNameColumn?: string;
     onAction?: { onAction: (row: any) => void };
     component?: (row: any, children: ReactNode) => ReactNode;
   }>;

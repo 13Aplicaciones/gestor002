@@ -101,6 +101,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
         format: TextFormat.none,
         width: "20vw",
         order: SortColumn.desc,
+        orderNameColumn: "user_date",
       },
       {
         name: "acciones",
