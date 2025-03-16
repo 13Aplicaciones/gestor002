@@ -14,15 +14,16 @@ import {
 } from "@radix-ui/react-icons";
 import { fetchData } from "api-fetch";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
-import { InputSearchDynamic, InputSubmit } from "../input/Input";
+import { InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "api-fetch";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useToastContext } from "../toast/useToastContext";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { IParametersQuery } from "./TableSearch";
 
 /**
  * Componete para crear un field de busqueda.
@@ -33,11 +34,22 @@ import * as yup from "yup";
  */
 
 /**
- * Interfaz para los parametros de la API.
+ * Funcion para obtener los ordenamientos desde la presentacion de la tabla.
+ *
+ * @param presentationTable
+ * @returns
  */
-interface IParametersQuery {
-  [key: string]: any;
-}
+const getSorts = (presentationTable: IPresentationTable) => {
+  const sortsFind: IParametersQuery = {} as IParametersQuery;
+
+  for (const item of presentationTable.items) {
+    if (item.order) {
+      sortsFind[item.name] = item.order;
+    }
+  }
+
+  return sortsFind;
+};
 
 /*
  * Componente para crear un field de busqueda.
@@ -50,33 +62,36 @@ interface IParametersQuery {
  *
  * @returns
  */
-const CreateSearchField = ({
+const CreateSearchFieldOrder = ({
   apiUrl,
-  nameIndex,
-  parametersApi,
+  parametersToConsult,
   presentationTable,
-  children,
   token,
   getToken,
 }: {
   apiUrl: string;
-  nameIndex: string;
-  parametersApi: IParametersQuery;
+  parametersToConsult: IParametersQuery;
   presentationTable: IPresentationTable;
-  children?: ReactNode;
   token?: string;
   getToken?: (() => Promise<string>) | undefined;
 }) => {
+  //Presentacion de los items de la tabla.
   const [t] = useTranslation("global_ux");
   const { showToast } = useToastContext();
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [parameters, setParameters] = useState<IParametersQuery>(parametersApi);
+
+  //Variables de estado para data, parametros de consulta, presentacion y ordenamiento.
+  const [data, setData] = useState([]);
+  const [parametersQuery, setParametersQuery] =
+    useState<IParametersQuery>(parametersToConsult);
   const [presentation, setPresentation] =
     useState<IPresentationTable>(presentationTable);
-  const [shorts, setShorts] = useState<string[]>([]);
+  const [sorts, setSorts] = useState<IParametersQuery>(
+    getSorts(presentationTable)
+  );
+
+  //Variables de estado para la paginacion
+  const [currentPage, setCurrentPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -96,47 +111,39 @@ const CreateSearchField = ({
     });
 
   /**
-   * Validacion de los fields del formulario.
-   */
-  const schemaBusqueda = yup.object({
-    search: yup.string(),
-  });
-
-  /**
    * Funcion para ejecutar la api.
    *
    */
   const runApi = async () => {
-    if (parameters[nameIndex] === undefined || parameters[nameIndex] === null) {
-      parameters[nameIndex] = "";
-    }
-
     if (
-      parameters.page === undefined ||
-      parameters.page === null ||
-      parameters.page < 0
+      parametersQuery.page === undefined ||
+      parametersQuery.page === null ||
+      parametersQuery.page < 0
     ) {
-      parameters.page = 0;
+      parametersQuery.page = 0;
     }
 
     if (totalPages === undefined || totalPages === null || totalPages <= 0) {
       setTotalPages(1);
     }
 
-    if (parameters.page >= totalPages) {
+    if (parametersQuery.page >= totalPages) {
       const pageTemp = totalPages - 1 > 0 ? totalPages - 1 : 0;
-      parameters.page = pageTemp;
+      parametersQuery.page = pageTemp;
     }
 
     setTotalPages(0);
     setCurrentPage(0);
     setTotalItems(0);
 
+    const sortsAnility = createSorts();
+    const parametersComplete = { ...parametersQuery, ...sortsAnility };
+
     fetchData({
       url: apiUrl,
       methodRest: MethodREST.GET,
       typeBody: TypeBody.URL_PARAMS,
-      bodyParameter: parameters,
+      bodyParameter: parametersComplete,
       token: token,
       getToken: getToken,
     })
@@ -162,41 +169,52 @@ const CreateSearchField = ({
   };
 
   /**
+   * Funcion para crear los parametros de ordenamiento en formato de URL y sort para la API.
+   *
+   * @returns
+   */
+  const createSorts = () => {
+    let i = 1;
+    /**
+     * Funcion para crear un texto con un numero dado por la variable number.
+     *
+     * @param length
+     * @returns
+     */
+    const lpad = (length: number) => {
+      const text = "  ".repeat(length);
+      return text;
+    };
+
+    const sortsTemp = Object.keys(sorts).reduce((object, key) => {
+      if (sorts[key] !== SortColumn.neutral) {
+        object[`sort` + lpad(i)] = key;
+        i++;
+        object[`sort` + lpad(i)] = sorts[key];
+        i++;
+      }
+      return object;
+    }, {} as IParametersQuery);
+
+    return sortsTemp;
+  };
+
+  /**
    * Ejecuta al iniciar de user effect.
    */
   useEffect(() => {
     setLoading(true);
 
-    parameters[nameIndex] = "";
-    parameters.page = 0;
-    setParameters(parameters);
+    parametersQuery.page = 0;
+    setParametersQuery(parametersQuery);
     setPresentation(presentationTable);
-
-    const shortsFind: string[] = [];
-    presentation.items
-      .filter((item: { order?: SortColumn }) => item.order !== undefined)
-      .forEach((item: { name: string; order?: SortColumn }) => {
-        if (item.order !== SortColumn.neutral) {
-          shortsFind.push("sort=" + item.name + "&sort=" + item.order);
-        }
-      });
-    setShorts(shortsFind);
-
-    console.log("shorts: " + shorts);
-
+    setSorts(getSorts(presentationTable));
     paginationPresentation();
-  }, [parametersApi]);
+  }, [parametersQuery]);
 
   /**
    * Hook para el formulario y usa register, handleSubmit y reset.
    */
-  const {
-    register: registerSearch,
-    handleSubmit: handleSubmitBusqueda,
-    formState: { errors: errorsBusqueda },
-  } = useForm({
-    resolver: yupResolver(schemaBusqueda),
-  });
 
   const schemaPagina = getSchemaPage(totalPages);
 
@@ -206,25 +224,10 @@ const CreateSearchField = ({
   const {
     register: registerPage,
     handleSubmit: handleSubmitPagina,
-    reset: resetPagina,
     formState: { errors: errorsPagina },
   } = useForm({
     resolver: yupResolver(schemaPagina),
   });
-
-  /**
-   * Metodo para consultar el formulario de busqueda.
-   *
-   * Y limpiar la consulta de paginacion.
-   *
-   * @param data
-   */
-  const consultSearch = async (data: any) => {
-    resetPagina();
-    parameters[nameIndex] = data.search;
-    parameters.page = 0;
-    paginationPresentation();
-  };
 
   /**
    * Metodo para consultar el formulario de paginacion.
@@ -232,7 +235,7 @@ const CreateSearchField = ({
    * @param data
    */
   const consultPage = async (data: any) => {
-    parameters.page = data.page - 1;
+    parametersQuery.page = data.page - 1;
     paginationPresentation();
   };
 
@@ -245,27 +248,6 @@ const CreateSearchField = ({
       await runApi();
       setLoading(false);
     }, 333);
-  };
-
-  /**
-   * Formulario para la busqueda.
-   *
-   * @returns
-   */
-  const searchForm = () => {
-    return (
-      <Flex direction="row" gap="1" align="baseline">
-        <form onSubmit={handleSubmitBusqueda(consultSearch)}>
-          <InputSearchDynamic
-            placeholder="Buscar"
-            columna={BandPresentation.column_6}
-            register={registerSearch("search", { required: true })}
-            messageError={errorsBusqueda.search?.message}
-          />
-        </form>
-        {children}
-      </Flex>
-    );
   };
 
   /**
@@ -284,7 +266,7 @@ const CreateSearchField = ({
             <IconButton
               variant="outline"
               onClick={async () => {
-                parameters.page = 0;
+                parametersQuery.page = 0;
                 paginationPresentation();
               }}
             >
@@ -293,7 +275,7 @@ const CreateSearchField = ({
             <IconButton
               variant="outline"
               onClick={async () => {
-                parameters.page = currentPage - 1;
+                parametersQuery.page = currentPage - 1;
                 paginationPresentation();
               }}
             >
@@ -312,7 +294,7 @@ const CreateSearchField = ({
             <IconButton
               variant="outline"
               onClick={async () => {
-                parameters.page = currentPage + 1;
+                parametersQuery.page = currentPage + 1;
                 paginationPresentation();
               }}
             >
@@ -321,7 +303,7 @@ const CreateSearchField = ({
             <IconButton
               variant="outline"
               onClick={async () => {
-                parameters.page = totalPages - 1;
+                parametersQuery.page = totalPages - 1;
                 paginationPresentation();
               }}
             >
@@ -342,18 +324,24 @@ const CreateSearchField = ({
 
   return (
     <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
-      {searchForm()}
       {loading ? (
-        <TableSkeleton column={parameters.size} />
+        <TableSkeleton column={parametersQuery.size} />
       ) : (
         <>
           <TableConfigurable
             data={data}
             isBand={presentation.banding}
             presentationTable={presentation}
-            presentationSorts={shorts}
+            presentationSorts={sorts}
             isHeader={presentation.headers}
             isLineNumber={presentation.numberLinea}
+            onOrderChange={{
+              onOrderChange: (name: string, direccion: SortColumn) => {
+                sorts[name] = direccion;
+                setSorts(sorts);
+                paginationPresentation();
+              },
+            }}
           />
           {pageForm()}
         </>
@@ -362,5 +350,4 @@ const CreateSearchField = ({
   );
 };
 
-export { CreateSearchField };
-export type { IParametersQuery };
+export { CreateSearchFieldOrder };

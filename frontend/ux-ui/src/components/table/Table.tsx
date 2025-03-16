@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Alerts,
@@ -23,6 +24,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
 import { ReactNode, useEffect, useState } from "react";
+import { IParametersQuery } from "./TableSearch";
 
 /**
  * Componente de tabla paginada.
@@ -157,24 +159,48 @@ const Cell = ({
  * @returns
  */
 const Title = ({
+  name,
   text,
   sort,
-  onOrder,
+  onOrderChange,
 }: {
+  name: string;
   text: string;
   sort?: SortColumn;
-  onOrder?: (text: string, sort?: SortColumn) => void;
+  onOrderChange?: {
+    onOrderChange: (name: string, direction: SortColumn) => void;
+  };
 }) => {
   const [t] = useTranslation("global_ux");
+  const [sortVisible, setSortVisible] = useState(sort);
 
-  //TODO: Agregar useEffect para actualizar el estado de la orden de la columna.
-  /*
-  useEffect(() => {  
-  }, [text, sort]);
-  */
+  const handleChange = (
+    name: string,
+    direction: SortColumn,
+    onOrderChange: any
+  ) => {
+    setSortVisible(direction);
+
+    if (onOrderChange) {
+      onOrderChange.onOrderChange(name, direction);
+    } else {
+      console.warn(
+        "onOrderChange -> No Setup (name: " +
+          name +
+          " direction: " +
+          direction +
+          ")"
+      );
+    }
+  };
+
+  useEffect(() => {
+    setSortVisible(sort);
+  }, [sort]);
+
   return (
     <>
-      {(!sort && (
+      {(!sortVisible && (
         <Text size="2" weight="bold">
           {text}
         </Text>
@@ -182,9 +208,9 @@ const Title = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             <IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
-              {sort === SortColumn.asc && <CaretUpIcon />}
-              {sort === SortColumn.desc && <CaretDownIcon />}
-              {sort === SortColumn.neutral && <CaretSortIcon />}
+              {sortVisible === SortColumn.asc && <CaretUpIcon />}
+              {sortVisible === SortColumn.desc && <CaretDownIcon />}
+              {sortVisible === SortColumn.neutral && <CaretSortIcon />}
               <Text size="2" weight="bold">
                 {text}
               </Text>
@@ -192,20 +218,18 @@ const Title = ({
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>
             <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.asc}
               onClick={() => {
-                sort = SortColumn.asc;
-                onOrder?.(text, sort);
-                console.log("presentation ASC: ", sort, text);
+                handleChange(name, SortColumn.asc, onOrderChange);
               }}
             >
               <CaretUpIcon />
               {t("tabla.orderAsc")}
             </DropdownMenu.Item>
             <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.desc}
               onClick={() => {
-                sort = SortColumn.desc;
-                onOrder?.(text, sort);
-                console.log("presentation DESC: ", sort, text);
+                handleChange(name, SortColumn.desc, onOrderChange);
               }}
             >
               <CaretDownIcon />
@@ -213,10 +237,9 @@ const Title = ({
             </DropdownMenu.Item>
             <DropdownMenu.Separator />
             <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.neutral}
               onClick={() => {
-                sort = SortColumn.neutral;
-                onOrder?.(text, sort);
-                console.log("presentation NONE: ", sort, text);
+                handleChange(name, SortColumn.neutral, onOrderChange);
               }}
             >
               <CaretSortIcon />
@@ -242,22 +265,27 @@ const Title = ({
  */
 const TableConfigurable = ({
   presentationTable,
+  presentationSorts,
   data,
   isHeader,
   isLineNumber,
   isBand,
-  onOrder,
+  onOrderChange,
 }: {
   presentationTable: IPresentationTable;
+  presentationSorts: IParametersQuery;
   data: any;
   isHeader?: boolean;
   isLineNumber?: boolean;
   isBand?: boolean;
-  onOrder?: { onOrder: (row: any) => void };
+  onOrderChange?: {
+    onOrderChange: (title: string, direction: SortColumn) => void;
+  };
 }) => {
   const [t] = useTranslation("global_ux");
   const [presentation, setPresentation] =
     useState<IPresentationTable>(presentationTable);
+  const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
 
   /**
    * Funcion para generar el header de la tabla.
@@ -281,9 +309,10 @@ const TableConfigurable = ({
               align="center"
             >
               <Title
+                name={item.name}
                 text={item.title}
-                sort={item.order}
-                onOrder={onOrder?.onOrder}
+                sort={sorts[item.name]}
+                onOrderChange={onOrderChange}
               />
             </Table.ColumnHeaderCell>
           ))}
@@ -297,7 +326,8 @@ const TableConfigurable = ({
    */
   useEffect(() => {
     setPresentation(presentationTable);
-  }, [presentationTable]);
+    setSorts(presentationSorts || {});
+  }, [presentationTable, presentationSorts]);
 
   return (
     <>

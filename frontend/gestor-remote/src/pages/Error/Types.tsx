@@ -1,14 +1,3 @@
-import { IParameters } from "ux-ui";
-
-/**
- * Parametros de la consulta.
- */
-const parametersQuery: IParameters = {
-  size: 10,
-  index: "",
-  page: 0
-};
-
 /**
  * Interfaz para el objeto de respuesta de la llamada.
  */
@@ -40,5 +29,5 @@ const createIRowDataError = (): IRowDataError => {
 };
 
 
-export { createIRowDataError, parametersQuery };
+export { createIRowDataError };
 export type { IRowDataError };

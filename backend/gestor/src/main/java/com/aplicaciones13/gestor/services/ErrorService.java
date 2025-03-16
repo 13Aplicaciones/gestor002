@@ -60,8 +60,8 @@ public class ErrorService {
      * @param pagingSort
      * @return
      */
-    public Page<Error> findByIndexAndMessage(String index, String mensaje, Pageable pagingSort) {
-        return errorRepository.findByIndexContaining(index, mensaje, pagingSort);
+    public Page<Error> findByIndexAndMessage(String index, String message, Pageable pagingSort) {
+        return errorRepository.findByIndexContaining(index, message, pagingSort);
     }
 
     /**

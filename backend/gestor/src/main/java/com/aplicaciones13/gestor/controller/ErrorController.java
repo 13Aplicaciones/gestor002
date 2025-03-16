@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/errors")
 @Tag(name = "Errores", description = "Servicio para CRUD de Errores")
 public class ErrorController {
-    
+
     @Autowired
     private ErrorService errorService;
 
@@ -90,8 +90,8 @@ public class ErrorController {
      */
     @PutMapping("/{uuid}")
     public ResponseEntity<ErrorResponse> updateError(
-        @PathVariable @ValidUUID String uuid,
-        @RequestBody @Valid ErrorRequest errorRequest) {
+            @PathVariable @ValidUUID String uuid,
+            @RequestBody @Valid ErrorRequest errorRequest) {
         return ResponseEntity.ok(errorService.update(uuid, errorRequest));
     }
 
@@ -107,7 +107,8 @@ public class ErrorController {
     }
 
     /**
-     * Metodo para obtener todos los errores con paginacion, order y busqueda por index y mensaje.
+     * Metodo para obtener todos los errores con paginacion, order y busqueda por
+     * index y mensaje.
      * 
      * @param page
      * @param size
@@ -116,15 +117,16 @@ public class ErrorController {
      * @param mensaje
      * @return
      */
-    @GetMapping("/paginado")
+    @GetMapping("/paginated")
     public Map<String, Object> getAllErrorsWithPagination(
+            @RequestParam(required = false) String index,
+            @RequestParam(required = false) String message,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "index,desc") String[] sort,
-            @RequestParam(required = false) String index,
-            @RequestParam(required = false) String mensaje) {
-        Page<Error> pageErrors = errorService.findByIndexAndMessage(index, mensaje,
-                ControllerTools.generateOrders(page, size, sort));
+            @RequestParam(defaultValue = "index,desc") String[] sort
+    ) {
+        Page<Error> pageErrors = errorService.findByIndexAndMessage(
+                index, message, ControllerTools.generateOrders(page, size, sort));
 
         return ControllerTools.generateFooterPage(pageErrors);
     }

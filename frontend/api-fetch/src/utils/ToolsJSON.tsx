@@ -29,10 +29,12 @@ const removeEmptyFields = (objeto: any) => {
  * 
  * @returns 
  */
-const convertJsontToUrlParams = (objeto: any) => {
-    return Object.keys(objeto)
-                  .map(key => encodeURIComponent(key.trim()) + '=' + encodeURIComponent(objeto[key]).trim())
+const convertJsontToUrlParams = (objet: any) => {
+    const response = Object.keys(objet)
+                  .map(key => encodeURIComponent(key.trim()) + '=' + encodeURIComponent(objet[key]).trim())
                   .join('&');
+
+    return response;
 }
 
 

@@ -1,6 +1,7 @@
 package com.aplicaciones13.gestor.repository;
 
 import com.aplicaciones13.gestor.model.Error;
+import com.aplicaciones13.gestor.model.User;
 
 import java.util.Optional;
 
@@ -27,7 +28,10 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param pageable
      * @return
      */
-    @Query("SELECT e FROM Error e WHERE (:index IS NULL OR upper(e.index) LIKE %:index%) AND (:message IS NULL OR upper(e.message) LIKE %:message%)")
+    @Query(value = "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
+        countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
+        nativeQuery = true
+    )
     Page<Error> findByIndexContaining(String index, String message, Pageable pageable);
 
     /**

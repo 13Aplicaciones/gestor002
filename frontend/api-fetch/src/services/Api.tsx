@@ -115,6 +115,7 @@ const fetchDataConfigurated = async (
   } catch (e) {
     iFetchData.status = 500;
     iFetchData.error = e instanceof Error ? e.message : String(e);
+    console.error("fetchDataConfigurated -> error: ", e,  JSON.stringify(iFetchData));
   }
 
   iFetchData.statusDescription = globalApiFetchEs.httpStatusResolve[iFetchData.status.toString() as keyof typeof globalApiFetchEs.httpStatus];
