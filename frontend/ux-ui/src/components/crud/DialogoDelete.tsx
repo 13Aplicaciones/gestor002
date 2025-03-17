@@ -9,6 +9,13 @@ const DialogDelete = () => {
   const [t] = useTranslation("global_ux");
   const [dialogStatus, setDialogStatus] = useState(false);
 
+    const [dialogRefresh, setDialogRefresh] = useState(false);
+
+    useState(() => {
+        setDialogRefresh(!dialogRefresh);
+    }
+    , [dialogStatus]);
+
   return (
     <DialogAlerts
       key={dialogRefresh.toString()}
