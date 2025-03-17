@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CreateSearchField, IParameters } from "../components/table/TableSearch";
+import { CreateSearchField, IParametersQuery } from "../components/table/TableSearch";
 import { IPresentationTable } from "../components/table/Table";
 import {
   GearIcon,
@@ -16,7 +16,7 @@ import { JustificationText, TextFormat } from "../ConstantsPresentation";
  * @returns
  */
 const miTablaApiDemo = () => {
-  const parametros: IParameters = {
+  const parametros: IParametersQuery = {
     page: 0,
     size: 10,
     sort: "index",

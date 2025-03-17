@@ -21,6 +21,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     /**
      * Metodo para encontrar menu desde el index
      */
-    Optional<Menu> findByIndex(String index);
+    Optional<Menu> findByIndexMenu(String indexMenu);
 
 }

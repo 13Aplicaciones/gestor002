@@ -25,8 +25,8 @@ public class ParameterService {
      * @return una lista de parámetros asociados al módulo
      */
     @Cacheable(value = "parameters", key = "#moduleIndex")
-    public List<ParameterResponse> findParametersByModuleIndex(String moduleIndex) {
-        List<Parameter> resp = parameterRepository.findByModule_Index(moduleIndex);
+    public List<ParameterResponse> findParametersByModule_IndexModule(String moduleIndex) {
+        List<Parameter> resp = parameterRepository.findByModule_IndexModule(moduleIndex);
 
         return resp.stream()
                 .map(ParameterMapper.INSTANCE::toResponse)
@@ -40,9 +40,9 @@ public class ParameterService {
      * @param moduleIndex
      * @return
      */
-    @Cacheable(value = "parameters", key = "{#index, #moduleIndex}")
-    public ParameterResponse findParameterByIndexAndModuleIndex(String index, String moduleIndex) {
-        Parameter resp = parameterRepository.findByIndexAndModule_Index(index, moduleIndex);
+    @Cacheable(value = "parameters", key = "{#indexParameter, #indexModule}")
+    public ParameterResponse findParameterByIndexParameterAndModule_IndexModule(String indexParameter, String indexModule) {
+        Parameter resp = parameterRepository.findByIndexParameterAndModule_IndexModule(indexParameter, indexModule);
         return ParameterMapper.INSTANCE.toResponse(resp);
     }
 }

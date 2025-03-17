@@ -22,7 +22,7 @@ public class ParameterRequest extends AppRequest {
     @NotNull
     @Size(max = 32)
     @Schema(description = "Index del parameter", example = "parameter123")
-    private String index;
+    private String indexParameter;
 
     @Size(max = 8)
     @Schema(description = "Listado de CDU + E=encriptado, TP=texto plano", example = "TP")

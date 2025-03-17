@@ -29,8 +29,8 @@ public class ParameterController {
     private ParameterService parameterService;
 
     @GetMapping("/{index}")
-    public ResponseEntity<ParameterResponse> getParameterByIndex(@PathVariable String index) {
-        ParameterResponse response = parameterService.findByIndex(index);
+    public ResponseEntity<ParameterResponse> getParameterByIndexParameter(@PathVariable String index) {
+        ParameterResponse response = parameterService.findByIndexParameter(index);
         return ResponseEntity.ok(response);
     }
 

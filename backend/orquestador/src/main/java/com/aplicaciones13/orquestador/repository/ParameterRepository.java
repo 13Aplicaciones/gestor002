@@ -24,7 +24,7 @@ public interface ParameterRepository extends JpaRepository<Parameter, Long> {
      * @param moduleIndex
      * @return
      */
-    List<Parameter> findByModule_Index(String moduleIndex);
+    List<Parameter> findByModule_IndexModule(String indexModule);
 
 
     /**
@@ -34,5 +34,5 @@ public interface ParameterRepository extends JpaRepository<Parameter, Long> {
      * @param moduleIndex
      * @return
      */
-    Parameter findByIndexAndModule_Index(String index, String moduleIndex);
+    Parameter findByIndexParameterAndModule_IndexModule(String indexParameter, String indexModule);
 }

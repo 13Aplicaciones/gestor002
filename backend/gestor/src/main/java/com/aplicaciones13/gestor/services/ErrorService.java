@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
+import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.gestor.mapping.ErrorMapper;
 import com.aplicaciones13.gestor.payload.request.ErrorRequest;
 import com.aplicaciones13.gestor.payload.response.ErrorResponse;
@@ -28,6 +29,9 @@ public class ErrorService {
     @Autowired
     private ErrorRepository errorRepository;
     
+    @Autowired
+    private JwtService jwtService;
+
     /**
      * Valida que el índice sea único en la base de datos con excepción del uuid
      * 
@@ -35,7 +39,7 @@ public class ErrorService {
      * @param uuid
      */
     public void validateUniqueIndexUuid(String index, String uuid) {
-        Optional<Error> existingError = errorRepository.findByIndex(index);
+        Optional<Error> existingError = errorRepository.findByIndexError(index);
         if (existingError.isPresent() && !existingError.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
@@ -46,8 +50,8 @@ public class ErrorService {
      * 
      * @param index
      */
-    public void validateUniqueIndex(String index) {
-        if (errorRepository.findByIndex(index).isPresent()) {
+    public void validateUniqueIndexError(String index) {
+        if (errorRepository.findByIndexError(index).isPresent()) {
             throw new DataIntegrityViolationException("El índice ya existe");
         }
     }
@@ -60,8 +64,8 @@ public class ErrorService {
      * @param pagingSort
      * @return
      */
-    public Page<Error> findByIndexAndMessage(String index, String message, Pageable pagingSort) {
-        return errorRepository.findByIndexContaining(index, message, pagingSort);
+    public Page<Error> findByIndexErrorAndMessage(String index, String message, Pageable pagingSort) {
+        return errorRepository.findByIndexErrorContaining(index, message, pagingSort);
     }
 
     /**
@@ -70,8 +74,8 @@ public class ErrorService {
      * @param index
      * @return
      */
-    public ErrorResponse findByIndex(String index) {
-        return errorRepository.findByIndex(index)
+    public ErrorResponse findByIndexError(String indexError) {
+        return errorRepository.findByIndexError(indexError)
                 .map(ErrorMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
     }
@@ -94,7 +98,7 @@ public class ErrorService {
      * @param uuid
      * @return
      */
-    public ErrorResponse findByUuid(String uuid) {        
+    public ErrorResponse findByUuid(String uuid) {
         return errorRepository.findByUuid(uuid)
                 .map(ErrorMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
@@ -108,9 +112,10 @@ public class ErrorService {
      */
     @InvokeUser
     public ErrorResponse create(ErrorRequest errorRequest) {        
-        validateUniqueIndex(errorRequest.getIndex());
+        validateUniqueIndexError(errorRequest.getIndexError());
         Error error = ErrorMapper.INSTANCE.toEntity(errorRequest);
-        error.setUser(errorRequest.getUserHidden());    
+        //error.setUser(errorRequest.getUserHidden());
+        error.setUser(jwtService.getUsername());    
         error = errorRepository.saveAndFlush(error);
         return ErrorMapper.INSTANCE.toResponse(error);
     }
@@ -124,17 +129,18 @@ public class ErrorService {
      */
     @InvokeUser
     public ErrorResponse update(String uuid, ErrorRequest errorRequest) {
-        validateUniqueIndexUuid(errorRequest.getIndex(), uuid);
+        validateUniqueIndexUuid(errorRequest.getIndexError(), uuid);
 
 
         Error error = errorRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("Error not found", HttpStatus.NOT_FOUND));
 
-        error.setIndex(errorRequest.getIndex());
+        error.setIndexError(errorRequest.getIndexError());
         error.setMessage(errorRequest.getMessage());
         error.setDescription(errorRequest.getDescription());
         error.setUserApp(errorRequest.getUserApp());
-        error.setUser(errorRequest.getUserHidden());
+        //error.setUser(errorRequest.getUserHidden());
+        error.setUser(jwtService.getUsername());
         error = errorRepository.saveAndFlush(error);
         return ErrorMapper.INSTANCE.toResponse(error);
     }

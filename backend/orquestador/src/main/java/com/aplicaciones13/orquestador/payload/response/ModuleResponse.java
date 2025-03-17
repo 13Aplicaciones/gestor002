@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -22,10 +21,10 @@ public class ModuleResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "UUID del registro para busquedas", example = "550e8400-e29b-41d4-a716-446655440000")
-    private UUID uuid;
+    private String uuid;
 
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
-    private String index;
+    private String indexModule;
 
     @Schema(description = "Name del index", example = "Name del Módulo")
     private String name;

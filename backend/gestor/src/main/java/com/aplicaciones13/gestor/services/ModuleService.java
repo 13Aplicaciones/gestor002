@@ -59,7 +59,7 @@ public class ModuleService {
     @InvokeUser
     public ModuleResponse create(ModuleRequest moduleRequest) {
         Module module = ModuleMapper.INSTANCE.toEntity(moduleRequest);
-        validateUniqueIndex(module.getIndex());
+        validateUniqueIndexModule(module.getIndexModule());
 
         module.setUser(moduleRequest.getUserHidden());
         module = moduleRepository.saveAndFlush(module);
@@ -76,12 +76,12 @@ public class ModuleService {
      */
     @InvokeUser
     public ModuleResponse update(String uuid, ModuleRequest moduleRequest) {
-        validateUniqueIndexUuid(moduleRequest.getIndex(), uuid);
+        validateUniqueIndexUuid(moduleRequest.getIndexModule(), uuid);
 
         Module module = moduleRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("Module no encontrado", HttpStatus.NOT_FOUND));
 
-        module.setIndex(moduleRequest.getIndex());
+        module.setIndexModule(moduleRequest.getIndexModule());
         module.setName(moduleRequest.getName());
         module.setContext(moduleRequest.getContext());
         module.setUserApp(moduleRequest.getUserApp());
@@ -111,8 +111,8 @@ public class ModuleService {
      * 
      * @param index
      */
-    private void validateUniqueIndex(String index) {
-        if (moduleRepository.findByIndex(index).isPresent()) {
+    private void validateUniqueIndexModule(String index) {
+        if (moduleRepository.findByIndexModule(index).isPresent()) {
             throw new DataIntegrityViolationException("El index ya existe");
         }
     }
@@ -124,7 +124,7 @@ public class ModuleService {
      * @param uuid
      */
     private void validateUniqueIndexUuid(String index, String uuid) {
-        Optional<Module> existingModule = moduleRepository.findByIndex(index);
+        Optional<Module> existingModule = moduleRepository.findByIndexModule(index);
         if (existingModule.isPresent() && !existingModule.get().getUuid().toString().equals(uuid)) {
             throw new DataIntegrityViolationException("El index ya existe");
         }

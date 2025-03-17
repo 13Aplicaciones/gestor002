@@ -44,8 +44,8 @@ public class Parameter extends UuidUserDateApp {
     @JoinColumn(name = "id_module", referencedColumnName = "id_module", insertable = false, updatable = false)
     private Module module;
 
-    @Column(length = 32, nullable = false, unique = true)
-    private String index;
+    @Column(name="index_parameter",length = 32, nullable = false, unique = true)
+    private String indexParameter;
 
     @Column(name = "encrypted", length = 8)
     private String encrypt;

@@ -22,7 +22,7 @@ public class ErrorRequest extends AppRequest{
     @NotNull
     @Size(min=5, max = 128)
     @Schema(description = "Index de error", example = "ERR001")
-    private String index;
+    private String indexError;
 
     @NotNull
     @Size(max = 1024)

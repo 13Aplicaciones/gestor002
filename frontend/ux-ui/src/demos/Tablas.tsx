@@ -176,6 +176,7 @@ const miTablaDemo = () => {
       <TableConfigurable
         data={data.items}
         presentationTable={presentation}
+        presentationSorts={{}}
         isHeader={true}
         isLineNumber={true}
         isBand={true}

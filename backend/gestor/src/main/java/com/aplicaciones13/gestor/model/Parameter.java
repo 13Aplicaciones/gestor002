@@ -35,8 +35,8 @@ public class Parameter extends UuidUserDateApp {
     @Column(name = "id_module")
     private Long idModule;
 
-    @Column(length = 32, nullable = false, unique = true)
-    private String index;
+    @Column(name = "index_parameter", length = 32, nullable = false, unique = true)
+    private String indexParameter;
 
     @Column(length = 8)
     private String encrypted;

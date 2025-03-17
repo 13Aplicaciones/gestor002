@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 public class ParameterResponse extends UserDateAppResponse {
 
     @Schema(description = "Index del parameter", example = "parameter123")
-    private String index;
+    private String indexParameter;
 
     @Schema(description = "Listado de CDU + E=encriptado, TP=texto plano", example = "TP")
     private String encryt;

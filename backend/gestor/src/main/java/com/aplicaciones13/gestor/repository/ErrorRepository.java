@@ -1,9 +1,9 @@
 package com.aplicaciones13.gestor.repository;
 
 import com.aplicaciones13.gestor.model.Error;
-import com.aplicaciones13.gestor.model.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,18 +21,18 @@ import org.springframework.stereotype.Repository;
 public interface ErrorRepository extends JpaRepository<Error, Long> {
 
     /**
-     * Metodo para buscar una por index(like) y/o mensaje(like) y que sea pageable.
+     * Metodo para buscar una por indexError(like) y/o mensaje(like) y que sea pageable.
      * 
      * @param index
      * @param mensaje
      * @param pageable
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
-        countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
+    @Query(value = "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index_error) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
+        countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index_error) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
         nativeQuery = true
     )
-    Page<Error> findByIndexContaining(String index, String message, Pageable pageable);
+    Page<Error> findByIndexErrorContaining(String indexError, String message, Pageable pageable);
 
     /**
      * Método para buscar una entidad de Error por index.
@@ -40,7 +40,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param index
      * @return
      */
-    Optional<Error> findByIndex(String index);
+    Optional<Error> findByIndexError(String indexModule);
 
     /**
      * Método para buscar una entidad de Error por UUID.
@@ -48,7 +48,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.error WHERE uuid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.error e WHERE e.uuid = ?1", nativeQuery = true)
     Optional<Error> findByUuid(String uuid);
 
     /**

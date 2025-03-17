@@ -1,7 +1,6 @@
 package com.aplicaciones13.orquestador.model;
 
 import lombok.Data;
-import lombok.Getter;
 
 import org.hibernate.annotations.Immutable;
 

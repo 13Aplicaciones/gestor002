@@ -17,7 +17,7 @@ public class ModuleListaResponse {
     private Long idModule;
 
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
-    private String index;
+    private String indexModule;
 
     @Schema(description = "Name del module", example = "Name del Módulo")
     private String name;

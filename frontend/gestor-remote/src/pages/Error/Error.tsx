@@ -39,7 +39,7 @@ const Error = ({ structure }: { structure?: OriginProps }) => {
         <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
       )}
 
-      {status == StatusEdit.see && <VistaPrevia index={rowSelecionado.index} />}
+      {status == StatusEdit.see && <VistaPrevia index={rowSelecionado.indexError} />}
 
       {(status == StatusEdit.create || status == StatusEdit.edit) && (
         <ErrorEdit

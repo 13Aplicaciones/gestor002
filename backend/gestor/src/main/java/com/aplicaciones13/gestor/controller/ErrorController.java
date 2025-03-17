@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,7 +53,7 @@ public class ErrorController {
      */
     @GetMapping("/index={index}")
     public ErrorResponse getErrorById(@PathVariable String index) {
-        return (ErrorResponse) errorService.findByIndex(index);
+        return (ErrorResponse) errorService.findByIndexError(index);
     }
 
     /**
@@ -125,7 +126,7 @@ public class ErrorController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "index,desc") String[] sort
     ) {
-        Page<Error> pageErrors = errorService.findByIndexAndMessage(
+        Page<Error> pageErrors = errorService.findByIndexErrorAndMessage(
                 index, message, ControllerTools.generateOrders(page, size, sort));
 
         return ControllerTools.generateFooterPage(pageErrors);

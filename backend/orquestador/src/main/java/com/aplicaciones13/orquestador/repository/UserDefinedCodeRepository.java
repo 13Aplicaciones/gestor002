@@ -16,5 +16,5 @@ import java.util.List;
  */
 @Repository
 public interface UserDefinedCodeRepository extends JpaRepository<UserDefinedCode, Long> {
-    List<UserDefinedCode> findByModule_IndexAndGroupNotOrderByGroupAscOrderAsc(String moduleIndex, String group);
+    List<UserDefinedCode> findByModule_IndexModuleAndGroupNotOrderByGroupAscOrderAsc(String moduleIndex, String group);
 }

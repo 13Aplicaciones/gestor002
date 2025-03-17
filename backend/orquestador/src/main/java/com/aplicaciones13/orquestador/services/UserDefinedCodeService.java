@@ -41,7 +41,7 @@ public class UserDefinedCodeService {
         List<UserDefinedCodeGroupResponse> respGroup = new ArrayList<>();
 
         List<UserDefinedCodeResponse> respList = userDefinedCodeRepository
-                .findByModule_IndexAndGroupNotOrderByGroupAscOrderAsc(moduleIndex, MODULE_INDEX_EXCLUDE)
+                .findByModule_IndexModuleAndGroupNotOrderByGroupAscOrderAsc(moduleIndex, MODULE_INDEX_EXCLUDE)
                 .stream()
                 .map(UserDefinedCodeMapper.INSTANCE::toResponse)
                 .collect(Collectors.toList());

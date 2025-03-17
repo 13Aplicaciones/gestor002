@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
 import com.aplicaciones13.orquestador.payload.response.StaticResponse;
-import com.aplicaciones13.orquestador.payload.response.StaticsResponse;
 import com.aplicaciones13.orquestador.payload.response.UserDefinedCodeGroupResponse;
 import com.aplicaciones13.orquestador.payload.response.UserResponse;
 import com.aplicaciones13.orquestador.services.ParameterService;
@@ -22,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 
@@ -58,7 +56,7 @@ public class StructureMenuController {
      */
     @GetMapping("/parameter/module={module}")
     public ResponseEntity<List<ParameterResponse>> getParameters(@PathVariable String module) {
-        List<ParameterResponse> response = parameterService.findParametersByModuleIndex(module);
+        List<ParameterResponse> response = parameterService.findParametersByModule_IndexModule(module);
         return ResponseEntity.ok(response);
     }
 

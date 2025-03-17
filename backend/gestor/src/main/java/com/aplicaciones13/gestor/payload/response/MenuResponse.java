@@ -27,7 +27,7 @@ public class MenuResponse extends UserDateAppResponse {
     private String type;
 
     @Schema(description = "Índice del menú", example = "menu_01")
-    private String index;
+    private String indexMenu;
 
     @Schema(description = "Name del menú", example = "Menú Principal")
     private String name;

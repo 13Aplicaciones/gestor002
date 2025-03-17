@@ -23,8 +23,8 @@ public class Menu implements Serializable {
     @Column(name = "id_menu")
     private Long idMenu;
 
-    @Column(length = 32, nullable = false, unique = true)
-    private String index;
+    @Column(name="index_menu", length = 32, nullable = false, unique = true)
+    private String indexMenu;
     
     @Column(name="statistics_query", length = 128, nullable = false)
     private String statisticsQuery;

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ParameterRepository extends JpaRepository<Parameter, Long> {
-    Optional<Parameter> findByIndex(String index);
+    Optional<Parameter> findByIndexParameter(String index);
 }

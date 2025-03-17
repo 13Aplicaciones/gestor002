@@ -139,8 +139,6 @@ const CreateSearchFieldOrder = ({
     const sortsAnility = createSorts();
     const parametersComplete = { ...parametersQuery, ...sortsAnility };
 
-    console.log("parametersComplete: ", JSON.stringify(parametersComplete));
-
     fetchData({
       url: apiUrl,
       methodRest: MethodREST.GET,

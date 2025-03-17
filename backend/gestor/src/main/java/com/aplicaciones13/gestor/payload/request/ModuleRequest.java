@@ -23,7 +23,7 @@ public class ModuleRequest extends StatusAppRequest {
     @NotNull
     @Size(max = 32)
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
-    private String index;
+    private String indexModule;
 
     @NotNull
     @Size(max = 128)

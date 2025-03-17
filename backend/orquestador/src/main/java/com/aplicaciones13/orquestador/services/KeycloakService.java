@@ -41,8 +41,8 @@ public class KeycloakService{
      * @return
      */
     public KeycloakTokenResponse refreshToken(String refreshToken) {        
-        ParameterResponse urlKeycloak = parameterService.findParameterByIndexAndModuleIndex("001", "OR_001_00");
-        ParameterResponse clientId = parameterService.findParameterByIndexAndModuleIndex("002", "OR_001_00");
+        ParameterResponse urlKeycloak = parameterService.findParameterByIndexParameterAndModule_IndexModule("001", "OR_001_00");
+        ParameterResponse clientId = parameterService.findParameterByIndexParameterAndModule_IndexModule("002", "OR_001_00");
         return keycloakClient.refreshToken(urlKeycloak.getValueText01(), clientId.getValueText01(), refreshToken);
     }
 }

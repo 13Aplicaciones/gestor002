@@ -18,15 +18,11 @@ import java.util.UUID;
 @Mapper
 public interface ModuleMapper {
     
-    default UUID map(String value) {
-        return UUID.fromString(value);
-    }
-    
     ModuleMapper INSTANCE = Mappers.getMapper(ModuleMapper.class);
 
     @Mapping(target = "uuid", source = "moduleUuid")
     @Mapping(target = "name", source = "moduleName")
-    @Mapping(target = "index", source = "moduleIndex")
+    @Mapping(target = "indexModule", source = "moduleIndex")
     @Mapping(target = "context", source = "moduleContext")
     @Mapping(target = "status", source = "moduleStatus")
     @Mapping(target = "icon", source = "moduleIcon")

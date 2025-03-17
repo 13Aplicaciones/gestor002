@@ -5,7 +5,7 @@ interface IRowDataError {
   message: string;
   description: string;
   uuid: string;
-  index: string;
+  indexError: string;
   user: string;
   userDate: string;
   userApp: string;
@@ -21,7 +21,7 @@ const createIRowDataError = (): IRowDataError => {
     message: "",
     description: "description",
     uuid: "",
-    index: "",
+    indexError: "",
     user: "",
     userDate: "",
     userApp: "",

@@ -1,6 +1,5 @@
 import { Button, Flex } from "@radix-ui/themes";
 import {
-  CreateSearchField,
   CreateSearchFieldOrder,
   IParametersQuery,
   IPresentationTable,
@@ -14,7 +13,6 @@ import {
 import { IRowDataError } from "./Types";
 import { TextFormat, JustificationText, SortColumn } from "ux-ui";
 import { useState, useEffect } from "react";
-
 import {
   getParameter,
   IParameter,
@@ -37,25 +35,35 @@ interface ITablaProps {
 
 const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameter, setParameter] = useState<IParameter>({} as IParameter);
-
+  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
   const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
     size: "7",
-    index: "0",
+    indexError: "0",
     message: "",
   });
 
+  /**
+   * Funcion para inicializar el token
+   *
+   */
   useEffect(() => {
-    const fetchToken = async () => {
+    const initializeStructure = async () => {
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
 
-      const parameterTemp: IParameter = await getParameter("GS_001_00", "200");
-      setParameter(parameterTemp);
+      const parameter: IParameter = await getParameter("GS_001_00", "200");
+      setParameterUrl(parameter);
+
+      //TODO para implementar la consulta de CDU para errores.
+      /*
+      const cdu:any = await getCDU("GS_001_00", "ER_001_00");
+      setCDI(cdu);
+      */
     };
 
-    fetchToken();
+    initializeStructure();
   }, []);
+
   /**
    * Presentación de los items de la tabla.
    */
@@ -66,12 +74,13 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     skeletonWidth: "96vw",
     items: [
       {
-        name: "index",
+        name: "indexError",
         title: "Indice",
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
         order: SortColumn.desc,
+        orderNameColumn: "index_error",
       },
       {
         name: "message",
@@ -128,10 +137,9 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
 
   return (
     <Flex direction="column" gap="3">
-      {token?.access_token && parameter?.valueText01 && (
-        <>
+      {token?.access_token && parameterUrl?.valueText01 && (
           <CreateSearchFieldOrder
-            apiUrl={parameter?.valueText01 + "/paginated"}
+            apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}
             presentationTable={presentationItems}
             token={token.access_token}
@@ -139,7 +147,6 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
               return await refreshToken();
             }}
           />
-        </>
       )}
     </Flex>
   );

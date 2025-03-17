@@ -14,7 +14,7 @@ import { STORE } from "../Constants";
  * Definicion de los tipos de dato que se van a manejar los parametros.
  */
 export interface IParameter {
-  index: string;
+  indexParameter: string;
   encryt: boolean;
   valueText01: string;
   valueText02: string;
@@ -81,7 +81,7 @@ const getParameter = async (indexModule: string, indexParameter: string) => {
   let rootData = {};
   await getParameters(indexModule).then((data) => {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].index == indexParameter) {
+      if (data[i].indexParameter == indexParameter) {
         rootData = data[i];
       }
     }

@@ -24,7 +24,7 @@ import lombok.Data;
 public abstract class UuidUserDateApp {
 
     @Column(name = "uuid", length = 36, updatable = false)
-    private UUID uuid;
+    private String uuid;
 
     @Column(length = 128, nullable = false)
     private String user;
@@ -36,14 +36,6 @@ public abstract class UuidUserDateApp {
     @Column(name = "user_app", nullable = false, length = 256)
     private String userApp;
 
-    /**
-     * Método que retorna el UUID.
-     * 
-     * @param uuid
-     */
-    public void setUuid(String uuid) {
-        this.uuid = UUID.fromString(uuid);
-    }
 
     /**
      * Método que se ejecuta antes de insertar un registro en la base de datos.
@@ -51,7 +43,7 @@ public abstract class UuidUserDateApp {
     @PrePersist
     protected void onCreate() {
         if (uuid == null) {
-            uuid = UUID.randomUUID();
+            uuid = UUID.randomUUID().toString();
         }
         if (user == null) {
             user = "<anonimo>";

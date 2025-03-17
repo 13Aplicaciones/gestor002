@@ -38,8 +38,8 @@ public class Menu extends UserDateApp {
     @Column(nullable = false, length = 8)
     private String type; // Type de menú (ej. principal, secundario)
 
-    @Column(length = 32, nullable = false, unique = true)
-    private String index; // Índice único del menú
+    @Column(name="index_menu", length = 32, nullable = false, unique = true)
+    private String indexMenu; // Índice único del menú
 
     @Column(length = 128, nullable = false)
     private String name; // Name del menú

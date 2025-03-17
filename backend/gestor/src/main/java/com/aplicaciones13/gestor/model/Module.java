@@ -30,8 +30,8 @@ public class Module extends UuidUserDateApp {
     @Column(name = "id_module")
     private Long idModule;
 
-    @Column(length = 32, nullable = false, unique = true)
-    private String index;
+    @Column(name = "index_module", length = 32, nullable = false, unique = true)
+    private String indexModule;
 
     @Column(length = 128, nullable = false)
     private String name;

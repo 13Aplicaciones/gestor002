@@ -45,7 +45,7 @@ public class StaticsService {
     @Cacheable(value = "StaticsService", key = "#indexMenu")
     public List<StaticResponse> executeDynamicQuery(String indexMenu) {
 
-        Optional<Menu> menu = menuService.findByIndex(indexMenu);
+        Optional<Menu> menu = menuService.findByIndexMenu(indexMenu);
 
         if (!menu.isPresent()) {
             return new ArrayList<StaticResponse>();

@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.UUID;
-
 import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 
 /**
@@ -20,10 +18,10 @@ import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 public class ErrorResponse extends UserDateAppResponse {
     
     @Schema(description = "UUID del registro para búsquedas", example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
-    private UUID uuid;
+    private String uuid;
 
     @Schema(description = "Index de error", example = "ERR001")
-    private String index;
+    private String indexError;
 
     @Schema(description = "Message de error", example = "Error al procesar la solicitud")
     private String message;

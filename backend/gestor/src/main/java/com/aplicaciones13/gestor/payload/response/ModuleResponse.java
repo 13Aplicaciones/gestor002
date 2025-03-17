@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.UUID;
-
 import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 
 /**
@@ -20,7 +18,7 @@ import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 public class ModuleResponse extends UserDateAppResponse {
 
     @Schema(description = "UUID del registro para busquedas", example = "550e8400-e29b-41d4-a716-446655440000")
-    private UUID uuid;
+    private String uuid;
 
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
     private String index;

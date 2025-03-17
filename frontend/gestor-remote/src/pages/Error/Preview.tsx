@@ -24,12 +24,12 @@ const VistaPrevia = ({ index }: { index: string }) => {
    * Cargar la vista previa del registro.
    */
   useEffect(() => {
-    const cargarVistaPrevia = async (index: string) => {
+    const cargarVistaPrevia = async (indexError: string) => {
       const tokenTemp: ITokenRoot = await getToken();
       const parameterTemp: IParameter = await getParameter("GS_001_00", "200");
 
       fetchData({
-        url: parameterTemp?.valueText01 + "/index=" + index,
+        url: parameterTemp?.valueText01 + "/index=" + indexError,
         methodRest: MethodREST.GET,
         typeBody: TypeBody.NONE,
         bodyParameter: null,
@@ -73,7 +73,7 @@ const VistaPrevia = ({ index }: { index: string }) => {
           <DataList.Item>
             <DataList.Label minWidth="88px">Index</DataList.Label>
             <DataList.Value>
-              <span dangerouslySetInnerHTML={{ __html: row?.index || "" }} />
+              <span dangerouslySetInnerHTML={{ __html: row?.indexError || "" }} />
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>

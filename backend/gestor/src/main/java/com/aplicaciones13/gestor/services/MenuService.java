@@ -43,7 +43,7 @@ public class MenuService {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Menu no encontrado"));
         menu.setType(request.getType());
-        menu.setIndex(request.getIndex());
+        menu.setIndexMenu(request.getIndexMenu());
         menu.setName(request.getName());
         menu.setTaskFlow(request.getTaskFlow());
         menu.setStatus(request.getStatus());
@@ -62,7 +62,7 @@ public class MenuService {
     private Menu toEntity(MenuRequest request) {
         Menu menu = new Menu();
         menu.setType(request.getType());
-        menu.setIndex(request.getIndex());
+        menu.setIndexMenu(request.getIndexMenu());
         menu.setName(request.getName());
         menu.setTaskFlow(request.getTaskFlow());
         menu.setStatus(request.getStatus());
@@ -77,7 +77,7 @@ public class MenuService {
         MenuResponse response = new MenuResponse();
         response.setIdMenu(menu.getIdMenu());
         response.setType(menu.getType());
-        response.setIndex(menu.getIndex());
+        response.setIndexMenu(menu.getIndexMenu());
         response.setName(menu.getName());
         response.setTaskFlow(menu.getTaskFlow());
         response.setStatus(menu.getStatus());

@@ -17,7 +17,7 @@ import com.aplicaciones13.orquestador.payload.response.MenuResponse;
 public interface MenuMapper {
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);
     
-    @Mapping(target = "index", source = "menuIndex")
+    @Mapping(target = "indexMenu", source = "menuIndex")
     @Mapping(target = "name", source = "menuName")
     @Mapping(target = "type", source = "menuType")
     @Mapping(target = "taskFlow", source = "menuTaskFlow")

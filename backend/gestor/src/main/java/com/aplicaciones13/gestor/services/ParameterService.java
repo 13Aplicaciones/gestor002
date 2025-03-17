@@ -24,8 +24,8 @@ public class ParameterService {
     @Autowired
     private ParameterRepository parameterRepository;
 
-    public ParameterResponse findByIndex(String index) {
-        return parameterRepository.findByIndex(index)
+    public ParameterResponse findByIndexParameter(String index) {
+        return parameterRepository.findByIndexParameter(index)
                 .map(ParameterMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
     }
@@ -33,19 +33,19 @@ public class ParameterService {
     @InvokeUser
     public ParameterResponse create(ParameterRequest parameterRequest) {
         Parameter parameter = ParameterMapper.INSTANCE.toEntity(parameterRequest);
-        validateUniqueIndex(parameter.getIndex());
+        validateUniqueIndexParameter(parameter.getIndexParameter());
         parameter = parameterRepository.saveAndFlush(parameter);
         return ParameterMapper.INSTANCE.toResponse(parameter);
     }
 
     @InvokeUser
     public ParameterResponse update(String index, ParameterRequest parameterRequest) {
-        validateUniqueIndex(parameterRequest.getIndex());
+        validateUniqueIndexParameter(parameterRequest.getIndexParameter());
 
-        Parameter parameter = parameterRepository.findByIndex(index)
+        Parameter parameter = parameterRepository.findByIndexParameter(index)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
 
-        parameter.setIndex(parameterRequest.getIndex());
+        parameter.setIndexParameter(parameterRequest.getIndexParameter());
         parameter.setEncrypted(parameterRequest.getEncrypted());
         parameter.setName(parameterRequest.getName());
         parameter.setDescription(parameterRequest.getDescription());
@@ -63,14 +63,14 @@ public class ParameterService {
     }
 
     public void delete(String index) {
-        Parameter parameter = parameterRepository.findByIndex(index)
+        Parameter parameter = parameterRepository.findByIndexParameter(index)
                 .orElseThrow(() -> new ResourceHttpStatusException("Parameter no encontrado", HttpStatus.NOT_FOUND));
 
         parameterRepository.delete(parameter);
     }
 
-    private void validateUniqueIndex(String index) {
-        if (parameterRepository.findByIndex(index).isPresent()) {
+    private void validateUniqueIndexParameter(String index) {
+        if (parameterRepository.findByIndexParameter(index).isPresent()) {
             throw new DataIntegrityViolationException("El index ya existe");
         }
     }

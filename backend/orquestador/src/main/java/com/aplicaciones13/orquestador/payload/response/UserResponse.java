@@ -2,7 +2,6 @@ package com.aplicaciones13.orquestador.payload.response;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -23,7 +22,7 @@ public class UserResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "UUID del registro", example = "550e8400-e29b-41d4-a716-446655440000")
-    private UUID uuid;
+    private String uuid;
 
     @Schema(description = "Nick del user", example = "user123")
     private String nick;

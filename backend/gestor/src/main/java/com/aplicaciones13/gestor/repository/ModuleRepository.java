@@ -21,7 +21,7 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      * @param uuid
      * @return
      */
-    @Query("SELECT m FROM Module m WHERE (:index IS NULL OR upper(m.index) LIKE %:index%) AND (:name IS NULL OR upper(m.name) LIKE %:name%) AND (:status IS NULL OR upper(m.status) LIKE %:status%)")
+    @Query("SELECT m FROM Module m WHERE (:index IS NULL OR upper(m.indexModule) LIKE %:index%) AND (:name IS NULL OR upper(m.name) LIKE %:name%) AND (:status IS NULL OR upper(m.status) LIKE %:status%)")
     Page<Module> paginado(String index, String name, String status, Pageable pageable);
 
 
@@ -51,5 +51,5 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      * @return
      */
     @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE m.index = ?1 and m.status != 'X'", nativeQuery = true)
-    Optional<Module> findByIndex(String index);
+    Optional<Module> findByIndexModule(String index);
 }

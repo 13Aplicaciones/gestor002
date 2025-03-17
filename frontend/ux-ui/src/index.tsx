@@ -13,7 +13,9 @@
 export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant, mapStatusToAlert } from './components/IconosColoresAlerts';
 export { Alerts, BandPresentation, Direction, TextFormat, JustificationText, SortColumn, StatusEdit } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
-export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
+//export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
+export { DialogForm, DialogAlerts } from './components/dialog/DialogState';
+
 export { GridDashboard } from './components/grid/GridDynamic';
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';
 export { getIconComponent } from './components/icon/IconDynamic';

@@ -34,7 +34,7 @@ public class MenuRequest extends AppRequest {
     @NotNull
     @Size(max = 32)
     @Schema(description = "Índice del menú", example = "menu_1")
-    private String index;
+    private String indexMenu;
 
     @NotNull
     @Size(max = 128)

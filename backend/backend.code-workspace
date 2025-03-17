@@ -7,10 +7,10 @@
 
 	"settings": {
 		"files.exclude": {
-			"aplicaciones13": true,
+			"aplicaciones13": false,
 			"gestor": false,
 			"orquestador": false,
-			"tools": true,
+			"tools": false,
 			"**/target": true,
 			"**/.mvn": true,
 			".vscode": true,

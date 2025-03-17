@@ -53,7 +53,7 @@ public class UserService {
      * 
      * @param nick
      */
-    public void validateUniqueIndex(String nick) {
+    public void validateUniqueNick(String nick) {
         if (userRepository.findByNick(nick).isPresent()) {
             throw new DataIntegrityViolationException("El nick ya existe");
         }
@@ -98,7 +98,7 @@ public class UserService {
     @InvokeUser
     public UserResponse create(UserRequest userRequest) {
         User user = UserMapper.INSTANCE.toEntity(userRequest);
-        validateUniqueIndex(user.getNick());
+        validateUniqueNick(user.getNick());
         user = userRepository.saveAndFlush(user);
         return UserMapper.INSTANCE.toResponse(user);
     }

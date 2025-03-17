@@ -28,8 +28,8 @@ public class Error extends UuidUserDateApp {
     @Column(name = "id_error")
     private Long idError;
     
-    @Column(length = 128, nullable = false)
-    private String index;
+    @Column(name = "index_error",length = 128, nullable = false)
+    private String indexError;
 
     @Column(length = 1024, nullable = false)
     private String message;
