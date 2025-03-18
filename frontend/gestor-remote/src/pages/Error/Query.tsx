@@ -50,7 +50,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     const initializeStructure = async () => {
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
-
+      
       const parameter: IParameter = await getParameter("GS_001_00", "200");
       setParameterUrl(parameter);
 
@@ -59,6 +59,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       const cdu:any = await getCDU("GS_001_00", "ER_001_00");
       setCDI(cdu);
       */
+      setParametersQuery({} as IParametersQuery);
     };
 
     initializeStructure();
@@ -107,7 +108,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
         name: "userDate",
         title: "Fecha",
         justification: JustificationText.start,
-        format: TextFormat.none,
+        format: TextFormat.dateHour,
         width: "20vw",
         order: SortColumn.desc,
         orderNameColumn: "user_date",

@@ -15,6 +15,7 @@ export { Alerts, BandPresentation, Direction, TextFormat, JustificationText, Sor
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 //export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { DialogForm, DialogAlerts } from './components/dialog/DialogState';
+export { DialogDelete } from './components/crud/DialogDelete';
 
 export { GridDashboard } from './components/grid/GridDynamic';
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';

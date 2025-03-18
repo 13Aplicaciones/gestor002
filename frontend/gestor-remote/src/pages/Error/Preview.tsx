@@ -1,8 +1,7 @@
-import { Alerts } from "ux-ui";
 import { Badge, DataList, Flex } from "@radix-ui/themes";
-import { BannerInformation } from "ux-ui";
+import { Alerts, BannerInformation } from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
-import { fetchData } from "api-fetch";
+import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import {
   getParameter,
   IParameter,
@@ -12,7 +11,6 @@ import {
   ITokenRoot,
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
-import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 
 const VistaPrevia = ({ index }: { index: string }) => {

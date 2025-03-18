@@ -17,7 +17,7 @@ export default defineConfig({
       fileName: (format) => `ux-ui.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom' ],
       output: {
         globals: {
           react: 'React',

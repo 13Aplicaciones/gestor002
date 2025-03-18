@@ -19,7 +19,7 @@ interface IRowDataError {
 const createIRowDataError = (): IRowDataError => {
   return {
     message: "",
-    description: "description",
+    description: "",
     uuid: "",
     indexError: "",
     user: "",

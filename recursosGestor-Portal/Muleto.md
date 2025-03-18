@@ -327,3 +327,18 @@ update GS_002_01.error
 set uuid = uuid ()
 
 ALTER TABLE GS_002_01.error MODIFY COLUMN uuid varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'UUID para indice unico de consulta';
+
+
+npm remove ux-ui
+
+npm install ../ux-ui
+
+npm link ../ux-ui/node_modules/react
+
+  
+
+npm remove api-fetch
+
+npm install ../api-fetch
+
+npm link ../api-fetch/node_modules/react

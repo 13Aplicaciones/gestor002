@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Alerts,
   TextFormat,
   SortColumn,
   JustificationText,
+  FormatMaskISO,
 } from "../../ConstantsPresentation";
 import { blackA } from "@radix-ui/colors";
 import {
@@ -25,6 +25,10 @@ import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
 import { ReactNode, useEffect, useState } from "react";
 import { IParametersQuery } from "./TableSearch";
+import {
+  formatDateMask,
+  formatDateSocialNetwork,
+} from "../../utils/FormatMask";
 
 /**
  * Componente de tabla paginada.
@@ -115,7 +119,20 @@ const Cell = ({
         case TextFormat.decimal2:
           return response.toFixed(2);
         case TextFormat.date:
-          return new Date(response).toLocaleDateString();
+          return formatDateMask(response, FormatMaskISO.date);
+        case TextFormat.dateHour:
+          return formatDateMask(response, FormatMaskISO.dateHour);
+        case TextFormat.dateHourZone:
+          return formatDateMask(response, FormatMaskISO.dateHourZone);
+        case TextFormat.dateHourZoneMiliseconds:
+          return formatDateMask(
+            response,
+            FormatMaskISO.dateHourZoneMiliseconds
+          );
+        case TextFormat.hour:
+          return formatDateMask(response, FormatMaskISO.hour);
+        case TextFormat.dateSocialNetwork:
+          return formatDateSocialNetwork(response);
         case TextFormat.action:
           return response;
         //TODO: Agregar mas formats de text.

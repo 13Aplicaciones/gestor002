@@ -22,6 +22,7 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "date-fns": "^4.1.0",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
@@ -48,6 +49,7 @@
     "package.json"
   ],
   "dependencies": {
-    "api-fetch": "file:../api-fetch"
+    "api-fetch": "file:../api-fetch",
+    "date-fns": "^4.1.0"
   }
 }

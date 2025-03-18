@@ -1,16 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertColor, useToastContext } from "ux-ui";
-import { Alerts, BandPresentation, Direction, StatusEdit } from "ux-ui";
-import { AreaField, InputField } from "ux-ui";
-import { BannerInformation, InformationPanelRegistration } from "ux-ui";
+import {
+  Alerts,
+  AreaField,
+  BandPresentation,
+  BannerInformation,
+  DialogDelete,
+  Direction,
+  FooterForm,
+  FormState,
+  InformationPanelRegistration,
+  InputField,
+  StatusEdit,
+  useToastContext,
+} from "ux-ui";
 import { Button, Flex } from "@radix-ui/themes";
-import { DialogAlerts } from "ux-ui";
-import { fetchData, IFetchData } from "api-fetch";
-import { FooterForm, FormState } from "ux-ui";
-import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken} from "orchestrator_remote/service/Tokens";
+import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { IRowDataError } from "./Types";
-import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,7 +35,9 @@ import * as yup from "yup";
  *
  * @author @omargo33
  *
- * @param param0
+ * @param status Estado del formulario
+ * @param row Fila de datos a editar
+ * @param onAtras Función para regresar a la vista anterior
  * @returns
  */
 const ErrorEdit = ({
@@ -33,20 +49,20 @@ const ErrorEdit = ({
   row?: IRowDataError;
   onAtras?: () => void;
 }) => {
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
-  const { showToast } = useToastContext();
-  const [stateFormulario, setFormStateulario] = useState<StatusEdit>(status || StatusEdit.create);
-  const [messageFormulario, setMessageForm] = useState("");
-  const [uuid, setUuid] = useState(row ? row.uuid : "");
-  const [loading, setLoading] = useState(false);
-  const [dialogStatus, setDialogStatus] = useState(false);
   const [dialogRefresh, setDialogRefresh] = useState(false);
+  const [dialogStatus, setDialogStatus] = useState(false);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [loading, setLoading] = useState(false);
+  const [messageFormulario, setMessageForm] = useState("");
+  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
+  const [uuid, setUuid] = useState(row ? row.uuid : "");
+  const { showToast } = useToastContext();
 
   /**
    * Esquema de validación de formulario
-   * 
-   */ 
+   *
+   */
   const schema = yup.object({
     indexError: yup
       .string()
@@ -82,8 +98,8 @@ const ErrorEdit = ({
 
   /**
    * Función para accionar el formulario
-   * 
-   * @param data 
+   *
+   * @param data
    */
   const accionar = async (data: any) => {
     setLoading(true);
@@ -92,7 +108,7 @@ const ErrorEdit = ({
     data = { ...data, usuarioPrograma: nombreAplicativo };
 
     setTimeout(async () => {
-      if (stateFormulario === StatusEdit.create) {
+      if (formStatus === StatusEdit.create) {
         fetchData({
           url: parameterUrl?.valueText01,
           methodRest: MethodREST.POST,
@@ -103,14 +119,14 @@ const ErrorEdit = ({
         })
           .then((response) => {
             analizarAccionar(response);
-            setFormStateulario(StatusEdit.edit);
+            setFormStatus(StatusEdit.edit);
           })
           .catch((error) => {
             setMessageForm("Error al crear el registro: " + error);
             return null;
           });
       }
-      if (stateFormulario === StatusEdit.edit) {
+      if (formStatus === StatusEdit.edit) {
         fetchData({
           url: parameterUrl?.valueText01 + "/" + uuid,
           methodRest: MethodREST.PUT,
@@ -127,7 +143,7 @@ const ErrorEdit = ({
             return null;
           });
       }
-      if (stateFormulario === StatusEdit.block) {
+      if (formStatus === StatusEdit.block) {
         fetchData({
           url: parameterUrl?.valueText01 + "/" + uuid,
           methodRest: MethodREST.DELETE,
@@ -138,7 +154,7 @@ const ErrorEdit = ({
         })
           .then((response) => {
             analizarAccionar(response);
-            setFormStateulario(StatusEdit.find);
+            setFormStatus(StatusEdit.find);
             setDialogStatus(false);
             onAtras();
           })
@@ -153,9 +169,9 @@ const ErrorEdit = ({
 
   /**
    * Función para analizar las respuestrra de accionar
-   * 
-   * @param response 
-   * @returns 
+   *
+   * @param response
+   * @returns
    */
   const analizarAccionar = (response: IFetchData) => {
     if (response.error) {
@@ -191,7 +207,7 @@ const ErrorEdit = ({
    * Función para mostrar el popUp de borrar
    */
   const showPopUpDelete = () => {
-    setFormStateulario(StatusEdit.block);
+    setFormStatus(StatusEdit.block);
     setDialogStatus(true);
   };
 
@@ -217,21 +233,38 @@ const ErrorEdit = ({
     setDialogRefresh((prev) => !prev); // Forzar la actualización cuando cambie dialogStatus
   }, [dialogStatus]);
 
+  const handleOnDelete = () => {
+    accionar(null);
+  };
+
+  const handleOnCancelDelete = () => {
+    setFormStatus(StatusEdit.edit);
+    setDialogStatus(false);
+  };
+
   return (
     <>
       <BannerInformation message={messageFormulario} alert={Alerts.error} />
       <Flex direction="row" gap="3" align="center">
-        <FormState statusEdit={stateFormulario} />
+        <FormState statusEdit={formStatus} />
         <InformationPanelRegistration row={row} />
       </Flex>
-     
+
+      <DialogDelete
+        dialogRefresh={dialogRefresh}
+        dialogStatus={dialogStatus}
+        loadingOnDelete={loading}
+        onDelete={handleOnDelete}
+        onCancel={handleOnCancelDelete}
+      />
+
       <form onSubmit={handleSubmit(accionar)}>
         <InputField
           title="Indice"
           columns={BandPresentation.column_3}
           placeholder="ERR001"
           directionLabel={Direction.horizontal}
-          register={register("indexError", { required: true })}
+          register={register("indexError")}
           messageError={errors.indexError?.message}
         />
         <AreaField
@@ -240,7 +273,7 @@ const ErrorEdit = ({
           rows={3}
           placeholder="Error al procesar la solicitud"
           directionLabel={Direction.horizontal}
-          register={register("message", { required: true })}
+          register={register("message")}
           messageError={errors.message?.message}
         />
         <AreaField
@@ -262,7 +295,7 @@ const ErrorEdit = ({
           <Button
             type="button"
             variant="surface"
-            disabled={stateFormulario === StatusEdit.create}
+            disabled={formStatus === StatusEdit.create}
             onClick={() => {
               showPopUpDelete();
             }}

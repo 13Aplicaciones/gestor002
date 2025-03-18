@@ -8,18 +8,36 @@ import { useState } from "react";
 import { VistaPrevia } from "./Preview";
 import ErrorEdit from "./Edit";
 
-//TODO tiene el valor de la estructura para cambiar los valores de permisos
+/**
+ * Página de errores del sistema.
+ * 
+ * @author @omargo33
+ * 
+ * @param structure Estructura de la pagina de errores del sistema.
+ * @returns 
+ */
 const Error = ({ structure }: { structure?: OriginProps }) => {
   const [status, setStatus] = useState(StatusEdit.find);
   const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>(
     createIRowDataError()
   );
 
+  /**
+   * Funcion para editar una fila.
+   * 
+   * @param row 
+   */
   const onEditarRow = (row: IRowDataError) => {
     setStatus(StatusEdit.edit);
     setRowSelecionado(row);
+    console.log("estructra", structure);
   };
 
+  /**
+   * Funcion para ver una fila.
+   * 
+   * @param row 
+   */
   const onSeeRow = (row: IRowDataError) => {
     setStatus(StatusEdit.see);
     setRowSelecionado(row);
@@ -28,13 +46,11 @@ const Error = ({ structure }: { structure?: OriginProps }) => {
   return (
     <Flex direction="column" gap="2" p="2">
       <Separator orientation="horizontal" size="4" />
-
       <Flex maxWidth="60vw">
         <Heading size="4" wrap="pretty">
           {status}
         </Heading>
       </Flex>
-
       {status == StatusEdit.find && (
         <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
       )}

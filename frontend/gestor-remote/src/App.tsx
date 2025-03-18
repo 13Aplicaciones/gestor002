@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { addToken, getToken} from "orchestrator_remote/service/Tokens";
+import { addToken } from "orchestrator_remote/service/Tokens";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { I18nextProvider } from "react-i18next";

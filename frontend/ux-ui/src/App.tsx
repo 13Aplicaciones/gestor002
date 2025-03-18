@@ -6,12 +6,12 @@ import "@radix-ui/themes/tokens/colors/teal.css";
 import "@radix-ui/themes/utilities.css";
 import { Button, Flex, Heading, Separator } from '@radix-ui/themes';
 import { MiBaners } from "./demos/Banners";
-import { MiDialogos } from "./demos/Dialogos";
+// import { MiDialogos } from "./demos/Dialogos";
 import { miTablaDemo } from "./demos/Tablas";
 import { MiToast } from "./demos/Toast";
 import { useTranslation } from "react-i18next";
 import ConsolaPantalla from "./demos/Consola";
-import miTablaApiDemo from "./demos/TablaApi";
+//import miTablaApiDemo from "./demos/TablaApi";
 import runApi from "./demos/Api";
 
 /**
@@ -35,11 +35,11 @@ const App = () => {
       <Heading>{t('actions.addDescription', {description:"jajjaja"})}</Heading>
       <Heading>{t('actions.edit')}</Heading>
       <Heading>Tabla con api</Heading>
-      {miTablaApiDemo()}
+      {/*miTablaApiDemo()*/}
 
       <Separator size="4" orientation="horizontal" />
       <Heading>Cajas de Dialogo</Heading>
-      {MiDialogos()}
+      {/*MiDialogos()*/}
 
       <Separator size="4" orientation="horizontal" />
       <Heading>Banners de Información</Heading>
