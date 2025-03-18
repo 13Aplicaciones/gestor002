@@ -157,6 +157,7 @@ npm install @originjs/vite-plugin-federation --save-dev
 npm install @radix-ui/themes
 npm install i18next
 npm install react-i18next
+npm install date-fns
 rm -rf node_modules package-lock.json
 npm install
 npm run dev
@@ -165,6 +166,21 @@ npm run dev
 ## Estructura base
 La estructura base [[ArquitecturaReact]]
 
+
+# Errores reportados 🚩
+---
+## hook y toast en la consola 🐞
+Si el sistema tiene problemas de hook y toast en la consola que afectan hook, y el error se debe a un problema con los useState, el problema esta dado por la falta de un link a los API.
+
+```bash
+npm remove ux-ui
+npm install ../ux-ui
+npm link ../ux-ui/node_modules/react
+
+npm remove api-fetch
+npm install ../api-fetch
+npm link ../api-fetch/node_modules/react
+```
 ---
 # Spring
 
@@ -182,6 +198,8 @@ spring.config.import=optional:configserver:${CONFIG_SERVER_URL:http://localhost:
 export COOFING_CLIENT_SECRET=a4qENAfxmaapoMzXwAiduBZuLPcF1Pl7
 
 export COOFING_URL_KEYCLOAK=http://localhost:8080
+
+
 
 
 
@@ -329,16 +347,4 @@ set uuid = uuid ()
 ALTER TABLE GS_002_01.error MODIFY COLUMN uuid varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'UUID para indice unico de consulta';
 
 
-npm remove ux-ui
 
-npm install ../ux-ui
-
-npm link ../ux-ui/node_modules/react
-
-  
-
-npm remove api-fetch
-
-npm install ../api-fetch
-
-npm link ../api-fetch/node_modules/react
