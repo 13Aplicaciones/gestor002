@@ -124,7 +124,7 @@ public class ErrorController {
             @RequestParam(required = false) String message,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "index,desc") String[] sort
+            @RequestParam(defaultValue = "index_error,desc") String[] sort
     ) {
         Page<Error> pageErrors = errorService.findByIndexErrorAndMessage(
                 index, message, ControllerTools.generateOrders(page, size, sort));

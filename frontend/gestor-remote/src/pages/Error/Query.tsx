@@ -17,6 +17,7 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
+import { QueryForm } from "./QueryForm";
 
 /**
  * Propiedades de la tabla de errores.
@@ -35,12 +36,17 @@ interface ITablaProps {
 
 const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "7",
-    indexError: "0",
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
+  /*const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
+    size: "3",
+    indexError: "",
     message: "",
-  });
+  });*/
+
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({} as IParametersQuery);
+
 
   /**
    * Funcion para inicializar el token
@@ -50,16 +56,11 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     const initializeStructure = async () => {
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
-      
+
       const parameter: IParameter = await getParameter("GS_001_00", "200");
       setParameterUrl(parameter);
 
-      //TODO para implementar la consulta de CDU para errores.
-      /*
-      const cdu:any = await getCDU("GS_001_00", "ER_001_00");
-      setCDI(cdu);
-      */
-      setParametersQuery({} as IParametersQuery);
+      //setParametersQuery({} as IParametersQuery);
     };
 
     initializeStructure();
@@ -69,7 +70,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
    * Presentación de los items de la tabla.
    */
   const presentationItems: IPresentationTable = {
-    banding: false,
+    banding: true,
     headers: true,
     numberLinea: false,
     skeletonWidth: "96vw",
@@ -108,7 +109,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
         name: "userDate",
         title: "Fecha",
         justification: JustificationText.start,
-        format: TextFormat.dateHour,
+        format: TextFormat.dateSocialNetworkDinamic,
         width: "20vw",
         order: SortColumn.desc,
         orderNameColumn: "user_date",
@@ -136,9 +137,20 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     ],
   };
 
+  const handleFormFind = (data: any) => {
+    const p: IParametersQuery = {
+      size: data.size,
+      indexError: data.indexError,
+      message: data.message,
+    };
+    setParametersQuery(p);
+  };
+
   return (
     <Flex direction="column" gap="3">
       {token?.access_token && parameterUrl?.valueText01 && (
+        <>
+          <QueryForm onFind={handleFormFind} />
           <CreateSearchFieldOrder
             apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}
@@ -148,6 +160,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
               return await refreshToken();
             }}
           />
+        </>
       )}
     </Flex>
   );

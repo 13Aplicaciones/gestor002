@@ -46,6 +46,7 @@ const enum TextFormat {
   dateHourZone = "dateHourZone", // Formato de fecha y hora con zona horaria
   dateHourZoneMiliseconds = "dateHourZoneMiliseconds", // Formato de fecha y hora con zona horaria y milisegundos
   dateSocialNetwork = "dateSocialNetwork", // Formato de fecha para redes sociales
+  dateSocialNetworkDinamic = "dateSocialNetworkDinamic", // Formato de fecha para redes sociales dinámico
   decimal2 = "##.##", // Formato de decimal con dos decimales
   hour = "hour", // Formato de hora
   none = "none", // Sin formato

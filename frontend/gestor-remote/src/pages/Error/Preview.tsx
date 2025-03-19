@@ -1,5 +1,5 @@
 import { Badge, DataList, Flex } from "@radix-ui/themes";
-import { Alerts, BannerInformation } from "ux-ui";
+import { Alerts, BannerInformation, formatDateMask, FormatMaskISO } from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import {
@@ -94,7 +94,7 @@ const VistaPrevia = ({ index }: { index: string }) => {
           </DataList.Item>
           <DataList.Item>
             <DataList.Label minWidth="88px">Fecha</DataList.Label>
-            <DataList.Value>{row?.userDate || ""}</DataList.Value>
+            <DataList.Value>{formatDateMask(row?.userDate|| "", FormatMaskISO.dateHour)}</DataList.Value>
           </DataList.Item>
           <DataList.Item>
             <DataList.Label minWidth="88px">Aplicativo</DataList.Label>

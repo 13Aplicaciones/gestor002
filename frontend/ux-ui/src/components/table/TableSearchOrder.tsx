@@ -75,22 +75,14 @@ const CreateSearchFieldOrder = ({
   token?: string;
   getToken?: (() => Promise<string>) | undefined;
 }) => {
-  //Presentacion de los items de la tabla.
-  const [t] = useTranslation("global_ux");
   const { showToast } = useToastContext();
+
+  const [t] = useTranslation("global_ux");
   const [loading, setLoading] = useState(false);
-
-  //Variables de estado para data, parametros de consulta, presentacion y ordenamiento.
   const [data, setData] = useState([]);
-  const [parametersQuery, setParametersQuery] =
-    useState<IParametersQuery>(parametersToConsult);
-  const [presentation, setPresentation] =
-    useState<IPresentationTable>(presentationTable);
-  const [sorts, setSorts] = useState<IParametersQuery>(
-    getSorts(presentationTable)
-  );
-
-  //Variables de estado para la paginacion
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>(parametersToConsult);
+  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [sorts, setSorts] = useState<IParametersQuery>(getSorts(presentationTable));
   const [currentPage, setCurrentPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -137,7 +129,19 @@ const CreateSearchFieldOrder = ({
     setTotalItems(0);
 
     const sortsAnility = createSorts();
-    const parametersComplete = { ...parametersQuery, ...sortsAnility };
+
+    const 
+
+    parametersQueryTem = Object.keys(parametersQuery)
+      .sort()
+      .reduce((sortedQuery, key) => {
+      sortedQuery[key] = parametersQuery[key];
+      return sortedQuery;
+      }, {} as IParametersQuery);
+
+    const parametersComplete = { ...parametersQueryTem, ...sortsAnility };
+
+    console.info("URL ejecutar", apiUrl, JSON.stringify(parametersComplete));
 
     fetchData({
       url: apiUrl,
@@ -188,9 +192,9 @@ const CreateSearchFieldOrder = ({
 
     /**
      * Funcion para crear los parametros de ordenamiento en formato de URL y sort para la API.
-     * 
+     *
      * Se toma en cuenta la configuracion de la presentacion de la tabla. Para campos ordenados que tienen un nombre de columna diferente al nombre del campo, se toma el nombre de la columna.
-     * 
+     *
      */
     const sortsTemp = Object.keys(sorts).reduce((object, key) => {
       if (sorts[key] !== SortColumn.neutral) {
@@ -217,11 +221,12 @@ const CreateSearchFieldOrder = ({
     setLoading(true);
 
     parametersQuery.page = 0;
-    setParametersQuery(parametersQuery);
+    setParametersQuery(parametersToConsult);
     setPresentation(presentationTable);
     setSorts(getSorts(presentationTable));
     paginationPresentation();
-  }, [parametersQuery]);
+    
+  }, [parametersToConsult]);
 
   /**
    * Hook para el formulario y usa register, handleSubmit y reset.
@@ -336,7 +341,7 @@ const CreateSearchFieldOrder = ({
   return (
     <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
       {loading ? (
-        <TableSkeleton column={parametersQuery.size} />
+          <TableSkeleton column={presentationTable.items.length} />
       ) : (
         <>
           <TableConfigurable

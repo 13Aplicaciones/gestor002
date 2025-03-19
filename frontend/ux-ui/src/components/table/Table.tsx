@@ -6,7 +6,7 @@ import {
   JustificationText,
   FormatMaskISO,
 } from "../../ConstantsPresentation";
-import { blackA } from "@radix-ui/colors";
+import { blackA, whiteA } from "@radix-ui/colors";
 import {
   CaretDownIcon,
   CaretSortIcon,
@@ -20,6 +20,7 @@ import {
   Skeleton,
   Table,
   Text,
+  useThemeContext,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
@@ -28,6 +29,7 @@ import { IParametersQuery } from "./TableSearch";
 import {
   formatDateMask,
   formatDateSocialNetwork,
+  formatDateSocialNetworkDinamic,
 } from "../../utils/FormatMask";
 
 /**
@@ -133,6 +135,8 @@ const Cell = ({
           return formatDateMask(response, FormatMaskISO.hour);
         case TextFormat.dateSocialNetwork:
           return formatDateSocialNetwork(response);
+        case TextFormat.dateSocialNetworkDinamic:
+          return formatDateSocialNetworkDinamic(response);
         case TextFormat.action:
           return response;
         //TODO: Agregar mas formats de text.
@@ -304,6 +308,8 @@ const TableConfigurable = ({
   const [presentation, setPresentation] =
     useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
+  const theme  = useThemeContext();
+   
 
   /**
    * Funcion para generar el header de la tabla.
@@ -363,7 +369,7 @@ const TableConfigurable = ({
                 key={rowIndex}
                 style={{
                   backgroundColor:
-                    isBand && rowIndex % 2 !== 0 ? blackA.blackA2 : "none",
+                    isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
                 }}
               >
                 {isLineNumber && (

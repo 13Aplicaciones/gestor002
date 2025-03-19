@@ -10,9 +10,9 @@ createRoot(document.getElementById("root")!).render(
       accentColor="indigo"
       grayColor="auto"
       scaling="100%"
-      radius="full"
+      radius="medium"
       panelBackground="translucent"
-      appearance="light">
+      appearance="dark">
       <App />
     </Theme>
   </StrictMode>

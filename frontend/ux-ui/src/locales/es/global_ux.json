@@ -161,8 +161,8 @@
   "infoPanelRegistration": {
     "title": "Información del Registro",
     "usuario": "Usuario",
-    "usuarioFechaCreacion": "Creación",
-    "usuarioFecha": "Modificación",
+    "usuarioFechaModify": "Modificación",
+    "usuarioFecha": "Creación",
     "usuarioPrograma": "Programa"
   },
   "dialogDelete": {

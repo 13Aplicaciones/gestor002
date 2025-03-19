@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { alertColor, alertIcon, alertVariant } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantsPresentation";
+import { Alerts, FormatMaskISO } from "../../ConstantsPresentation";
 import {
   Badge,
   Callout,
@@ -13,6 +13,7 @@ import {
   Separator,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
+import { formatDateMask } from "../../utils/FormatMask";
 
 /**
  * Clase que representa los tipos de messages que se pueden mostrar en la aplicación.
@@ -60,10 +61,10 @@ const BannerInformation = ({
  * Muestra la información del registro.
  *
  * {
- *  "usuario":"",
- *  "usuarioFecha":"",
- *  "usuarioFechaCreacion":"",
- *  "usuarioPrograma":""
+ *  "user":"",
+ *  "userData":"",
+ *  "userModify":"",
+ *  "userApp":""
  * }
  *
  * @param row Registro a mostrar
@@ -89,7 +90,7 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
       <HoverCard.Content>
         <Flex direction="column" gap="3">
           <Heading size="2">{t("infoPanelRegistration.title")}</Heading>
-          <Separator orientation="horizontal" size="2" />
+          <Separator orientation="horizontal" size="4" />
           <DataList.Root>
             {row.user && (
               <DataList.Item>
@@ -103,12 +104,12 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                 </DataList.Value>
               </DataList.Item>
             )}
-            {row.userApp && (
+            {row.userModify && (
               <DataList.Item>
                 <DataList.Label minWidth={{ md: "80px" }}>
-                  {t("infoPanelRegistration.usuarioFechaCreacion")}
+                  {t("infoPanelRegistration.usuarioFechaModify")}
                 </DataList.Label>
-                <DataList.Value>{row.userApp}</DataList.Value>
+                {formatDateMask(row.userModify, FormatMaskISO.dateHour)}
               </DataList.Item>
             )}
             {row.userDate && (
@@ -116,7 +117,9 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                 <DataList.Label minWidth={{ md: "80px" }}>
                   {t("infoPanelRegistration.usuarioFecha")}
                 </DataList.Label>
-                <DataList.Value>{row.userDate}</DataList.Value>
+                <DataList.Value>
+                  {formatDateMask(row.userDate, FormatMaskISO.dateHour)}
+                </DataList.Value>
               </DataList.Item>
             )}
             {row.userApp && (

@@ -28,6 +28,5 @@ const createIRowDataError = (): IRowDataError => {
   };
 };
 
-
 export { createIRowDataError };
 export type { IRowDataError };
