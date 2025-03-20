@@ -44,7 +44,7 @@ import { useTranslation } from "react-i18next";
 const FormEdit = ({
   status,
   row,
-  onAtras = () => {},
+  onAtras,
 }: {
   status: StatusEdit;
   row?: IRowDataError;
@@ -79,9 +79,7 @@ const FormEdit = ({
       .string()
       .required(t("validation.required"))
       .max(1024, t("validation.max", { max: 1024 })),
-    description: yup
-      .string()
-      .max(4098, t("validation.max", { max: 4098 })),
+    description: yup.string().max(4098, t("validation.max", { max: 4098 })),
     userApp: yup.string(),
   });
 
@@ -109,7 +107,8 @@ const FormEdit = ({
    */
   const accionar = async (data: any) => {
     setLoading(true);
-    data = { ...data, userApp: t("nameApp") };
+    const nameApp = window.location.pathname.split("/").pop() + t("nameApp");
+    data = { ...data, userApp: nameApp };
 
     setTimeout(async () => {
       if (formStatus === StatusEdit.create) {
@@ -126,7 +125,7 @@ const FormEdit = ({
             setFormStatus(StatusEdit.edit);
           })
           .catch((error) => {
-            setMessageForm(t("actions.errorFetch", {error: error}));
+            setMessageForm(t("actions.errorFetch", { error: error }));
             return null;
           });
       }
@@ -143,7 +142,7 @@ const FormEdit = ({
             analizarAccionar(response);
           })
           .catch((error) => {
-            setMessageForm(t("actions.errorFetch", {error: error}));
+            setMessageForm(t("actions.errorFetch", { error: error }));
             return null;
           });
       }
@@ -160,10 +159,10 @@ const FormEdit = ({
             analizarAccionar(response);
             setFormStatus(StatusEdit.find);
             setDialogStatus(false);
-            onAtras();
+            onAtras?.();
           })
           .catch((error) => {
-            setMessageForm(t("actions.errorFetch", {error: error}));
+            setMessageForm(t("actions.errorFetch", { error: error }));
             return null;
           });
       }
@@ -233,7 +232,7 @@ const FormEdit = ({
   }, [dialogStatus]);
 
   const handleOnDelete = () => {
-    accionar(null);
+    //accionar(null);
   };
 
   /**
@@ -295,6 +294,7 @@ const FormEdit = ({
             {t("actions.save")}
           </Button>
           <Button
+            type="reset"
             variant="surface"
             disabled={formStatus === StatusEdit.create}
             onClick={() => {
