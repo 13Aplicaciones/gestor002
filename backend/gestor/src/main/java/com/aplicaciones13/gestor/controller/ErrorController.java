@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -120,14 +119,16 @@ public class ErrorController {
      */
     @GetMapping("/paginated")
     public Map<String, Object> getAllErrorsWithPagination(
-            @RequestParam(required = false) String index,
+            @RequestParam(required = false) String indexError,
             @RequestParam(required = false) String message,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "index_error,desc") String[] sort
     ) {
+
+        log.info("index: " + indexError + " message: " + message + " page: " + page + " size: " + size + " sort: " + sort);
         Page<Error> pageErrors = errorService.findByIndexErrorAndMessage(
-                index, message, ControllerTools.generateOrders(page, size, sort));
+            indexError, message, ControllerTools.generateOrders(page, size, sort));
 
         return ControllerTools.generateFooterPage(pageErrors);
     }

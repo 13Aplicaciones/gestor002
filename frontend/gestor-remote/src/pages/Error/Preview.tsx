@@ -1,5 +1,10 @@
 import { Badge, DataList, Flex } from "@radix-ui/themes";
-import { Alerts, BannerInformation, formatDateMask, FormatMaskISO } from "ux-ui";
+import {
+  Alerts,
+  BannerInformation,
+  formatDateMask,
+  FormatMaskISO,
+} from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import {
@@ -12,8 +17,16 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-const VistaPrevia = ({ index }: { index: string }) => {
+/**
+ * Función para tener una vista previa de los errores del sistema.
+ * 
+ * @param index para realizar la consulta de la vista previa. 
+ * @returns 
+ */
+const Preview = ({ index }: { index: string }) => {
+  const [t] = useTranslation("global_gestor");
   const [messageForm, setMessageForm] = useState<string>("");
   const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
   const [row, setRow] = useState<IRowDataError | null>(createIRowDataError());
@@ -69,19 +82,21 @@ const VistaPrevia = ({ index }: { index: string }) => {
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Index</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.indexError.title')}</DataList.Label>
             <DataList.Value>
-              <span dangerouslySetInnerHTML={{ __html: row?.indexError || "" }} />
+              <span
+                dangerouslySetInnerHTML={{ __html: row?.indexError || "" }}
+              />
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Mensaje</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.message.title')}</DataList.Label>
             <DataList.Value>
               <span dangerouslySetInnerHTML={{ __html: row?.message || "" }} />
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Descripcion</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.description.title')}</DataList.Label>
             <DataList.Value>
               <span
                 dangerouslySetInnerHTML={{ __html: row?.description || "" }}
@@ -89,15 +104,17 @@ const VistaPrevia = ({ index }: { index: string }) => {
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Usuario</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.user.title')}</DataList.Label>
             <DataList.Value>{row?.user || ""}</DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Fecha</DataList.Label>
-            <DataList.Value>{formatDateMask(row?.userDate|| "", FormatMaskISO.dateHour)}</DataList.Value>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.userDate.title')}</DataList.Label>
+            <DataList.Value>
+              {formatDateMask(row?.userDate || "", FormatMaskISO.dateHour)}
+            </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">Aplicativo</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.error.fields.userApp.title')}</DataList.Label>
             <DataList.Value>{row?.userApp || ""}</DataList.Value>
           </DataList.Item>
         </DataList.Root>
@@ -106,4 +123,4 @@ const VistaPrevia = ({ index }: { index: string }) => {
   );
 };
 
-export { VistaPrevia };
+export { Preview };

@@ -80,9 +80,13 @@ const CreateSearchFieldOrder = ({
   const [t] = useTranslation("global_ux");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>(parametersToConsult);
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
-  const [sorts, setSorts] = useState<IParametersQuery>(getSorts(presentationTable));
+  const [parametersQuery, setParametersQuery] =
+    useState<IParametersQuery>(parametersToConsult);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
+  const [sorts, setSorts] = useState<IParametersQuery>(
+    getSorts(presentationTable)
+  );
   const [currentPage, setCurrentPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -130,18 +134,14 @@ const CreateSearchFieldOrder = ({
 
     const sortsAnility = createSorts();
 
-    const 
-
-    parametersQueryTem = Object.keys(parametersQuery)
+    const parametersQueryTem = Object.keys(parametersQuery)
       .sort()
       .reduce((sortedQuery, key) => {
-      sortedQuery[key] = parametersQuery[key];
-      return sortedQuery;
+        sortedQuery[key] = parametersQuery[key];
+        return sortedQuery;
       }, {} as IParametersQuery);
 
     const parametersComplete = { ...parametersQueryTem, ...sortsAnility };
-
-    console.info("URL ejecutar", apiUrl, JSON.stringify(parametersComplete));
 
     fetchData({
       url: apiUrl,
@@ -225,7 +225,6 @@ const CreateSearchFieldOrder = ({
     setPresentation(presentationTable);
     setSorts(getSorts(presentationTable));
     paginationPresentation();
-    
   }, [parametersToConsult]);
 
   /**
@@ -341,7 +340,7 @@ const CreateSearchFieldOrder = ({
   return (
     <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
       {loading ? (
-          <TableSkeleton column={presentationTable.items.length} />
+        <TableSkeleton column={presentationTable.items.length} />
       ) : (
         <>
           <TableConfigurable

@@ -17,7 +17,8 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { QueryForm } from "./QueryForm";
+import { FormQuery } from "./FormQuery";
+import { useTranslation } from "react-i18next";
 
 /**
  * Propiedades de la tabla de errores.
@@ -30,23 +31,21 @@ interface ITablaProps {
 /**
  * Tabla de errores del sistema.
  *
- * @param param0
+ * @param onEditRow Funcion para editar una fila.
+ * @param onSeeRow Funcion para ver una fila.
  * @returns
  */
-
 const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
+  const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [parameterUrl, setParameterUrl] = useState<IParameter>(
     {} as IParameter
   );
-  /*const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "3",
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
+    size: "10",
     indexError: "",
     message: "",
-  });*/
-
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({} as IParametersQuery);
-
+  });
 
   /**
    * Funcion para inicializar el token
@@ -60,7 +59,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       const parameter: IParameter = await getParameter("GS_001_00", "200");
       setParameterUrl(parameter);
 
-      //setParametersQuery({} as IParametersQuery);
+      // TODO: Implementar la consulta de Indices definidos por el usuario.
     };
 
     initializeStructure();
@@ -77,7 +76,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     items: [
       {
         name: "indexError",
-        title: "Indice",
+        title: t("modules.error.fields.indexError.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
@@ -86,7 +85,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "message",
-        title: "Mensaje que hay",
+        title: t("modules.error.fields.message.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
@@ -100,14 +99,14 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "description",
-        title: "Descripción",
+        title: t("modules.error.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "40vw",
       },
       {
         name: "userDate",
-        title: "Fecha",
+        title: t("modules.error.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
         width: "20vw",
@@ -116,7 +115,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "acciones",
-        title: "Acci.",
+        title: t("modules.error.fields.acciones.abrev"),
         justification: JustificationText.center,
         format: TextFormat.action,
         width: "6vw",
@@ -137,20 +136,22 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     ],
   };
 
-  const handleFormFind = (data: any) => {
-    const p: IParametersQuery = {
-      size: data.size,
-      indexError: data.indexError,
-      message: data.message,
-    };
-    setParametersQuery(p);
+  /**
+   * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
+   * 
+   * @param data 
+   */
+  const handleFormFind = (data: IParametersQuery) => {
+    parametersQuery.indexError = data.indexError;
+    parametersQuery.message = data.message;
+    setParametersQuery({ ...parametersQuery });
   };
 
   return (
     <Flex direction="column" gap="3">
       {token?.access_token && parameterUrl?.valueText01 && (
         <>
-          <QueryForm onFind={handleFormFind} />
+          <FormQuery onFind={handleFormFind} />
           <CreateSearchFieldOrder
             apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}

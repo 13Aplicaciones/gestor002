@@ -1,7 +1,31 @@
 {
+  "nameApp": "gestor",
   "title": "Gestor de tareas",
   "icon": "GestorIcon",
   "description": "Gestor de tareas y errores",
+  "actions":{
+    "edit": "Editar",
+    "delete": "Borrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "search": "Buscar",
+    "close": "Cerrar",
+    "change": "Cambiar",
+    "clean": "Limpiar",
+    "saveSatisfactory": "Guardado ({{status}})",
+    "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
+    "errorFetch": "Error en la petición {{error}}"
+  },
+  "validation": {
+    "required": "Campo requerido",
+    "min": "El valor mínimo es {{min}}",
+    "max": "El valor máximo es {{max}}",
+    "email": "Correo electrónico no válido",
+    "password": "La contraseña debe tener al menos 8 caracteres",
+    "passwordMatch": "Las contraseñas no coinciden",
+    "error": "Error en el campo"
+  },
+  
   "modules": {
     "module": {
       "icon": "CubeIcon",
@@ -36,8 +60,45 @@
     "error": {
       "icon": "Cross1Icon",
       "title": "Errores",
+      "add": "Error",
       "description": "Información de errores del sistema y cómo se pueden solucionar",
-      "path": "Error"
+      "path": "Error",
+      "panel": {
+        "find": "Buscar errores",
+        "see": "Vista previa del error",
+        "edit": "Editar error"
+      },
+      "fields": {
+        "indexError":{
+          "title": "Indice",
+          "placeholder": "ERROR-000"
+        },
+        "message":{
+          "title": "Mensaje",
+          "placeholder": "Mensaje del error"
+        },
+        "description":{
+          "title": "Descripción",
+          "placeholder": "Descripción del error"
+        },
+        "userDate":{
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user":{
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp":{
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones":{
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acciones"
+        }
+      }
     },
     "information": {
       "icon": "InfoCircledIcon",

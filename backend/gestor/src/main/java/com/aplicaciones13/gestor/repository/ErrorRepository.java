@@ -28,8 +28,9 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param pageable
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index_error) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
-        countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR upper(e.index_error) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(e.message) LIKE '%' || upper('?2') || '%') ",
+    @Query(value = "\n" + //
+                "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR UPPER(e.index_error) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(e.message) LIKE CONCAT('%', UPPER(?2), '%')) ",
+        countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR UPPER(e.index_error) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(e.message) LIKE CONCAT('%', UPPER(?2), '%')) ",
         nativeQuery = true
     )
     Page<Error> findByIndexErrorContaining(String indexError, String message, Pageable pageable);

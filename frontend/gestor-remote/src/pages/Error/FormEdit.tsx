@@ -29,6 +29,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -40,7 +41,7 @@ import * as yup from "yup";
  * @param onAtras Función para regresar a la vista anterior
  * @returns
  */
-const ErrorEdit = ({
+const FormEdit = ({
   status,
   row,
   onAtras = () => {},
@@ -51,13 +52,18 @@ const ErrorEdit = ({
 }) => {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(
+    status || StatusEdit.create
+  );
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row ? row.uuid : "");
   const { showToast } = useToastContext();
+  const [t] = useTranslation("global_gestor");
 
   /**
    * Esquema de validación de formulario
@@ -66,16 +72,16 @@ const ErrorEdit = ({
   const schema = yup.object({
     indexError: yup
       .string()
-      .required("El indice es requerido")
-      .min(5, "El indice debe tener mínimo 5 caracter")
-      .max(128, "El indice debe tener máximo 10 caracteres"),
+      .required(t("validation.required"))
+      .min(5, t("validation.min", { min: 5 }))
+      .max(128, t("validation.max", { max: 128 })),
     message: yup
       .string()
-      .required("El message es requerido")
-      .max(1024, "El message debe tener máximo 124 caracteres"),
+      .required(t("validation.required"))
+      .max(1024, t("validation.max", { max: 1024 })),
     description: yup
       .string()
-      .max(4098, "La descripción debe tener máximo 4098 caracteres"),
+      .max(4098, t("validation.max", { max: 4098 })),
     userApp: yup.string(),
   });
 
@@ -99,13 +105,11 @@ const ErrorEdit = ({
   /**
    * Función para accionar el formulario
    *
-   * @param data
+   * @param data Datos del formulario
    */
   const accionar = async (data: any) => {
     setLoading(true);
-    const nombreAplicativo =
-      window.location.pathname.split("/").pop() + "miNuevoDato";
-    data = { ...data, usuarioPrograma: nombreAplicativo };
+    data = { ...data, userApp: t("nameApp") };
 
     setTimeout(async () => {
       if (formStatus === StatusEdit.create) {
@@ -122,7 +126,7 @@ const ErrorEdit = ({
             setFormStatus(StatusEdit.edit);
           })
           .catch((error) => {
-            setMessageForm("Error al crear el registro: " + error);
+            setMessageForm(t("actions.errorFetch", {error: error}));
             return null;
           });
       }
@@ -139,7 +143,7 @@ const ErrorEdit = ({
             analizarAccionar(response);
           })
           .catch((error) => {
-            setMessageForm("Error al accionar el registro " + error);
+            setMessageForm(t("actions.errorFetch", {error: error}));
             return null;
           });
       }
@@ -159,7 +163,7 @@ const ErrorEdit = ({
             onAtras();
           })
           .catch((error) => {
-            setMessageForm("Error al borrar el registro " + error);
+            setMessageForm(t("actions.errorFetch", {error: error}));
             return null;
           });
       }
@@ -176,17 +180,13 @@ const ErrorEdit = ({
   const analizarAccionar = (response: IFetchData) => {
     if (response.error) {
       if (response.status === 400) {
-        console.log(response.responseErrorJSON);
         showToast(
           response.error + " " + response.status.toString(),
           response.responseErrorJSON.message,
           Alerts.warning
         );
-
-        console.log(response.error + " " + response.status.toString());
       } else {
         showToast(response.status.toString(), response.error, Alerts.warning);
-        console.log(response.status.toString());
       }
       return;
     } else {
@@ -195,11 +195,10 @@ const ErrorEdit = ({
         setUuid(respuesta.response.uuid);
       }
       showToast(
-        respuesta.status.toString(),
-        "Accion realizada con exito",
+        t("actions.saveSatisfactory", { status: respuesta.status.toString() }),
+        t("actions.saveSatisfactoryDescription"),
         Alerts.success
       );
-      console.log(respuesta.status.toString());
     }
   };
 
@@ -237,6 +236,9 @@ const ErrorEdit = ({
     accionar(null);
   };
 
+  /**
+   * Función para cancelar el borrado
+   */
   const handleOnCancelDelete = () => {
     setFormStatus(StatusEdit.edit);
     setDialogStatus(false);
@@ -260,27 +262,27 @@ const ErrorEdit = ({
 
       <form onSubmit={handleSubmit(accionar)}>
         <InputField
-          title="Indice"
+          title={t("modules.error.fields.indexError.title")}
           columns={BandPresentation.column_3}
-          placeholder="ERR001"
+          placeholder={t("modules.error.fields.indexError.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("indexError")}
           messageError={errors.indexError?.message}
         />
         <AreaField
-          title="Mensaje"
+          title={t("modules.error.fields.message.title")}
           columns={BandPresentation.column_2}
           rows={3}
-          placeholder="Error al procesar la solicitud"
+          placeholder={t("modules.error.fields.message.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("message")}
           messageError={errors.message?.message}
         />
         <AreaField
-          title="Descripción"
+          title={t("modules.error.fields.description.title")}
           columns={BandPresentation.column_1}
           rows={5}
-          placeholder="Descripción detallada del error"
+          placeholder={t("modules.error.fields.description.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("description")}
           messageError={errors.description?.message}
@@ -290,17 +292,16 @@ const ErrorEdit = ({
           columns={BandPresentation.column_2}
         >
           <Button type="submit" disabled={loading}>
-            Guardar
+            {t("actions.save")}
           </Button>
           <Button
-            type="button"
             variant="surface"
             disabled={formStatus === StatusEdit.create}
             onClick={() => {
               showPopUpDelete();
             }}
           >
-            Borrar
+            {t("actions.delete")}
           </Button>
         </FooterForm>
       </form>
@@ -308,4 +309,4 @@ const ErrorEdit = ({
   );
 };
 
-export default ErrorEdit;
+export default FormEdit;

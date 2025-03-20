@@ -1,20 +1,31 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { BandPresentation, Direction, FooterForm, InputField, IParametersQuery } from "ux-ui";
 import { Button } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
-import { BandPresentation, Direction, FooterForm, InputField } from "ux-ui";
+import { useTranslation } from "react-i18next";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const QueryForm = ({ onFind }: { onFind: (data: any) => void }) => {
+/**
+ * Formulario de consulta de errores del sistema.
+ *
+ * @param onFind Función para buscar errores
+ * @returns
+ */
+const FormQuery = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => {
+  const [t] = useTranslation("global_gestor");
+  
   const schema = yup.object({
     indexError: yup
       .string()
-      .max(128, "El indice debe tener máximo 10 caracteres"),
+      .max(128, t("validation.max", { max: 128 })),
     message: yup
       .string()
-      .max(1024, "El message debe tener máximo 124 caracteres"),
-    size: yup.string(),
+      .max(1024, t("validation.max", { max: 1024 })),
   });
 
+  /**
+   * Hook para el manejo de formularios.
+   */
   const {
     register,
     handleSubmit,
@@ -24,18 +35,25 @@ const QueryForm = ({ onFind }: { onFind: (data: any) => void }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       indexError: "",
-      message: "",
-      size: "3",
+      message: ""
     },
   });
-
   
-  const submitForm = (data: any) => {
+  /**
+   * Función para enviar el formulario.
+   *
+   * @param data
+   */
+  const submitForm = (data: IParametersQuery) => {
     if (onFind) {
       onFind(data);
     }
   };
 
+  /**
+   * Función para limpiar el formulario y los datos de la consulta.
+   * 
+   */
   const resetForm = () => {
     if (onFind) {
       onFind({});
@@ -46,17 +64,17 @@ const QueryForm = ({ onFind }: { onFind: (data: any) => void }) => {
   return (
     <form onSubmit={handleSubmit(submitForm)}>
       <InputField
-        title="Indice"
+        title={t("modules.error.fields.indexError.title")}
         columns={BandPresentation.column_3}
-        placeholder="ERR001"
+        placeholder={t("modules.error.fields.indexError.placeholder")}
         directionLabel={Direction.horizontal}
         register={register("indexError")}
         messageError={errors.indexError?.message}
       />
       <InputField
-        title="Mensaje"
+        title={t("modules.error.fields.message.title")}
         columns={BandPresentation.column_3}
-        placeholder="mensaje"
+        placeholder={t("modules.error.fields.message.placeholder")}
         directionLabel={Direction.horizontal}
         register={register("message")}
         messageError={errors.message?.message}
@@ -65,13 +83,13 @@ const QueryForm = ({ onFind }: { onFind: (data: any) => void }) => {
         directionLabel={Direction.horizontal}
         columns={BandPresentation.column_2}
       >
-        <Button type="submit">Buscar</Button>
+        <Button type="submit">{t("actions.search")}</Button>
         <Button type="button" onClick={() => resetForm()}>
-          Limpiar
+          {t("actions.clean")}
         </Button>
       </FooterForm>
     </form>
   );
 };
 
-export { QueryForm };
+export { FormQuery };

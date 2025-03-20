@@ -3,7 +3,7 @@ import { Flex, Heading, Text } from "@radix-ui/themes";
 import { getIconComponent } from "ux-ui";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Error from "./Error/Error";
+import {Page as PageError} from "./Error/Page";
 import Information from "./Information";
 import Module from "./Module";
 import User from "./User";
@@ -69,7 +69,7 @@ const Origin = ({ structure }: { structure?: OriginProps }) => {
   const flow = (structure: any) => {
     switch (structure?.element) {
       case "error":
-        return <Error structure={structure} />;
+        return <PageError structure={structure} />;
       case "information":
         return <Information structure={structure} />;
       case "module":
