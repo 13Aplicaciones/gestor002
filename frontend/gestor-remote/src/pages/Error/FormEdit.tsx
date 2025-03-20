@@ -294,7 +294,7 @@ const FormEdit = ({
             {t("actions.save")}
           </Button>
           <Button
-            type="reset"
+            type="button"
             variant="surface"
             disabled={formStatus === StatusEdit.create}
             onClick={() => {
