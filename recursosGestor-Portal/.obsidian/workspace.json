@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "Muleto"
             }
+          },
+          {
+            "id": "b0f84f1a3270682c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Investigaciones.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Investigaciones"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -169,10 +184,11 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "401ad317017a4e9a",
+  "active": "b0f84f1a3270682c",
   "lastOpenFiles": [
-    "mega Check list.md",
     "Muleto.md",
+    "Investigaciones.md",
+    "mega Check list.md",
     "SitiosAyuda.canvas",
     "documentos/ArquitecturaReact.md",
     "documentos/ejemplo toast.md",

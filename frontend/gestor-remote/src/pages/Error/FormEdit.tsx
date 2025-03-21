@@ -159,7 +159,9 @@ const FormEdit = ({
             analizarAccionar(response);
             setFormStatus(StatusEdit.find);
             setDialogStatus(false);
-            onAtras?.();
+            if (onAtras) {
+              onAtras();
+            }
           })
           .catch((error) => {
             setMessageForm(t("actions.errorFetch", { error: error }));
@@ -232,7 +234,8 @@ const FormEdit = ({
   }, [dialogStatus]);
 
   const handleOnDelete = () => {
-    //accionar(null);
+    setFormStatus(StatusEdit.edit);
+    accionar(null);
   };
 
   /**
@@ -295,6 +298,7 @@ const FormEdit = ({
           </Button>
           <Button
             type="button"
+            form="none" // Evita que el botón esté asociado al formulario
             variant="surface"
             disabled={formStatus === StatusEdit.create}
             onClick={() => {
