@@ -173,13 +173,14 @@ La estructura base [[ArquitecturaReact]]
 Si el sistema tiene problemas de hook y toast en la consola que afectan hook, y el error se debe a un problema con los useState, el problema esta dado por la falta de un link a los API.
 
 ```bash
-npm remove ux-ui
-npm install ../ux-ui
-npm link ../ux-ui/node_modules/react
-
 npm remove api-fetch
+npm remove ux-ui
+
 npm install ../api-fetch
+npm install ../ux-ui
+
 npm link ../api-fetch/node_modules/react
+npm link ../ux-ui/node_modules/react
 ```
 ---
 # Spring

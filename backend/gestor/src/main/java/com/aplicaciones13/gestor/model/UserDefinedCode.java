@@ -52,6 +52,9 @@ public class UserDefinedCode extends UserDateApp {
     @Column(nullable = false)
     private Long order;
 
+    @Column(nullable = false, length = 256)
+    private String style;
+
     @Column(nullable = false, length = 8)
     private String status;
 

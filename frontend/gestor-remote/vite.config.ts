@@ -22,7 +22,8 @@ export default defineConfig({
       name: "gestor_remote",
       filename: "gestorRemoteEntry.js",
       exposes: {
-        "./App": "./src/App",
+        "./Orgin": "./src/pages/Origin",
+        "./Translation": "./src/utils/getTranslation",
       },
       remotes: {
         orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",

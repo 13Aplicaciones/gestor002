@@ -77,7 +77,7 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
     row === undefined ||
     row === null ||
     Object.keys(row).length === 0 ||
-    row.usuarioPrograma === ""
+    row.userApp === ""
   ) {
     return <></>;
   }

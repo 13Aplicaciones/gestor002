@@ -48,9 +48,6 @@ public class Module extends UuidUserDateApp {
     @Column(length = 8)
     private String status;
 
-    @Column(length = 64)
-    private String icon;
-
     @OneToMany(mappedBy = "module")
     private List<Parameter> parameters;
 

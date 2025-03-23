@@ -76,7 +76,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     items: [
       {
         name: "indexError",
-        title: t("modules.error.fields.indexError.title"),
+        title: t("modules.GS-ER-001.fields.indexError.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
@@ -85,7 +85,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "message",
-        title: t("modules.error.fields.message.title"),
+        title: t("modules.GS-ER-001.fields.message.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
@@ -99,14 +99,14 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "description",
-        title: t("modules.error.fields.description.title"),
+        title: t("modules.GS-ER-001.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "40vw",
       },
       {
         name: "userDate",
-        title: t("modules.error.fields.userDate.title"),
+        title: t("modules.GS-ER-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
         width: "20vw",
@@ -115,7 +115,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
       },
       {
         name: "acciones",
-        title: t("modules.error.fields.acciones.abrev"),
+        title: t("modules.GS-ER-001.fields.acciones.abrev"),
         justification: JustificationText.center,
         format: TextFormat.action,
         width: "6vw",

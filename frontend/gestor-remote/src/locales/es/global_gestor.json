@@ -27,37 +27,37 @@
   },
   
   "modules": {
-    "module": {
+    "GS-MD-001": {
       "icon": "CubeIcon",
       "title": "Módulos",
       "description": "Modulos del Sistema",
       "path": "Module"
     },
-    "menu": {
+    "GS-MN-001": {
       "icon": "DropdownMenuIcon",
       "title": "Menús",
       "description": "Menús del sistema",
       "path": "Menu"
     },
-    "rol": {
+    "GS-RL-001": {
       "icon": "Link2Icon",
       "title": "Roles",
       "description": "Roles de los usuarios",
       "path": "Role"
     },
-    "cdu": {
+    "GS-CD-001": {
       "icon": "ListBulletIcon",
       "title": "Códigos Definidos",
       "description": "Códigos definidos del sistema",
       "path": "DefinedCodes"
     },
-    "user": {
+    "GS-US-001": {
       "icon": "PersonIcon",
       "title": "Usuarios",
       "description": "Usuarios del sistema",
       "path": "User"
     },
-    "error": {
+    "GS-ER-001": {
       "icon": "Cross1Icon",
       "title": "Errores",
       "add": "Error",
@@ -100,13 +100,13 @@
         }
       }
     },
-    "information": {
+    "GS-IN-001": {
       "icon": "InfoCircledIcon",
       "title": "Información",
       "description": "Datos de información del módulo",
       "path": "Information"
     },
-    "changePassword": {
+    "GS-CC-001": {
       "icon": "LockClosedIcon",
       "title": "Cambio Clave",
       "description": "Cambio de clave del usuario",

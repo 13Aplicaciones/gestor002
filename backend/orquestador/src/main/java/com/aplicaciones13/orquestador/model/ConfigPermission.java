@@ -70,9 +70,6 @@ public class ConfigPermission {
     @Column(name = "menu_orden")
     private Integer menuOrden;
 
-    @Column(name = "menu_icon")
-    private String menuIcon;
-
     @Column(name = "module_id_module")
     private Long moduleIdModule;
 
@@ -91,6 +88,4 @@ public class ConfigPermission {
     @Column(name = "module_uuid")
     private String moduleUuid;
 
-    @Column(name = "module_icon")
-    private String moduleIcon;
 }

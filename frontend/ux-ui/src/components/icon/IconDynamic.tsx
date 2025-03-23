@@ -2,14 +2,23 @@ import * as RadixIcons from "@radix-ui/react-icons";
 
 /**
  * Función que retorna el componente de un icono para facilitar el uso dinámico de los mismos.
- * 
+ *
  * @param iconName Nombre del icono
- * 
- * @returns 
+ *
+ * @returns
  */
-const getIconComponent = (iconName: string, width: string , height: string) => {
+const getIconComponent = (iconName: string, width: string, height: string) => {
+  try {
     const IconComponent = RadixIcons[iconName as keyof typeof RadixIcons];
-    return IconComponent ? <IconComponent width={width} height={height} /> : <RadixIcons.TransparencyGridIcon width={width} height={height} />;
+    return IconComponent ? (
+      <IconComponent width={width} height={height} />
+    ) : (
+      <RadixIcons.TransparencyGridIcon width={width} height={height} />
+    );
+  } catch (error) {
+    console.error("getIconComponent -> error: ", error);
+    return <RadixIcons.TransparencyGridIcon width={width} height={height} />;
+  }
 };
 
-export { getIconComponent }
+export { getIconComponent };

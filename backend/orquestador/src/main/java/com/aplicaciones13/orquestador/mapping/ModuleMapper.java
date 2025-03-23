@@ -25,6 +25,5 @@ public interface ModuleMapper {
     @Mapping(target = "indexModule", source = "moduleIndex")
     @Mapping(target = "context", source = "moduleContext")
     @Mapping(target = "status", source = "moduleStatus")
-    @Mapping(target = "icon", source = "moduleIcon")
     ModuleResponse toResponse(ConfigPermission configPermission);
 }

@@ -1,13 +1,12 @@
 import { ButtonBackFloating, ButtonCreateRecordFloating } from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
 import { Flex, Heading, Separator } from "@radix-ui/themes";
-import { OriginProps } from "../Origin";
+import { Preview } from "./Preview";
 import { Query } from "./Query";
 import { StatusEdit } from "ux-ui";
 import { useState } from "react";
-import { Preview } from "./Preview";
-import FormEdit from "./FormEdit";
 import { useTranslation } from "react-i18next";
+import FormEdit from "./FormEdit";
 
 /**
  * Página de errores del sistema.
@@ -17,7 +16,7 @@ import { useTranslation } from "react-i18next";
  * @param structure Estructura de la pagina de errores del sistema.
  * @returns
  */
-const Page = ({ structure }: { structure?: OriginProps }) => {
+const Page = () => {
   const [t] = useTranslation("global_gestor");
   const [status, setStatus] = useState(StatusEdit.find);
   const [rowSelecionado, setRowSelecionado] = useState<IRowDataError>(
@@ -32,7 +31,6 @@ const Page = ({ structure }: { structure?: OriginProps }) => {
   const onEditarRow = (row: IRowDataError) => {
     setStatus(StatusEdit.edit);
     setRowSelecionado(row);
-    console.log("estructra", structure);
   };
 
   /**
@@ -50,7 +48,7 @@ const Page = ({ structure }: { structure?: OriginProps }) => {
       <Separator orientation="horizontal" size="4" />
       <Flex maxWidth="60vw">
         <Heading size="4" wrap="pretty">
-          {t("modules.error.panel." + status)}
+          {t("modules.GS-ER-001.panel." + status)}
         </Heading>
       </Flex>
 
@@ -74,7 +72,7 @@ const Page = ({ structure }: { structure?: OriginProps }) => {
 
       {(status == StatusEdit.find && (
         <ButtonCreateRecordFloating
-          toolTip={t("modules.error.add")}
+          toolTip={t("modules.GS-ER-001.add")}
           onClick={() => {
             setStatus(StatusEdit.create);
             setRowSelecionado(createIRowDataError());

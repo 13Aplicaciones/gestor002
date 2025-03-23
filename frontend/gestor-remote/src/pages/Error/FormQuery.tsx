@@ -64,17 +64,17 @@ const FormQuery = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
       <InputField
-        title={t("modules.error.fields.indexError.title")}
+        title={t("modules.GS-ER-001.fields.indexError.title")}
         columns={BandPresentation.column_3}
-        placeholder={t("modules.error.fields.indexError.placeholder")}
+        placeholder={t("modules.GS-ER-001.fields.indexError.placeholder")}
         directionLabel={Direction.horizontal}
         register={register("indexError")}
         messageError={errors.indexError?.message}
       />
       <InputField
-        title={t("modules.error.fields.message.title")}
+        title={t("modules.GS-ER-001.fields.message.title")}
         columns={BandPresentation.column_3}
-        placeholder={t("modules.error.fields.message.placeholder")}
+        placeholder={t("modules.GS-ER-001.fields.message.placeholder")}
         directionLabel={Direction.horizontal}
         register={register("message")}
         messageError={errors.message?.message}
@@ -84,7 +84,9 @@ const FormQuery = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
         columns={BandPresentation.column_2}
       >
         <Button type="submit">{t("actions.search")}</Button>
-        <Button type="button" onClick={() => resetForm()}>
+        <Button type="button"
+        variant="surface"
+        onClick={() => resetForm()}>
           {t("actions.clean")}
         </Button>
       </FooterForm>

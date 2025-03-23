@@ -82,7 +82,7 @@ const Preview = ({ index }: { index: string }) => {
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.indexError.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.indexError.title')}</DataList.Label>
             <DataList.Value>
               <span
                 dangerouslySetInnerHTML={{ __html: row?.indexError || "" }}
@@ -90,13 +90,13 @@ const Preview = ({ index }: { index: string }) => {
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.message.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.message.title')}</DataList.Label>
             <DataList.Value>
               <span dangerouslySetInnerHTML={{ __html: row?.message || "" }} />
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.description.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.description.title')}</DataList.Label>
             <DataList.Value>
               <span
                 dangerouslySetInnerHTML={{ __html: row?.description || "" }}
@@ -104,17 +104,17 @@ const Preview = ({ index }: { index: string }) => {
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.user.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.user.title')}</DataList.Label>
             <DataList.Value>{row?.user || ""}</DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.userDate.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.userDate.title')}</DataList.Label>
             <DataList.Value>
               {formatDateMask(row?.userDate || "", FormatMaskISO.dateHour)}
             </DataList.Value>
           </DataList.Item>
           <DataList.Item>
-            <DataList.Label minWidth="88px">{t('modules.error.fields.userApp.title')}</DataList.Label>
+            <DataList.Label minWidth="88px">{t('modules.GS-ER-001.fields.userApp.title')}</DataList.Label>
             <DataList.Value>{row?.userApp || ""}</DataList.Value>
           </DataList.Item>
         </DataList.Root>

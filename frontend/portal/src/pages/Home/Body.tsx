@@ -5,19 +5,16 @@ import {
   GridDashboard,
   useToastContext,
 } from "ux-ui";
+// import { AppGestor } from "./Demo";
+import { Button as MiB } from "@radix-ui/themes";
 import { getSelectModule } from "orchestrator_remote/service/Structure";
 import { getStatic } from "orchestrator_remote/service/Statics";
 import { IModuleRoot } from "./Header";
-import { useEffect, useState } from "react";
-
 import { Suspense } from "react";
-import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import * as Temp from "./Demo";
-
-import { AppGestor } from "./Demo";
-
-import { Button as MiB } from "@radix-ui/themes";
+//import * as Temp from "./Demo";
+import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
 
 /**
  * Cuerpo de la pagina principal
@@ -42,38 +39,38 @@ const Card = ({
   indexMenu,
   title,
   description,
-  iconName,
+  iconName = "TransparencyGridIcon",
 }: {
   index: number;
   indexMenu: string;
   title: string;
   description: string;
-  iconName: string;
+  iconName?: string;
 }) => {
   const { showToast } = useToastContext();
   const [data, setData] = useState([]);
 
-  const executeFindStatics = async (indexMenu: string) => {
-    const dataStatic = await getStatic(indexMenu);
-
-    if (dataStatic?.error) {
-      showToast(
-        dataStatic.error + " (" + dataStatic.status + ") ",
-        dataStatic.statusDescription || "",
-        Alerts.error
-      );
-      setData([]);
-    } else {
-      setData(dataStatic);
-    }
-  };
-
   useEffect(() => {
+    const executeFindStatics = async (indexMenu: string) => {
+      const dataStatic = await getStatic(indexMenu);  
+      if (dataStatic?.error) {
+        showToast(
+          dataStatic.error + " (" + dataStatic.status + ") ",
+          dataStatic.statusDescription || "",
+          Alerts.error
+        );
+        setData([]);
+      } else {
+        setData(dataStatic);
+      }
+    };
+    
     executeFindStatics(indexMenu);
+    
     if (!indexMenu) {
       console.error("useEffect -> indexMenu is empty");
     }
-  }, [index]);
+  }, [index, indexMenu, showToast]);
 
   return (
     <CardGrid
@@ -118,16 +115,21 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
   }, [refreshModule]);
 
   const [flag, setFlag] = useState(false);
-  const [contenidoName, setContenidoName] = useState("Button");
+  //const [contenidoName, setContenidoName] = useState("Button");
 
+  /*
   const getCustomComponent = (name: string) => {
-    const MiComponent = Temp[name as keyof typeof Temp];
-    return MiComponent ? <MiComponent /> : <Temp.Button />;
+    //const MiComponent = Temp[name as keyof typeof Temp];
+    
+    
+    //return MiComponent ? <Temp.Button /> : <Temp.Button />;
+    return <Temp.Button />;
   };
+  */
 
   const handleSwitch = () => {
     setFlag(!flag);
-    setContenidoName(flag ? "Button" : "Footer");
+    //setContenidoName(flag ? "Button" : "Footer");
   };
 
   return (
@@ -138,11 +140,12 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
             {Array.isArray(dataModuleSelect.menus) &&
               dataModuleSelect.menus.map((item, index) => (
                 <Card
+                  key={item.indexMenu} // Asignar una clave única basada en item.indexMenu
                   index={index}
-                  indexMenu={item.index}
+                  indexMenu={item.indexMenu}
                   title={item.name}
-                  description={"pendiente"}
-                  iconName={item.icon}
+                  description={index === 0 ? "description" : "description"}
+                  iconName={/*item.icon*/ "TransparencyGridIcon"}
                 />
               ))}
           </GridDashboard>
@@ -158,17 +161,19 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
 
       <CatchErrorLoadElement titleName="Button">
         <Suspense fallback={t("messages.loading")}>
-          {getCustomComponent(contenidoName)}
+          {/*getCustomComponent(contenidoName)?*/}
         </Suspense>
       </CatchErrorLoadElement>
 
       <MiB onClick={handleSwitch}>Button</MiB>
 
+      {/* 
       <CatchErrorLoadElement titleName="gestor">
         <Suspense fallback={t("messages.loading")}>
-          <AppGestor structure={{ element: "Error" }} />
+          <AppGestor name={"GS-IN-001"} />
         </Suspense>
       </CatchErrorLoadElement>
+      */}
     </>
   );
 };

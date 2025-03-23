@@ -35,9 +35,6 @@ public class MenuResponse implements Serializable {
     @Schema(description = "Order de visualización del menú", example = "1")
     private Long order;
 
-    @Schema(description = "Icon Presentacion", example = "QuestionMarkIcon")
-    private String icon;
-
     @Schema(description = "Create")
     private String create;
 

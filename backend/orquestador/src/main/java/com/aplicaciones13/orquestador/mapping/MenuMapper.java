@@ -23,7 +23,6 @@ public interface MenuMapper {
     @Mapping(target = "taskFlow", source = "menuTaskFlow")
     @Mapping(target = "status", source = "menuStatus")
     @Mapping(target = "order", source = "menuOrden") 
-    @Mapping(target = "icon", source = "menuIcon")    
     @Mapping(target = "create", source = "create")
     @Mapping(target = "update", source = "update")
     @Mapping(target = "delete", source = "delete")

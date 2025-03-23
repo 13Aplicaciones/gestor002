@@ -30,6 +30,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import {getTranslation, getTranslationWithLangAndNS} from "../../utils/getTranslation";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -246,8 +247,13 @@ const FormEdit = ({
     setDialogStatus(false);
   };
 
+  const testIne18 = getTranslation("actions.errorFetch",  {error: "hola"});
+  const testIne18Int = getTranslationWithLangAndNS("actions.errorFetch", "es", "global_api", {error: "hola"});
+
   return (
     <>
+      hola: {testIne18}
+      hola: {testIne18Int}
       <BannerInformation message={messageFormulario} alert={Alerts.error} />
       <Flex direction="row" gap="3" align="center">
         <FormState statusEdit={formStatus} />
@@ -264,27 +270,27 @@ const FormEdit = ({
 
       <form onSubmit={handleSubmit(accionar)}>
         <InputField
-          title={t("modules.error.fields.indexError.title")}
+          title={t("modules.GS-ER-001.fields.indexError.title")}
           columns={BandPresentation.column_3}
-          placeholder={t("modules.error.fields.indexError.placeholder")}
+          placeholder={t("modules.GS-ER-001.fields.indexError.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("indexError")}
           messageError={errors.indexError?.message}
         />
         <AreaField
-          title={t("modules.error.fields.message.title")}
+          title={t("modules.GS-ER-001.fields.message.title")}
           columns={BandPresentation.column_2}
           rows={3}
-          placeholder={t("modules.error.fields.message.placeholder")}
+          placeholder={t("modules.GS-ER-001.fields.message.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("message")}
           messageError={errors.message?.message}
         />
         <AreaField
-          title={t("modules.error.fields.description.title")}
+          title={t("modules.GS-ER-001.fields.description.title")}
           columns={BandPresentation.column_1}
           rows={5}
-          placeholder={t("modules.error.fields.description.placeholder")}
+          placeholder={t("modules.GS-ER-001.fields.description.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("description")}
           messageError={errors.description?.message}

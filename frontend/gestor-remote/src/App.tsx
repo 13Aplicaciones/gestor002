@@ -2,9 +2,9 @@ import { addToken } from "orchestrator_remote/service/Tokens";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { I18nextProvider } from "react-i18next";
-import { Origin, OriginProps } from "./pages/Origin";
+import { Origin } from "./pages/Origin";
 import { ToastContextProvider } from "ux-ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import i18next from "./i18n";
 
 /**
@@ -13,10 +13,8 @@ import i18next from "./i18n";
  * @param param0
  * @returns
  */
-const App = ({ structure }: { structure?: OriginProps }) => {
-  const [structureTest, setStructureTest] = useState<OriginProps | undefined>(
-    structure
-  );
+const App = () => {
+  const [name, setName] = useState("error");
 
   /**
    * Funcion para ejecutar una api.
@@ -43,7 +41,7 @@ const App = ({ structure }: { structure?: OriginProps }) => {
           console.error("runApi -> Error:", response.error);
         } else {
           await addToken({ token: response.response });
-          }
+        }
       })
       .catch((error) => {
         console.error("fetchData -> Error:", error);
@@ -52,43 +50,40 @@ const App = ({ structure }: { structure?: OriginProps }) => {
   };
 
   /**
+   * Funcion para ejecutar la api de token al cargar la pagina.
+   */
+  useEffect(() => {
+    runApi();
+  }, []);
+
+  /**
    * Funcion para manejar el token y refrescar el panel.
    *
    * @param panelName
    */
   const heandleToken = (panelName: string) => {
     runApi();
-    setStructureTest({
-      refreshToken: structureTest?.refreshToken
-        ? structureTest.refreshToken + 1
-        : 1,
-      element: panelName,
-      id: 1,
-      name: panelName,
-    });
+    setName(panelName);
   };
 
   return (
     <I18nextProvider i18n={i18next}>
       <ToastContextProvider>
         <Flex direction="row" align={"center"} gap="1" px="1" py="2">
-          <Button size="3" onClick={() => heandleToken("error")}>
+          <Button size="3" onClick={() => heandleToken("GS-ER-001")}>
             Error
           </Button>
-          <Button size="3" onClick={() => heandleToken("information")}>
+          <Button size="3" onClick={() => heandleToken("GS-IN-001")}>
             Information
           </Button>
-          <Button size="3" onClick={() => heandleToken("module")}>
+          <Button size="3" onClick={() => heandleToken("GS-MD-001")}>
             Module
           </Button>
-          <Button size="3" onClick={() => heandleToken("user")}>
+          <Button size="3" onClick={() => heandleToken("GS-US-001")}>
             User
           </Button>
-          <Button size="3" onClick={() => heandleToken("vacio")}>
-            Vacio
-          </Button>
         </Flex>
-        <Origin structure={structureTest} />
+        <Origin name={name} />
       </ToastContextProvider>
     </I18nextProvider>
   );
