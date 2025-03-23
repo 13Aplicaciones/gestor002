@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Alerts,
+  //Alerts,
   BandPresentation,
   Direction,
   SortColumn,
@@ -19,7 +19,7 @@ import { MethodREST, TypeBody } from "api-fetch";
 import { ReactNode, useEffect, useState } from "react";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { useForm } from "react-hook-form";
-import { useToastContext } from "../toast/useToastContext";
+//import { useToastContext } from "../toast/useToastContext";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -68,7 +68,7 @@ const CreateSearchField = ({
   getToken?: (() => Promise<string>) | undefined;
 }) => {
   const [t] = useTranslation("global_ux");
-  const { showToast } = useToastContext();
+  //const { showToast } = useToastContext();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
@@ -142,11 +142,11 @@ const CreateSearchField = ({
     })
       .then((response) => {
         if (response.error) {
-          showToast(
+          /*showToast(
             response.error + " (" + response.status.toString() + ")",
             t("httpStatusResolve." + response.status.toString()),
             Alerts.warning
-          );
+          );*/
           return;
         } else {
           const data = response.response.items;
@@ -157,7 +157,8 @@ const CreateSearchField = ({
         }
       })
       .catch((error) => {
-        showToast("Error", error, Alerts.error);
+        //showToast("Error", error, Alerts.error);
+        console.error("Error: " + error);
       });
   };
 

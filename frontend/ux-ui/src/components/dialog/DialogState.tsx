@@ -74,7 +74,6 @@ const footDialogue = ({
  *
  */
 const DialogForm = ({
-    
   status,
   title,
   description,
@@ -183,4 +182,89 @@ const DialogAlerts = ({
   );
 };
 
-export { DialogForm, DialogAlerts };
+/*
+interface IToeastDialog {
+  key : string;
+  status: boolean;
+  message: string;
+  alert: Alerts;
+  duration?: number;
+  onClose?: () => void;
+}
+
+export const createIToasDialog = (): IToeastDialog => {
+  return {
+    key : "",
+    status: true,
+    message: "",
+    alert: Alerts.info,
+    duration: 3000,
+    onClose: () => {},
+  };
+};
+*/
+/**
+ * Componente ToastDialog para mostrar mensajes en una esquina de la pantalla.
+ *
+ * @param status Indica si el toast está visible
+ * @param message Mensaje a mostrar en el toast
+ * @param alert Tipo de alerta (para colores e íconos)
+ * @param duration Duración en milisegundos antes de que se cierre automáticamente
+ * @param onClose Callback cuando el toast se cierra
+ */
+const ToastDialog = ({
+  status,
+  message,
+  alert,
+  duration = 3000,
+  onClose,
+}: {
+  status: boolean;
+  message: string;
+  alert: Alerts;
+  duration?: number;
+  onClose?: () => void;
+}) => {
+  const [visible, setVisible] = useState(status);
+
+  useEffect(() => {
+    if (status) {
+      setVisible(true); // Muestra el toast cuando el estado cambia a true
+      const timer = setTimeout(() => {
+        setVisible(false); // Oculta el toast después de la duración
+        if (onClose) onClose();
+      }, duration);
+
+      return () => clearTimeout(timer); // Limpia el temporizador al desmontar o actualizar
+    } else {
+      setVisible(false); // Oculta el toast si el estado cambia a false
+    }
+  }, [status, duration, onClose]);
+
+  if (!visible) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        padding: "10px 20px",
+        backgroundColor: alertColor({ alert }),
+        color: "#fff",
+        borderRadius: "8px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.5s ease-in-out",
+        zIndex: 1000,
+      }}
+    >
+      <Flex gap="2" align="center">
+        {alertIconSize({ alert, size: "24" })}
+        <span>{message}</span>
+      </Flex>
+    </div>
+  );
+};
+
+export { DialogForm, DialogAlerts, ToastDialog };

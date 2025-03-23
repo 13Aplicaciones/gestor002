@@ -53,7 +53,7 @@ const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
   );
 };
 
-const Origin = ({ name }: { name?: string }) => {
+const Origin = ({ name }: { name: string }) => {
   const flow = () => {
     switch (name) {
       case "GS-ER-001":
@@ -64,6 +64,8 @@ const Origin = ({ name }: { name?: string }) => {
         return <Module />;
       case "GS-US-001":
         return <User />;
+      default:
+        return <Title />;
     }
   };
 

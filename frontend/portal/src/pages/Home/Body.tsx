@@ -1,9 +1,9 @@
 import {
-  Alerts,
+  //Alerts,
   CardGrid,
   CardGridSkeleton,
   GridDashboard,
-  useToastContext,
+  //useToastContext,
 } from "ux-ui";
 // import { AppGestor } from "./Demo";
 import { Button as MiB } from "@radix-ui/themes";
@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 //import * as Temp from "./Demo";
 import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
+
+import { WrapOrigin } from "gestor_remote/Wrap";
 
 /**
  * Cuerpo de la pagina principal
@@ -47,30 +49,32 @@ const Card = ({
   description: string;
   iconName?: string;
 }) => {
-  const { showToast } = useToastContext();
+  //const { showToast } = useToastContext();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const executeFindStatics = async (indexMenu: string) => {
-      const dataStatic = await getStatic(indexMenu);  
+      const dataStatic = await getStatic(indexMenu);
       if (dataStatic?.error) {
+        /*
         showToast(
           dataStatic.error + " (" + dataStatic.status + ") ",
           dataStatic.statusDescription || "",
           Alerts.error
         );
+        */
         setData([]);
       } else {
         setData(dataStatic);
       }
     };
-    
+
     executeFindStatics(indexMenu);
-    
+
     if (!indexMenu) {
       console.error("useEffect -> indexMenu is empty");
     }
-  }, [index, indexMenu, showToast]);
+  }, [index, indexMenu /*showToast*/]);
 
   return (
     <CardGrid
@@ -167,13 +171,13 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
 
       <MiB onClick={handleSwitch}>Button</MiB>
 
-      {/* 
-      <CatchErrorLoadElement titleName="gestor">
-        <Suspense fallback={t("messages.loading")}>
-          <AppGestor name={"GS-IN-001"} />
-        </Suspense>
-      </CatchErrorLoadElement>
-      */}
+      {
+        <CatchErrorLoadElement titleName="gestor">
+          <Suspense fallback={t("messages.loading")}>
+            <WrapOrigin name={"GS-IN-001"} />
+          </Suspense>
+        </CatchErrorLoadElement>
+      }
     </>
   );
 };

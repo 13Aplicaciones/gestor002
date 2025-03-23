@@ -6,7 +6,7 @@ import {
   JustificationText,
   FormatMaskISO,
 } from "../../ConstantsPresentation";
-import { blackA, whiteA } from "@radix-ui/colors";
+import { blackA, /*whiteA*/ } from "@radix-ui/colors";
 import {
   CaretDownIcon,
   CaretSortIcon,
@@ -20,7 +20,7 @@ import {
   Skeleton,
   Table,
   Text,
-  useThemeContext,
+  //useThemeContext,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
@@ -308,7 +308,7 @@ const TableConfigurable = ({
   const [presentation, setPresentation] =
     useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
-  const theme  = useThemeContext();
+  //const theme  = useThemeContext();
    
 
   /**
@@ -369,7 +369,7 @@ const TableConfigurable = ({
                 key={rowIndex}
                 style={{
                   backgroundColor:
-                    isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
+                    isBand && rowIndex % 2 !== 0 ? blackA.blackA1 : "none",
                 }}
               >
                 {isLineNumber && (
@@ -379,6 +379,7 @@ const TableConfigurable = ({
                 )}
                 {presentation.items.map((field: any, cellIndex: number) => (
                   <Cell
+                    key={cellIndex}
                     cellIndex={cellIndex}
                     justification={presentation.items[cellIndex].justification}
                     row={row}

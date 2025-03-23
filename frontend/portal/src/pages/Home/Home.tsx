@@ -1,5 +1,5 @@
 import { addToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
-import { alertColor, Alerts, BannerInformation, useToastContext } from "ux-ui";
+import { alertColor, Alerts, BannerInformation, /*useToastContext*/ } from "ux-ui";
 import { Card, Flex } from "@radix-ui/themes";
 import { ExclamationTriangleIcon, UpdateIcon } from "@radix-ui/react-icons";
 import {
@@ -23,7 +23,7 @@ const Home = () => {
   const [refreshKey, setRefreshKey] = useState(0); // Estado para forzar el refresco
   const [hasTriedSignin, setHasTriedSignin] = useState(false);
   const [t] = useTranslation("global_portal");
-  const { showToast } = useToastContext();
+  //const { showToast } = useToastContext();
   const auth = useAuth();
 
   /**
@@ -77,18 +77,18 @@ const Home = () => {
       if (auth.user) {
         const data = await getStructure();
         if (data?.error) {
-          showToast(
+          /*showToast(
             data.error + " (" + data.status + ") ",
             data.statusDescription || "",
             Alerts.error
-          );
+          );*/
         } else {
           await setSelectModule("0");
         }
       }
     };
     fetchData();
-  }, [auth.user, showToast]);
+  }, [auth.user]);
 
   if (auth.isLoading) {
     return (

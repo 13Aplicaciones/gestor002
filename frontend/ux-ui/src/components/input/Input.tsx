@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Alerts, BandPresentation, Direction } from "../../ConstantsPresentation";
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Flex, Text } from "@radix-ui/themes";
+import { Flex, Text, TextField, Slot } from "@radix-ui/themes";
 import { MessageField } from "./Menssages";
 import { MouseEventHandler, ReactNode, useState } from "react";
-import { Root as TextField, Slot } from "@radix-ui/themes/dist/cjs/components/text-field.js";
 import { TextArea } from "@radix-ui/themes";
 import useCalculatePresentation from "./Calculations";
 
@@ -39,7 +38,7 @@ const InputField = ({ title, placeholder, messageError, columns, directionLabel,
                 <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
-                <TextField type='text'
+                <TextField.Root type='text'
                     size="2" style={{ marginBottom: '1vh', width: presentation.width }}
                     placeholder={placeholder}
                     {...register}
@@ -73,7 +72,7 @@ const InputFieldDate = ({ title, placeholder, messageError, columns, directionLa
                 <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
-                <TextField type='date'
+                <TextField.Root type='date'
                     size="2" style={{ marginBottom: '1vh' }}
                     placeholder={placeholder}
                     {...register}
@@ -113,7 +112,7 @@ const InputSecretField = ({ title, placeholder, messageError, columns, direction
                 <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} >
-                <TextField type={visible ? 'text' : 'password'}
+                <TextField.Root type={visible ? 'text' : 'password'}
                     size="2" style={{ marginBottom: '1vh', width: presentation.width }}
                     placeholder={placeholder}
                     {...register}
@@ -125,7 +124,7 @@ const InputSecretField = ({ title, placeholder, messageError, columns, direction
                                 <EyeOpenIcon style={{ cursor: 'pointer' }} /> : <EyeClosedIcon style={{ cursor: 'pointer' }} />
                         }
                     </Slot>
-                </TextField>
+                </TextField.Root>
                 <MessageField message={messageError} />
             </Flex>
         </Flex>
@@ -190,7 +189,7 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
 
     return (
         <Flex direction={"row"} >
-            <TextField size="3" style={{ width: presentation.width }} placeholder={placeholder}
+            <TextField.Root size="3" style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
                 <Slot onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
@@ -198,7 +197,7 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
                 <Slot>
                     <MagnifyingGlassIcon />
                 </Slot>
-            </TextField>
+            </TextField.Root>
             <MessageField message={messageError} />
             {children}
         </Flex>
@@ -234,12 +233,12 @@ const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLab
 
     return (
         <Flex direction={presentation.direction} gap={size} style={{ alignItems: presentation.align }}>
-            <TextField size={size} style={{ width: presentation.width }} placeholder={placeholder}
+            <TextField.Root size={size} style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
                 <Slot onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
                 </Slot>
-            </TextField>
+            </TextField.Root>
             <MessageField message={messageError} alert={Alerts.error} />
             {children}
         </Flex>

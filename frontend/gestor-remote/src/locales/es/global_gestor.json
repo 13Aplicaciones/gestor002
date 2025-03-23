@@ -2,7 +2,7 @@
   "nameApp": "gestor",
   "title": "Gestor de tareas",
   "icon": "GestorIcon",
-  "description": "Gestor de tareas y errores",
+  "description": "Gestor de Modulos, Menús, Roles, Códigos Definidos, Usuarios, Errores, Información y Cambio de Clave de los usuarios",
   "actions":{
     "edit": "Editar",
     "delete": "Borrar",

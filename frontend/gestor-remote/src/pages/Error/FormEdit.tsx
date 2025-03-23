@@ -11,7 +11,6 @@ import {
   InformationPanelRegistration,
   InputField,
   StatusEdit,
-  useToastContext,
 } from "ux-ui";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
@@ -30,7 +29,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
-import {getTranslation, getTranslationWithLangAndNS} from "../../utils/getTranslation";
+import {  ToastDialog,
+} from "ux-ui/src/components/dialog/DialogState";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -51,20 +51,21 @@ const FormEdit = ({
   row?: IRowDataError;
   onAtras?: () => void;
 }) => {
+  
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(
-    status || StatusEdit.create
-  );
+  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
+  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [t] = useTranslation("global_gestor");
+  const [toast, setToast] = useState<{ status: boolean; message: string; alert: Alerts }>({
+    status: true,
+    message: "",
+    alert: Alerts.success,
+  });
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row ? row.uuid : "");
-  const { showToast } = useToastContext();
-  const [t] = useTranslation("global_gestor");
 
   /**
    * Esquema de validación de formulario
@@ -182,13 +183,38 @@ const FormEdit = ({
   const analizarAccionar = (response: IFetchData) => {
     if (response.error) {
       if (response.status === 400) {
+        setToast({
+          ...toast,
+          status: true,
+          message: response.responseErrorJSON.message,
+          alert: Alerts.warning,
+
+          /*onClose: () => {
+            setToast({ ...toast, status: false });
+          },?*/
+        });
+        /*
         showToast(
           response.error + " " + response.status.toString(),
           response.responseErrorJSON.message,
           Alerts.warning
         );
+        */
       } else {
+        setToast({
+          ...toast,
+          status: true,
+          message: response.responseErrorJSON.message,
+          alert: Alerts.warning,
+
+          /*onClose: () => {
+            setToast({ ...toast, status: false });
+          },?*/
+        });
+        /*
         showToast(response.status.toString(), response.error, Alerts.warning);
+        setVerDialogo(true);
+        */
       }
       return;
     } else {
@@ -196,11 +222,25 @@ const FormEdit = ({
       if (respuesta.response && respuesta.response.uuid) {
         setUuid(respuesta.response.uuid);
       }
+
+      setToast({
+        ...toast,
+        status: true,
+        message: "t(actions.saveSatisfactoryDescription)",
+        alert: Alerts.success,
+
+        /*onClose: () => {
+          setToast({ ...toast, status: false });
+        },?*/
+      });
+
+      /*
       showToast(
         t("actions.saveSatisfactory", { status: respuesta.status.toString() }),
         t("actions.saveSatisfactoryDescription"),
         Alerts.success
       );
+      */
     }
   };
 
@@ -247,19 +287,13 @@ const FormEdit = ({
     setDialogStatus(false);
   };
 
-  const testIne18 = getTranslation("actions.errorFetch",  {error: "hola"});
-  const testIne18Int = getTranslationWithLangAndNS("actions.errorFetch", "es", "global_api", {error: "hola"});
-
   return (
     <>
-      hola: {testIne18}
-      hola: {testIne18Int}
       <BannerInformation message={messageFormulario} alert={Alerts.error} />
       <Flex direction="row" gap="3" align="center">
         <FormState statusEdit={formStatus} />
         <InformationPanelRegistration row={row} />
       </Flex>
-
       <DialogDelete
         dialogRefresh={dialogRefresh}
         dialogStatus={dialogStatus}
@@ -268,6 +302,10 @@ const FormEdit = ({
         onCancel={handleOnCancelDelete}
       />
 
+      <ToastDialog
+        {...toast}
+        onClose={() => setToast({ ...toast, status: false })}
+      />
       <form onSubmit={handleSubmit(accionar)}>
         <InputField
           title={t("modules.GS-ER-001.fields.indexError.title")}

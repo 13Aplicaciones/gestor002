@@ -6,6 +6,15 @@ import i18n from "../i18n";
  * 
  * @author @omargo33
  * @since 2025-03-22
+ *   const testIne18 = getTranslation("actions.errorFetch", { error: "hola" });
+  const testIne18Int = getTranslationWithLangAndNS(
+    "actions.errorFetch",
+    "es",
+    "global_api",
+    { error: "hola" }
+  );
+
+ * 
  */
 
 /**
