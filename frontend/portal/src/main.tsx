@@ -6,7 +6,6 @@ import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes';
-import { ToastContextProvider } from "ux-ui";
 import Home from "./pages/Home/Home.tsx";
 import i18n from "./i18n.tsx";
 
@@ -40,9 +39,7 @@ createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
           <Theme accentColor="mint" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
-            <ToastContextProvider>
               <Home />
-            </ToastContextProvider>
           </Theme>
         </AuthProvider>
       </QueryClientProvider>

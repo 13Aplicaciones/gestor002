@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  //Alerts,
   BandPresentation,
   Direction,
   SortColumn,
@@ -19,7 +18,6 @@ import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { useForm } from "react-hook-form";
-//import { useToastContext } from "../toast/useToastContext";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -75,8 +73,6 @@ const CreateSearchFieldOrder = ({
   token?: string;
   getToken?: (() => Promise<string>) | undefined;
 }) => {
-  //const { showToast } = useToastContext();
-
   const [t] = useTranslation("global_ux");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -153,6 +149,7 @@ const CreateSearchFieldOrder = ({
     })
       .then((response) => {
         if (response.error) {
+          //TODO: Implementar alertas
           /*showToast(
             response.error + " (" + response.status.toString() + ")",
             t("httpStatusResolve." + response.status.toString()),
@@ -168,7 +165,6 @@ const CreateSearchFieldOrder = ({
         }
       })
       .catch((error) => {
-        //showToast("Error", error, Alerts.error);
         console.error("Error: " + error); 
       });
   };

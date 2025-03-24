@@ -1,12 +1,11 @@
 import { alertColor, mapStatusToAlert } from "../IconosColoresAlerts";
 import { Alerts } from "../../ConstantsPresentation";
 import { Badge, Box, Card, Flex, Heading, Link, Text, Skeleton } from "@radix-ui/themes";
+import { blackA } from "@radix-ui/colors"
 import { getIconComponent } from "../icon/IconDynamic";
 import { MouseEventHandler } from "react";
 import { Pencil1Icon } from "@radix-ui/react-icons";
-// import { useThemeContext } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
-import { /*whiteA,*/ blackA } from "@radix-ui/colors"
 
 /**
  * DataItemBadge type.
@@ -101,6 +100,7 @@ const CardGrid = (
         { title: string, description: string, iconName: string, descriptionLength?: number, firtsColor?: boolean, onClick?: MouseEventHandler<HTMLDivElement>, data: DataItemBadge[] }) => {
 
     const [t] = useTranslation("global_ux");
+    //TODO: revisar el tema de los colores 
     //const theme = useThemeContext();
     //const colorBackground = (theme.appearance === "light") ? firtsColor ? blackA.blackA3 : blackA.blackA1 : firtsColor ? whiteA.whiteA3 : whiteA.whiteA1;
     const colorBackground = firtsColor ? blackA.blackA3 : blackA.blackA1;

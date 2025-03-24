@@ -58,8 +58,6 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
 
       const parameter: IParameter = await getParameter("GS_001_00", "200");
       setParameterUrl(parameter);
-
-      // TODO: Implementar la consulta de Indices definidos por el usuario.
     };
 
     initializeStructure();

@@ -13,7 +13,6 @@
 export { alertIcon, alertIconSize, alertColor, alertColorBackground, alertVariant, mapStatusToAlert } from './components/IconosColoresAlerts';
 export { Alerts, BandPresentation, Direction, TextFormat, JustificationText, SortColumn, StatusEdit, FormatMaskISO } from './ConstantsPresentation.tsx';
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
-//export { DialogForm, DialogAlerts } from './components/dialog/Dialog';
 export { DialogForm, DialogAlerts } from './components/dialog/DialogState';
 export { DialogDelete } from './components/crud/DialogDelete';
 
@@ -34,10 +33,6 @@ export type { IParametersQuery } from './components/table/TableSearch';
 export { TableConfigurable } from './components/table/Table';
 export { CreateSearchField } from './components/table/TableSearch';
 export { CreateSearchFieldOrder } from './components/table/TableSearchOrder';
-
-// Exportar elementos de la libreria para Toast
-export { ToastContextProvider  } from './components/toast/ToastContextProvider';
-//export { useToastContext } from './components/toast/useToastContext';
 
 // Exportar elementos formatos de fecha
 export { formatDateMask, formatDateSocialNetwork, formatDateSocialNetworkDinamic } from './utils/FormatMask';

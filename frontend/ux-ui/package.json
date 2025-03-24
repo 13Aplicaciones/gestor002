@@ -8,7 +8,7 @@
     "dev": "vite --port 3002 --strictPort",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --port 3000 --strictPort",
+    "preview": "vite preview --port 3002 --strictPort",
     "test": "jest",
     "format": "prettier --write ."
   },

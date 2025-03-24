@@ -1,11 +1,4 @@
-import {
-  //Alerts,
-  CardGrid,
-  CardGridSkeleton,
-  GridDashboard,
-  //useToastContext,
-} from "ux-ui";
-// import { AppGestor } from "./Demo";
+import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
 import { Button as MiB } from "@radix-ui/themes";
 import { getSelectModule } from "orchestrator_remote/service/Structure";
 import { getStatic } from "orchestrator_remote/service/Statics";
@@ -13,9 +6,7 @@ import { IModuleRoot } from "./Header";
 import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-//import * as Temp from "./Demo";
 import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
-
 import { WrapOrigin } from "gestor_remote/Wrap";
 
 /**
@@ -49,20 +40,15 @@ const Card = ({
   description: string;
   iconName?: string;
 }) => {
-  //const { showToast } = useToastContext();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const executeFindStatics = async (indexMenu: string) => {
       const dataStatic = await getStatic(indexMenu);
       if (dataStatic?.error) {
-        /*
-        showToast(
-          dataStatic.error + " (" + dataStatic.status + ") ",
-          dataStatic.statusDescription || "",
-          Alerts.error
-        );
-        */
+        console.error(dataStatic.error + " (" + dataStatic.status + ") ");
+        console.error(dataStatic.statusDescription || "");
+
         setData([]);
       } else {
         setData(dataStatic);
@@ -74,7 +60,7 @@ const Card = ({
     if (!indexMenu) {
       console.error("useEffect -> indexMenu is empty");
     }
-  }, [index, indexMenu /*showToast*/]);
+  }, [index, indexMenu]);
 
   return (
     <CardGrid
@@ -99,7 +85,6 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
     Record<string, IModuleRoot>
   >({});
   const [loading, setLoading] = useState(true);
-
   const [t] = useTranslation("global");
 
   const fetchData = async () => {
@@ -119,25 +104,19 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
   }, [refreshModule]);
 
   const [flag, setFlag] = useState(false);
-  //const [contenidoName, setContenidoName] = useState("Button");
-
-  /*
-  const getCustomComponent = (name: string) => {
-    //const MiComponent = Temp[name as keyof typeof Temp];
-    
-    
-    //return MiComponent ? <Temp.Button /> : <Temp.Button />;
-    return <Temp.Button />;
-  };
-  */
-
   const handleSwitch = () => {
     setFlag(!flag);
-    //setContenidoName(flag ? "Button" : "Footer");
   };
 
   return (
     <>
+      {
+        <CatchErrorLoadElement titleName="gestor">
+          <Suspense fallback={t("messages.loading")}>
+            <WrapOrigin name={"GS-ER-001"} />
+          </Suspense>
+        </CatchErrorLoadElement>
+      }
       <>
         {!loading && (
           <GridDashboard>
@@ -170,14 +149,6 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
       </CatchErrorLoadElement>
 
       <MiB onClick={handleSwitch}>Button</MiB>
-
-      {
-        <CatchErrorLoadElement titleName="gestor">
-          <Suspense fallback={t("messages.loading")}>
-            <WrapOrigin name={"GS-IN-001"} />
-          </Suspense>
-        </CatchErrorLoadElement>
-      }
     </>
   );
 };

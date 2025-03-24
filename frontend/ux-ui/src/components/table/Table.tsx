@@ -20,7 +20,7 @@ import {
   Skeleton,
   Table,
   Text,
-  //useThemeContext,
+  Theme,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
@@ -221,7 +221,7 @@ const Title = ({
   }, [sort]);
 
   return (
-    <>
+    <Flex>
       {(!sortVisible && (
         <Text size="2" weight="bold">
           {text}
@@ -270,7 +270,7 @@ const Title = ({
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )}
-    </>
+    </Flex>
   );
 };
 
@@ -304,13 +304,10 @@ const TableConfigurable = ({
     onOrderChange: (title: string, direction: SortColumn) => void;
   };
 }) => {
-  const [t] = useTranslation("global_ux");
-  const [presentation, setPresentation] =
-    useState<IPresentationTable>(presentationTable);
+  
+  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
-  //const theme  = useThemeContext();
-   
-
+  const [t] = useTranslation("global_ux");
   /**
    * Funcion para generar el header de la tabla.
    *
@@ -354,7 +351,7 @@ const TableConfigurable = ({
   }, [presentationTable, presentationSorts]);
 
   return (
-    <>
+    <Theme accentColor="mint" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
       {!data || data.length === 0 ? (
         <BannerInformation
           message={t("tabla.noDataSearch")}
@@ -395,7 +392,7 @@ const TableConfigurable = ({
           </Table.Body>
         </Table.Root>
       )}
-    </>
+    </Theme>
   );
 };
 

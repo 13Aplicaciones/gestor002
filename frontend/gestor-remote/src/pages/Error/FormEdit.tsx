@@ -24,13 +24,12 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { IRowDataError } from "./Types";
+import { ToastDialog } from "ux-ui/src/components/dialog/DialogState";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useTranslation } from "react-i18next";
-import {  ToastDialog,
-} from "ux-ui/src/components/dialog/DialogState";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -51,16 +50,25 @@ const FormEdit = ({
   row?: IRowDataError;
   onAtras?: () => void;
 }) => {
-  
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(
+    status || StatusEdit.create
+  );
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
   const [t] = useTranslation("global_gestor");
-  const [toast, setToast] = useState<{ status: boolean; message: string; alert: Alerts }>({
-    status: true,
+  const [toast, setToast] = useState<{
+    status: boolean;
+    title: string;
+    message: string;
+    alert: Alerts;
+  }>({
+    status: false,
+    title: "",
     message: "",
     alert: Alerts.success,
   });
@@ -186,35 +194,18 @@ const FormEdit = ({
         setToast({
           ...toast,
           status: true,
-          message: response.responseErrorJSON.message,
+          title: response.error + " (" + response.status.toString() + ")",
+          message: response.error,
           alert: Alerts.warning,
-
-          /*onClose: () => {
-            setToast({ ...toast, status: false });
-          },?*/
         });
-        /*
-        showToast(
-          response.error + " " + response.status.toString(),
-          response.responseErrorJSON.message,
-          Alerts.warning
-        );
-        */
       } else {
         setToast({
           ...toast,
           status: true,
-          message: response.responseErrorJSON.message,
+          title: response.status.toString(),
+          message: response.error,
           alert: Alerts.warning,
-
-          /*onClose: () => {
-            setToast({ ...toast, status: false });
-          },?*/
         });
-        /*
-        showToast(response.status.toString(), response.error, Alerts.warning);
-        setVerDialogo(true);
-        */
       }
       return;
     } else {
@@ -226,21 +217,10 @@ const FormEdit = ({
       setToast({
         ...toast,
         status: true,
-        message: "t(actions.saveSatisfactoryDescription)",
+        title: t("actions.saveSatisfactory", { status: response.status }),
+        message: t("actions.saveSatisfactoryDescription"),
         alert: Alerts.success,
-
-        /*onClose: () => {
-          setToast({ ...toast, status: false });
-        },?*/
       });
-
-      /*
-      showToast(
-        t("actions.saveSatisfactory", { status: respuesta.status.toString() }),
-        t("actions.saveSatisfactoryDescription"),
-        Alerts.success
-      );
-      */
     }
   };
 
@@ -289,23 +269,22 @@ const FormEdit = ({
 
   return (
     <>
-      <BannerInformation message={messageFormulario} alert={Alerts.error} />
-      <Flex direction="row" gap="3" align="center">
-        <FormState statusEdit={formStatus} />
-        <InformationPanelRegistration row={row} />
-      </Flex>
-      <DialogDelete
+       <DialogDelete
         dialogRefresh={dialogRefresh}
         dialogStatus={dialogStatus}
         loadingOnDelete={loading}
         onDelete={handleOnDelete}
         onCancel={handleOnCancelDelete}
       />
-
       <ToastDialog
         {...toast}
         onClose={() => setToast({ ...toast, status: false })}
       />
+      <BannerInformation message={messageFormulario} alert={Alerts.error} />
+      <Flex direction="row" gap="3" align="center">
+        <FormState statusEdit={formStatus} />
+        <InformationPanelRegistration row={row} />
+      </Flex>
       <form onSubmit={handleSubmit(accionar)}>
         <InputField
           title={t("modules.GS-ER-001.fields.indexError.title")}

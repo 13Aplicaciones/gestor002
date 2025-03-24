@@ -1,5 +1,5 @@
-import { blackA, /*whiteA*/ } from "@radix-ui/colors";
-import { Grid, /*useThemeContext*/ } from "@radix-ui/themes";
+import { blackA, } from "@radix-ui/colors";
+import { Grid, } from "@radix-ui/themes";
 import { ReactNode } from "react";
 
 /**
@@ -22,8 +22,6 @@ import { ReactNode } from "react";
  * @returns
  */
 const GridDashboard = ({ children, ...props }: { children?: ReactNode }) => {
-    //const theme  = useThemeContext();
-   
     return (
         <Grid
             gap="4"

@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-
-//TODO se debe poner processos de encriptacion y desencriptacion de datos asincronos.
-
 /**
  * Manejo de base de datos indexada
  * 

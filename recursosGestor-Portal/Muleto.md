@@ -165,8 +165,6 @@ npm run dev
 
 ## Estructura base
 La estructura base [[ArquitecturaReact]]
-
-
 # Errores reportados 🚩
 ---
 ## hook y toast en la consola 🐞
@@ -179,6 +177,13 @@ npm remove ux-ui
 npm install ../api-fetch
 npm install ../ux-ui
 
+npm link ../api-fetch/node_modules/react
+npm link ../ux-ui/node_modules/react
+```
+
+Cuando hay problemas se debe validar mas que nada los link
+
+```bash
 npm link ../api-fetch/node_modules/react
 npm link ../ux-ui/node_modules/react
 ```
@@ -199,8 +204,6 @@ spring.config.import=optional:configserver:${CONFIG_SERVER_URL:http://localhost:
 export COOFING_CLIENT_SECRET=a4qENAfxmaapoMzXwAiduBZuLPcF1Pl7
 
 export COOFING_URL_KEYCLOAK=http://localhost:8080
-
-
 
 
 

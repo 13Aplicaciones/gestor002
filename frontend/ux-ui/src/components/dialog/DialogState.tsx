@@ -1,9 +1,11 @@
 import "../../i18n";
 import { alertColor, alertIconSize } from "../IconosColoresAlerts";
 import { Alerts } from "../../ConstantsPresentation";
-import { Button, Dialog, Flex, Separator } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Separator, Text } from "@radix-ui/themes";
+import { blackA } from "@radix-ui/colors";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 
 /**
  * Funciones de presentation de Dialogos.
@@ -155,7 +157,7 @@ const DialogAlerts = ({
 
   return (
     <Dialog.Root open={open}>
-      <Dialog.Content>
+      <Dialog.Content style={{ marginTop: "0px" }}>
         {title && (
           <Dialog.Title>
             <Flex gap="2" style={{ color: alertColor({ alert }) }}>
@@ -182,27 +184,6 @@ const DialogAlerts = ({
   );
 };
 
-/*
-interface IToeastDialog {
-  key : string;
-  status: boolean;
-  message: string;
-  alert: Alerts;
-  duration?: number;
-  onClose?: () => void;
-}
-
-export const createIToasDialog = (): IToeastDialog => {
-  return {
-    key : "",
-    status: true,
-    message: "",
-    alert: Alerts.info,
-    duration: 3000,
-    onClose: () => {},
-  };
-};
-*/
 /**
  * Componente ToastDialog para mostrar mensajes en una esquina de la pantalla.
  *
@@ -214,12 +195,14 @@ export const createIToasDialog = (): IToeastDialog => {
  */
 const ToastDialog = ({
   status,
+  title,
   message,
   alert,
   duration = 3000,
   onClose,
 }: {
   status: boolean;
+  title: string;
   message: string;
   alert: Alerts;
   duration?: number;
@@ -259,9 +242,17 @@ const ToastDialog = ({
         zIndex: 1000,
       }}
     >
-      <Flex gap="2" align="center">
-        {alertIconSize({ alert, size: "24" })}
-        <span>{message}</span>
+      <Flex gap="2" align="center" style={{ color: blackA.blackA9 }}>
+        {alertIconSize({ alert, size: "36" })}
+
+        <Flex direction="column" gap="1" >
+          <Text size="3" weight="bold" >
+            <span style={{ fontWeight: "bold" }}>{title}</span>
+          </Text>
+          <Text size="2" weight="medium">
+            <span>{message}</span>
+          </Text>
+        </Flex>
       </Flex>
     </div>
   );

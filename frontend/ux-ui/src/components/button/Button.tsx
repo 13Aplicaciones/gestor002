@@ -1,6 +1,5 @@
 import { ArrowLeftIcon, PlusIcon } from "@radix-ui/react-icons";
 import { IconButton } from "@radix-ui/themes";
-// import { useTranslation } from "react-i18next";
 
 /**
  * Componete que representa los botones personalizados.
@@ -23,7 +22,7 @@ const ButtonCreateRecordFloating = ({
   disabled = false,
   onClick,
 }: {
-  toolTip: string;
+  toolTip?: string;
   disabled?: boolean;
   onClick?: () => void;
 }) => {

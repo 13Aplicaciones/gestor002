@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import { store } from 'api-fetch'
 import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes'
-import { ToastContextProvider } from "./components/toast/ToastContextProvider.tsx";
 import App from './App.tsx'
 import i18n from "./i18n.tsx";
 /**
@@ -22,9 +21,7 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
         <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="light">
-          <ToastContextProvider >
             <App />
-          </ToastContextProvider >
         </Theme>
       </Provider>
     </I18nextProvider>

@@ -11,6 +11,7 @@ const runApi = () => {
     username: 'root',
     password: '12341234s',
     client_id: 'gestor002-client',
+    //TODO: client_secret se debe poner en el archivo de configuracion
     //client_secret: 'NGrjAmonCxkiOlUJ1Wj1KgeS5mKRZfmG',
     grant_type: 'password'
   };
