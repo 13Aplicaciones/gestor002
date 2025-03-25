@@ -6,6 +6,9 @@
 ##
 ## Usage: ./clean.sh
 ##
+clear
+echo -e "\e[32m---------------- inicio de instalacion ---------------- \e[0m"
+
 cd api-fetch 
 rm -rf dist node_modules package-lock.json
 npm install 
@@ -17,6 +20,7 @@ cd ux-ui
 rm -rf dist node_modules package-lock.json
 npm install 
 ./installAPI.sh
+npm run build
 cd ..
 echo -e "\e[32m---------------- ux-ui finished ---------------- \e[0m"
 

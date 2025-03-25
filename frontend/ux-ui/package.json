@@ -49,6 +49,6 @@
     "package.json"
   ],
   "dependencies": {
-    "api-fetch": "file:../api-fetch"    
+    "api-fetch": "file:../api-fetch"
   }
 }
