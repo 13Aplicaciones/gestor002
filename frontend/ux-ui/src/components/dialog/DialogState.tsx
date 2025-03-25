@@ -100,15 +100,26 @@ const DialogForm = ({
 
   return (
     <Dialog.Root open={open}>
-      <Dialog.Content maxWidth="500px">
+      <Dialog.Content
+        // maxWidth="500px"
+        align="center"
+        style={{
+          position: "fixed",
+          top: "calc(50% - 50vh / 2)",
+          left: "50%",
+          transform: "translateX(-50%)", // Adjusted to center both horizontally and vertically
+          width: "100%", // Ensures responsiveness
+          maxWidth: "500px", // Limits the width to 500px
+        }}
+      >
         {title && (
           <Dialog.Title>
-            <span dangerouslySetInnerHTML={{ __html: title }} />
+        <span dangerouslySetInnerHTML={{ __html: title }} />
           </Dialog.Title>
         )}
         {description && (
           <Dialog.Description>
-            <span dangerouslySetInnerHTML={{ __html: description }} />
+        <span dangerouslySetInnerHTML={{ __html: description }} />
           </Dialog.Description>
         )}
         {children}
@@ -157,24 +168,34 @@ const DialogAlerts = ({
 
   return (
     <Dialog.Root open={open}>
-      <Dialog.Content style={{ marginTop: "0px" }}>
+      <Dialog.Content
+        // maxWidth="500px"
+        align="center"
+        style={{
+          position: "fixed",
+          top: "calc(50% - 50vh / 2)",
+          left: "50%",
+          transform: "translateX(-50%)", // Adjusted to center both horizontally and vertically
+          width: "100%", // Ensures responsiveness
+          maxWidth: "500px", // Limits the width to 500px
+        }}
+      >
         {title && (
           <Dialog.Title>
-            <Flex gap="2" style={{ color: alertColor({ alert }) }}>
-              {alertIconSize({ alert: alert, size: "24" })}
-              <span dangerouslySetInnerHTML={{ __html: title }} />
-            </Flex>
+        <Flex gap="2" style={{ color: alertColor({ alert }) }}>
+          {alertIconSize({ alert: alert, size: "24" })}
+          <span dangerouslySetInnerHTML={{ __html: title }} />
+        </Flex>
           </Dialog.Title>
         )}
         {description && (
           <Dialog.Description>
-            <span dangerouslySetInnerHTML={{ __html: description }} />
+        <span dangerouslySetInnerHTML={{ __html: description }} />
           </Dialog.Description>
         )}
         {children}
         {footDialogue({
           closeDialogue: () => setOpen(!open),
-
           textAction: t("actions.cancel"),
           cancel: cancel,
           buttons: buttons,

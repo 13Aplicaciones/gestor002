@@ -208,10 +208,10 @@ const Title = ({
     } else {
       console.warn(
         "onOrderChange -> No Setup (name: " +
-          name +
-          " direction: " +
-          direction +
-          ")"
+        name +
+        " direction: " +
+        direction +
+        ")"
       );
     }
   };
@@ -227,49 +227,49 @@ const Title = ({
           {text}
         </Text>
       )) || (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
-              {sortVisible === SortColumn.asc && <CaretUpIcon />}
-              {sortVisible === SortColumn.desc && <CaretDownIcon />}
-              {sortVisible === SortColumn.neutral && <CaretSortIcon />}
-              <Text size="2" weight="bold">
-                {text}
-              </Text>
-            </IconButton>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item
-              disabled={sortVisible === SortColumn.asc}
-              onClick={() => {
-                handleChange(name, SortColumn.asc, onOrderChange);
-              }}
-            >
-              <CaretUpIcon />
-              {t("tabla.orderAsc")}
-            </DropdownMenu.Item>
-            <DropdownMenu.Item
-              disabled={sortVisible === SortColumn.desc}
-              onClick={() => {
-                handleChange(name, SortColumn.desc, onOrderChange);
-              }}
-            >
-              <CaretDownIcon />
-              {t("tabla.orderDesc")}
-            </DropdownMenu.Item>
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item
-              disabled={sortVisible === SortColumn.neutral}
-              onClick={() => {
-                handleChange(name, SortColumn.neutral, onOrderChange);
-              }}
-            >
-              <CaretSortIcon />
-              {t("tabla.unordered")}
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      )}
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
+                {sortVisible === SortColumn.asc && <CaretUpIcon />}
+                {sortVisible === SortColumn.desc && <CaretDownIcon />}
+                {sortVisible === SortColumn.neutral && <CaretSortIcon />}
+                <Text size="2" weight="bold">
+                  {text}
+                </Text>
+              </IconButton>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <DropdownMenu.Item
+                disabled={sortVisible === SortColumn.asc}
+                onClick={() => {
+                  handleChange(name, SortColumn.asc, onOrderChange);
+                }}
+              >
+                <CaretUpIcon />
+                {t("tabla.orderAsc")}
+              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                disabled={sortVisible === SortColumn.desc}
+                onClick={() => {
+                  handleChange(name, SortColumn.desc, onOrderChange);
+                }}
+              >
+                <CaretDownIcon />
+                {t("tabla.orderDesc")}
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item
+                disabled={sortVisible === SortColumn.neutral}
+                onClick={() => {
+                  handleChange(name, SortColumn.neutral, onOrderChange);
+                }}
+              >
+                <CaretSortIcon />
+                {t("tabla.unordered")}
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        )}
     </Flex>
   );
 };
@@ -304,7 +304,7 @@ const TableConfigurable = ({
     onOrderChange: (title: string, direction: SortColumn) => void;
   };
 }) => {
-  
+
   const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
@@ -351,7 +351,7 @@ const TableConfigurable = ({
   }, [presentationTable, presentationSorts]);
 
   return (
-    <Theme accentColor="mint" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
+    <Theme asChild={true}>
       {!data || data.length === 0 ? (
         <BannerInformation
           message={t("tabla.noDataSearch")}

@@ -7,12 +7,7 @@ import i18next from "./i18n";
 const WrapOrigin = ({ name }: { name: string }) => {
   return (
     <Theme
-      accentColor="indigo"
-      grayColor="auto"
-      scaling="100%"
-      radius="medium"
-      panelBackground="translucent"
-      appearance="dark"
+      asChild={true}   
     >
       <I18nextProvider i18n={i18next}>
           <Origin name={name} />

@@ -1,13 +1,13 @@
-import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
 import { Button as MiB } from "@radix-ui/themes";
-import { getSelectModule } from "orchestrator_remote/service/Structure";
-import { getStatic } from "orchestrator_remote/service/Statics";
-import { IModuleRoot } from "./Header";
-import { Suspense } from "react";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
 import { WrapOrigin } from "gestor_remote/Wrap";
+import { getStatic } from "orchestrator_remote/service/Statics";
+import { getSelectModule } from "orchestrator_remote/service/Structure";
+import { Suspense, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
+import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
+import { IModuleRoot } from "./Header";
+import { Portal } from "radix-ui";
 
 /**
  * Cuerpo de la pagina principal
@@ -113,7 +113,11 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
       {
         <CatchErrorLoadElement titleName="gestor">
           <Suspense fallback={t("messages.loading")}>
+
+              
             <WrapOrigin name={"GS-ER-001"} />
+  
+  
           </Suspense>
         </CatchErrorLoadElement>
       }

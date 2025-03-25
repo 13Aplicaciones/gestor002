@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <Theme accentColor="teal" grayColor="auto" scaling="105%" panelBackground="translucent" appearance="light">
+        <Theme  asChild={true}>
             <App />
         </Theme>
       </Provider>

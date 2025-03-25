@@ -3,8 +3,8 @@
     {
       "path": "."
     }
-  ],  
-  "settings": {    
+  ],
+  "settings": {
     "files.exclude": {
       "api-fetch": false,
       "demo-remote": true,
@@ -15,7 +15,7 @@
       "ux-ui": false,
       "**/node_modules": true,
       "**/dist": true,
-      ".vscode": true
+      ".vscode": false
     },
     "workbench.colorCustomizations": {
       "activityBar.activeBackground": "#1f6fd0",
@@ -41,8 +41,8 @@
   "extensions": {
     "recommendations": [
       "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",	  
+      "esbenp.prettier-vscode",
       "EbenezerDon.npm-studio"
     ]
-  }
+  }, 
 }
