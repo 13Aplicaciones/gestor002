@@ -7,8 +7,8 @@
   "settings": {
     "files.exclude": {
       "api-fetch": false,
-      "demo-remote": true,
-      "frontend-oauth2": true,
+      "demo-remote": false,
+      "frontend-oauth2": false,
       "gestor-remote": false,
       "orchestrator-remote": false,
       "portal": false,
