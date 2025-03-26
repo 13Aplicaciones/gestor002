@@ -12,7 +12,7 @@ import {
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
 import { fetchData } from "api-fetch";
-import { Flex, IconButton, Text } from "@radix-ui/themes";
+import { Flex, IconButton, Text, Theme } from "@radix-ui/themes";
 import { InputSubmit } from "../input/Input";
 import { MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
@@ -335,6 +335,7 @@ const CreateSearchFieldOrder = ({
   };
 
   return (
+    <Theme asChild={true}>
     <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
       {loading ? (
         <TableSkeleton column={presentationTable.items.length} />
@@ -359,6 +360,7 @@ const CreateSearchFieldOrder = ({
         </>
       )}
     </Flex>
+    </Theme>
   );
 };
 

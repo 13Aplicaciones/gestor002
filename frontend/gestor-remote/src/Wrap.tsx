@@ -6,9 +6,7 @@ import i18next from "./i18n";
 
 const WrapOrigin = ({ name }: { name: string }) => {
   return (
-    <Theme
-      asChild={true}   
-    >
+    <Theme asChild={true} >
       <I18nextProvider i18n={i18next}>
           <Origin name={name} />
       </I18nextProvider>

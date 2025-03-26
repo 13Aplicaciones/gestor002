@@ -70,7 +70,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
     banding: true,
     headers: true,
     numberLinea: false,
-    skeletonWidth: "96vw",
+    skeletonWidth: "90vw",
     items: [
       {
         name: "indexError",
@@ -100,7 +100,7 @@ const Query = ({ onEditRow, onSeeRow }: ITablaProps) => {
         title: t("modules.GS-ER-001.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
-        width: "40vw",
+        width: "34vw",
       },
       {
         name: "userDate",

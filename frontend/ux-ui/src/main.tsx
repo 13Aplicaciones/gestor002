@@ -20,8 +20,8 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <Theme  asChild={true}>
-            <App />
+        <Theme asChild={true}>
+          <App />
         </Theme>
       </Provider>
     </I18nextProvider>

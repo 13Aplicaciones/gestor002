@@ -8,14 +8,7 @@ import i18next from "./i18n";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Theme
-      accentColor="indigo"
-      grayColor="auto"
-      scaling="100%"
-      radius="medium"
-      panelBackground="translucent"
-      appearance="dark"
-    >
+    <Theme accentColor="indigo" grayColor="auto" scaling="100%" radius="medium" panelBackground="translucent" appearance="dark">
       <I18nextProvider i18n={i18next}>
         <App />
       </I18nextProvider>

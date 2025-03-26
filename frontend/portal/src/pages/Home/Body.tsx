@@ -114,10 +114,10 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
         <CatchErrorLoadElement titleName="gestor">
           <Suspense fallback={t("messages.loading")}>
 
-              
+
             <WrapOrigin name={"GS-ER-001"} />
-  
-  
+
+
           </Suspense>
         </CatchErrorLoadElement>
       }

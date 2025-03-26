@@ -20,7 +20,7 @@ import {
   Skeleton,
   Table,
   Text,
-  Theme,
+  //Theme,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
@@ -351,7 +351,7 @@ const TableConfigurable = ({
   }, [presentationTable, presentationSorts]);
 
   return (
-    <Theme asChild={true}>
+    <>
       {!data || data.length === 0 ? (
         <BannerInformation
           message={t("tabla.noDataSearch")}
@@ -392,7 +392,7 @@ const TableConfigurable = ({
           </Table.Body>
         </Table.Root>
       )}
-    </Theme>
+    </>
   );
 };
 

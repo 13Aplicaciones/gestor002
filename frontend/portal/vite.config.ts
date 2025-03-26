@@ -12,7 +12,7 @@ export default defineConfig({
         gestor_remote: "http://localhost:5002/assets/gestorRemoteEntry.js",        
         orchestrator_remote: "http://localhost:5050/assets/orchestratorRemoteEntry.js",        
       },      
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", '@radix-ui/themes'],
     }),
   ],
   build: {
