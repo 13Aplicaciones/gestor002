@@ -1,5 +1,5 @@
-import { blackA, } from "@radix-ui/colors";
-import { Grid, } from "@radix-ui/themes";
+import { blackA, whiteA } from "@radix-ui/colors";
+import { Grid, useThemeContext } from "@radix-ui/themes";
 import { ReactNode } from "react";
 
 /**
@@ -22,6 +22,8 @@ import { ReactNode } from "react";
  * @returns
  */
 const GridDashboard = ({ children, ...props }: { children?: ReactNode }) => {
+    const theme  = useThemeContext();
+   
     return (
         <Grid
             gap="4"
@@ -29,7 +31,7 @@ const GridDashboard = ({ children, ...props }: { children?: ReactNode }) => {
             columns={{ xs: "1", sm: "2", md: "3", lg: "3", xl: "4" }}
             style={{
                 borderRadius: '8px',
-                backgroundColor:  blackA.blackA1,
+                backgroundColor: theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1,
                 border: `1px solid ${blackA.blackA2}`,
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
             }}

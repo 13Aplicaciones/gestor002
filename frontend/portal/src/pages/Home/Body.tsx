@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
 import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
 import { IModuleRoot } from "./Header";
-import { Portal } from "radix-ui";
 
 /**
  * Cuerpo de la pagina principal
@@ -113,6 +112,7 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
       {
         <CatchErrorLoadElement titleName="gestor">
           <Suspense fallback={t("messages.loading")}>
+
 
 
             <WrapOrigin name={"GS-ER-001"} />

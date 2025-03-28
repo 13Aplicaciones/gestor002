@@ -34,6 +34,10 @@ export { TableConfigurable } from './components/table/Table';
 export { CreateSearchField } from './components/table/TableSearch';
 export { CreateSearchFieldOrder } from './components/table/TableSearchOrder';
 
+// Exportar elementos de la libreria para Toast
+export { ToastContextProvider  } from './components/toast/ToastContextProvider';
+export { useToastContext } from './components/toast/useToastContext';
+
 // Exportar elementos formatos de fecha
 export { formatDateMask, formatDateSocialNetwork, formatDateSocialNetworkDinamic } from './utils/FormatMask';
 

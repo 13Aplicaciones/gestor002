@@ -6,7 +6,7 @@ import {
   JustificationText,
   FormatMaskISO,
 } from "../../ConstantsPresentation";
-import { blackA, /*whiteA*/ } from "@radix-ui/colors";
+import { blackA, whiteA } from "@radix-ui/colors";
 import {
   CaretDownIcon,
   CaretSortIcon,
@@ -20,6 +20,7 @@ import {
   Skeleton,
   Table,
   Text,
+  useThemeContext,
   //Theme,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
@@ -308,6 +309,8 @@ const TableConfigurable = ({
   const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
+  const theme  = useThemeContext();
+
   /**
    * Funcion para generar el header de la tabla.
    *
@@ -366,7 +369,7 @@ const TableConfigurable = ({
                 key={rowIndex}
                 style={{
                   backgroundColor:
-                    isBand && rowIndex % 2 !== 0 ? blackA.blackA1 : "none",
+                  isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
                 }}
               >
                 {isLineNumber && (

@@ -5,12 +5,15 @@ import { StrictMode } from "react";
 import { Theme } from "@radix-ui/themes";
 import App from "./App.tsx";
 import i18next from "./i18n";
+import { ToastContextProvider } from "ux-ui";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Theme accentColor="indigo" grayColor="auto" scaling="100%" radius="medium" panelBackground="translucent" appearance="dark">
+    <Theme accentColor="indigo" grayColor="auto" scaling="100%" radius="medium" panelBackground="translucent" appearance="light">
       <I18nextProvider i18n={i18next}>
-        <App />
+        <ToastContextProvider>
+          <App />
+        </ToastContextProvider>
       </I18nextProvider>
     </Theme>
   </StrictMode>

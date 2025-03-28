@@ -1,13 +1,13 @@
-import "@radix-ui/themes/styles.css";
-import { AuthProvider } from 'react-oidc-context';
-import { createRoot } from 'react-dom/client'
-import { I18nextProvider } from 'react-i18next';
-import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { StrictMode } from 'react'
 import { Theme } from '@radix-ui/themes';
-import Home from "./pages/Home/Home.tsx";
+import "@radix-ui/themes/styles.css";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Log, UserManager, WebStorageStateStore } from 'oidc-client-ts';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { I18nextProvider } from 'react-i18next';
+import { AuthProvider } from 'react-oidc-context';
 import i18n from "./i18n.tsx";
+import Home from "./pages/Home/Home.tsx";
 
 /**
  * See: {@link https://authts.github.io/oidc-client-ts/classes/UserManager.html}
@@ -38,8 +38,10 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-          <Theme accentColor="orange" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="light">
+          <Theme accentColor="green" grayColor="slate" scaling="110%" radius="medium" panelBackground="translucent" appearance="dark">
+              
               <Home />
+          
           </Theme>
         </AuthProvider>
       </QueryClientProvider>

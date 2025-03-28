@@ -169,8 +169,8 @@ const DialogAlerts = ({
   return (
     <Dialog.Root open={open}>
       <Dialog.Content
-        // maxWidth="500px"
-        align="center"
+        maxWidth="500px"
+        /*align="center"
         style={{
           position: "fixed",
           top: "calc(50% - 50vh / 2)",
@@ -178,7 +178,7 @@ const DialogAlerts = ({
           transform: "translateX(-50%)", // Adjusted to center both horizontally and vertically
           width: "100%", // Ensures responsiveness
           maxWidth: "500px", // Limits the width to 500px
-        }}
+        }}*/
       >
         {title && (
           <Dialog.Title>

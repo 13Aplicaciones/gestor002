@@ -11,6 +11,7 @@ import {
   InformationPanelRegistration,
   InputField,
   StatusEdit,
+  useToastContext,
 } from "ux-ui";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
@@ -61,6 +62,8 @@ const FormEdit = ({
     {} as IParameter
   );
   const [t] = useTranslation("global_gestor");
+  
+  const { showToast } = useToastContext();
   const [toast, setToast] = useState<{
     status: boolean;
     title: string;
@@ -214,13 +217,19 @@ const FormEdit = ({
         setUuid(respuesta.response.uuid);
       }
 
-      setToast({
+      showToast(
+        t("actions.saveSatisfactory", { status: respuesta.status.toString() }),
+        t("actions.saveSatisfactoryDescription"),
+        Alerts.success
+      );
+
+      /*setToast({
         ...toast,
         status: true,
         title: t("actions.saveSatisfactory", { status: response.status }),
         message: t("actions.saveSatisfactoryDescription"),
         alert: Alerts.success,
-      });
+      });/*/
     }
   };
 
