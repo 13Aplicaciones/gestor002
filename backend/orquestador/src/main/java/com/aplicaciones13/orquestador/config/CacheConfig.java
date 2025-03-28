@@ -1,13 +1,14 @@
 package com.aplicaciones13.orquestador.config;
 
+/* 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
-
 import java.util.concurrent.TimeUnit;
+*/
 
 /**
  * Configuración de la cache

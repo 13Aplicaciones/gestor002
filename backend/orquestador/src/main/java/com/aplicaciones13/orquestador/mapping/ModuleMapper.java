@@ -7,8 +7,6 @@ import org.mapstruct.factory.Mappers;
 import com.aplicaciones13.orquestador.model.ConfigPermission;
 import com.aplicaciones13.orquestador.payload.response.ModuleResponse;
 
-import java.util.UUID;
-
 /**
  * Mapper para la entidad Module
  * 

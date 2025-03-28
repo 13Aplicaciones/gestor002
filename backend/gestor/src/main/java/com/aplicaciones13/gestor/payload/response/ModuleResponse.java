@@ -21,7 +21,7 @@ public class ModuleResponse extends UserDateAppResponse {
     private String uuid;
 
     @Schema(description = "Index con el que se conoce al module de forma simplificada", example = "module123")
-    private String index;
+    private String indexModule;
 
     @Schema(description = "Name del index", example = "Name del Módulo")
     private String name;

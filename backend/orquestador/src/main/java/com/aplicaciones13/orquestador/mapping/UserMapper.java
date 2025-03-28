@@ -1,6 +1,7 @@
 package com.aplicaciones13.orquestador.mapping;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.aplicaciones13.orquestador.model.User;
@@ -16,5 +17,6 @@ import com.aplicaciones13.orquestador.payload.response.UserResponse;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+    @Mapping(target = "modules", ignore = true)
     UserResponse toResponse(User user);
 }

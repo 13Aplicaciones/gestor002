@@ -3,7 +3,6 @@ package com.aplicaciones13.gestor.repository;
 import com.aplicaciones13.gestor.model.Error;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
