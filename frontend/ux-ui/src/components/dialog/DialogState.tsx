@@ -1,11 +1,9 @@
-import "../../i18n";
-import { alertColor, alertIconSize } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantsPresentation";
-import { Button, Dialog, Flex, Separator, Text } from "@radix-ui/themes";
-import { blackA } from "@radix-ui/colors";
+import { Button, Dialog, Flex, Separator } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
+import { Alerts } from "../../ConstantsPresentation";
+import "../../i18n";
+import { alertColor, alertIconSize } from "../IconosColoresAlerts";
 
 /**
  * Funciones de presentation de Dialogos.
@@ -168,18 +166,7 @@ const DialogAlerts = ({
 
   return (
     <Dialog.Root open={open}>
-      <Dialog.Content
-        maxWidth="500px"
-        /*align="center"
-        style={{
-          position: "fixed",
-          top: "calc(50% - 50vh / 2)",
-          left: "50%",
-          transform: "translateX(-50%)", // Adjusted to center both horizontally and vertically
-          width: "100%", // Ensures responsiveness
-          maxWidth: "500px", // Limits the width to 500px
-        }}*/
-      >
+      <Dialog.Content maxWidth="500px">
         {title && (
           <Dialog.Title>
         <Flex gap="2" style={{ color: alertColor({ alert }) }}>
@@ -205,78 +192,5 @@ const DialogAlerts = ({
   );
 };
 
-/**
- * Componente ToastDialog para mostrar mensajes en una esquina de la pantalla.
- *
- * @param status Indica si el toast está visible
- * @param message Mensaje a mostrar en el toast
- * @param alert Tipo de alerta (para colores e íconos)
- * @param duration Duración en milisegundos antes de que se cierre automáticamente
- * @param onClose Callback cuando el toast se cierra
- */
-const ToastDialog = ({
-  status,
-  title,
-  message,
-  alert,
-  duration = 3000,
-  onClose,
-}: {
-  status: boolean;
-  title: string;
-  message: string;
-  alert: Alerts;
-  duration?: number;
-  onClose?: () => void;
-}) => {
-  const [visible, setVisible] = useState(status);
+export { DialogAlerts, DialogForm };
 
-  useEffect(() => {
-    if (status) {
-      setVisible(true); // Muestra el toast cuando el estado cambia a true
-      const timer = setTimeout(() => {
-        setVisible(false); // Oculta el toast después de la duración
-        if (onClose) onClose();
-      }, duration);
-
-      return () => clearTimeout(timer); // Limpia el temporizador al desmontar o actualizar
-    } else {
-      setVisible(false); // Oculta el toast si el estado cambia a false
-    }
-  }, [status, duration, onClose]);
-
-  if (!visible) return null;
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "20px",
-        padding: "10px 20px",
-        backgroundColor: alertColor({ alert }),
-        color: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        opacity: visible ? 1 : 0,
-        transition: "opacity 0.5s ease-in-out",
-        zIndex: 1000,
-      }}
-    >
-      <Flex gap="2" align="center" style={{ color: blackA.blackA9 }}>
-        {alertIconSize({ alert, size: "36" })}
-
-        <Flex direction="column" gap="1" >
-          <Text size="3" weight="bold" >
-            <span style={{ fontWeight: "bold" }}>{title}</span>
-          </Text>
-          <Text size="2" weight="medium">
-            <span>{message}</span>
-          </Text>
-        </Flex>
-      </Flex>
-    </div>
-  );
-};
-
-export { DialogForm, DialogAlerts, ToastDialog };

@@ -3,11 +3,10 @@ import { Button } from "@radix-ui/themes";
 import {
   DialogAlerts,
   DialogForm,
-  ToastDialog,
 } from "../components/dialog/DialogState";
 import { hideDialogDinamico, showDialogDinamico } from "api-fetch";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useToastContext } from "../components/toast/useToastContext";
 
 /**
  * Demo de dialogos
@@ -17,36 +16,17 @@ import { useState } from "react";
  */
 const MiDialogos = () => {
   const dispatch = useDispatch();
-
-  const [toast, setToast] = useState<{
-    status: boolean;
-    title: string;
-    message: string;
-    alert: Alerts;
-  }>({
-    status: false,
-    title: "",
-    message: "",
-    alert: Alerts.success,
-  });
-
+  const { showToast } = useToastContext();
   const handleToast = () => {
-    setToast({
-      ...toast,
-      status: true,
-      title: "Titulo",
-      message: "Detalle del mensaje, que es super interesante",
-      alert: Alerts.error,
-    });
+    showToast(
+      "Titulo",
+      "Detalle del mensaje, que es super interesante",
+      Alerts.success
+    );
   };
 
   return (
     <>
-      <ToastDialog
-        {...toast}
-        onClose={() => setToast({ ...toast, status: false })}
-      />
-
       <div
         style={{
           padding: 20,

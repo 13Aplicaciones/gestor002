@@ -22,6 +22,7 @@ export { getIconComponent } from './components/icon/IconDynamic';
 export { ButtonCreateRecordFloating, ButtonBackFloating } from './components/button/Button';
 export { AreaField, InputField } from './components/input/Input';
 export { FormState, FooterForm } from './components/form/Form';
+
 // Exportar elementos Tipos de datos
 export type { DataItemBadge } from './components/grid/Card';
 

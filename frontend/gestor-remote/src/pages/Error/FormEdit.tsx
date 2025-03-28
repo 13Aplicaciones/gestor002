@@ -25,7 +25,6 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { IRowDataError } from "./Types";
-import { ToastDialog } from "ux-ui/src/components/dialog/DialogState";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -64,17 +63,7 @@ const FormEdit = ({
   const [t] = useTranslation("global_gestor");
   
   const { showToast } = useToastContext();
-  const [toast, setToast] = useState<{
-    status: boolean;
-    title: string;
-    message: string;
-    alert: Alerts;
-  }>({
-    status: false,
-    title: "",
-    message: "",
-    alert: Alerts.success,
-  });
+
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row ? row.uuid : "");
 
@@ -194,21 +183,17 @@ const FormEdit = ({
   const analizarAccionar = (response: IFetchData) => {
     if (response.error) {
       if (response.status === 400) {
-        setToast({
-          ...toast,
-          status: true,
-          title: response.error + " (" + response.status.toString() + ")",
-          message: response.error,
-          alert: Alerts.warning,
-        });
+        showToast(
+          response.error + " (" + response.status.toString() + ")",
+          response.error,
+          Alerts.warning,
+        );
       } else {
-        setToast({
-          ...toast,
-          status: true,
-          title: response.status.toString(),
-          message: response.error,
-          alert: Alerts.warning,
-        });
+        showToast(
+          response.status.toString(),
+          response.error,
+          Alerts.warning,
+        );
       }
       return;
     } else {
@@ -222,14 +207,6 @@ const FormEdit = ({
         t("actions.saveSatisfactoryDescription"),
         Alerts.success
       );
-
-      /*setToast({
-        ...toast,
-        status: true,
-        title: t("actions.saveSatisfactory", { status: response.status }),
-        message: t("actions.saveSatisfactoryDescription"),
-        alert: Alerts.success,
-      });/*/
     }
   };
 
@@ -284,10 +261,6 @@ const FormEdit = ({
         loadingOnDelete={loading}
         onDelete={handleOnDelete}
         onCancel={handleOnCancelDelete}
-      />
-      <ToastDialog
-        {...toast}
-        onClose={() => setToast({ ...toast, status: false })}
       />
       <BannerInformation message={messageFormulario} alert={Alerts.error} />
       <Flex direction="row" gap="3" align="center">
