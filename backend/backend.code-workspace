@@ -11,6 +11,7 @@
 			"gestor": false,
 			"orquestador": false,
 			"tools": false,
+			"keycloak": false,
 			"**/target": true,
 			"**/.mvn": true,
 			".vscode": true,

@@ -1,54 +1,21 @@
-package com.aplicaciones13.orquestador.services;
+package com.aplicaciones13.keycloak.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
-import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakClient;
-import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.ApplicationTokenRequest;
-import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserRequest;
-import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakRequest.UserScopeRequest;
-import com.aplicaciones13.orquestador.client.keyckloak26.KeycloakResponse.KeycloakTokenResponse;
-import com.aplicaciones13.orquestador.payload.response.ParameterResponse;
- 
+import com.aplicaciones13.keycloak.config.KeycloakConfig;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import java.util.Collections;
+
 @Service
-public class KeycloakService{
-    
-    @Autowired
-    private ParameterService parameterService;
-
-    private final KeycloakClient keycloakClient;
-
-    public KeycloakService(KeycloakClient keycloakClient) {
-        this.keycloakClient = keycloakClient;
-    }
-
-    public KeycloakTokenResponse getToken(String url, UserRequest userRequest) {
-        return keycloakClient.fetchToken(url, userRequest);
-    }
-
-    public KeycloakTokenResponse getToken(String url, ApplicationTokenRequest applicationTokenRequest) {
-        return keycloakClient.fetchToken(url, applicationTokenRequest);
-    }
-
-    public KeycloakTokenResponse getToken(String url, UserScopeRequest userScopeRequest) {
-        return keycloakClient.fetchToken(url, userScopeRequest);
-    }
-
-    /**
-     * Metodo para obtener un token de acceso a partir de un refreshToken
-     * 
-     * @param refreshToken
-     * @return
-     */
-    public KeycloakTokenResponse refreshToken(String refreshToken) {        
-        ParameterResponse urlKeycloak = parameterService.findParameterByIndexParameterAndModule_IndexModule("001", "OR_001_00");
-        ParameterResponse clientId = parameterService.findParameterByIndexParameterAndModule_IndexModule("002", "OR_001_00");
-        return keycloakClient.refreshToken(urlKeycloak.getValueText01(), clientId.getValueText01(), refreshToken);
-    }
-
-
-
-
+public class KeycloakService {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -65,13 +32,16 @@ public class KeycloakService{
     public String getAdminToken() {
         // Verificar si necesitamos un nuevo token
         if (adminToken == null || System.currentTimeMillis() > tokenExpiry) {
-            String tokenUrl = keycloakConfig.getAuthServerUrl() + "/realms/master/protocol/openid-connect/token";
+
+            
+
+            String tokenUrl = keycloakConfig.getAuthServerUrl() + "/realms/"+keycloakConfig.getRealm()+"/protocol/openid-connect/token";
             
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             
-            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-            map.add("client_id", "admin-cli");
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();            
+            map.add("client_id", keycloakConfig.getClientId());
             map.add("username", keycloakConfig.getAdminUsername());
             map.add("password", keycloakConfig.getAdminPassword());
             map.add("grant_type", "password");
