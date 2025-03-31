@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   format,
   formatDistanceToNow,
@@ -6,7 +7,7 @@ import {
   parseISO,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import { FormatMaskISO } from "../ConstantsPresentation";
+import { FormatMaskISO, TextFormat } from "../ConstantsPresentation";
 
 /**
  *
@@ -20,7 +21,7 @@ const formatDateMask = (dateString: string, mask: FormatMaskISO): string => {
   if (!dateString) {
     return "";
   }
-  
+
   try {
     const date = parseISO(dateString);
     return format(date, mask);
@@ -87,9 +88,56 @@ const formatDateSerius = (dateString: string): string => {
   }
 };
 
+/**
+   * Funcion para format el contenido de la celda en base a la presentation.
+   *
+   * @param row Fila de la tabla.
+   * @param valor Valor de la celda.
+   * @param index Indice de la celda.
+   *
+   * @returns
+   */
+const formatFromTextFormat = (format: TextFormat, value: any): string => {
+  const response = value;
+  try {
+    switch (format) {
+      case TextFormat.none:
+        return response || "- - - -";
+      case TextFormat.decimal2:
+        return response.toFixed(2);
+      case TextFormat.date:
+        return formatDateMask(response, FormatMaskISO.date);
+      case TextFormat.dateHour:
+        return formatDateMask(response, FormatMaskISO.dateHour);
+      case TextFormat.dateHourZone:
+        return formatDateMask(response, FormatMaskISO.dateHourZone);
+      case TextFormat.dateHourZoneMiliseconds:
+        return formatDateMask(
+          response,
+          FormatMaskISO.dateHourZoneMiliseconds
+        );
+      case TextFormat.hour:
+        return formatDateMask(response, FormatMaskISO.hour);
+      case TextFormat.dateSocialNetwork:
+        return formatDateSocialNetwork(response);
+      case TextFormat.dateSocialNetworkDinamic:
+        return formatDateSocialNetworkDinamic(response);
+      case TextFormat.action:
+        return response;
+      //TODO: Agregar mas formats de text.
+      default:
+        return response;
+    }
+  } catch {
+    return response;
+  }
+};
+
+
 export {
+  formatFromTextFormat,
   formatDateMask,
+  formatDateSerius,
   formatDateSocialNetwork,
   formatDateSocialNetworkDinamic,
-  formatDateSerius,
 };

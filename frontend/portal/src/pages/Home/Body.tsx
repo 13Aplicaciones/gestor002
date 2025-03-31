@@ -1,12 +1,15 @@
-import { Button as MiB } from "@radix-ui/themes";
-import { WrapOrigin } from "gestor_remote/Wrap";
-import { getStatic } from "orchestrator_remote/service/Statics";
-import { getSelectModule } from "orchestrator_remote/service/Structure";
-import { Suspense, useEffect, useState } from "react";
+import { IModuleRoot } from "./Header";
 import { useTranslation } from "react-i18next";
+import { WrapOrigin } from "gestor_remote/Wrap";
+import { Suspense, useEffect, useState } from "react";
+import { getStatic } from "orchestrator_remote/service/Statics";
 import { CardGrid, CardGridSkeleton, GridDashboard } from "ux-ui";
 import CatchErrorLoadElement from "../../utils/CatchErrorLoadElement";
-import { IModuleRoot } from "./Header";
+import { getSelectModule } from "orchestrator_remote/service/Structure";
+import { Box, Card, Flex, Heading, Inset, Strong, Text } from "@radix-ui/themes";
+import { GearIcon } from "@radix-ui/react-icons";
+
+import { jade } from "@radix-ui/colors";
 
 /**
  * Cuerpo de la pagina principal
@@ -26,7 +29,7 @@ import { IModuleRoot } from "./Header";
  * @param iconName icon name of the card
  * @returns
  */
-const Card = ({
+const Card001 = ({
   index,
   indexMenu,
   title,
@@ -64,7 +67,7 @@ const Card = ({
   return (
     <CardGrid
       key={index}
-      title={title}
+      title={title + " hola " + index}
       description={description}
       iconName={iconName}
       firtsColor={index === 0}
@@ -102,31 +105,15 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
     return () => clearTimeout(timer);
   }, [refreshModule]);
 
-  const [flag, setFlag] = useState(false);
-  const handleSwitch = () => {
-    setFlag(!flag);
-  };
-
   return (
     <>
-      {
-        <CatchErrorLoadElement titleName="gestor">
-          <Suspense fallback={t("messages.loading")}>
-
-
-
-            <WrapOrigin name={"GS-ER-001"} />
-
-
-          </Suspense>
-        </CatchErrorLoadElement>
-      }
+      <Banner />
       <>
         {!loading && (
           <GridDashboard>
             {Array.isArray(dataModuleSelect.menus) &&
               dataModuleSelect.menus.map((item, index) => (
-                <Card
+                <Card001
                   key={item.indexMenu} // Asignar una clave única basada en item.indexMenu
                   index={index}
                   indexMenu={item.indexMenu}
@@ -151,10 +138,87 @@ const Body = ({ refreshModule }: { refreshModule: number }) => {
           {/*getCustomComponent(contenidoName)?*/}
         </Suspense>
       </CatchErrorLoadElement>
+      {
+        <CatchErrorLoadElement titleName="gestor">
+          <Suspense fallback={t("messages.loading")}>
 
-      <MiB onClick={handleSwitch}>Button</MiB>
+
+
+            <WrapOrigin name={"GS-ER-001"} />
+
+
+          </Suspense>
+        </CatchErrorLoadElement>
+      }
+
+
     </>
   );
 };
+
+
+
+const Banner = () => {
+  return (
+    <Box maxWidth="100%">
+      <Card size="2">
+        <Inset clip="padding-box" side="top" pb="current">
+
+          <Flex
+            height="230px"
+            position="relative"
+            style={{
+              background: "linear-gradient(270deg, hsla(164, 64%, 62%, 1) 0%, hsla(164, 64%, 42%, 1) 50%, hsla(164, 64%, 22%, 1) 100%)",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+          </Flex>
+
+        </Inset>
+        <Text as="p" size="3">
+          <Strong>Typography</Strong> is the art and technique of arranging type to
+          make written language legible, readable and appealing when displayed.
+        </Text>
+
+        <Box
+          position="absolute"
+          top="-150px"
+          right="-100px"
+          style={{
+            opacity: 0.43,
+            fontSize: "100px",
+            lineHeight: "1",
+          }}
+        >
+          <Text as="span" >
+            <GearIcon width="390" height="390" />
+          </Text>
+        </Box>
+
+
+
+        <Box
+          position="absolute"
+          top="75px"
+        >
+          <Flex direction="column" align="start" justify="center">
+            <Heading size="9" >
+              GESTOR de APLicativos
+            </Heading>
+            <Heading size="7" weight="bold" >
+              Los gestores de datos
+            </Heading>
+          </Flex>
+        </Box>
+
+
+
+      </Card>
+    </Box>
+
+  );
+};
+
 
 export default Body;

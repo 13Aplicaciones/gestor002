@@ -4,7 +4,6 @@ import {
   TextFormat,
   SortColumn,
   JustificationText,
-  FormatMaskISO,
 } from "../../ConstantsPresentation";
 import { blackA, whiteA } from "@radix-ui/colors";
 import {
@@ -21,17 +20,12 @@ import {
   Table,
   Text,
   useThemeContext,
-  //Theme,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { BannerInformation } from "../callout/Information";
 import { ReactNode, useEffect, useState } from "react";
 import { IParametersQuery } from "./TableSearch";
-import {
-  formatDateMask,
-  formatDateSocialNetwork,
-  formatDateSocialNetworkDinamic,
-} from "../../utils/FormatMask";
+import { formatFromTextFormat } from "../../utils/FormatMask";
 
 /**
  * Componente de tabla paginada.
@@ -65,7 +59,8 @@ interface IPresentationTable {
 /**
  * Funcion para justify el contenido de la celda en base a la presentation.
  *
- * @param index
+ * @param justification Justificacion del texto.
+ * 
  * @returns
  */
 const justify = (justification: JustificationText) => {
@@ -79,76 +74,37 @@ const justify = (justification: JustificationText) => {
 /**
  * Funcion para crear una celda de la tabla.
  *
- * @param row Filas de la tabla.
- * @param field Campo de la tabla.
  * @param cellIndex Indice de la celda.
+ * @param justification Justificacion del texto.
+ * @param row Fila de la tabla.
+ * @param textFormat Formato del texto.
+ * @param value Valor de la celda.
+ * @param width Ancho de la celda.
+ * @param onAction Funcion para la accion de la celda.
+ * @param component Componente a mostrar en la celda.
  *
  * @returns
  */
 const Cell = ({
-  value,
   cellIndex,
-  row,
-  width,
   justification,
+  row,
   textFormat,
+  value,
+  width,
   onAction,
   component,
 }: {
-  value: any;
   cellIndex: number;
-  row: any;
-  width: string;
   justification: JustificationText;
+  row: any;
   textFormat: TextFormat;
+  value: any;
+  width: string;
   onAction?: { onAction: (row: any) => void };
   component?: (row: any, children: ReactNode) => ReactNode;
 }) => {
-  /**
-   * Funcion para format el contenido de la celda en base a la presentation.
-   *
-   * @param row Fila de la tabla.
-   * @param valor Valor de la celda.
-   * @param index Indice de la celda.
-   *
-   * @returns
-   */
-  const format = (format: TextFormat, value: any): string => {
-    const response = value;
-    try {
-      switch (format) {
-        case TextFormat.none:
-          return response || "- - - -";
-        case TextFormat.decimal2:
-          return response.toFixed(2);
-        case TextFormat.date:
-          return formatDateMask(response, FormatMaskISO.date);
-        case TextFormat.dateHour:
-          return formatDateMask(response, FormatMaskISO.dateHour);
-        case TextFormat.dateHourZone:
-          return formatDateMask(response, FormatMaskISO.dateHourZone);
-        case TextFormat.dateHourZoneMiliseconds:
-          return formatDateMask(
-            response,
-            FormatMaskISO.dateHourZoneMiliseconds
-          );
-        case TextFormat.hour:
-          return formatDateMask(response, FormatMaskISO.hour);
-        case TextFormat.dateSocialNetwork:
-          return formatDateSocialNetwork(response);
-        case TextFormat.dateSocialNetworkDinamic:
-          return formatDateSocialNetworkDinamic(response);
-        case TextFormat.action:
-          return response;
-        //TODO: Agregar mas formats de text.
-        default:
-          return response;
-      }
-    } catch {
-      return response;
-    }
-    return response;
-  };
+  const textFomatter = formatFromTextFormat(textFormat, value);
 
   return (
     <Table.Cell
@@ -161,13 +117,15 @@ const Cell = ({
         {component?.(row, null)}
         {(onAction && (
           <Link
-            truncate
             onClick={() => onAction?.onAction(row)}
             style={{ cursor: "pointer" }}
-          >
-            <Text weight="regular">{format(textFormat, value)}</Text>
-          </Link>
-        )) || <Text truncate>{format(textFormat, value)}</Text>}
+            truncate
+            underline="hover"
+            weight="medium"
+          >{textFomatter}</Link>
+        )) ||
+          <Text truncate>{textFomatter}</Text>
+        }
       </Flex>
     </Table.Cell>
   );
@@ -234,7 +192,7 @@ const Title = ({
                 {sortVisible === SortColumn.asc && <CaretUpIcon />}
                 {sortVisible === SortColumn.desc && <CaretDownIcon />}
                 {sortVisible === SortColumn.neutral && <CaretSortIcon />}
-                <Text size="2" weight="bold">
+                <Text size="2" weight="regular">
                   {text}
                 </Text>
               </IconButton>
@@ -309,7 +267,7 @@ const TableConfigurable = ({
   const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
-  const theme  = useThemeContext();
+  const theme = useThemeContext();
 
   /**
    * Funcion para generar el header de la tabla.
@@ -327,16 +285,16 @@ const TableConfigurable = ({
           )}
           {presentation.items.map((item: any, index: number) => (
             <Table.ColumnHeaderCell
+              align="center"
+              justify={justify(item.justification)}
               key={index}
               width={item.width}
-              justify={justify(item.justification)}
-              align="center"
             >
               <Title
                 name={item.name}
-                text={item.title}
-                sort={sorts[item.name]}
                 onOrderChange={onOrderChange}
+                sort={sorts[item.name]}
+                text={item.title}
               />
             </Table.ColumnHeaderCell>
           ))}
@@ -369,7 +327,7 @@ const TableConfigurable = ({
                 key={rowIndex}
                 style={{
                   backgroundColor:
-                  isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
+                    isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
                 }}
               >
                 {isLineNumber && (
@@ -379,15 +337,15 @@ const TableConfigurable = ({
                 )}
                 {presentation.items.map((field: any, cellIndex: number) => (
                   <Cell
-                    key={cellIndex}
                     cellIndex={cellIndex}
+                    component={presentation.items[cellIndex].component}
                     justification={presentation.items[cellIndex].justification}
+                    key={cellIndex}
+                    onAction={presentation.items[cellIndex].onAction}
                     row={row}
                     textFormat={presentation.items[cellIndex].format}
                     value={row[field.name]}
                     width={presentation.items[cellIndex].width}
-                    onAction={presentation.items[cellIndex].onAction}
-                    component={presentation.items[cellIndex].component}
                   />
                 ))}
               </Table.Row>

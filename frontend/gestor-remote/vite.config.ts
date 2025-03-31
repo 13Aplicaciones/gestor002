@@ -22,8 +22,7 @@ export default defineConfig({
       name: "gestor_remote",
       filename: "gestorRemoteEntry.js",
       exposes: {
-        //"./Origin": "./src/pages/Origin",
-        //"./Translation": "./src/utils/getTranslation",
+        "./Translation": "./src/utils/getTranslation",
         "./Wrap": "./src/Wrap",
       },
       remotes: {

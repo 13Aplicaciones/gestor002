@@ -38,7 +38,7 @@ createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
-          <Theme accentColor="jade" grayColor="olive" scaling="90%" radius="large" panelBackground="translucent" appearance="light">
+          <Theme accentColor="jade" grayColor="olive" scaling="90%" radius="large" panelBackground="translucent" appearance="dark">
             <Home />
           </Theme>
         </AuthProvider>

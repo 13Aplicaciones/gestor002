@@ -1,4 +1,4 @@
-import { ButtonBackFloating, ButtonCreateRecordFloating } from "ux-ui";
+import { ButtonBackFloating, ButtonCreateRecordFloating, ToastContextProvider } from "ux-ui";
 import { createIRowDataError, IRowDataError } from "./Types";
 import { Flex, Heading, Separator } from "@radix-ui/themes";
 import { Preview } from "./Preview";
@@ -44,48 +44,50 @@ const Page = () => {
   };
 
   return (
-    <Flex direction="column" gap="2" p="2">
-      <Separator orientation="horizontal" size="4" />
-      <Flex maxWidth="60vw">
-        <Heading size="4" wrap="pretty">
-          {t("modules.GS-ER-001.panel." + status)}
-        </Heading>
+    <ToastContextProvider>
+      <Flex direction="column" gap="2" p="2">
+        <Separator orientation="horizontal" size="4" />
+        <Flex maxWidth="60vw">
+          <Heading size="4" wrap="pretty">
+            {t("modules.GS-ER-001.panel." + status)}
+          </Heading>
+        </Flex>
+
+        {status == StatusEdit.find && (
+          <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
+        )}
+
+        {status == StatusEdit.see && (
+          <Preview index={rowSelecionado.indexError} />
+        )}
+
+        {(status == StatusEdit.create || status == StatusEdit.edit) && (
+          <FormEdit
+            status={status}
+            row={rowSelecionado}
+            onAtras={() => {
+              setStatus(StatusEdit.find);
+            }}
+          />
+        )}
+
+        {(status == StatusEdit.find && (
+          <ButtonCreateRecordFloating
+            toolTip={t("modules.GS-ER-001.add")}
+            onClick={() => {
+              setStatus(StatusEdit.create);
+              setRowSelecionado(createIRowDataError());
+            }}
+          />
+        )) || (
+            <ButtonBackFloating
+              onClick={() => {
+                setStatus(StatusEdit.find);
+              }}
+            />
+          )}
       </Flex>
-
-      {status == StatusEdit.find && (
-        <Query onEditRow={onEditarRow} onSeeRow={onSeeRow} />
-      )}
-
-      {status == StatusEdit.see && (
-        <Preview index={rowSelecionado.indexError} />
-      )}
-
-      {(status == StatusEdit.create || status == StatusEdit.edit) && (
-        <FormEdit
-          status={status}
-          row={rowSelecionado}
-          onAtras={() => {
-            setStatus(StatusEdit.find);
-          }}
-        />
-      )}
-
-      {(status == StatusEdit.find && (
-        <ButtonCreateRecordFloating
-          toolTip={t("modules.GS-ER-001.add")}
-          onClick={() => {
-            setStatus(StatusEdit.create);
-            setRowSelecionado(createIRowDataError());
-          }}
-        />
-      )) || (
-        <ButtonBackFloating
-          onClick={() => {
-            setStatus(StatusEdit.find);
-          }}
-        />
-      )}
-    </Flex>
+    </ToastContextProvider>
   );
 };
 

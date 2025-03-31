@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Alerts,
   BandPresentation,
   Direction,
   SortColumn,
@@ -21,6 +22,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useToastContext } from "../toast/useToastContext";
+
 
 /**
  * Componete para crear un field de busqueda.
@@ -75,6 +78,8 @@ const CreateSearchField = ({
   const [shorts, setShorts] = useState<string[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const { showToast } = useToastContext();
+  
 
   /**
    * Validacion de los fields del formulario.
@@ -138,12 +143,11 @@ const CreateSearchField = ({
     })
       .then((response) => {
         if (response.error) {
-          //TODO: Implementar el toast
-          /*showToast(
+          showToast(
             response.error + " (" + response.status.toString() + ")",
             t("httpStatusResolve." + response.status.toString()),
             Alerts.warning
-          );*/
+          );
           return;
         } else {
           const data = response.response.items;
