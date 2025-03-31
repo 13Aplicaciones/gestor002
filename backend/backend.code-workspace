@@ -7,10 +7,10 @@
 
 	"settings": {
 		"files.exclude": {
-			"aplicaciones13": false,
+			"aplicaciones13": true,
 			"gestor": false,
-			"orquestador": false,
-			"tools": false,
+			"orquestador": true,
+			"tools": true,
 			"keycloak": false,
 			"**/target": true,
 			"**/.mvn": true,

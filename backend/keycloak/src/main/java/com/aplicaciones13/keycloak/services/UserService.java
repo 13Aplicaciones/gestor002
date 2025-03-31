@@ -1,12 +1,8 @@
 package com.aplicaciones13.keycloak.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.aplicaciones13.keycloak.config.KeycloakConfig;
 import com.aplicaciones13.keycloak.model.Credential;

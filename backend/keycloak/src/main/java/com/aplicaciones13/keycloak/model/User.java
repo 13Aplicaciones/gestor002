@@ -5,6 +5,13 @@ import java.util.Map;
 
 import lombok.Data;
 
+/**
+ * Clase para estructura de creacion de usuarios.
+ * 
+ * @author omargo33
+ * @since 2025-03-31
+ * 
+ */
 @Data
 public class User {
     private String id;

@@ -11,6 +11,16 @@ import com.aplicaciones13.keycloak.services.UserService;
 import java.util.List;
 import java.util.Map;
 
+//TODO valirar seguridades de token
+//TODO agregar OpenAPI
+/**
+ * 
+ * Controlador para administrar usuarios.
+ * 
+ * @author omargo33
+ * @since 2025-03-31
+ * 
+ */
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -18,34 +28,71 @@ public class UserController {
     @Autowired
     private UserService userService;
     
+    /**
+     * Metodo para obtener todos los usuarios.
+     * 
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
     
+    /**
+     * Metodo para obtener la informacion de un unico usuario.
+     * 
+     * @param userId
+     * @return
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable String userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
     
+    /**
+     * Metodo para crear usuario
+     * 
+     * @param user
+     * @return
+     */
     @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody User user) {
         userService.createUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
+    /**
+     * Metodo para actualizar la informacion de un usuario.
+     * 
+     * @param userId
+     * @param user
+     * @return
+     */
     @PutMapping("/{userId}")
     public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody User user) {
         userService.updateUser(userId, user);
         return ResponseEntity.ok().build();
     }
     
+    /**
+     * Metodo para borrar un usuario.
+     * 
+     * @param userId
+     * @return
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }
     
+    /**
+     * Metodo para cambiar el password
+     * 
+     * @param userId
+     * @param passwordInfo
+     * @return
+     */
     @PostMapping("/{userId}/password")
     public ResponseEntity<Void> setPassword(
             @PathVariable String userId, 
@@ -58,6 +105,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     
+    /**
+     * Metodo para agrear un usuario a un grupo.
+     * 
+     * @param userId
+     * @param groupId
+     * @return
+     */
     @PostMapping("/{userId}/groups/{groupId}")
     public ResponseEntity<Void> addUserToGroup(
             @PathVariable String userId,

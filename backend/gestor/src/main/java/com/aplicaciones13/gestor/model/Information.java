@@ -23,6 +23,7 @@ import jakarta.persistence.Table;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Information extends UuidUserDateApp {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_information")

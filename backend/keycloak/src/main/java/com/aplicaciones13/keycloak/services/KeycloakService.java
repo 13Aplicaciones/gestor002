@@ -14,6 +14,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Collections;
 
+/**
+ * Servicio para interactuar con la API de Keycloak usando RestTemplate.
+ * 
+ * @author omargo33
+ * @since 2025-03-31
+ * 
+ */
 @Service
 public class KeycloakService {
 
@@ -33,19 +40,14 @@ public class KeycloakService {
         // Verificar si necesitamos un nuevo token
         if (adminToken == null || System.currentTimeMillis() > tokenExpiry) {
 
-            
-
-            String tokenUrl = keycloakConfig.getAuthServerUrl() + "/realms/"+keycloakConfig.getRealm()+"/protocol/openid-connect/token";
-            
+            String tokenUrl = keycloakConfig.getAuthServerUrl() + "/realms/master/protocol/openid-connect/token";
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-            
             MultiValueMap<String, String> map = new LinkedMultiValueMap<>();            
-            map.add("client_id", keycloakConfig.getClientId());
+            map.add("client_id", "admin-cli");
             map.add("username", keycloakConfig.getAdminUsername());
             map.add("password", keycloakConfig.getAdminPassword());
             map.add("grant_type", "password");
-            
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
             
             try {
@@ -63,7 +65,6 @@ public class KeycloakService {
                 throw new RuntimeException("Error al obtener token de administrador: " + e.getMessage());
             }
         }
-        
         return adminToken;
     }
     
