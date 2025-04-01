@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    ## configuracion de recursos
+    ## mem_limit: 256m
+    ## mem_reservation: 64M
+    ## cpus: 0.5
+    ports:
+      - "2181:2181"
+    environment:
+      TZ: America/Bogota
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    network_mode: 
+      host
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ## configuracion de recursos
+    ## mem_limit: 256m
+    ## mem_reservation: 64M
+    ## cpus: 1
+    ports:
+      - "9092:9092"
+    environment:
+      TZ: America/Bogota
+      KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    depends_on:
+      - zookeeper
+    network_mode: 
+      host
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ## configuracion de recursos
+    ## mem_limit: 128m
+    ## mem_reservation: 64M
+    ## cpus: 0.5
+    ports:
+      - "8078:8080"
+    environment:
+      TZ: America/Bogota
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: localhost:9092
+    depends_on:
+      - kafka
+    network_mode: 
+      host

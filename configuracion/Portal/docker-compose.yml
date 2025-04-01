@@ -2,9 +2,12 @@
 ##
 ## Docker para administrar contenedores del desarrollo del proyecto gestor002
 ## 
-## Servidor de base de datos msyql latest
-## Servidor de nxinx latest
-## Servidor de Spring Boot Admin java 
+## 🙂 Servidor de base de datos mysql latest
+## 🙂 Servidor de Spring Boot Admin java 
+## 🙂 Servidor de Keycloak
+## 🙂 Servidor de Redis - Cache
+##
+## 🙁 Servidor de nginx latest 
 
 version: '3.7'
 
@@ -36,29 +39,29 @@ services:
     networks:
       - gestor-network
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx_portal
+  ## nginx:
+    ## image: nginx:latest
+    ## container_name: nginx_portal
     ## restart: always
     ##
     ## configuracion de recursos
-    mem_limit: 384m
-    mem_reservation: 128M
-    cpus: 0.5
-    ports:
-      - "80:80"
-    environment:
-      TZ: America/Bogota
-    volumes:
-      - ./html:/var/www/html
-      - ./cert:/etc/nginx/cert
-      - ./config:/etc/nginx
+    ## mem_limit: 384m
+    ## mem_reservation: 128M
+    ## cpus: 0.5
+    ## ports:
+    ##   - "80:80"
+    ## environment:
+    ##   TZ: America/Bogota
+    ## volumes:
+    ##   - ./html:/var/www/html
+    ##   - ./cert:/etc/nginx/cert
+    ##   - ./config:/etc/nginx
     ##network_mode: 
       ##host 
-    depends_on:
-      - mysql
-    networks:
-      - gestor-network
+    ## depends_on:
+    ##   - mysql
+    ## networks:
+    ##   - gestor-network
 
   ##
   ## Servidor de keycloak
@@ -134,7 +137,7 @@ services:
       - 8100:8100    
     network_mode: 
       host
-    
+
 networks:
   gestor-network:
     driver: bridge

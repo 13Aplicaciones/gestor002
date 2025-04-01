@@ -6,12 +6,13 @@
 	],
 
 	"settings": {
-		"files.exclude": {
+		"files.exclude": {						
 			"aplicaciones13": true,
 			"gestor": false,
+			"keycloak": false,
+			"manager": true,
 			"orquestador": false,
 			"tools": true,
-			"keycloak": false,
 			"**/target": true,
 			"**/.mvn": true,
 			".vscode": true,
