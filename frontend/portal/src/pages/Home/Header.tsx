@@ -107,8 +107,6 @@ const MenuModule = ({
   const [module, setModule] = useState<IModuleRoot>();
   const [t] = useTranslation("global_portal");
 
-  
-
   useEffect(() => {
     const executeSelectModule = async () => {
       const module = await getSelectModule();

@@ -103,7 +103,7 @@ const CardGrid = (
     const [t] = useTranslation("global_ux");
     const theme = useThemeContext();
     const colorBackground = (theme.appearance === "light") ? firtsColor ? blackA.blackA3 : blackA.blackA1 : firtsColor ? whiteA.whiteA3 : whiteA.whiteA1;
-    
+
     return (
         <Card size="2" onClick={onClick} style={{ cursor: 'pointer', backgroundColor: colorBackground }}>
             <Flex direction="column" gap="2" p="2" width="100%" align="start">

@@ -9,7 +9,7 @@
 		"files.exclude": {
 			"aplicaciones13": true,
 			"gestor": false,
-			"orquestador": true,
+			"orquestador": false,
 			"tools": true,
 			"keycloak": false,
 			"**/target": true,

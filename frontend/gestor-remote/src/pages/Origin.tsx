@@ -53,6 +53,12 @@ const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
   );
 };
 
+/**
+ * Funcion para mostrar los paneles de los modulos de la aplicacion.
+ * 
+ * @param param0 
+ * @returns 
+ */
 const Origin = ({ name }: { name: string }) => {
   const flow = () => {
     switch (name) {
