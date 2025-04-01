@@ -1,7 +1,8 @@
 {
   "nameApp": "gestor",
   "title": "Gestor de Tareas",
-  "icon": "GestorIcon",
+  "subTitle": "Administración de recursos del sistema",
+  "icon": "GearIcon",
   "description": "Gestor de Modulos, Menús, Roles, Códigos Definidos, Usuarios, Errores, Información y Cambio de Clave de los usuarios",
   "actions":{
     "edit": "Editar",

@@ -2,6 +2,7 @@ import { Box, Card, Flex, Heading, Inset, Text } from "@radix-ui/themes";
 import { gradientColor } from "ux-ui/src/components/IconosColoresAlerts";
 import { useThemeContext } from "@radix-ui/themes";
 import { getIconComponent } from "ux-ui";
+import { IBannerRoot } from "../routes/Structure";
 
 /**
  * Componentes para la pagina principal
@@ -21,7 +22,7 @@ import { getIconComponent } from "ux-ui";
  * 
  * @returns 
  */
-const Banner = ({ title = "title", subTitle = "subTitle", description = "description", iconName = "GearIcon" }: { title: string; subTitle: string, description: string, iconName: string }) => {
+const Banner = ({ banner }: { banner:IBannerRoot }) => {
     const theme = useThemeContext();
     const color = theme.accentColor;
     const background = gradientColor(color);
@@ -42,7 +43,7 @@ const Banner = ({ title = "title", subTitle = "subTitle", description = "descrip
                     </Flex>
                 </Inset>
                 <Text as="p" size="3">
-                    <span dangerouslySetInnerHTML={{ __html: description }} />
+                    <span dangerouslySetInnerHTML={{ __html: banner.description }} />
                 </Text>
                 <Box
                     position="absolute"
@@ -54,14 +55,14 @@ const Banner = ({ title = "title", subTitle = "subTitle", description = "descrip
                         lineHeight: "1",
                     }} >
                     <Text as="span" >
-                        {getIconComponent(iconName, "340px", "340px")}
+                        {getIconComponent(banner.iconName, "340px", "340px")}
                     </Text>
                 </Box>
 
                 <Box position="absolute" top="75px">
                     <Flex direction="column" align="start" justify="center">
-                        <Heading size="9">{title}</Heading>
-                        <Heading size="7" weight="bold">{subTitle}
+                        <Heading size="9">{banner.title}</Heading>
+                        <Heading size="7" weight="bold">{banner.subTitle}
                         </Heading>
                     </Flex>
                 </Box>
