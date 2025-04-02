@@ -21,7 +21,7 @@ services:
     ## configuracion de recursos
     mem_limit: 512m
     mem_reservation: 256M
-    cpus: 1
+    cpus: 2
     ports:
       - "3306:3306"
     command: 
@@ -61,7 +61,7 @@ services:
     ## depends_on:
     ##   - mysql
     ## networks:
-    ##   - gestor-network
+    ##   gestor-network
 
   ##
   ## Servidor de keycloak
@@ -72,8 +72,8 @@ services:
     ## restart: always
     ##
     ## configuration recursos
-    mem_limit: 1024m
-    mem_reservation: 512M
+    mem_limit: 768m
+    mem_reservation: 384M
     cpus: 1
     environment:
       - TZ=America/Bogota
@@ -108,8 +108,8 @@ services:
     ## restart: always
     ##
     ## configuracion de recursos
-    mem_limit: 256m
-    mem_reservation: 128M
+    mem_limit: 64m
+    mem_reservation: 32M
     cpus: 0.5
     ports:
       - "6379:6379"
@@ -128,15 +128,15 @@ services:
     image: manager:0.0.1
     container_name: manager_portal
     ## configuration recursos
-    mem_limit: 256m
+    mem_limit: 384m
     mem_reservation: 64M
     cpus: 0.5    
     ## restart: always
     build: manager_build
     ports:
       - 8100:8100    
-    network_mode: 
-      host
+    networks:
+      - gestor-network
 
 networks:
   gestor-network:
