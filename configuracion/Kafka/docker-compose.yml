@@ -21,7 +21,7 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     ## configuracion de recursos
-    mem_limit: 384m
+    mem_limit: 512m
     mem_reservation: 64M
     cpus: 2
     ports:

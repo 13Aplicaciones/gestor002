@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 
 import com.aplicaciones13.keycloak.config.KeycloakConfig;
 
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class SessionManagementService {
 
@@ -23,7 +25,8 @@ public class SessionManagementService {
      */
     public void logoutAllUsers() {
         String url = keycloakConfig.getRealmUrl() + "/logout-all";
-        keycloakService.post(url, null, Void.class);
+        ResponseEntity<Void> response = keycloakService.post(url, null, Void.class);
+        log.info("Logout all users response: URL = {}, Status Code = {}, Headers = {}", url, response.getStatusCode(), response.getHeaders());
     }
     
     /**

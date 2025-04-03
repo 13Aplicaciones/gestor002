@@ -14,25 +14,24 @@ import lombok.extern.slf4j.Slf4j;
 public class PassportProducer {
     
 
-    private final KafkaTemplate<String, Passport> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     
     @Value("${kafka.topic.passport}")
     private String passportTopic;
 
-    public PassportProducer(KafkaTemplate<String, Passport> kafkaTemplate) {
+    public PassportProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendPassportInfo(Passport passport) {
-        CompletableFuture<SendResult<String, Passport>> future = kafkaTemplate.send(
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(
                 passportTopic, 
                 passport.getPassportNumber(), 
-                passport
+                passport.toString()
         );
         
         future.whenComplete((result, ex) -> {
-            if (ex == null) {
-                
+            if (ex == null) {                
                 log.info("Enviado passport {} con offset {}", 
                         passport.getPassportNumber(), 
                         result.getRecordMetadata().offset());

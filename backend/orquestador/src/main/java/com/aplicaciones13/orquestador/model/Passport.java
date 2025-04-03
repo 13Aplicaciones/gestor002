@@ -12,16 +12,11 @@ import java.util.Date;
  * 
  */
 @Data
-public class Passport implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class Passport {
+    
     private String passportNumber;
     private String fullName;
     private String nationality;
-    private Date dateOfBirth;
-    private Date issueDate;
-    private Date expiryDate;
     private String issuingAuthority;
     private String gender;
-
 }

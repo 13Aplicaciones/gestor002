@@ -7,7 +7,7 @@
 
 	"settings": {
 		"files.exclude": {						
-			"aplicaciones13": true,
+			"aplicaciones13": false,
 			"gestor": true,
 			"keycloak": false,
 			"manager": true,
