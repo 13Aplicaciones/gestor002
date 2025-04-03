@@ -1,0 +1,22 @@
+{
+	"nodes":[
+		{"id":"fa957c49781bedfe","type":"link","url":"https://ui.mantine.dev/","x":-40,"y":0,"width":400,"height":400},
+		{"id":"000b5cfd2afbfaa9","type":"link","url":"https://chakra-ui.com/","x":-480,"y":0,"width":400,"height":400},
+		{"id":"220c655435256510","type":"link","url":"https://ui.shadcn.com/","x":400,"y":0,"width":400,"height":400},
+		{"id":"f14c9839fb92d1ee","type":"link","url":"https://www.radix-ui.com/","x":840,"y":0,"width":400,"height":400},
+		{"id":"fc42f6e0f95eb6e5","type":"text","text":"Sitios de Analisis Licencia MIT","x":275,"y":-280,"width":250,"height":60},
+		{"id":"d71f633cf4083a99","type":"text","text":"Sitios Soporte","x":280,"y":-638,"width":250,"height":57},
+		{"id":"cd53ace47019b872","type":"link","url":"https://snyk.io/advisor/","x":-280,"y":-809,"width":400,"height":400},
+		{"id":"80b77ef900e5fcb7","type":"link","url":"https://www.npmjs.com/","x":720,"y":-800,"width":400,"height":380},
+		{"id":"c8e01a12c0305736","type":"link","url":"https://npm-gui.nullapps.dev/","x":205,"y":-1240,"width":400,"height":400}
+	],
+	"edges":[
+		{"id":"b94b3e8d621cf573","fromNode":"000b5cfd2afbfaa9","fromSide":"top","toNode":"fc42f6e0f95eb6e5","toSide":"bottom"},
+		{"id":"cbfa64972f2c46f8","fromNode":"fa957c49781bedfe","fromSide":"top","toNode":"fc42f6e0f95eb6e5","toSide":"bottom"},
+		{"id":"0b058c341f9429ea","fromNode":"220c655435256510","fromSide":"top","toNode":"fc42f6e0f95eb6e5","toSide":"bottom"},
+		{"id":"91d890eee10c8634","fromNode":"f14c9839fb92d1ee","fromSide":"top","toNode":"fc42f6e0f95eb6e5","toSide":"bottom"},
+		{"id":"7f6afefe3acbb555","fromNode":"d71f633cf4083a99","fromSide":"right","toNode":"80b77ef900e5fcb7","toSide":"left"},
+		{"id":"84d75bf184950ed2","fromNode":"d71f633cf4083a99","fromSide":"left","toNode":"cd53ace47019b872","toSide":"right"},
+		{"id":"0a1a17edff5eb9bf","fromNode":"d71f633cf4083a99","fromSide":"top","toNode":"c8e01a12c0305736","toSide":"bottom"}
+	]
+}

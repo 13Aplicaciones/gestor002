@@ -1,15 +1,17 @@
 {
 	"nodes":[
 		{"id":"fba36e81cc92d847","type":"text","text":"reactLibreria","x":-641,"y":314,"width":250,"height":60},
-		{"id":"bf602e45fb880bae","type":"link","url":"https://dlcastillop.com/blog/libreria-hooks-react","x":-316,"y":280,"width":400,"height":391},
-		{"id":"9954e6e3ac596141","type":"link","url":"https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9","x":-1116,"y":280,"width":400,"height":400},
-		{"id":"7af63c133e045019","x":-716,"y":-380,"width":400,"height":400,"type":"link","url":"https://www.javacodegeeks.com/2025/03/optimize-spring-boot-startup-time-tips-techniques.html"},
-		{"id":"ba67c3a75523e010","type":"link","url":"https://springdoc.org/#swagger-ui-properties","x":-716,"y":800,"width":400,"height":400}
+		{"id":"7af63c133e045019","type":"link","url":"https://www.javacodegeeks.com/2025/03/optimize-spring-boot-startup-time-tips-techniques.html","x":-716,"y":-380,"width":400,"height":400},
+		{"id":"ba67c3a75523e010","type":"link","url":"https://springdoc.org/#swagger-ui-properties","x":-716,"y":800,"width":400,"height":400},
+		{"id":"9954e6e3ac596141","type":"link","url":"https://dev.to/nicolaserny/create-a-react-component-library-with-vite-and-typescript-1ih9","x":-1440,"y":20,"width":400,"height":400},
+		{"id":"bf602e45fb880bae","type":"link","url":"https://dlcastillop.com/blog/libreria-hooks-react","x":80,"y":119,"width":400,"height":391},
+		{"id":"853c93dc7a6325d8","x":-1520,"y":600,"width":400,"height":400,"type":"link","url":"https://react-icons.github.io/react-icons/"}
 	],
 	"edges":[
-		{"id":"4a735d99ce063e54","fromNode":"9954e6e3ac596141","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"},
-		{"id":"e0855aac6b8eee6e","fromNode":"bf602e45fb880bae","fromSide":"top","toNode":"fba36e81cc92d847","toSide":"top"},
 		{"id":"6b193f701de2ffd5","fromNode":"fba36e81cc92d847","fromSide":"bottom","toNode":"ba67c3a75523e010","toSide":"top"},
-		{"id":"bc83755f1f93248e","fromNode":"fba36e81cc92d847","fromSide":"top","toNode":"7af63c133e045019","toSide":"bottom"}
+		{"id":"bc83755f1f93248e","fromNode":"fba36e81cc92d847","fromSide":"top","toNode":"7af63c133e045019","toSide":"bottom"},
+		{"id":"276bbe7ae62d9d50","fromNode":"9954e6e3ac596141","fromSide":"right","toNode":"fba36e81cc92d847","toSide":"left"},
+		{"id":"7c8e2483e5572c3b","fromNode":"bf602e45fb880bae","fromSide":"left","toNode":"fba36e81cc92d847","toSide":"right"},
+		{"id":"0d4c295af5993f70","fromNode":"853c93dc7a6325d8","fromSide":"right","toNode":"fba36e81cc92d847","toSide":"left"}
 	]
 }

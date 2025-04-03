@@ -4,21 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "597f842cae9278cd",
+        "id": "e51a89e56e91f7bb",
         "type": "tabs",
         "children": [
           {
-            "id": "b0f84f1a3270682c",
+            "id": "1b7bd5ecb737034b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "mindmapview",
               "state": {
-                "file": "Muleto.md",
-                "mode": "source",
-                "source": false
+                "file": "idea/arquitectura.md"
               },
-              "icon": "lucide-file",
-              "title": "Muleto"
+              "icon": "blocks",
+              "title": "arquitectura"
             }
           }
         ]
@@ -41,7 +39,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": true
               },
               "icon": "lucide-folder-closed",
               "title": "Explorador de archivos"
@@ -78,7 +76,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "a357d9ef32c7dbd5",
@@ -166,19 +164,32 @@
       "daily-notes:Abrir la nota de hoy": false,
       "templates:Insertar plantilla": false,
       "command-palette:Abrir paleta de comandos": false,
-      "obsidian-excalidraw-plugin:New drawing": false
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "univer:Univer": false,
+      "obsidian-kanban:Create new board": false
     }
   },
-  "active": "b0f84f1a3270682c",
+  "active": "1b7bd5ecb737034b",
   "lastOpenFiles": [
+    "idea",
+    "idea/arquitectura.md",
+    "Sin título.md",
+    "excalibrain.md",
     "Investigaciones.md",
-    "Muleto.md",
     "mega Check list.md",
+    "Muleto.md",
     "SitiosAyuda.canvas",
-    "documentos/ArquitecturaReact.md",
+    "SitosUI-Investigacion.canvas",
+    "LibreriasGraficas.md",
+    "Excalidraw/Drawing 2025-04-03 11.39.55.excalidraw.md",
+    "documentos/Seguridades.pdf",
+    "documentos/Respuesta-REST.md",
     "documentos/ejemplo toast.md",
     "documentos/CORS.md",
-    "documentos/Respuesta-REST.md",
-    "documentos/Seguridades.pdf"
+    "documentos/ArquitecturaReact.md",
+    "Excalidraw/Drawing 2025-02-17 15.02.20.excalidraw.md",
+    "Excalidraw/sdfsa.md",
+    "Sin título.canvas",
+    "SitiosLibreriasUI.md"
   ]
 }
