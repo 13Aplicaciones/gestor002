@@ -15,6 +15,7 @@ export { Alerts, BandPresentation, Direction, TextFormat, JustificationText, Sor
 export { BannerInformation, InformationPanelRegistration } from './components/callout/Information';
 export { DialogForm, DialogAlerts } from './components/dialog/DialogState';
 export { DialogDelete } from './components/crud/DialogDelete';
+export { PageCrud } from './components/crud/PageCrud';
 
 export { GridDashboard } from './components/grid/GridDynamic';
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard } from './components/grid/Card';
@@ -29,6 +30,12 @@ export type { DataItemBadge } from './components/grid/Card';
 // Exportar elementos Tipos de Tablas
 export type { IPresentationTable } from './components/table/Table';
 export type { IParametersQuery } from './components/table/TableSearch';
+export type { IQueryProps, IFormProps, IPreviewProps } from './components/crud/Types';
+export type { IPresentationDataList } from './components/dataList/DataList';
+
+// Exportar elementos de la libreria Para DataList
+export { DataListConfigurable, DataListSkeleton } from './components/dataList/DataList';
+
 
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from './components/table/Table';

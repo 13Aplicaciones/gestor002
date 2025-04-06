@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/types"]
+  "include": ["src", "src/types", "../ux-ui/src/components/crud/Types.tsx", "../ux-ui/src/components/dataList/DataList.tsx"]
 }

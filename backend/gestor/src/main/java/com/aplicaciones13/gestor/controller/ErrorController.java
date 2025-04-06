@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-01-12
  * 
  */
-@Slf4j
 @Valid
 @RestController
 @RequestMapping("/api/errors")
@@ -125,8 +124,6 @@ public class ErrorController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "index_error,desc") String[] sort
     ) {
-
-        log.info("index: " + indexError + " message: " + message + " page: " + page + " size: " + size + " sort: " + sort);
         Page<Error> pageErrors = errorService.findByIndexErrorAndMessage(
             indexError, message, ControllerTools.generateOrders(page, size, sort));
 

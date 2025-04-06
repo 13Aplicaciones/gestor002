@@ -1,7 +1,11 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
-import { getIconComponent } from "ux-ui";
-import { Page as PageError } from "./Error/Page";
 import { useTranslation } from "react-i18next";
+import { getIconComponent } from "ux-ui";
+import { PageCrud } from "ux-ui";
+import { Modules } from "../utils/Constants";
+import { FormEditError, PreviewError } from "./Error/Form";
+import { QueryError } from "./Error/Query";
+import { createIRowDataError } from "./Error/Types";
 import Information from "./Information";
 import Module from "./Module";
 import User from "./User";
@@ -62,8 +66,14 @@ const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
 const Origin = ({ name }: { name: string }) => {
   const flow = () => {
     switch (name) {
-      case "GS-ER-001":
-        return <PageError />;
+      case Modules.ERROR:
+        return <PageCrud
+          tranlation={Modules.ERROR}
+          createIRowDataCustom={createIRowDataError}
+          QueryPanel={QueryError}
+          PreviewPanel={PreviewError}
+          FormPanel={FormEditError}
+        />;
       case "GS-IN-001":
         return <Information />;
       case "GS-MD-001":
@@ -71,7 +81,13 @@ const Origin = ({ name }: { name: string }) => {
       case "GS-US-001":
         return <User />;
       default:
-        return <Title />;
+        return <PageCrud
+          tranlation={Modules.ERROR}
+          createIRowDataCustom={createIRowDataError}
+          QueryPanel={QueryError}
+          PreviewPanel={PreviewError}
+          FormPanel={FormEditError}
+        />;
     }
   };
 
@@ -83,4 +99,5 @@ const Origin = ({ name }: { name: string }) => {
   );
 };
 
-export { Origin, Title, SubTitle };
+export { Origin, SubTitle, Title };
+

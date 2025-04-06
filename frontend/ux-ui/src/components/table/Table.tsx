@@ -1,10 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Alerts,
-  TextFormat,
-  SortColumn,
-  JustificationText,
-} from "../../ConstantsPresentation";
 import { blackA, whiteA } from "@radix-ui/colors";
 import {
   CaretDownIcon,
@@ -21,11 +15,17 @@ import {
   Text,
   useThemeContext,
 } from "@radix-ui/themes";
-import { useTranslation } from "react-i18next";
-import { BannerInformation } from "../callout/Information";
 import { ReactNode, useEffect, useState } from "react";
-import { IParametersQuery } from "./TableSearch";
+import { useTranslation } from "react-i18next";
+import {
+  Alerts,
+  JustificationText,
+  SortColumn,
+  TextFormat,
+} from "../../ConstantsPresentation";
 import { formatFromTextFormat } from "../../utils/FormatMask";
+import { BannerInformation } from "../callout/Information";
+import { IParametersQuery } from "./TableSearch";
 
 /**
  * Componente de tabla paginada.

@@ -65,11 +65,15 @@
       "description": "Información de errores del sistema y cómo se pueden solucionar",
       "path": "Error",
       "panel": {
-        "find": "Buscar errores",
-        "see": "Vista previa del error",
-        "edit": "Editar error"
+        "find": "Buscar Errores",
+        "see": "Vista previa del Error",
+        "edit": "Editar Error"
       },
       "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
         "indexError":{
           "title": "Indice",
           "placeholder": "ERROR-000"
@@ -97,7 +101,7 @@
         "acciones":{
           "title": "Acciones",
           "placeholder": "Acciones a realizar",
-          "abrev": "Acciones"
+          "abrev": "Acci."
         }
       }
     },

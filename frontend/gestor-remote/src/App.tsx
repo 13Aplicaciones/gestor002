@@ -4,6 +4,8 @@ import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { Origin } from "./pages/Origin";
 import { useEffect, useState } from "react";
 
+import { Modules } from "./utils/Constants";
+
 /**
  * Funcion principal de la aplicacion en developer
  *
@@ -66,7 +68,7 @@ const App = () => {
   return (
     <>
       <Flex direction="row" align={"center"} gap="1" px="1" py="2">
-        <Button size="3" onClick={() => heandleToken("GS-ER-001")}>
+        <Button size="3" onClick={() => heandleToken(Modules.ERROR)}>
           Error
         </Button>
         <Button size="3" onClick={() => heandleToken("GS-IN-001")}>

@@ -1,18 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Alerts,
-  AreaField,
-  BandPresentation,
-  BannerInformation,
-  DialogDelete,
-  Direction,
-  FooterForm,
-  FormState,
-  InformationPanelRegistration,
-  InputField,
-  StatusEdit,
-  useToastContext,
-} from "ux-ui";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
 import {
@@ -24,12 +11,32 @@ import {
   ITokenRoot,
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
-import { IRowDataError } from "./Types";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Alerts,
+  AreaField,
+  BandPresentation,
+  BannerInformation,
+  DataListConfigurable,
+  DataListSkeleton,
+  DialogDelete,
+  Direction,
+  FooterForm,
+  FormState,
+  IFormProps,
+  InformationPanelRegistration,
+  InputField,
+  IPresentationDataList,
+  JustificationText,
+  StatusEdit,
+  TextFormat,
+  useToastContext,
+} from "ux-ui";
 import * as yup from "yup";
+import { createIRowDataError, IRowDataError } from "./Types";
+import { Modules } from "../../utils/Constants";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -41,31 +48,22 @@ import * as yup from "yup";
  * @param onAtras Función para regresar a la vista anterior
  * @returns
  */
-const FormEdit = ({
+const FormEditError = ({
   status,
   row,
   onAtras,
-}: {
-  status: StatusEdit;
-  row?: IRowDataError;
-  onAtras?: () => void;
-}) => {
+}: IFormProps) => {
+
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(
-    status || StatusEdit.create
-  );
+  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
+  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
   const [t] = useTranslation("global_gestor");
-  
-  const { showToast } = useToastContext();
-
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row ? row.uuid : "");
+  const { showToast } = useToastContext();
 
   /**
    * Esquema de validación de formulario
@@ -107,7 +105,7 @@ const FormEdit = ({
    *
    * @param data Datos del formulario
    */
-  const accionar = async (data: any) => {
+  const actuate = async (data: any) => {
     setLoading(true);
     const nameApp = window.location.pathname.split("/").pop() + t("nameApp");
     data = { ...data, userApp: nameApp };
@@ -227,7 +225,7 @@ const FormEdit = ({
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
 
-      const parameter: IParameter = await getParameter("GS_001_00", "200");
+      const parameter: IParameter = await getParameter(Modules.GS_001_00, "200");
       setParameterUrl(parameter);
     };
     initializeStructure();
@@ -242,7 +240,7 @@ const FormEdit = ({
 
   const handleOnDelete = () => {
     setFormStatus(StatusEdit.edit);
-    accionar(null);
+    actuate(null);
   };
 
   /**
@@ -255,7 +253,7 @@ const FormEdit = ({
 
   return (
     <>
-       <DialogDelete
+      <DialogDelete
         dialogRefresh={dialogRefresh}
         dialogStatus={dialogStatus}
         loadingOnDelete={loading}
@@ -267,7 +265,7 @@ const FormEdit = ({
         <FormState statusEdit={formStatus} />
         <InformationPanelRegistration row={row} />
       </Flex>
-      <form onSubmit={handleSubmit(accionar)}>
+      <form onSubmit={handleSubmit(actuate)}>
         <InputField
           title={t("modules.GS-ER-001.fields.indexError.title")}
           columns={BandPresentation.column_3}
@@ -318,4 +316,128 @@ const FormEdit = ({
   );
 };
 
-export default FormEdit;
+/**
+ * Función para tener una vista previa de los errores del sistema.
+ * 
+ * @param row Fila de datos a editar 
+ * @returns 
+ */
+const PreviewError = ({ row }: { row?: IRowDataError }) => {
+  const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
+  const [messageForm, setMessageForm] = useState<string>("");
+  const [rowFound, setRowFound] = useState<IRowDataError | null>(createIRowDataError());
+  const [t] = useTranslation("global_gestor");
+
+  /**
+   * Cargar la vista previa del registro.
+   */
+  useEffect(() => {
+    const cargarVistaPrevia = async (indexError: string) => {
+      const tokenTemp: ITokenRoot = await getToken();
+      const parameterTemp: IParameter = await getParameter(Modules.GS_001_00, "200");
+
+      fetchData({
+        url: parameterTemp?.valueText01 + "/index=" + indexError,
+        methodRest: MethodREST.GET,
+        typeBody: TypeBody.NONE,
+        bodyParameter: null,
+        token: tokenTemp.access_token,
+        getToken() {
+          return refreshToken();
+        },
+      })
+        .then((response) => {
+          if (response.error) {
+            setMessageForm(response?.statusDescription || "");
+            setAlertForm(Alerts.info);
+            return null;
+          }
+          setRowFound(response.response);
+        })
+        .catch((error) => {
+          setMessageForm("Error message: " + error);
+          setAlertForm(Alerts.error);
+          return null;
+        });
+    };
+
+    if (row?.indexError) {
+      cargarVistaPrevia(row.indexError);
+    }
+  }, [row]);
+
+
+  /**
+   * Presentación de los items de la tabla.
+   */
+  const presentationData: IPresentationDataList = {
+    banding: true,
+    headers: true,
+    skeletonWidth: "90vw",
+    items: [
+      {
+        name: "uuid",
+        title: t("modules.GS-ER-001.fields.uuid.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+
+      {
+        name: "indexError",
+        title: t("modules.GS-ER-001.fields.indexError.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+      {
+        name: "message",
+        title: t("modules.GS-ER-001.fields.message.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+      {
+        name: "description",
+        title: t("modules.GS-ER-001.fields.description.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+      {
+        name: "user",
+        title: t("modules.GS-ER-001.fields.user.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+      {
+        name: "userDate",
+        title: t("modules.GS-ER-001.fields.userDate.title"),
+        justification: JustificationText.start,
+        format: TextFormat.dateSocialNetworkDinamic,
+      },
+      {
+        name: "userApp",
+        title: t("modules.GS-ER-001.fields.userApp.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+    ],
+  };
+
+  return (
+    <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
+      {(messageForm && (
+        <BannerInformation message={messageForm} alert={alertForm} />
+      )) || (
+          <DataListConfigurable
+            presentationDataList={presentationData}
+            data={rowFound}
+          />
+
+
+        )}
+      <DataListSkeleton column={5} />
+
+    </Flex>
+  );
+};
+
+export { FormEditError, PreviewError };
+
