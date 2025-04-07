@@ -1,16 +1,5 @@
 package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.base.controller.ControllerTools;
-import com.aplicaciones13.base.validations.ValidUUID;
-import com.aplicaciones13.gestor.model.Error;
-import com.aplicaciones13.gestor.payload.request.ErrorRequest;
-import com.aplicaciones13.gestor.payload.response.ErrorResponse;
-import com.aplicaciones13.gestor.services.ErrorService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.aplicaciones13.base.controller.ControllerTools;
+import com.aplicaciones13.base.validations.ValidUUID;
+import com.aplicaciones13.gestor.model.Error;
+import com.aplicaciones13.gestor.payload.request.ErrorRequest;
+import com.aplicaciones13.gestor.payload.response.ErrorResponse;
+import com.aplicaciones13.gestor.services.ErrorService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * Controlador de errores.
@@ -122,8 +121,7 @@ public class ErrorController {
             @RequestParam(required = false) String message,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "index_error,desc") String[] sort
-    ) {
+            @RequestParam(defaultValue = "index_error,desc") String[] sort) {
         Page<Error> pageErrors = errorService.findByIndexErrorAndMessage(
             indexError, message, ControllerTools.generateOrders(page, size, sort));
 

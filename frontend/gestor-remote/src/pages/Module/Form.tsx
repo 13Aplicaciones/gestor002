@@ -35,11 +35,11 @@ import {
   useToastContext,
 } from "ux-ui";
 import * as yup from "yup";
-import { Menus, MODULE } from "../../utils/Constants";
-import { createIRowDataError, IRowDataError } from "./Types";
+import { Menus } from "../../utils/Constants";
+import { createIRowDataModule, IRowDataModule } from "./Types";
 
 /**
- * Formulario de edición de errores del sistema.
+ * Formulario de edición de Modulees del sistema.
  *
  * @author @omargo33
  *
@@ -48,7 +48,7 @@ import { createIRowDataError, IRowDataError } from "./Types";
  * @param onAtras Función para regresar a la vista anterior
  * @returns
  */
-const FormEditError = ({
+const FormEditModule = ({
   status,
   row,
   onAtras,
@@ -70,7 +70,7 @@ const FormEditError = ({
    *
    */
   const schema = yup.object({
-    indexError: yup
+    indexModule: yup
       .string()
       .required(t("validation.required"))
       .min(5, t("validation.min", { min: 5 }))
@@ -93,7 +93,7 @@ const FormEditError = ({
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      indexError: row?.indexError || "",
+      indexModule: row?.indexModule || "",
       message: row?.message || "",
       description: row?.description || "",
       userApp: row?.userApp || "",
@@ -124,8 +124,8 @@ const FormEditError = ({
             analizarAccionar(response);
             setFormStatus(StatusEdit.edit);
           })
-          .catch((error) => {
-            setMessageForm(t("actions.errorFetch", { error: error }));
+          .catch((Module) => {
+            setMessageForm(t("actions.ModuleFetch", { Module: Module }));
             return null;
           });
       }
@@ -141,8 +141,8 @@ const FormEditError = ({
           .then((response) => {
             analizarAccionar(response);
           })
-          .catch((error) => {
-            setMessageForm(t("actions.errorFetch", { error: error }));
+          .catch((Module) => {
+            setMessageForm(t("actions.ModuleFetch", { Module: Module }));
             return null;
           });
       }
@@ -163,8 +163,8 @@ const FormEditError = ({
               onAtras();
             }
           })
-          .catch((error) => {
-            setMessageForm(t("actions.errorFetch", { error: error }));
+          .catch((Module) => {
+            setMessageForm(t("actions.ModuleFetch", { Module: Module }));
             return null;
           });
       }
@@ -225,8 +225,8 @@ const FormEditError = ({
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
 
-      const parameter: IParameter = await getParameter(MODULE, "200");
-      parameter.valueText01 = parameter.valueText01 + Menus.ERROR_ENDPOINT;
+      const parameter: IParameter = await getParameter(Menus.MODULE, "200");
+      parameter.valueText01 = parameter.valueText01 + Menus.MODULE_ENDPOINT;
       setParameterUrl(parameter);
     };
     initializeStructure();
@@ -268,27 +268,27 @@ const FormEditError = ({
       </Flex>
       <form onSubmit={handleSubmit(actuate)}>
         <InputField
-          title={t("modules.GS-ER-001.fields.indexError.title")}
+          title={t("modules.GS-MD-001.fields.indexModule.title")}
           columns={BandPresentation.column_3}
-          placeholder={t("modules.GS-ER-001.fields.indexError.placeholder")}
+          placeholder={t("modules.GS-MD-001.fields.indexModule.placeholder")}
           directionLabel={Direction.horizontal}
-          register={register("indexError")}
-          messageError={errors.indexError?.message}
+          register={register("indexModule")}
+          messageError={errors.indexModule?.message}
         />
         <AreaField
-          title={t("modules.GS-ER-001.fields.message.title")}
+          title={t("modules.GS-MD-001.fields.message.title")}
           columns={BandPresentation.column_2}
           rows={3}
-          placeholder={t("modules.GS-ER-001.fields.message.placeholder")}
+          placeholder={t("modules.GS-MD-001.fields.message.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("message")}
           messageError={errors.message?.message}
         />
         <AreaField
-          title={t("modules.GS-ER-001.fields.description.title")}
+          title={t("modules.GS-MD-001.fields.description.title")}
           columns={BandPresentation.column_1}
           rows={5}
-          placeholder={t("modules.GS-ER-001.fields.description.placeholder")}
+          placeholder={t("modules.GS-MD-001.fields.description.placeholder")}
           directionLabel={Direction.horizontal}
           register={register("description")}
           messageError={errors.description?.message}
@@ -318,67 +318,56 @@ const FormEditError = ({
 };
 
 /**
- * Función para tener una vista previa de los errores del sistema.
+ * Función para tener una vista previa de los Modulees del sistema.
  * 
  * @param row Fila de datos a editar 
  * @returns 
  */
-const PreviewError = ({ row }: { row?: IRowDataError }) => {
+const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
   const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
-  const [loading, setLoading] = useState(false);
   const [messageForm, setMessageForm] = useState<string>("");
-  const [rowFound, setRowFound] = useState<IRowDataError | null>(createIRowDataError());
+  const [rowFound, setRowFound] = useState<IRowDataModule | null>(createIRowDataModule());
   const [t] = useTranslation("global_gestor");
 
   /**
    * Cargar la vista previa del registro.
    */
   useEffect(() => {
-    const loadPreview = (row: any) => {
-      setLoading(true);
-      setTimeout(async () => {
-        await runApi(row.uuid || "");
-        setLoading(false);
-      }, 333);
+    const cargarVistaPrevia = async (indexModule: string) => {
+      const tokenTemp: ITokenRoot = await getToken();
+      const parameterTemp: IParameter = await getParameter(Menus.MODULE, "200");
+      parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.MODULE_ENDPOINT;
+
+      fetchData({
+        url: parameterTemp?.valueText01 + "/index=" + indexModule,
+        methodRest: MethodREST.GET,
+        typeBody: TypeBody.NONE,
+        bodyParameter: null,
+        token: tokenTemp.access_token,
+        getToken() {
+          return refreshToken();
+        },
+      })
+        .then((response) => {
+          if (response.error) {
+            setMessageForm(response?.statusDescription || "");
+            setAlertForm(Alerts.info);
+            return null;
+          }
+          setRowFound(response.response);
+        })
+        .catch((Module) => {
+          setMessageForm("Module message: " + Module);
+          setAlertForm(Alerts.error);
+          return null;
+        });
     };
-  
-    loadPreview(row);
+
+    if (row?.indexModule) {
+      cargarVistaPrevia(row.indexModule);
+    }
   }, [row]);
 
-  /**
-   * Método para ejecutar la API y obtener los datos del error.
-   * 
-   * @param indexError 
-   */
-  const runApi = async (indexError: string) => {
-    const tokenTemp: ITokenRoot = await getToken();
-    const parameterTemp: IParameter = await getParameter(MODULE, "200");
-    parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.ERROR_ENDPOINT;
-
-    fetchData({
-      url: parameterTemp?.valueText01 + "/" + indexError,
-      methodRest: MethodREST.GET,
-      typeBody: TypeBody.NONE,
-      bodyParameter: null,
-      token: tokenTemp.access_token,
-      getToken() {
-        return refreshToken();
-      },
-    })
-      .then((response) => {
-        if (response.error) {
-          setMessageForm(response?.statusDescription || "");
-          setAlertForm(Alerts.info);
-          return null;
-        }
-        setRowFound(response.response);
-      })
-      .catch((error) => {
-        setMessageForm("Error message: " + error);
-        setAlertForm(Alerts.error);
-        return null;
-      });
-  };
 
   /**
    * Presentación de los items de la tabla.
@@ -390,44 +379,44 @@ const PreviewError = ({ row }: { row?: IRowDataError }) => {
     items: [
       {
         name: "uuid",
-        title: t("modules.GS-ER-001.fields.uuid.title"),
+        title: t("modules.GS-MD-001.fields.uuid.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
 
       {
-        name: "indexError",
-        title: t("modules.GS-ER-001.fields.indexError.title"),
+        name: "indexModule",
+        title: t("modules.GS-MD-001.fields.indexModule.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "message",
-        title: t("modules.GS-ER-001.fields.message.title"),
+        title: t("modules.GS-MD-001.fields.message.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "description",
-        title: t("modules.GS-ER-001.fields.description.title"),
+        title: t("modules.GS-MD-001.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "user",
-        title: t("modules.GS-ER-001.fields.user.title"),
+        title: t("modules.GS-MD-001.fields.user.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "userDate",
-        title: t("modules.GS-ER-001.fields.userDate.title"),
+        title: t("modules.GS-MD-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
       },
       {
         name: "userApp",
-        title: t("modules.GS-ER-001.fields.userApp.title"),
+        title: t("modules.GS-MD-001.fields.userApp.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
@@ -439,20 +428,16 @@ const PreviewError = ({ row }: { row?: IRowDataError }) => {
       {(messageForm && (
         <BannerInformation message={messageForm} alert={alertForm} />
       )) || (
-          loading ? (
-            <DataListSkeleton column={5} />
-          ) : (
-            <>
-              <DataListConfigurable
-                presentationDataList={presentationData}
-                data={rowFound}
-              />
-            </>
-          )
+          <DataListConfigurable
+            presentationDataList={presentationData}
+            data={rowFound}
+          />
         )}
+      <DataListSkeleton column={5} />
+
     </Flex>
   );
 };
 
-export { FormEditError, PreviewError };
+export { FormEditModule, PreviewModule };
 

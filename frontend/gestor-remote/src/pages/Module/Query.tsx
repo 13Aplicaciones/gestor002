@@ -11,7 +11,7 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
@@ -25,16 +25,17 @@ import {
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { IRowDataError } from "./Types";
+import { IRowDataModule } from "./Types";
+import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 
 /**
- * Tabla de errores del sistema.
+ * Tabla de Modulees del sistema.
  *
  * @param onEditRow Funcion para editar una fila.
  * @param onSeeRow Funcion para ver una fila.
  * @returns
  */
-const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
   const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [parameterUrl, setParameterUrl] = useState<IParameter>(
@@ -42,7 +43,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
   );
   const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
     size: "10",
-    indexError: "",
+    indexModule: "",
     message: "",
   });
 
@@ -56,7 +57,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       setToken(tokenTemp);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      parameter.valueText01 = parameter.valueText01 + Menus.ERROR_ENDPOINT;
+      parameter.valueText01 = parameter.valueText01 + Menus.MODULE_ENDPOINT;
       setParameterUrl(parameter);
     };
 
@@ -73,22 +74,22 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
     skeletonWidth: "90vw",
     items: [
       {
-        name: "indexError",
-        title: t("modules.GS-ER-001.fields.indexError.title"),
+        name: "indexModule",
+        title: t("modules.GS-MD-001.fields.indexModule.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
         order: SortColumn.desc,
-        orderNameColumn: "index_error",
+        orderNameColumn: "index_Module",
       },
       {
         name: "message",
-        title: t("modules.GS-ER-001.fields.message.title"),
+        title: t("modules.GS-MD-001.fields.message.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
         onAction: {
-          onAction: (row: IRowDataError) => {
+          onAction: (row: IRowDataModule) => {
             if (onSeeRow) {
               onSeeRow(row);
             }
@@ -97,14 +98,14 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       },
       {
         name: "description",
-        title: t("modules.GS-ER-001.fields.description.title"),
+        title: t("modules.GS-MD-001.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "34vw",
       },
       {
         name: "userDate",
-        title: t("modules.GS-ER-001.fields.userDate.title"),
+        title: t("modules.GS-MD-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
         width: "20vw",
@@ -113,11 +114,11 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       },
       {
         name: "acciones",
-        title: t("modules.GS-ER-001.fields.acciones.abrev"),
+        title: t("modules.GS-MD-001.fields.acciones.abrev"),
         justification: JustificationText.center,
         format: TextFormat.action,
         width: "6vw",
-        component: (row: IRowDataError) => (
+        component: (row: IRowDataModule) => (
           <Button
             size="1"
             variant="ghost"
@@ -140,7 +141,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
    * @param data 
    */
   const handleFormFind = (data: IParametersQuery) => {
-    parametersQuery.indexError = data.indexError;
+    parametersQuery.indexModule = data.indexModule;
     parametersQuery.message = data.message;
     setParametersQuery({ ...parametersQuery });
   };
@@ -166,27 +167,30 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
 };
 
 /**
- * Formulario de consulta de errores del sistema.
+ * Formulario de consulta de Modulees del sistema.
  *
- * @param onFind Función para buscar errores
+ * @param onFind Función para buscar Modulees
  * @returns
  */
 const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => {
   const [t] = useTranslation("global_gestor");
-  
+
   const schema = yup.object({
-    indexError: yup
+    indexModule: yup
       .string()
       .max(128, t("validation.max", { max: 128 })),
-    message: yup
+    name: yup
       .string()
       .max(1024, t("validation.max", { max: 1024 })),
+    status: yup
+      .string(),
   });
 
   /**
    * Hook para el manejo de formularios.
    */
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -194,11 +198,12 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      indexError: "",
-      message: ""
+      indexModule: "",
+      name: "",
+      status: "",
     },
   });
-  
+
   /**
    * Función para enviar el formulario.
    *
@@ -206,6 +211,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
    */
   const submitForm = (data: IParametersQuery) => {
     if (onFind) {
+      console.log("data", data);
       onFind(data);
     }
   };
@@ -221,32 +227,85 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
     reset();
   }
 
+  const items: IPresentationInputSelect = {
+    items: [
+
+      {
+        order: 10,
+        justification: JustificationText.end,
+        
+        title: "VACIO",
+        width: "100%",
+      },
+     
+
+      {
+        order: 0,
+        justification: JustificationText.end,
+        value: "A",
+        title: "Activo",
+        width: "100%",
+      },
+      {
+        order: 2,
+        justification: JustificationText.start,
+        value: "X",
+        title: "Borrado",
+        width: "100%",
+      },
+
+      {
+        order: 1,
+        justification: JustificationText.start,
+        value: "I",
+        title: "Inactivo",
+        width: "100%",
+      }
+    ]
+  };
+
   return (
     <form onSubmit={handleSubmit(submitForm)}>
       <InputField
-        title={t("modules.GS-ER-001.fields.indexError.title")}
+        title={t("modules.GS-MD-001.fields.indexModule.title")}
         columns={BandPresentation.column_3}
-        placeholder={t("modules.GS-ER-001.fields.indexError.placeholder")}
+        placeholder={t("modules.GS-MD-001.fields.indexModule.placeholder")}
         directionLabel={Direction.horizontal}
-        register={register("indexError")}
-        messageError={errors.indexError?.message}
+        register={register("indexModule")}
+        messageError={errors.indexModule?.message}
       />
       <InputField
-        title={t("modules.GS-ER-001.fields.message.title")}
+        title={t("modules.GS-MD-001.fields.name.title")}
         columns={BandPresentation.column_3}
-        placeholder={t("modules.GS-ER-001.fields.message.placeholder")}
+        placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
         directionLabel={Direction.horizontal}
-        register={register("message")}
-        messageError={errors.message?.message}
+        register={register("name")}
+        messageError={errors.name?.message}
       />
+      <Controller
+        name="status"
+        control={control}
+        render={({ field }) => (
+          <InputSelect
+            title={t("modules.GS-MD-001.fields.status.title")}
+            placeholder="mi placeholder"
+            messageError={errors.status?.message}
+            columns={BandPresentation.column_3}
+            directionLabel={Direction.horizontal}
+            items={items} 
+            {...field}
+            />
+        )}
+      />
+
       <FooterForm
         directionLabel={Direction.horizontal}
         columns={BandPresentation.column_2}
       >
         <Button type="submit">{t("actions.search")}</Button>
         <Button type="button"
-        variant="surface"
-        onClick={() => resetForm()}>
+          variant="surface"
+          onClick={() => resetForm()}>
           {t("actions.clean")}
         </Button>
       </FooterForm>
@@ -254,4 +313,4 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
   );
 };
 
-export { QueryError };
+export { QueryModule };

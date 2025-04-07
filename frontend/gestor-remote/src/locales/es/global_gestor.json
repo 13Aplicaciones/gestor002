@@ -31,8 +31,58 @@
     "GS-MD-001": {
       "icon": "CubeIcon",
       "title": "Módulos",
-      "description": "Modulos del Sistema",
-      "path": "Module"
+      "add": "Módulo",
+      "description": "Módulos del Sistema",
+      "path": "Module",
+      "panel": {
+        "find": "Buscar Módulos de Sistema",
+        "see": "Vista previa del Módulo",
+        "edit": "Editar Módulo",
+        "create": "Crear Módulo"
+      },
+      "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "indexModule":{
+          "title": "Indice",
+          "placeholder": "GS-MD-001"
+        },
+        "context":{
+          "title": "Contexto",
+          "placeholder": "/WEB-INF/rol-task-flow.xml#rol-task-flow"
+        },
+        "name":{
+          "title": "Nombre",
+          "placeholder": "Cliente"
+        },
+        "status":{
+          "title": "Estado",
+          "placeholder": "Estado del módulo A"
+        },
+        "orden":{
+          "title": "Orden",
+          "placeholder": "10"
+        },
+        "userDate":{
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user":{
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp":{
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones":{
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      }
     },
     "GS-MN-001": {
       "icon": "DropdownMenuIcon",
@@ -67,7 +117,8 @@
       "panel": {
         "find": "Buscar Errores",
         "see": "Vista previa del Error",
-        "edit": "Editar Error"
+        "edit": "Editar Error",
+        "create": "Crear Error"
       },
       "fields": {
         "uuid": {

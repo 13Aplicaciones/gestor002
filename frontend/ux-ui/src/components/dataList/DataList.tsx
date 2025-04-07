@@ -56,9 +56,9 @@ const DataListConfigurable = ({
     return (
         <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
             <DataList.Root>
-                {presentation.items.map((item: any) => (
+                {presentation.items.map((item: any, index:number) => (
                     <DataList.Item align={"start"}>
-                        <DataList.Label minWidth="12vh">{item.title}</DataList.Label>
+                        <DataList.Label minWidth="12vh" key={index}>{item.title}</DataList.Label>
                         <DataList.Value >
                             <Flex width={"100%"} justify={justify(item.justification)} gap="2" >
                                 {item.component?.(item, null)}

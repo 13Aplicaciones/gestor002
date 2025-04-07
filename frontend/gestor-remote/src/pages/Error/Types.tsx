@@ -2,13 +2,13 @@
  * Interfaz para el objeto de respuesta de la llamada.
  */
 interface IRowDataError {
-  message: string;
   description: string;
-  uuid: string;
   indexError: string;
+  message: string;
   user: string;
-  userDate: string;
   userApp: string;
+  userDate: string;
+  uuid: string;
 }
 
 /**
@@ -18,13 +18,13 @@ interface IRowDataError {
  */
 const createIRowDataError = (): IRowDataError => {
   return {
-    message: "",
     description: "",
-    uuid: "",
     indexError: "",
+    message: "",
     user: "",
-    userDate: "",
     userApp: "",
+    userDate: "",
+    uuid: "",
   };
 };
 
