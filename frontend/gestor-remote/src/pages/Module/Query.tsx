@@ -11,7 +11,7 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
@@ -24,9 +24,9 @@ import {
 } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
+import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 import { Menus, MODULE } from "../../utils/Constants";
 import { IRowDataModule } from "./Types";
-import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 
 /**
  * Tabla de Modulees del sistema.
@@ -80,11 +80,11 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
         format: TextFormat.none,
         width: "10vw",
         order: SortColumn.desc,
-        orderNameColumn: "index_Module",
+        orderNameColumn: "index_module",
       },
       {
-        name: "message",
-        title: t("modules.GS-MD-001.fields.message.title"),
+        name: "name",
+        title: t("modules.GS-MD-001.fields.name.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
@@ -97,8 +97,8 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
         },
       },
       {
-        name: "description",
-        title: t("modules.GS-MD-001.fields.description.title"),
+        name: "context",
+        title: t("modules.GS-MD-001.fields.context.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "34vw",
@@ -142,7 +142,8 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
    */
   const handleFormFind = (data: IParametersQuery) => {
     parametersQuery.indexModule = data.indexModule;
-    parametersQuery.message = data.message;
+    parametersQuery.name = data.name;
+    parametersQuery.status = data.status;
     setParametersQuery({ ...parametersQuery });
   };
 
@@ -211,7 +212,6 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
    */
   const submitForm = (data: IParametersQuery) => {
     if (onFind) {
-      console.log("data", data);
       onFind(data);
     }
   };
@@ -229,16 +229,6 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
 
   const items: IPresentationInputSelect = {
     items: [
-
-      {
-        order: 10,
-        justification: JustificationText.end,
-        
-        title: "VACIO",
-        width: "100%",
-      },
-     
-
       {
         order: 0,
         justification: JustificationText.end,
@@ -247,20 +237,27 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
         width: "100%",
       },
       {
-        order: 2,
-        justification: JustificationText.start,
-        value: "X",
-        title: "Borrado",
-        width: "100%",
-      },
-
-      {
         order: 1,
         justification: JustificationText.start,
         value: "I",
         title: "Inactivo",
         width: "100%",
-      }
+      },
+
+      {
+        order: 10,
+        justification: JustificationText.start,
+        value: "X",
+        color: "red",
+        iconName: "TrashIcon",
+        title: "Borrado",
+        width: "100%",
+      },
+      {
+        order: 9,
+        separator: true,
+      },
+
     ]
   };
 
@@ -288,13 +285,13 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
         render={({ field }) => (
           <InputSelect
             title={t("modules.GS-MD-001.fields.status.title")}
-            placeholder="mi placeholder"
+            placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
             messageError={errors.status?.message}
             columns={BandPresentation.column_3}
             directionLabel={Direction.horizontal}
-            items={items} 
+            items={items}
             {...field}
-            />
+          />
         )}
       />
 

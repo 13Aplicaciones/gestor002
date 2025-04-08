@@ -27,7 +27,7 @@ public interface ErrorRepository extends JpaRepository<Error, Long> {
      * @param pageable
      * @return
      */
-    @Query(value = "\n" + //
+    @Query(value = 
                 "SELECT * FROM GS_002_01.error e WHERE (?1 IS NULL OR UPPER(e.index_error) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(e.message) LIKE CONCAT('%', UPPER(?2), '%')) ",
         countQuery = "SELECT count(*) FROM GS_002_01.error e WHERE (?1 IS NULL OR UPPER(e.index_error) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(e.message) LIKE CONCAT('%', UPPER(?2), '%')) ",
         nativeQuery = true

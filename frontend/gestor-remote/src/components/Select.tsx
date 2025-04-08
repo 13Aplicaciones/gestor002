@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex, Select, Text } from "@radix-ui/themes";
-import { ReactNode} from "react";
-import { BandPresentation, Direction, JustificationText } from "ux-ui";
+import { ReactNode } from "react";
+import { BandPresentation, Direction, getIconComponent, JustificationText } from "ux-ui";
 import useCalculatePresentation from "ux-ui/src/components/input/Calculations";
 import { MessageField } from "ux-ui/src/components/input/Menssages";
 
@@ -11,10 +11,14 @@ import { MessageField } from "ux-ui/src/components/input/Menssages";
 interface IPresentationInputSelect {
     items: Array<{
         order: number;
-        justification: JustificationText;
+        separator?: boolean;
+        justification?: JustificationText;
         value?: string;
-        title: string;
-        width: string;
+        title?: string;
+        disabled?: boolean | undefined;
+        width?: string;
+        color?: string;
+        iconName?: string;
         onAction?: { onAction: (row: any) => void };
         component?: (row: any, children: ReactNode) => ReactNode;
     }>;
@@ -59,14 +63,29 @@ const InputSelect = ({
             <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
                 <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
-            <Flex direction={"column"} >
-                <Select.Root onValueChange={handleValueChange} value={value || ""}>
+            <Flex direction={"column"} style={{ marginBottom: '1vh', width: presentation.width }} >
+                <Select.Root onValueChange={handleValueChange} value={value || ""} >
                     <Select.Trigger placeholder={placeholder} />
-                    <Select.Content>
+                    <Select.Content >
                         {items.items.map((item) => (
-                            <Select.Item key={item.order} value={item.value}>
-                                {item.title}
-                            </Select.Item>
+                            item.separator ? (
+                                <Select.Separator key={item.order} />
+                            ) : (
+                                <>
+                                    <Select.Item
+                                        disabled={item.disabled || false}
+                                        key={item.order}
+                                        value={item.value || ""}
+                                        style={{ color: item.color || 'inherit' }}
+                                    >
+                                        {item.iconName ? (
+                                            <Flex justify="center" align="center" gap="2" >
+                                                {getIconComponent(item.iconName || "", "18", "18")}
+                                                {item.title}
+                                            </Flex>) : item.title}
+                                    </Select.Item>
+                                </>
+                            )
                         ))}
                     </Select.Content>
                 </Select.Root>
@@ -78,3 +97,4 @@ const InputSelect = ({
 
 export { InputSelect };
 export type { IPresentationInputSelect };
+
