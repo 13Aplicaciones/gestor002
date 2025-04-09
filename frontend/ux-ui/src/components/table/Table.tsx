@@ -51,8 +51,19 @@ interface IPresentationTable {
     width: string;
     order?: SortColumn;
     orderNameColumn?: string;
+    cellSelect?: IPresentationCellSelect;
     onAction?: { onAction: (row: any) => void };
     component?: (row: any, children: ReactNode) => ReactNode;
+  }>;
+}
+
+/**
+ * Interfaz para la presentacion de la tabla.
+ */
+interface IPresentationCellSelect {
+  items: Array<{
+    value: string;
+    title: string;
   }>;
 }
 
@@ -91,6 +102,7 @@ const Cell = ({
   row,
   textFormat,
   value,
+  cellSelect,
   width,
   onAction,
   component,
@@ -100,11 +112,12 @@ const Cell = ({
   row: any;
   textFormat: TextFormat;
   value: any;
+  cellSelect?: IPresentationCellSelect;
   width: string;
   onAction?: { onAction: (row: any) => void };
   component?: (row: any, children: ReactNode) => ReactNode;
 }) => {
-  const textFomatter = formatFromTextFormat(textFormat, value);
+
 
   return (
     <Table.Cell
@@ -113,23 +126,69 @@ const Cell = ({
       maxWidth={width}
       width={width}
     >
-      <Flex gap="2" justify={justify(justification)}>
-        {component?.(row, null)}
-        {(onAction && (
-          <Link
-            onClick={() => onAction?.onAction(row)}
-            style={{ cursor: "pointer" }}
-            truncate
-            underline="hover"
-            weight="medium"
-          >{textFomatter}</Link>
-        )) ||
-          <Text truncate>{textFomatter}</Text>
-        }
-      </Flex>
+      <CellFormatter
+        value={value}
+        textFormat={textFormat}
+        justification={justification}
+        cellSelect={cellSelect}
+        row={row}
+        onAction={onAction}
+        component={component}
+      />
     </Table.Cell>
   );
 };
+
+/**
+ * Funcion para formatear el texto de la celda.
+ * 
+ * @param param0 
+ * @returns 
+ */
+const CellFormatter = (
+  {
+    value,
+    textFormat,
+    justification,
+    row,
+    cellSelect,
+    onAction,
+    component
+  }: {
+    value: string;
+    textFormat: TextFormat;
+    justification: JustificationText;
+    row: any;
+    cellSelect?: IPresentationCellSelect;
+    onAction?: { onAction: (row: any) => void };
+    component?: (row: any, children: ReactNode) => ReactNode;
+  }
+) => {
+  let textFomatter = value;
+
+  if (cellSelect) {
+    textFomatter = cellSelect.items.find((item) => item.value === value)?.title || "";
+  } else {
+    textFomatter = formatFromTextFormat(textFormat, value);
+  }
+
+  return (
+    <Flex gap="2" justify={justify(justification)}>
+      {component?.(row, null)}
+      {(onAction && (
+        <Link
+          onClick={() => onAction?.onAction(row)}
+          style={{ cursor: "pointer" }}
+          truncate
+          underline="hover"
+          weight="medium"
+        >{textFomatter}</Link>
+      )) ||
+        <Text truncate>{textFomatter}</Text>
+      }
+    </Flex>
+  )
+}
 
 /**
  * Funcion para mostrar el <Title>.
@@ -346,6 +405,7 @@ const TableConfigurable = ({
                     textFormat={presentation.items[cellIndex].format}
                     value={row[field.name]}
                     width={presentation.items[cellIndex].width}
+                    cellSelect={presentation.items[cellIndex].cellSelect}
                   />
                 ))}
               </Table.Row>

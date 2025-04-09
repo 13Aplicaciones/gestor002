@@ -112,6 +112,29 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
         order: SortColumn.desc,
         orderNameColumn: "user_date",
       },
+
+      {
+        name: "status",
+        title: t("modules.GS-MD-001.fields.status.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+        width: "10vw",
+        cellSelect: {
+          items: [{
+            value: "A",
+            title: "Activo",
+          },
+          {
+            value: "I",
+            title: "Inactivo",
+          },
+          {
+            value: "X",
+            title: "Borrado",
+          }],
+        },
+      },
+
       {
         name: "acciones",
         title: t("modules.GS-MD-001.fields.acciones.abrev"),
