@@ -12,7 +12,7 @@
 			"keycloak": false,
 			"manager": true,
 			"orquestador": false,
-			"tools": true,
+			"tools": false,
 			"**/target": true,
 			"**/.mvn": true,
 			".vscode": true,
