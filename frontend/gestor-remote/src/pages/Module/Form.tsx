@@ -12,11 +12,10 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   Alerts,
-  AreaField,
   BandPresentation,
   BannerInformation,
   DataListConfigurable,
@@ -32,11 +31,12 @@ import {
   JustificationText,
   StatusEdit,
   TextFormat,
-  useToastContext,
+  useToastContext
 } from "ux-ui";
 import * as yup from "yup";
 import { Menus } from "../../utils/Constants";
 import { createIRowDataModule, IRowDataModule } from "./Types";
+import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 
 /**
  * Formulario de edición de Modulees del sistema.
@@ -74,19 +74,33 @@ const FormEditModule = ({
       .string()
       .required(t("validation.required"))
       .min(5, t("validation.min", { min: 5 }))
-      .max(128, t("validation.max", { max: 128 })),
-    message: yup
+      .max(128, t("validation.max", { max: 32 })),
+    name: yup
       .string()
       .required(t("validation.required"))
-      .max(1024, t("validation.max", { max: 1024 })),
-    description: yup.string().max(4098, t("validation.max", { max: 4098 })),
-    userApp: yup.string(),
+      .max(128, t("validation.max", { max: 128 })),
+    context: yup
+      .string()
+      .required(t("validation.required"))
+      .max(128, t("validation.max", { max: 128 })),
+    status: yup
+      .string()
+      .required(t("validation.required"))
+      .max(8, t("validation.max", { max: 8 })),
+    userApp: yup
+      .string(),
+    orden: yup
+      .number()
+      .typeError(t("validation.typeNumber"))
+      .min(0, t("validation.min", { min: 0 }))
+      .max(9999, t("validation.max", { max: 9999 })),
   });
 
   /**
    * Función para registrar los datos del formulario
    */
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -94,9 +108,11 @@ const FormEditModule = ({
     resolver: yupResolver(schema),
     defaultValues: {
       indexModule: row?.indexModule || "",
-      message: row?.message || "",
-      description: row?.description || "",
+      name: row?.name || "",
+      context: row?.context || "",
+      status: row?.status || "A",
       userApp: row?.userApp || "",
+      orden: row?.orden || 1, // Hidden field
     },
   });
 
@@ -252,6 +268,28 @@ const FormEditModule = ({
     setDialogStatus(false);
   };
 
+  // TODO:
+// poner en un useEffect para no repetir
+// sacar desde el orquestador
+  const items: IPresentationInputSelect = {
+    items: [
+      {
+        order: 0,
+        justification: JustificationText.end,
+        value: "A",
+        title: "Activo",
+        width: "100%",
+      },
+      {
+        order: 1,
+        justification: JustificationText.start,
+        value: "I",
+        title: "Inactivo",
+        width: "100%",
+      }
+    ]
+  };
+
   return (
     <>
       <DialogDelete
@@ -275,23 +313,36 @@ const FormEditModule = ({
           register={register("indexModule")}
           messageError={errors.indexModule?.message}
         />
-        <AreaField
-          title={t("modules.GS-MD-001.fields.message.title")}
+        <InputField
+          title={t("modules.GS-MD-001.fields.name.title")}
           columns={BandPresentation.column_2}
-          rows={3}
-          placeholder={t("modules.GS-MD-001.fields.message.placeholder")}
+          placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
           directionLabel={Direction.horizontal}
-          register={register("message")}
-          messageError={errors.message?.message}
+          register={register("name")}
+          messageError={errors.name?.message}
         />
-        <AreaField
-          title={t("modules.GS-MD-001.fields.description.title")}
+        <InputField
+          title={t("modules.GS-MD-001.fields.context.title")}
           columns={BandPresentation.column_1}
-          rows={5}
-          placeholder={t("modules.GS-MD-001.fields.description.placeholder")}
+          placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
           directionLabel={Direction.horizontal}
-          register={register("description")}
-          messageError={errors.description?.message}
+          register={register("context")}
+          messageError={errors.context?.message}
+        />
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <InputSelect
+              title={t("modules.GS-MD-001.fields.status.title")}
+              placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
+              messageError={errors.status?.message}
+              columns={BandPresentation.column_6}
+              directionLabel={Direction.horizontal}
+              items={items}
+              {...field}
+            />
+          )}
         />
         <FooterForm
           directionLabel={Direction.horizontal}

@@ -31,4 +31,7 @@ public class ModuleResponse extends UserDateAppResponse {
 
     @Schema(description = "Status del listado A=Activo, I=Inactivo y X=Eliminado", example = "A")
     private String status;
+
+    @Schema(description = "Orden del listado", example = "1")
+    private Long orden;
 }

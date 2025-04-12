@@ -3,7 +3,9 @@ package com.aplicaciones13.gestor.payload.request;
 import com.aplicaciones13.base.payload.common.StatusAppRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,10 +31,14 @@ public class ModuleRequest extends StatusAppRequest {
     @Size(max = 128)
     @Schema(description = "Name del index", example = "Name del Módulo")
     private String name;
-
     
     @NotNull
     @Size(max = 128)
     @Schema(description = "Context de aplicacion", example = "Context del Módulo")
     private String context;
+
+    @Positive
+    @Max(1000)
+    @Schema(description = "Orden del listado", example = "1")
+    private Long orden;
 }

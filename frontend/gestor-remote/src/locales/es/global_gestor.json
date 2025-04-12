@@ -18,13 +18,14 @@
     "errorFetch": "Error en la petición {{error}}"
   },
   "validation": {
-    "required": "Campo requerido",
-    "min": "El valor mínimo es {{min}}",
-    "max": "El valor máximo es {{max}}",
     "email": "Correo electrónico no válido",
+    "error": "Error en el campo",
+    "max": "El valor máximo es {{max}}",
+    "min": "El valor mínimo es {{min}}",
     "password": "La contraseña debe tener al menos 8 caracteres",
     "passwordMatch": "Las contraseñas no coinciden",
-    "error": "Error en el campo"
+    "required": "Campo requerido",
+    "typeNumber": "El valor debe ser un número"
   },
   
   "modules": {

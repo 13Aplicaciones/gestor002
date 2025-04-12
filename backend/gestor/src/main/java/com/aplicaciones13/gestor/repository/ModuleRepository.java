@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface ModuleRepository extends JpaRepository<Module, Long> {
 
     /**
-     * Metodo para buscar un module por su index, name y status sea diferente de
+     * Metodo para buscar un module por su indexModule, name y status sea diferente de
      * X y este paginado
      * 
      * @param uuid
@@ -30,13 +30,13 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
 
 
     /**
-     * Método para buscar un module de lista de modules diferente de X y orderados por index y por name
+     * Método para buscar un module de lista de modules diferente de X y orderados por indexModule y por name
      * 
      * @param uuid
      * @return
      */
     @SuppressWarnings("null")
-    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE status != 'X' ORDER BY m.index, m.name", nativeQuery = true)
+    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE status != 'X' ORDER BY m.index_module m.name", nativeQuery = true)
     List<Module> findAll();
 
     /**
@@ -49,11 +49,11 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
     Optional<Module> findByUuid(String uuid);
 
     /**
-     * Método para buscar un module por su index y status sea diferente de X
+     * Método para buscar un module por su indexModule y status sea diferente de X
      * 
-     * @param index
+     * @param indexModule
      * @return
      */
-    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE m.index = ?1 and m.status != 'X'", nativeQuery = true)
-    Optional<Module> findByIndexModule(String index);
+    @Query(value = "SELECT m.* FROM GS_002_01.module m WHERE m.index_module = ?1 and m.status != 'X'", nativeQuery = true)
+    Optional<Module> findByIndexModule(String indexModule);
 }

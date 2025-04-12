@@ -310,7 +310,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
             title={t("modules.GS-MD-001.fields.status.title")}
             placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
             messageError={errors.status?.message}
-            columns={BandPresentation.column_3}
+            columns={BandPresentation.column_6}
             directionLabel={Direction.horizontal}
             items={items}
             {...field}

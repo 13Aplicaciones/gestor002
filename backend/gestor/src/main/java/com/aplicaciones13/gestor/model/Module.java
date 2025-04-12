@@ -42,9 +42,13 @@ public class Module extends UuidUserDateApp {
     @Column(length = 8)
     private String status;
 
+    @Column(name = "orden")
+    private Long orden;
+
     @PrePersist
     protected void onCreate() {
         super.onCreate();
         status = "C";
+        orden = 1L;
     }
 }
