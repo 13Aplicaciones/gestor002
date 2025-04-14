@@ -65,12 +65,12 @@ const openDatabase = (database: any) => {
  * @param data datos a guardar
  * @returns
  */
-const addDataToIndexedDB = async (database: any, ddl: string, data: any) => {
+const addDataToIndexedDB = async (database: any, ddl: string,  index?: string, data?: any, ) => {
 
     const db = await openDatabase(database);
     const transaction = db.transaction(ddl, 'readwrite');
     const store = transaction.objectStore(ddl);
-    const id = database.ddl[ddl].id;
+    const id = database.ddl[ddl].id + (index ? '_' + index : '');
 
     if (id) {
         data.id = id;
@@ -87,6 +87,8 @@ const addDataToIndexedDB = async (database: any, ddl: string, data: any) => {
     });
 };
 
+
+//TODO: Validar si index se necesita en esta funcion
 /**
  * Funcion para guardar datos en la base de datos indexada
  * 
@@ -116,12 +118,12 @@ const saveDataToIndexedDB = async (database: any, ddl: string, data: any) => {
  * @param id 
  * @returns 
  */
-const getDataFromIndexedDB = async (database: any, ddl: string) => {
+const getDataFromIndexedDB = async (database: any, ddl: string, index?: string) => {
     const db = await openDatabase(database);
     const transaction = db.transaction(ddl, 'readonly');
     const store = transaction.objectStore(ddl);
-    const id = database.ddl[ddl].id;
-
+    const id = database.ddl[ddl].id + (index ? '_' + index : '');
+    
     return new Promise<any>((resolve, reject) => {
         const request = store.get(id);
         request.onsuccess = () => {
@@ -140,12 +142,12 @@ const getDataFromIndexedDB = async (database: any, ddl: string) => {
  * @param id 
  * @returns 
  */
-const deleteDataById = async (database: any, ddl: string) => {
+const deleteDataById = async (database: any, ddl: string, index?: string) => {
     const db = await openDatabase(database);
     const transaction = db.transaction(ddl, 'readwrite');
     const store = transaction.objectStore(ddl);
-    const id = database.ddl[ddl].id;
-
+    const id = database.ddl[ddl].id + (index ? '_' + index : '');
+   
     return new Promise<void>((resolve, reject) => {
         const request = store.delete(id);
         request.onsuccess = () => {

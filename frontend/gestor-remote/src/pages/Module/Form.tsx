@@ -27,16 +27,17 @@ import {
   IFormProps,
   InformationPanelRegistration,
   InputField,
+  InputSelect,
   IPresentationDataList,
+  IPresentationInputSelect,
   JustificationText,
   StatusEdit,
   TextFormat,
   useToastContext
 } from "ux-ui";
 import * as yup from "yup";
-import { Menus } from "../../utils/Constants";
+import { Menus, MODULE } from "../../utils/Constants";
 import { createIRowDataModule, IRowDataModule } from "./Types";
-import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 
 /**
  * Formulario de edición de Modulees del sistema.
@@ -241,7 +242,7 @@ const FormEditModule = ({
       const tokenTemp: ITokenRoot = await getToken();
       setToken(tokenTemp);
 
-      const parameter: IParameter = await getParameter(Menus.MODULE, "200");
+      const parameter: IParameter = await getParameter(MODULE, "200");
       parameter.valueText01 = parameter.valueText01 + Menus.MODULE_ENDPOINT;
       setParameterUrl(parameter);
     };
@@ -269,22 +270,22 @@ const FormEditModule = ({
   };
 
   // TODO:
-// poner en un useEffect para no repetir
-// sacar desde el orquestador
+  // poner en un useEffect para no repetir
+  // sacar desde el orquestador
   const items: IPresentationInputSelect = {
     items: [
       {
         order: 0,
         justification: JustificationText.end,
-        value: "A",
-        title: "Activo",
+        codeText: "A",
+        name: "Activo",
         width: "100%",
       },
       {
         order: 1,
         justification: JustificationText.start,
-        value: "I",
-        title: "Inactivo",
+        codeText: "I",
+        name: "Inactivo",
         width: "100%",
       }
     ]
@@ -376,6 +377,7 @@ const FormEditModule = ({
  */
 const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
   const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
+  const [loading, setLoading] = useState(false);
   const [messageForm, setMessageForm] = useState<string>("");
   const [rowFound, setRowFound] = useState<IRowDataModule | null>(createIRowDataModule());
   const [t] = useTranslation("global_gestor");
@@ -384,41 +386,51 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
    * Cargar la vista previa del registro.
    */
   useEffect(() => {
-    const cargarVistaPrevia = async (indexModule: string) => {
-      const tokenTemp: ITokenRoot = await getToken();
-      const parameterTemp: IParameter = await getParameter(Menus.MODULE, "200");
-      parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.MODULE_ENDPOINT;
-
-      fetchData({
-        url: parameterTemp?.valueText01 + "/index=" + indexModule,
-        methodRest: MethodREST.GET,
-        typeBody: TypeBody.NONE,
-        bodyParameter: null,
-        token: tokenTemp.access_token,
-        getToken() {
-          return refreshToken();
-        },
-      })
-        .then((response) => {
-          if (response.error) {
-            setMessageForm(response?.statusDescription || "");
-            setAlertForm(Alerts.info);
-            return null;
-          }
-          setRowFound(response.response);
-        })
-        .catch((Module) => {
-          setMessageForm("Module message: " + Module);
-          setAlertForm(Alerts.error);
-          return null;
-        });
+    const loadPreview = (row: any) => {
+      setLoading(true);
+      setTimeout(async () => {
+        await runApi(row.uuid || "");
+        setLoading(false);
+      }, 333);
     };
 
-    if (row?.indexModule) {
-      cargarVistaPrevia(row.indexModule);
-    }
+    loadPreview(row);
   }, [row]);
 
+
+  /**
+   * Cargar la vista previa del registro.
+   */
+
+  const runApi = async (uuid: string) => {
+    const tokenTemp: ITokenRoot = await getToken();
+    const parameterTemp: IParameter = await getParameter(MODULE, "200");
+    parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.MODULE_ENDPOINT;
+
+    fetchData({
+      url: parameterTemp?.valueText01 + "/" + uuid,
+      methodRest: MethodREST.GET,
+      typeBody: TypeBody.NONE,
+      bodyParameter: null,
+      token: tokenTemp.access_token,
+      getToken() {
+        return refreshToken();
+      },
+    })
+      .then((response) => {
+        if (response.error) {
+          setMessageForm(response?.statusDescription || "");
+          setAlertForm(Alerts.info);
+          return null;
+        }
+        setRowFound(response.response);
+      })
+      .catch((Module) => {
+        setMessageForm("Module message: " + Module);
+        setAlertForm(Alerts.error);
+        return null;
+      });
+  };
 
   /**
    * Presentación de los items de la tabla.
@@ -442,17 +454,25 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
         format: TextFormat.none,
       },
       {
-        name: "message",
-        title: t("modules.GS-MD-001.fields.message.title"),
+        name: "name",
+        title: t("modules.GS-MD-001.fields.name.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
-        name: "description",
-        title: t("modules.GS-MD-001.fields.description.title"),
+        name: "context",
+        title: t("modules.GS-MD-001.fields.context.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
+
+      {
+        name: "status",
+        title: t("modules.GS-MD-001.fields.status.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+
       {
         name: "user",
         title: t("modules.GS-MD-001.fields.user.title"),
@@ -479,13 +499,16 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
       {(messageForm && (
         <BannerInformation message={messageForm} alert={alertForm} />
       )) || (
-          <DataListConfigurable
-            presentationDataList={presentationData}
-            data={rowFound}
-          />
-        )}
-      <DataListSkeleton column={5} />
 
+          loading ? (
+            <DataListSkeleton column={5} />
+          ) : (
+            <DataListConfigurable
+              presentationDataList={presentationData}
+              data={rowFound}
+            />
+          )
+        )}
     </Flex>
   );
 };

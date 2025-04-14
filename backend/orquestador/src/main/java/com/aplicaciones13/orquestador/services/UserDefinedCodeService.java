@@ -31,17 +31,17 @@ public class UserDefinedCodeService {
     /**
      * Busca los códigos definidos por el usuario de un módulo en particular a partir
      * 
-     * @param moduleIndex
+     * @param indexModule
      * @param group
      * @return
      */
-    @Cacheable(value = "userDefinedCode", key = "#moduleIndex")
-    public List<UserDefinedCodeGroupResponse> find(String moduleIndex) {
+    @Cacheable(value = "userDefinedCode", key = "#indexModule")
+    public List<UserDefinedCodeGroupResponse> find(String indexModule) {
         String group = MODULE_INDEX_EXCLUDE;
         List<UserDefinedCodeGroupResponse> respGroup = new ArrayList<>();
 
         List<UserDefinedCodeResponse> respList = userDefinedCodeRepository
-                .findByModule_IndexModuleAndGroupNotOrderByGroupAscOrderAsc(moduleIndex, MODULE_INDEX_EXCLUDE)
+                .findByModule_IndexModuleAndGroupNotOrderByGroupAscOrderAsc(indexModule, MODULE_INDEX_EXCLUDE)
                 .stream()
                 .map(UserDefinedCodeMapper.INSTANCE::toResponse)
                 .collect(Collectors.toList());

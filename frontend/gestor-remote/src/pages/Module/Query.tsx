@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button, Flex } from "@radix-ui/themes";
@@ -10,6 +11,7 @@ import {
   ITokenRoot,
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
+import { getUserDefinedCodeByGroup } from "orchestrator_remote/service/UserDefineCode";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -17,14 +19,15 @@ import {
   BandPresentation,
   CreateSearchFieldOrder,
   Direction, FooterForm, InputField,
+  InputSelect,
   IParametersQuery,
+  IPresentationInputSelect,
   IPresentationTable,
   JustificationText, SortColumn,
   TextFormat,
 } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
-import { InputSelect, IPresentationInputSelect } from "../../components/Select";
 import { Menus, MODULE } from "../../utils/Constants";
 import { IRowDataModule } from "./Types";
 
@@ -36,21 +39,104 @@ import { IRowDataModule } from "./Types";
  * @returns
  */
 const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({ size: "10", indexModule: "", message: "", });
+  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [presentacionTabla, setPresentacionTabla] = useState<IPresentationTable>({} as IPresentationTable);
   const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "10",
-    indexModule: "",
-    message: "",
-  });
 
   /**
-   * Funcion para inicializar el token
+   * Funcion para inicializar la tabla
    *
    */
+  useEffect(() => {
+    const initializeStructure = async () => {
+      const statusList = await getUserDefinedCodeByGroup("LG_001_00", "AD_CD_01");
+
+      setPresentacionTabla({
+        banding: true,
+        headers: true,
+        numberLinea: false,
+        skeletonWidth: "90vw",
+        items: [
+          {
+            name: "indexModule",
+            title: t("modules.GS-MD-001.fields.indexModule.title"),
+            justification: JustificationText.start,
+            format: TextFormat.none,
+            width: "10vw",
+            order: SortColumn.desc,
+            orderNameColumn: "index_module",
+          },
+          {
+            name: "name",
+            title: t("modules.GS-MD-001.fields.name.title"),
+            justification: JustificationText.start,
+            format: TextFormat.none,
+            width: "20vw",
+            onAction: {
+              onAction: (row: IRowDataModule) => {
+                if (onSeeRow) {
+                  onSeeRow(row);
+                }
+              },
+            },
+          },
+          {
+            name: "context",
+            title: t("modules.GS-MD-001.fields.context.title"),
+            justification: JustificationText.start,
+            format: TextFormat.none,
+            width: "34vw",
+          },
+          {
+            name: "userDate",
+            title: t("modules.GS-MD-001.fields.userDate.title"),
+            justification: JustificationText.start,
+            format: TextFormat.dateSocialNetworkDinamic,
+            width: "20vw",
+            order: SortColumn.desc,
+            orderNameColumn: "user_date",
+          },
+          {
+            name: "status",
+            title: t("modules.GS-MD-001.fields.status.title"),
+            justification: JustificationText.start,
+            format: TextFormat.none,
+            width: "10vw",
+            cellSelect: statusList,
+          },
+          {
+            name: "acciones",
+            title: t("modules.GS-MD-001.fields.acciones.abrev"),
+            justification: JustificationText.center,
+            format: TextFormat.action,
+            width: "6vw",
+            component: (row: IRowDataModule) => (
+              <Button
+                size="1"
+                variant="ghost"
+                onClick={() => {
+                  if (onEditRow) {
+                    onEditRow(row);
+                  }
+                }}
+              >
+                <DotsVerticalIcon width="16" height="16" />
+              </Button>
+            ),
+          },
+        ],
+      });
+    };
+
+    initializeStructure();
+  }, []);
+
+  /**
+  * Funcion para inicializar el token
+  *
+  */
   useEffect(() => {
     const initializeStructure = async () => {
       const tokenTemp: ITokenRoot = await getToken();
@@ -63,100 +149,6 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
 
     initializeStructure();
   }, []);
-
-  /**
-   * Presentación de los items de la tabla.
-   */
-  const presentationItems: IPresentationTable = {
-    banding: true,
-    headers: true,
-    numberLinea: false,
-    skeletonWidth: "90vw",
-    items: [
-      {
-        name: "indexModule",
-        title: t("modules.GS-MD-001.fields.indexModule.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        order: SortColumn.desc,
-        orderNameColumn: "index_module",
-      },
-      {
-        name: "name",
-        title: t("modules.GS-MD-001.fields.name.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "20vw",
-        onAction: {
-          onAction: (row: IRowDataModule) => {
-            if (onSeeRow) {
-              onSeeRow(row);
-            }
-          },
-        },
-      },
-      {
-        name: "context",
-        title: t("modules.GS-MD-001.fields.context.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "34vw",
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-MD-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-        width: "20vw",
-        order: SortColumn.desc,
-        orderNameColumn: "user_date",
-      },
-
-      {
-        name: "status",
-        title: t("modules.GS-MD-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        cellSelect: {
-          items: [{
-            value: "A",
-            title: "Activo",
-          },
-          {
-            value: "I",
-            title: "Inactivo",
-          },
-          {
-            value: "X",
-            title: "Borrado",
-          }],
-        },
-      },
-
-      {
-        name: "acciones",
-        title: t("modules.GS-MD-001.fields.acciones.abrev"),
-        justification: JustificationText.center,
-        format: TextFormat.action,
-        width: "6vw",
-        component: (row: IRowDataModule) => (
-          <Button
-            size="1"
-            variant="ghost"
-            onClick={() => {
-              if (onEditRow) {
-                onEditRow(row);
-              }
-            }}
-          >
-            <DotsVerticalIcon width="16" height="16" />
-          </Button>
-        ),
-      },
-    ],
-  };
 
   /**
    * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
@@ -178,7 +170,7 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
           <CreateSearchFieldOrder
             apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}
-            presentationTable={presentationItems}
+            presentationTable={presentacionTabla}
             token={token.access_token}
             getToken={async () => {
               return await refreshToken();
@@ -250,37 +242,40 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
     reset();
   }
 
-  const items: IPresentationInputSelect = {
+  const list: IPresentationInputSelect = {
     items: [
       {
         order: 0,
         justification: JustificationText.end,
-        value: "A",
-        title: "Activo",
+        codeText: "A",
+        name: "Activo",
+        description: "Activo",
         width: "100%",
+        separator: false,
       },
       {
         order: 1,
         justification: JustificationText.start,
-        value: "I",
-        title: "Inactivo",
+        codeText: "I",
+        name: "Inactivo",
         width: "100%",
+        separator: false,
       },
-
       {
         order: 10,
         justification: JustificationText.start,
-        value: "X",
+        codeText: "X",
         color: "red",
         iconName: "TrashIcon",
-        title: "Borrado",
+        name: "Borrado",
+        description: "Borrado",
         width: "100%",
+        separator: false,
       },
       {
         order: 9,
         separator: true,
       },
-
     ]
   };
 
@@ -312,7 +307,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
             messageError={errors.status?.message}
             columns={BandPresentation.column_6}
             directionLabel={Direction.horizontal}
-            items={items}
+            items={list}
             {...field}
           />
         )}

@@ -1,3 +1,11 @@
+/**
+ * Definicion de estructura de la base de datos y los stores que se van a manejar en la aplicacion.
+ * 
+ * @author omargo33
+ * @since 2025-04-12
+ * 
+ * La base de datos se llama 13applications y tiene los siguientes stores:
+ */
 export const STORE = {
     db: "13applications",
     stores: [
@@ -6,6 +14,7 @@ export const STORE = {
         { name: "moduleSelect" },
         { name: "menuSelect" },
         { name: "parameters" },
+        { name: "userDefinedCode" },
     ],
     ddl: {
         structure: {
@@ -26,6 +35,10 @@ export const STORE = {
         },
         parameters: {
             name: "parameters",
+            id: "module"
+        },
+        userDefinedCode: {
+            name: "userDefinedCode",
             id: "module"
         },
     },

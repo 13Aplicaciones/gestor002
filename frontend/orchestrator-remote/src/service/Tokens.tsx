@@ -22,7 +22,7 @@ export type ITokenRoot = {
  * @returns 
  */
 const addToken = async ({ token }: { token: ITokenRoot }) => {
-    await addDataToIndexedDB(STORE, STORE.ddl.token.name, token);
+    await addDataToIndexedDB(STORE, STORE.ddl.token.name, '', token);
     return token;
 }
 

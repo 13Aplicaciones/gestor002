@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   addDataToIndexedDB,
   createFetchData,
   deleteDataById,
+  fetchData,
   getDataFromIndexedDB,
+  MethodREST, TypeBody,
 } from "api-fetch";
-import { fetchData } from "api-fetch";
-import { getToken, ITokenRoot, refreshToken } from "./Tokens";
-import { MethodREST, TypeBody } from "api-fetch";
 import { STORE } from "../Constants";
+import { getToken, ITokenRoot, refreshToken } from "./Tokens";
 
 /**
  * Definicion de los tipos de dato que se van a manejar los parametros.
@@ -33,7 +32,8 @@ export interface IParameter {
 const getParameters = async (indexModule: string) => {
   const iRootData = await getDataFromIndexedDB(
     STORE,
-    STORE.ddl.parameters.name
+    STORE.ddl.parameters.name,
+    indexModule
   );
 
   if (iRootData) {
@@ -61,7 +61,8 @@ const getParameters = async (indexModule: string) => {
     if (!iFetchData.error) {
       await addDataToIndexedDB(
         STORE,
-        STORE.ddl.parameters.name,
+        STORE.ddl.parameters.name, 
+        indexModule,
         iFetchData.response
       );
       return iFetchData.response;
@@ -97,11 +98,11 @@ const getParameter = async (indexModule: string, indexParameter: string) => {
  * @returns
  */
 const refreshParameters = async (indexModule: string) => {
-  await deleteDataById(STORE, STORE.ddl.parameters.name).then(async () => {
+  await deleteDataById(STORE, STORE.ddl.parameters.name, indexModule).then(async () => {
     return await getParameters(indexModule);
   });
 
   return null;
 };
 
-export { getParameters, getParameter, refreshParameters };
+export { getParameter, getParameters, refreshParameters };

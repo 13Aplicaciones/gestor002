@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Flex, Slot, Text, TextArea, TextField } from "@radix-ui/themes";
+import { Flex, Select, Slot, Text, TextArea, TextField } from "@radix-ui/themes";
 import { MouseEventHandler, ReactNode, useState } from "react";
-import { Alerts, BandPresentation, Direction } from "../../ConstantsPresentation";
+import { Alerts, BandPresentation, Direction, JustificationText } from "../../ConstantsPresentation";
 import useCalculatePresentation from "./Calculations";
 import { MessageField } from "./Menssages";
+import { getIconComponent } from "../icon/IconDynamic";
 
 /**
  * Componentes de input del sistema. 
@@ -143,7 +144,7 @@ const InputSecretField = ({ title, placeholder, messageError, columns, direction
  * @returns 
  */
 const AreaField = ({ title, placeholder, messageError, columns, rows, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation,  rows?:number | 2,  directionLabel: Direction | Direction.horizontal, register?: any }) => {
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, rows?: number | 2, directionLabel: Direction | Direction.horizontal, register?: any }) => {
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
@@ -244,4 +245,98 @@ const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLab
     )
 }
 
-export { AreaField, InputField, InputFieldDate, InputSearchDynamic, InputSecretField, InputSubmit };
+
+/**
+ * Interfaz para la presentacion de la tabla.
+ */
+interface IPresentationInputSelect {
+    items: Array<{
+        order: number;
+        separator?: boolean;
+        justification?: JustificationText;
+        codeText?: string;
+        codeNumber?: number;
+        name?: string;
+        description?: string;
+        disabled?: boolean | undefined;
+        width?: string;
+        color?: string;
+        iconName?: string;
+        onAction?: { onAction: (row: any) => void };
+        component?: (row: any, children: ReactNode) => ReactNode;
+    }>;
+}
+
+const InputSelect = ({
+    title,
+    placeholder,
+    messageError,
+    columns,
+    directionLabel,
+    items,
+    value,
+    onChange,
+}: {
+    title?: string;
+    placeholder?: string;
+    messageError?: string;
+    columns?: BandPresentation;
+    directionLabel?: Direction | Direction.horizontal;
+    items: IPresentationInputSelect;
+    value: any;
+    onChange?: (newValue: any) => void;
+}) => {
+
+    const presentation = useCalculatePresentation(directionLabel || Direction.horizontal, columns, '60vw');
+    items.items.sort((a, b) => a.order - b.order);
+
+    /**
+     * Función para manejar el cambio de valor.
+     * 
+     * @param newValue 
+     */
+    const handleValueChange = (newValue: string) => {
+        if (onChange) {
+            onChange(newValue);
+        }
+    };
+
+    return (
+        <Flex direction={presentation.direction} gap="3" style={{ alignItems: presentation.align }} >
+            <Flex width="calc(150px * var(--scaling))" style={{ justifyContent: presentation.justify }}>
+                <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
+            </Flex>
+            <Flex direction={"column"} style={{ marginBottom: '1vh', width: presentation.width }} >
+                <Select.Root onValueChange={handleValueChange} value={value || ""} >
+                    <Select.Trigger placeholder={placeholder} />
+                    <Select.Content >
+                        {items.items.map((item) => (
+                            item.separator ? (
+                                <Select.Separator key={item.order} />
+                            ) : (
+                                <>
+                                    <Select.Item
+                                        disabled={item.disabled || false}
+                                        key={item.order}
+                                        value={item.codeText || ""}
+                                        style={{ color: item.color || 'inherit' }}
+                                    >
+                                        {item.iconName ? (
+                                            <Flex justify="center" align="center" gap="2" >
+                                                {getIconComponent(item.iconName || "", "18", "18")}
+                                                {item.name}
+                                            </Flex>) : item.name}
+                                    </Select.Item>
+                                </>
+                            )
+                        ))}
+                    </Select.Content>
+                </Select.Root>
+                <MessageField message={messageError} />
+            </Flex>
+        </Flex>
+    )
+};
+
+export { AreaField, InputField, InputSelect, InputFieldDate, InputSearchDynamic, InputSecretField, InputSubmit };
+export type { IPresentationInputSelect };

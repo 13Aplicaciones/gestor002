@@ -62,8 +62,13 @@ interface IPresentationTable {
  */
 interface IPresentationCellSelect {
   items: Array<{
-    value: string;
-    title: string;
+    group: string;
+    codeText: string;
+    codeNumber: number;
+    name: string;
+    description: string;
+    order: number;
+    status: string;
   }>;
 }
 
@@ -117,8 +122,6 @@ const Cell = ({
   onAction?: { onAction: (row: any) => void };
   component?: (row: any, children: ReactNode) => ReactNode;
 }) => {
-
-
   return (
     <Table.Cell
       justify={justify(justification)}
@@ -138,6 +141,38 @@ const Cell = ({
     </Table.Cell>
   );
 };
+
+
+/**
+ * Asignar el valor de la celda en base a la presentation.
+ * 
+ * @param value 
+ * @param textFormat 
+ * @param cellSelect 
+ * @returns 
+ */
+const valueOfList = (value: string, textFormat: TextFormat, cellSelect: any) => {
+  let textFomatter = value;
+  if (cellSelect) {
+    try {
+      const selectedItem = cellSelect.find((item: any) => {
+        return item.codeText === value;
+      });
+      if (selectedItem) {
+        textFomatter = selectedItem.name;
+      } else {
+        textFomatter = "<No Definido>";
+      }
+    } catch (error) {
+      textFomatter = "<No Encontrado>";
+      console.error("Error al filtrar el valor:", error);
+    }
+  } else {
+    textFomatter = formatFromTextFormat(textFormat, value);
+  }
+
+  return textFomatter;
+}
 
 /**
  * Funcion para formatear el texto de la celda.
@@ -159,18 +194,12 @@ const CellFormatter = (
     textFormat: TextFormat;
     justification: JustificationText;
     row: any;
-    cellSelect?: IPresentationCellSelect;
+    cellSelect?: any;
     onAction?: { onAction: (row: any) => void };
     component?: (row: any, children: ReactNode) => ReactNode;
   }
 ) => {
-  let textFomatter = value;
-
-  if (cellSelect) {
-    textFomatter = cellSelect.items.find((item) => item.value === value)?.title || "";
-  } else {
-    textFomatter = formatFromTextFormat(textFormat, value);
-  }
+  const textFomatter = valueOfList(value, textFormat, cellSelect);
 
   return (
     <Flex gap="2" justify={justify(justification)}>
@@ -452,3 +481,4 @@ const TableSkeleton = ({ column }: { column: number }) => {
 
 export { TableConfigurable, TableSkeleton };
 export type { IPresentationTable };
+

@@ -341,7 +341,7 @@ const PreviewError = ({ row }: { row?: IRowDataError }) => {
         setLoading(false);
       }, 333);
     };
-  
+
     loadPreview(row);
   }, [row]);
 

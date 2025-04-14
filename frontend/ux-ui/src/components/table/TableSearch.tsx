@@ -24,7 +24,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useToastContext } from "../toast/useToastContext";
 
-
 /**
  * Componete para crear un field de busqueda.
  *
@@ -73,13 +72,12 @@ const CreateSearchField = ({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [parameters, setParameters] = useState<IParametersQuery>(parametersApi);
-  const [presentation, setPresentation] =
-    useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [shorts, setShorts] = useState<string[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const { showToast } = useToastContext();
-  
+
 
   /**
    * Validacion de los fields del formulario.

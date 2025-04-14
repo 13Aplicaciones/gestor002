@@ -113,7 +113,7 @@ const MenuModule = ({
       setModule(module);
       setTitle(module?.name || t("portal.title"));
     };
-        
+
     executeSelectModule();
   }, [refreshModule, t]);
 

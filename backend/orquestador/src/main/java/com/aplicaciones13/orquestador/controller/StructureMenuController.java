@@ -65,9 +65,9 @@ public class StructureMenuController {
      * 
      * @return
      */
-    @GetMapping("/udc/module={module}")
-    public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String module) {
-        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(module);
+    @GetMapping("/udc/module={indexModule}")
+    public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String indexModule) {
+        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(indexModule);
         return ResponseEntity.ok(response);
     }
 
