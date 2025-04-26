@@ -22,8 +22,8 @@ public interface ModuleRepository extends JpaRepository<Module, Long> {
      * @return
      */
     @Query(value = 
-                "SELECT * FROM GS_002_01.module m WHERE (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%')) ",
-        countQuery = "SELECT count(*) FROM GS_002_01.module m WHERE (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%'))",
+                "SELECT * FROM GS_002_01.module m WHERE m.status != 'X' and (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%')) ",
+        countQuery = "SELECT count(*) FROM GS_002_01.module m WHERE m.status != 'X' and (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%'))",
         nativeQuery = true
     )
     Page<Module> paginado(String indexModule, String name, String status, Pageable pageable);

@@ -6,13 +6,19 @@ import { Theme } from "@radix-ui/themes";
 import App from "./App.tsx";
 import i18next from "./i18n";
 
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Theme accentColor="indigo" grayColor="auto" scaling="100%" radius="medium" panelBackground="translucent" appearance="light">
+    <Theme
+      accentColor="indigo"
+      grayColor="auto"
+      scaling="90%"
+      radius="medium"
+      panelBackground="translucent"
+      appearance="light"
+    >
       <I18nextProvider i18n={i18next}>
-          <App />
-        </I18nextProvider>
+        <App />
+      </I18nextProvider>
     </Theme>
   </StrictMode>
 );

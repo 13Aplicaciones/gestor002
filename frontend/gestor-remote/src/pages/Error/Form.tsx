@@ -19,8 +19,6 @@ import {
   AreaField,
   BandPresentation,
   BannerInformation,
-  DataListConfigurable,
-  DataListSkeleton,
   DialogDelete,
   Direction,
   FooterForm,
@@ -28,15 +26,11 @@ import {
   IFormProps,
   InformationPanelRegistration,
   InputField,
-  IPresentationDataList,
-  JustificationText,
   StatusEdit,
-  TextFormat,
-  useToastContext,
+  useToastContext
 } from "ux-ui";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { createIRowDataError, IRowDataError } from "./Types";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -317,142 +311,5 @@ const FormEditError = ({
   );
 };
 
-/**
- * Función para tener una vista previa de los errores del sistema.
- * 
- * @param row Fila de datos a editar 
- * @returns 
- */
-const PreviewError = ({ row }: { row?: IRowDataError }) => {
-  const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
-  const [loading, setLoading] = useState(false);
-  const [messageForm, setMessageForm] = useState<string>("");
-  const [rowFound, setRowFound] = useState<IRowDataError | null>(createIRowDataError());
-  const [t] = useTranslation("global_gestor");
-
-  /**
-   * Cargar la vista previa del registro.
-   */
-  useEffect(() => {
-    const loadPreview = (row: any) => {
-      setLoading(true);
-      setTimeout(async () => {
-        await runApi(row.uuid || "");
-        setLoading(false);
-      }, 333);
-    };
-
-    loadPreview(row);
-  }, [row]);
-
-  /**
-   * Método para ejecutar la API y obtener los datos del error.
-   * 
-   * @param indexError 
-   */
-  const runApi = async (indexError: string) => {
-    const tokenTemp: ITokenRoot = await getToken();
-    const parameterTemp: IParameter = await getParameter(MODULE, "200");
-    parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.ERROR_ENDPOINT;
-
-    fetchData({
-      url: parameterTemp?.valueText01 + "/" + indexError,
-      methodRest: MethodREST.GET,
-      typeBody: TypeBody.NONE,
-      bodyParameter: null,
-      token: tokenTemp.access_token,
-      getToken() {
-        return refreshToken();
-      },
-    })
-      .then((response) => {
-        if (response.error) {
-          setMessageForm(response?.statusDescription || "");
-          setAlertForm(Alerts.info);
-          return null;
-        }
-        setRowFound(response.response);
-      })
-      .catch((error) => {
-        setMessageForm("Error message: " + error);
-        setAlertForm(Alerts.error);
-        return null;
-      });
-  };
-
-  /**
-   * Presentación de los items de la tabla.
-   */
-  const presentationData: IPresentationDataList = {
-    banding: true,
-    headers: true,
-    skeletonWidth: "90vw",
-    items: [
-      {
-        name: "uuid",
-        title: t("modules.GS-ER-001.fields.uuid.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-
-      {
-        name: "indexError",
-        title: t("modules.GS-ER-001.fields.indexError.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "message",
-        title: t("modules.GS-ER-001.fields.message.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "description",
-        title: t("modules.GS-ER-001.fields.description.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "user",
-        title: t("modules.GS-ER-001.fields.user.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-ER-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-      },
-      {
-        name: "userApp",
-        title: t("modules.GS-ER-001.fields.userApp.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-    ],
-  };
-
-  return (
-    <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
-      {(messageForm && (
-        <BannerInformation message={messageForm} alert={alertForm} />
-      )) || (
-          loading ? (
-            <DataListSkeleton column={5} />
-          ) : (
-            <>
-              <DataListConfigurable
-                presentationDataList={presentationData}
-                data={rowFound}
-              />
-            </>
-          )
-        )}
-    </Flex>
-  );
-};
-
-export { FormEditError, PreviewError };
+export { FormEditError };
 

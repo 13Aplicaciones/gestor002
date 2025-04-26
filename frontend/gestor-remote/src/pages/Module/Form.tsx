@@ -18,8 +18,6 @@ import {
   Alerts,
   BandPresentation,
   BannerInformation,
-  DataListConfigurable,
-  DataListSkeleton,
   DialogDelete,
   Direction,
   FooterForm,
@@ -28,16 +26,12 @@ import {
   InformationPanelRegistration,
   InputField,
   InputSelect,
-  IPresentationDataList,
-  IPresentationInputSelect,
-  JustificationText,
   StatusEdit,
-  TextFormat,
   useToastContext
 } from "ux-ui";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { createIRowDataModule, IRowDataModule } from "./Types";
+import { listaFormModule } from "./Estructures/Presentations";
 
 /**
  * Formulario de edición de Modulees del sistema.
@@ -49,18 +43,17 @@ import { createIRowDataModule, IRowDataModule } from "./Types";
  * @param onAtras Función para regresar a la vista anterior
  * @returns
  */
-const FormEditModule = ({
-  status,
-  row,
-  onAtras,
-}: IFormProps) => {
-
+const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(
+    status || StatusEdit.create
+  );
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
   const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row ? row.uuid : "");
@@ -88,8 +81,7 @@ const FormEditModule = ({
       .string()
       .required(t("validation.required"))
       .max(8, t("validation.max", { max: 8 })),
-    userApp: yup
-      .string(),
+    userApp: yup.string(),
     orden: yup
       .number()
       .typeError(t("validation.typeNumber"))
@@ -201,14 +193,10 @@ const FormEditModule = ({
         showToast(
           response.error + " (" + response.status.toString() + ")",
           response.error,
-          Alerts.warning,
+          Alerts.warning
         );
       } else {
-        showToast(
-          response.status.toString(),
-          response.error,
-          Alerts.warning,
-        );
+        showToast(response.status.toString(), response.error, Alerts.warning);
       }
       return;
     } else {
@@ -269,28 +257,6 @@ const FormEditModule = ({
     setDialogStatus(false);
   };
 
-  // TODO:
-  // poner en un useEffect para no repetir
-  // sacar desde el orquestador
-  const items: IPresentationInputSelect = {
-    items: [
-      {
-        order: 0,
-        justification: JustificationText.end,
-        codeText: "A",
-        name: "Activo",
-        width: "100%",
-      },
-      {
-        order: 1,
-        justification: JustificationText.start,
-        codeText: "I",
-        name: "Inactivo",
-        width: "100%",
-      }
-    ]
-  };
-
   return (
     <>
       <DialogDelete
@@ -340,7 +306,7 @@ const FormEditModule = ({
               messageError={errors.status?.message}
               columns={BandPresentation.column_6}
               directionLabel={Direction.horizontal}
-              items={items}
+              items={listaFormModule()}
               {...field}
             />
           )}
@@ -369,149 +335,4 @@ const FormEditModule = ({
   );
 };
 
-/**
- * Función para tener una vista previa de los Modulees del sistema.
- * 
- * @param row Fila de datos a editar 
- * @returns 
- */
-const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
-  const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
-  const [loading, setLoading] = useState(false);
-  const [messageForm, setMessageForm] = useState<string>("");
-  const [rowFound, setRowFound] = useState<IRowDataModule | null>(createIRowDataModule());
-  const [t] = useTranslation("global_gestor");
-
-  /**
-   * Cargar la vista previa del registro.
-   */
-  useEffect(() => {
-    const loadPreview = (row: any) => {
-      setLoading(true);
-      setTimeout(async () => {
-        await runApi(row.uuid || "");
-        setLoading(false);
-      }, 333);
-    };
-
-    loadPreview(row);
-  }, [row]);
-
-
-  /**
-   * Cargar la vista previa del registro.
-   */
-
-  const runApi = async (uuid: string) => {
-    const tokenTemp: ITokenRoot = await getToken();
-    const parameterTemp: IParameter = await getParameter(MODULE, "200");
-    parameterTemp.valueText01 = parameterTemp.valueText01 + Menus.MODULE_ENDPOINT;
-
-    fetchData({
-      url: parameterTemp?.valueText01 + "/" + uuid,
-      methodRest: MethodREST.GET,
-      typeBody: TypeBody.NONE,
-      bodyParameter: null,
-      token: tokenTemp.access_token,
-      getToken() {
-        return refreshToken();
-      },
-    })
-      .then((response) => {
-        if (response.error) {
-          setMessageForm(response?.statusDescription || "");
-          setAlertForm(Alerts.info);
-          return null;
-        }
-        setRowFound(response.response);
-      })
-      .catch((Module) => {
-        setMessageForm("Module message: " + Module);
-        setAlertForm(Alerts.error);
-        return null;
-      });
-  };
-
-  /**
-   * Presentación de los items de la tabla.
-   */
-  const presentationData: IPresentationDataList = {
-    banding: true,
-    headers: true,
-    skeletonWidth: "90vw",
-    items: [
-      {
-        name: "uuid",
-        title: t("modules.GS-MD-001.fields.uuid.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-
-      {
-        name: "indexModule",
-        title: t("modules.GS-MD-001.fields.indexModule.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "name",
-        title: t("modules.GS-MD-001.fields.name.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "context",
-        title: t("modules.GS-MD-001.fields.context.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-
-      {
-        name: "status",
-        title: t("modules.GS-MD-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-
-      {
-        name: "user",
-        title: t("modules.GS-MD-001.fields.user.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-MD-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-      },
-      {
-        name: "userApp",
-        title: t("modules.GS-MD-001.fields.userApp.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-    ],
-  };
-
-  return (
-    <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
-      {(messageForm && (
-        <BannerInformation message={messageForm} alert={alertForm} />
-      )) || (
-
-          loading ? (
-            <DataListSkeleton column={5} />
-          ) : (
-            <DataListConfigurable
-              presentationDataList={presentationData}
-              data={rowFound}
-            />
-          )
-        )}
-    </Flex>
-  );
-};
-
-export { FormEditModule, PreviewModule };
-
+export { FormEditModule };

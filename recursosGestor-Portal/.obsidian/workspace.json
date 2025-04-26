@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "597f842cae9278cd",
+        "id": "b89fcf9990fba7f2",
         "type": "tabs",
         "children": [
           {
-            "id": "b0f84f1a3270682c",
+            "id": "b242c8ffcdfde691",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -169,15 +169,16 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "b0f84f1a3270682c",
+  "active": "b242c8ffcdfde691",
   "lastOpenFiles": [
-    "SitiosAyuda.canvas",
-    "SitosUI-Investigacion.canvas",
-    "Investigaciones.md",
     "idea/arquitectura.md",
+    "Excalidraw/Drawing 2025-04-03 11.39.55.excalidraw.md",
+    "Muleto.md",
+    "SitosUI-Investigacion.canvas",
+    "SitiosAyuda.canvas",
+    "Investigaciones.md",
     "idea",
     "mega Check list.md",
-    "Muleto.md",
     "documentos/ArquitecturaReact.md",
     "documentos/ejemplo toast.md",
     "documentos/CORS.md",

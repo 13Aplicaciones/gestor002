@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button, Flex } from "@radix-ui/themes";
 import {
   getParameter,
@@ -11,25 +9,25 @@ import {
   ITokenRoot,
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
-import { getUserDefinedCodeByGroup } from "orchestrator_remote/service/UserDefineCode";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   CreateSearchFieldOrder,
-  Direction, FooterForm, InputField,
+  Direction,
+  FooterForm,
+  InputField,
   InputSelect,
   IParametersQuery,
-  IPresentationInputSelect,
   IPresentationTable,
-  JustificationText, SortColumn,
-  TextFormat,
 } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { IRowDataModule } from "./Types";
+import { listaQueryModule, tableQueryModule } from "./Estructures/Presentations";
+import queryMenu from "./QueryMenu";
+import { IRowDataModule } from "./Estructures/Types";
 
 /**
  * Tabla de Modulees del sistema.
@@ -39,10 +37,16 @@ import { IRowDataModule } from "./Types";
  * @returns
  */
 const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({ size: "10", indexModule: "", message: "", });
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
-  const [presentacionTabla, setPresentacionTabla] = useState<IPresentationTable>({} as IPresentationTable);
-  const [t] = useTranslation("global_gestor");
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
+    size: "10",
+    indexModule: "",
+    message: "",
+  });
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
+  const [presentacionTabla, setPresentacionTabla] =
+    useState<IPresentationTable>({} as IPresentationTable);
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
 
   /**
@@ -51,92 +55,36 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
    */
   useEffect(() => {
     const initializeStructure = async () => {
-      const statusList = await getUserDefinedCodeByGroup("LG_001_00", "AD_CD_01");
+      const tableFormat = await tableQueryModule();
 
-      setPresentacionTabla({
-        banding: true,
-        headers: true,
-        numberLinea: false,
-        skeletonWidth: "90vw",
-        items: [
-          {
-            name: "indexModule",
-            title: t("modules.GS-MD-001.fields.indexModule.title"),
-            justification: JustificationText.start,
-            format: TextFormat.none,
-            width: "10vw",
-            order: SortColumn.desc,
-            orderNameColumn: "index_module",
+      tableFormat.items[1].onAction = {
+        onAction: (row: IRowDataModule) => {
+          if (onSeeRow) {
+            onSeeRow(row);
+          }
+        },
+      };
+
+      tableFormat.items[5].component = (row) =>
+        queryMenu({
+          row,
+          onEditRow: (row) => {
+            if (onEditRow) {
+              onEditRow(row);
+            }
           },
-          {
-            name: "name",
-            title: t("modules.GS-MD-001.fields.name.title"),
-            justification: JustificationText.start,
-            format: TextFormat.none,
-            width: "20vw",
-            onAction: {
-              onAction: (row: IRowDataModule) => {
-                if (onSeeRow) {
-                  onSeeRow(row);
-                }
-              },
-            },
-          },
-          {
-            name: "context",
-            title: t("modules.GS-MD-001.fields.context.title"),
-            justification: JustificationText.start,
-            format: TextFormat.none,
-            width: "34vw",
-          },
-          {
-            name: "userDate",
-            title: t("modules.GS-MD-001.fields.userDate.title"),
-            justification: JustificationText.start,
-            format: TextFormat.dateSocialNetworkDinamic,
-            width: "20vw",
-            order: SortColumn.desc,
-            orderNameColumn: "user_date",
-          },
-          {
-            name: "status",
-            title: t("modules.GS-MD-001.fields.status.title"),
-            justification: JustificationText.start,
-            format: TextFormat.none,
-            width: "10vw",
-            cellSelect: statusList,
-          },
-          {
-            name: "acciones",
-            title: t("modules.GS-MD-001.fields.acciones.abrev"),
-            justification: JustificationText.center,
-            format: TextFormat.action,
-            width: "6vw",
-            component: (row: IRowDataModule) => (
-              <Button
-                size="1"
-                variant="ghost"
-                onClick={() => {
-                  if (onEditRow) {
-                    onEditRow(row);
-                  }
-                }}
-              >
-                <DotsVerticalIcon width="16" height="16" />
-              </Button>
-            ),
-          },
-        ],
-      });
+        });
+
+      setPresentacionTabla(tableFormat);
     };
 
     initializeStructure();
   }, []);
 
   /**
-  * Funcion para inicializar el token
-  *
-  */
+   * Funcion para inicializar el token
+   *
+   */
   useEffect(() => {
     const initializeStructure = async () => {
       const tokenTemp: ITokenRoot = await getToken();
@@ -152,8 +100,8 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
 
   /**
    * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
-   * 
-   * @param data 
+   *
+   * @param data
    */
   const handleFormFind = (data: IParametersQuery) => {
     parametersQuery.indexModule = data.indexModule;
@@ -188,18 +136,17 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
  * @param onFind Función para buscar Modulees
  * @returns
  */
-const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => {
+const QueryForm = ({
+  onFind,
+}: {
+  onFind: (data: IParametersQuery) => void;
+}) => {
   const [t] = useTranslation("global_gestor");
 
   const schema = yup.object({
-    indexModule: yup
-      .string()
-      .max(128, t("validation.max", { max: 128 })),
-    name: yup
-      .string()
-      .max(1024, t("validation.max", { max: 1024 })),
-    status: yup
-      .string(),
+    indexModule: yup.string().max(128, t("validation.max", { max: 128 })),
+    name: yup.string().max(1024, t("validation.max", { max: 1024 })),
+    status: yup.string(),
   });
 
   /**
@@ -233,50 +180,13 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
 
   /**
    * Función para limpiar el formulario y los datos de la consulta.
-   * 
+   *
    */
   const resetForm = () => {
     if (onFind) {
       onFind({});
     }
     reset();
-  }
-
-  const list: IPresentationInputSelect = {
-    items: [
-      {
-        order: 0,
-        justification: JustificationText.end,
-        codeText: "A",
-        name: "Activo",
-        description: "Activo",
-        width: "100%",
-        separator: false,
-      },
-      {
-        order: 1,
-        justification: JustificationText.start,
-        codeText: "I",
-        name: "Inactivo",
-        width: "100%",
-        separator: false,
-      },
-      {
-        order: 10,
-        justification: JustificationText.start,
-        codeText: "X",
-        color: "red",
-        iconName: "TrashIcon",
-        name: "Borrado",
-        description: "Borrado",
-        width: "100%",
-        separator: false,
-      },
-      {
-        order: 9,
-        separator: true,
-      },
-    ]
   };
 
   return (
@@ -307,7 +217,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
             messageError={errors.status?.message}
             columns={BandPresentation.column_6}
             directionLabel={Direction.horizontal}
-            items={list}
+            items={listaQueryModule()}
             {...field}
           />
         )}
@@ -318,9 +228,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
         columns={BandPresentation.column_2}
       >
         <Button type="submit">{t("actions.search")}</Button>
-        <Button type="button"
-          variant="surface"
-          onClick={() => resetForm()}>
+        <Button type="button" variant="surface" onClick={() => resetForm()}>
           {t("actions.clean")}
         </Button>
       </FooterForm>

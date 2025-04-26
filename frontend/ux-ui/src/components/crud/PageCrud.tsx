@@ -15,6 +15,7 @@ import { IFormProps, IPreviewProps, IQueryProps } from "./Types";
  * @param QueryPanel - Componente de consulta.
  * @param PreviewPanel - Componente de vista previa.
  * @param FormPanel - Componente de edición de formulario.
+ * @param MasterPreviewPanel - Componente de vista previa maestro.
  * 
  * @returns Componente de página CRUD. 
  * 
@@ -22,15 +23,17 @@ import { IFormProps, IPreviewProps, IQueryProps } from "./Types";
 const PageCrud = (
     { tranlation,
         createIRowDataCustom,
-        QueryPanel,
+        QueryPanel,        
+        FormPanel,
         PreviewPanel,
-        FormPanel
+        MasterPreviewPanel
     }: {
         tranlation: string,
         createIRowDataCustom: () => any,
-        QueryPanel: ComponentType<IQueryProps>
-        PreviewPanel: ComponentType<IPreviewProps>
-        FormPanel: ComponentType<IFormProps>
+        QueryPanel: ComponentType<IQueryProps>,
+        FormPanel: ComponentType<IFormProps>,
+        PreviewPanel: ComponentType<IPreviewProps>,
+        MasterPreviewPanel?: ComponentType<IPreviewProps>,
     }
 ) => {
     const [rowSelecionado, setRowSelecionado] = useState<any>(createIRowDataCustom());
@@ -73,6 +76,10 @@ const PageCrud = (
 
                 {status == StatusEdit.see && (
                     <PreviewPanel row={rowSelecionado} />
+                )}
+
+                {status == StatusEdit.detail && MasterPreviewPanel && (
+                    <MasterPreviewPanel row={rowSelecionado} />
                 )}
 
                 {(status == StatusEdit.create || status == StatusEdit.edit) && (

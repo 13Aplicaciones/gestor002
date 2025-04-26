@@ -86,6 +86,7 @@ const enum StatusEdit {
   edit = "edit", // Editar un registro
   find = "find", // Buscar un registro
   see = "see", // Ver un registro
+  detail = "detail", // Ver un registro en detalle
 }
 
 const enum FormatMaskISO {

@@ -16,16 +16,17 @@ import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   CreateSearchFieldOrder,
-  Direction, FooterForm, InputField,
+  Direction,
+  FooterForm,
+  InputField,
   IParametersQuery,
-  IPresentationTable,
-  JustificationText, SortColumn,
-  TextFormat,
+  IPresentationTable
 } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { IRowDataError } from "./Types";
+import { tableQueryModule } from "./Estructures/Presentations";
+import { IRowDataError } from "./Estructures/Types";
 
 /**
  * Tabla de errores del sistema.
@@ -35,7 +36,6 @@ import { IRowDataError } from "./Types";
  * @returns
  */
 const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
-  const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [parameterUrl, setParameterUrl] = useState<IParameter>(
     {} as IParameter
@@ -45,6 +45,8 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
     indexError: "",
     message: "",
   });
+  const [presentacionTabla, setPresentacionTabla] =
+    useState<IPresentationTable>({} as IPresentationTable);
 
   /**
    * Funcion para inicializar el token
@@ -58,86 +60,41 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       const parameter: IParameter = await getParameter(MODULE, "200");
       parameter.valueText01 = parameter.valueText01 + Menus.ERROR_ENDPOINT;
       setParameterUrl(parameter);
+
+      const tableFormat = tableQueryModule();
+
+      tableFormat.items[1].onAction = {
+        onAction: (row: IRowDataError) => {
+          if (onSeeRow) {
+            onSeeRow(row);
+          }
+        },
+      };
+
+      tableFormat.items[4].component = (row: IRowDataError) => (
+        <Button
+          size="1"
+          variant="ghost"
+          onClick={() => {
+            if (onEditRow) {
+              onEditRow(row);
+            }
+          }}
+        >
+          <DotsVerticalIcon width="16" height="16" />
+        </Button>
+      );
+
+      setPresentacionTabla(tableFormat);
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Presentación de los items de la tabla.
-   */
-  const presentationItems: IPresentationTable = {
-    banding: true,
-    headers: true,
-    numberLinea: false,
-    skeletonWidth: "90vw",
-    items: [
-      {
-        name: "indexError",
-        title: t("modules.GS-ER-001.fields.indexError.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        order: SortColumn.desc,
-        orderNameColumn: "index_error",
-      },
-      {
-        name: "message",
-        title: t("modules.GS-ER-001.fields.message.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "20vw",
-        onAction: {
-          onAction: (row: IRowDataError) => {
-            if (onSeeRow) {
-              onSeeRow(row);
-            }
-          },
-        },
-      },
-      {
-        name: "description",
-        title: t("modules.GS-ER-001.fields.description.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "34vw",
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-ER-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-        width: "20vw",
-        order: SortColumn.desc,
-        orderNameColumn: "user_date",
-      },
-      {
-        name: "acciones",
-        title: t("modules.GS-ER-001.fields.acciones.abrev"),
-        justification: JustificationText.center,
-        format: TextFormat.action,
-        width: "6vw",
-        component: (row: IRowDataError) => (
-          <Button
-            size="1"
-            variant="ghost"
-            onClick={() => {
-              if (onEditRow) {
-                onEditRow(row);
-              }
-            }}
-          >
-            <DotsVerticalIcon width="16" height="16" />
-          </Button>
-        ),
-      },
-    ],
-  };
-
-  /**
    * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
-   * 
-   * @param data 
+   *
+   * @param data
    */
   const handleFormFind = (data: IParametersQuery) => {
     parametersQuery.indexError = data.indexError;
@@ -153,7 +110,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
           <CreateSearchFieldOrder
             apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}
-            presentationTable={presentationItems}
+            presentationTable={presentacionTabla}
             token={token.access_token}
             getToken={async () => {
               return await refreshToken();
@@ -171,16 +128,16 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
  * @param onFind Función para buscar errores
  * @returns
  */
-const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => {
+const QueryForm = ({
+  onFind,
+}: {
+  onFind: (data: IParametersQuery) => void;
+}) => {
   const [t] = useTranslation("global_gestor");
-  
+
   const schema = yup.object({
-    indexError: yup
-      .string()
-      .max(128, t("validation.max", { max: 128 })),
-    message: yup
-      .string()
-      .max(1024, t("validation.max", { max: 1024 })),
+    indexError: yup.string().max(128, t("validation.max", { max: 128 })),
+    message: yup.string().max(1024, t("validation.max", { max: 1024 })),
   });
 
   /**
@@ -195,10 +152,10 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
     resolver: yupResolver(schema),
     defaultValues: {
       indexError: "",
-      message: ""
+      message: "",
     },
   });
-  
+
   /**
    * Función para enviar el formulario.
    *
@@ -212,14 +169,14 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
 
   /**
    * Función para limpiar el formulario y los datos de la consulta.
-   * 
+   *
    */
   const resetForm = () => {
     if (onFind) {
       onFind({});
     }
     reset();
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
@@ -244,9 +201,7 @@ const QueryForm = ({ onFind }: { onFind: (data: IParametersQuery) => void }) => 
         columns={BandPresentation.column_2}
       >
         <Button type="submit">{t("actions.search")}</Button>
-        <Button type="button"
-        variant="surface"
-        onClick={() => resetForm()}>
+        <Button type="button" variant="surface" onClick={() => resetForm()}>
           {t("actions.clean")}
         </Button>
       </FooterForm>

@@ -2,13 +2,15 @@ import { Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { getIconComponent, PageCrud } from "ux-ui";
 import { Menus } from "../utils/Constants";
-import { FormEditError, PreviewError } from "./Error/Form";
+import { createIRowDataError } from "./Error/Estructures/Types";
+import { FormEditError } from "./Error/Form";
+import { PreviewError } from "./Error/Preview";
 import { QueryError } from "./Error/Query";
-import { createIRowDataError } from "./Error/Types";
 import Information from "./Information";
-import { FormEditModule, PreviewModule } from "./Module/Form";
+import { createIRowDataModule } from "./Module/Estructures/Types";
+import { FormEditModule } from "./Module/Form";
+import { PreviewModule } from "./Module/Preview";
 import { QueryModule } from "./Module/Query";
-import { createIRowDataModule } from "./Module/Types";
 import User from "./User";
 
 /**
@@ -89,7 +91,7 @@ const Origin = ({ name }: { name: string }) => {
         return <User />;
       default:
         return <PageCrud
-          tranlation={Menus.ERROR}
+          tranlation={Menus.MODULE}
           createIRowDataCustom={createIRowDataError}
           QueryPanel={QueryError}
           PreviewPanel={PreviewError}

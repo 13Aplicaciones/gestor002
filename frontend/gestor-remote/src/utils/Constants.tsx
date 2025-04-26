@@ -11,5 +11,4 @@ export const Menus: { [key: string]: string } = {
     MODULE: "GS-MD-001",
     USER_ENDPOINT: "/users",
     USER: "GS-US-001",
-
 };

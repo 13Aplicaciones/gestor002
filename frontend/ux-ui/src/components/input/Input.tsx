@@ -191,12 +191,12 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
         <Flex direction={"row"} >
             <TextField.Root size="3" style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
-                <Slot onClick={onClick}>
+                <TextField.Slot side="right" onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
-                </Slot>
-                <Slot>
+                </TextField.Slot>
+                <TextField.Slot side="left">
                     <MagnifyingGlassIcon />
-                </Slot>
+                </TextField.Slot>
             </TextField.Root>
             <MessageField message={messageError} />
             {children}
@@ -218,8 +218,9 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
  *  
  * @returns 
  */
-const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLabel, register, children, size }:
+const InputSubmit = ({type, placeholder, columna, messageError, onClick, directionLabel, register, children, size }:
     {
+        type?: string;
         placeholder?: string;
         columna?: BandPresentation;
         messageError?: string;
@@ -233,11 +234,13 @@ const InputSubmit = ({ placeholder, columna, messageError, onClick, directionLab
 
     return (
         <Flex direction={presentation.direction} gap={size} style={{ alignItems: presentation.align }}>
-            <TextField.Root size={size} style={{ width: presentation.width }} placeholder={placeholder}
+            <TextField.Root 
+            type={type}
+            size={size} style={{ width: presentation.width }} placeholder={placeholder}
                 {...register}>
-                <Slot onClick={onClick}>
+                <TextField.Slot onClick={onClick}>
                     <EnterIcon style={{ cursor: 'pointer' }} />
-                </Slot>
+                </TextField.Slot>
             </TextField.Root>
             <MessageField message={messageError} alert={Alerts.error} />
             {children}

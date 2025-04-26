@@ -1,28 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Alerts,
-  BandPresentation,
-  Direction,
-  SortColumn,
-} from "../../ConstantsPresentation";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
-import { fetchData } from "api-fetch";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
-import { InputSearchDynamic, InputSubmit } from "../input/Input";
-import { MethodREST, TypeBody } from "api-fetch";
+import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { ReactNode, useEffect, useState } from "react";
-import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {
+  Alerts,
+  BandPresentation,
+  Direction,
+  SortColumn,
+} from "../../ConstantsPresentation";
+import { InputSearchDynamic, InputSubmit } from "../input/Input";
 import { useToastContext } from "../toast/useToastContext";
+import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 
 /**
  * Componete para crear un field de busqueda.
@@ -72,12 +71,12 @@ const CreateSearchField = ({
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [parameters, setParameters] = useState<IParametersQuery>(parametersApi);
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
   const [shorts, setShorts] = useState<string[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const { showToast } = useToastContext();
-
 
   /**
    * Validacion de los fields del formulario.
@@ -85,11 +84,11 @@ const CreateSearchField = ({
   const getSchemaPage = (maxPage: number) =>
     yup.object({
       page: yup
-        .string()
+        .number()
         .test("max-page", t("page.errorPage", { maxPage }), (value) => {
           return (
-            parseInt(value || "0", 10) <= maxPage &&
-            parseInt(value || "0", 10) > 0
+            (value || 0) <= maxPage &&
+            (value || 0) > 0
           );
         }),
     });
@@ -305,7 +304,8 @@ const CreateSearchField = ({
                 columna={BandPresentation.column_6}
                 register={registerPage("page", { required: true })}
                 messageError={errorsPagina.page?.message}
-                size="2"
+                size="1"
+                type="number"
               />
             </form>
             <IconButton
