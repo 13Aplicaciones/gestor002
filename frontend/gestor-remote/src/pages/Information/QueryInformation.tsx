@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -12,66 +12,34 @@ import { useEffect, useState } from "react";
 import {
   CreateSearchFieldOrder,
   IParametersQuery,
-  IPresentationTable
+  IPresentationTable,
 } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import { Menus, MODULE } from "../../utils/Constants";
-import queryActionsModule from "./QueryActionsModule";
-import { tableQueryModule } from "./Structures/Presentations";
-import { IRowDataModule } from "./Structures/Types";
-import { QueryFormModule } from "./QueryFormModule";
+import { QueryFormInformation } from "./QueryFormInformation";
+import { tableQueryInformation } from "./Structures/Presentations";
+import { IRowDataInformation } from "./Structures/Types";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 
 /**
- * Tabla de Modulees del sistema.
+ * Tabla de informacion del sistema.
  *
  * @param onEditRow Funcion para editar una fila.
  * @param onSeeRow Funcion para ver una fila.
  * @returns
  */
-const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "10",
-    indexModule: "",
-    message: "",
-  });
+const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
+  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [parameterUrl, setParameterUrl] = useState<IParameter>(
     {} as IParameter
   );
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
+    size: "10",
+    indexError: "",
+    message: "",
+  });
   const [presentacionTabla, setPresentacionTabla] =
     useState<IPresentationTable>({} as IPresentationTable);
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-
-  /**
-   * Funcion para inicializar la tabla
-   *
-   */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      const tableFormat = await tableQueryModule();
-
-      tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataModule) => {
-          if (onSeeRow) {
-            onSeeRow(row);
-          }
-        },
-      };
-
-      tableFormat.items[5].component = (row) =>
-        queryActionsModule({
-          row,
-          onEditRow: (row) => {
-            if (onEditRow) {
-              onEditRow(row);
-            }
-          },
-        });
-
-      setPresentacionTabla(tableFormat);
-    };
-
-    initializeStructure();
-  }, []);
 
   /**
    * Funcion para inicializar el token
@@ -83,8 +51,35 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
       setToken(tokenTemp);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      parameter.valueText01 = parameter.valueText01 + Menus.MODULE_ENDPOINT;
+      parameter.valueText01 =
+        parameter.valueText01 + Menus.INFORMATION_ENDPOINT;
       setParameterUrl(parameter);
+
+      const tableFormat = tableQueryInformation();
+
+      tableFormat.items[1].onAction = {
+        onAction: (row: IRowDataInformation) => {
+          if (onSeeRow) {
+            onSeeRow(row);
+          }
+        },
+      };
+
+      tableFormat.items[3].component = (row: IRowDataInformation) => (
+        <Button
+          size="1"
+          variant="ghost"
+          onClick={() => {
+            if (onEditRow) {
+              onEditRow(row);
+            }
+          }}
+        >
+          <DotsVerticalIcon width="16" height="16" />
+        </Button>
+      );
+
+      setPresentacionTabla(tableFormat);
     };
 
     initializeStructure();
@@ -96,9 +91,8 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
    * @param data
    */
   const handleFormFind = (data: IParametersQuery) => {
-    parametersQuery.indexModule = data.indexModule;
+    parametersQuery.indexError = data.indexError;
     parametersQuery.name = data.name;
-    parametersQuery.status = data.status;
     setParametersQuery({ ...parametersQuery });
   };
 
@@ -106,7 +100,7 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
     <Flex direction="column" gap="3">
       {token?.access_token && parameterUrl?.valueText01 && (
         <>
-          <QueryFormModule onFind={handleFormFind} />
+          <QueryFormInformation onFind={handleFormFind} />
           <CreateSearchFieldOrder
             apiUrl={parameterUrl?.valueText01 + "/paginated"}
             parametersToConsult={parametersQuery}
@@ -122,4 +116,4 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
   );
 };
 
-export { QueryModule };
+export { QueryInformation };

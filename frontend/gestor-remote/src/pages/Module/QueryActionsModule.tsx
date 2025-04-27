@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button, DropdownMenu } from "@radix-ui/themes";
-import { IRowDataModule } from "./Estructures/Types";
+import { IRowDataModule } from "./Structures/Types";
 
 /**
  * QueryMeny de la tabla de Modulos.

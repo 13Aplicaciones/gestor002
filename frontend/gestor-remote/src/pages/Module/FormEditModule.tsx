@@ -14,7 +14,7 @@ import {
 } from "ux-ui";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { listaFormModule } from "./Estructures/Presentations";
+import { listaFormModule } from "./Structures/Presentations";
 import { GenericCrudForm } from "../../components/forms/GenericCrudForm";
 
 /**

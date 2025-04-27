@@ -26,7 +26,10 @@ public interface InformationRepository extends JpaRepository<Information, Long> 
      * @param pageable
      * @return
      */
-    @Query("SELECT i FROM Information i WHERE (:name IS NULL OR upper(i.name) LIKE %:name%)")
+    @Query( value = 
+                "SELECT * FROM GS_002_01.information i WHERE (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))",
+            countQuery = "SELECT COUNT(*) FROM GS_002_01.information i WHERE (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))",
+            nativeQuery = true)    
     Page<Information> findByNameContaining(String name, Pageable pageable);
 
     /**

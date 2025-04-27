@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
-import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -12,28 +19,28 @@ import {
   FormState,
   InformationPanelRegistration,
   StatusEdit,
-  useToastContext
+  useToastContext,
 } from "ux-ui";
 
 export interface GenericCrudFormProps<T> {
   /** Estado inicial del formulario (crear, editar, ver) */
   status: StatusEdit;
-  
+
   /** Datos de la fila que se está editando */
   row: T;
-  
+
   /** Función que se llama al volver atrás */
   onAtras?: () => void;
-  
+
   /** Endpoint específico del módulo (/modules, /errors, etc.) */
   endpoint: string;
-  
+
   /** Código del módulo para obtener el parámetro URL base */
   moduleCode: string;
-  
+
   /** Función para preparar los datos antes de enviarlos al servidor */
   prepareData?: (data: T) => any;
-  
+
   /** Renderizado del formulario */
   renderForm: (props: {
     formStatus: StatusEdit;
@@ -50,14 +57,18 @@ export function GenericCrudForm<T extends { uuid?: string }>({
   endpoint,
   moduleCode,
   prepareData,
-  renderForm
+  renderForm,
 }: GenericCrudFormProps<T>) {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(
+    status || StatusEdit.create
+  );
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
+  const [parameterUrl, setParameterUrl] = useState<IParameter>(
+    {} as IParameter
+  );
   const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
   const [uuid, setUuid] = useState(row?.uuid || "");
@@ -69,7 +80,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
   const actuate = async (data: any) => {
     setLoading(true);
     const nameApp = window.location.pathname.split("/").pop() + t("nameApp");
-    
+
     // Preparar los datos si se proporciona una función personalizada
     if (prepareData) {
       data = prepareData(data);
@@ -80,7 +91,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
     try {
       setTimeout(async () => {
         let response: IFetchData | null = null;
-        
+
         // Crear nuevo registro
         if (formStatus === StatusEdit.create) {
           response = await fetchData({
@@ -91,12 +102,12 @@ export function GenericCrudForm<T extends { uuid?: string }>({
             token: token.access_token,
             getToken: await refreshToken(),
           });
-          
+
           if (!response.error) {
             setFormStatus(StatusEdit.edit);
           }
         }
-        
+
         // Actualizar registro existente
         else if (formStatus === StatusEdit.edit) {
           response = await fetchData({
@@ -108,7 +119,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
             getToken: await refreshToken(),
           });
         }
-        
+
         // Eliminar registro
         else if (formStatus === StatusEdit.block) {
           response = await fetchData({
@@ -119,7 +130,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
             token: token.access_token,
             getToken: await refreshToken(),
           });
-          
+
           if (!response.error) {
             setFormStatus(StatusEdit.find);
             setDialogStatus(false);
@@ -128,11 +139,11 @@ export function GenericCrudForm<T extends { uuid?: string }>({
             }
           }
         }
-        
+
         if (response) {
           analizarAccionar(response);
         }
-        
+
         setLoading(false);
       }, 333);
     } catch (error) {
@@ -190,7 +201,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
       parameter.valueText01 = parameter.valueText01 + endpoint;
       setParameterUrl(parameter);
     };
-    
+
     initializeStructure();
   }, [endpoint, moduleCode]);
 
@@ -225,7 +236,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
         <FormState statusEdit={formStatus} />
         <InformationPanelRegistration row={row} />
       </Flex>
-      
+
       {renderForm({
         formStatus,
         loading,

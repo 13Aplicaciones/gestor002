@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Valid
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "users", description = "Servicio para CRUD de users")
+@Tag(name = "Users", description = "Servicio para CRUD de users")
 public class UserController {
 
     @Autowired

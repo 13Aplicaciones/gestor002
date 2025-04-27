@@ -7,9 +7,14 @@ import com.aplicaciones13.gestor.payload.request.InformationRequest;
 import com.aplicaciones13.gestor.payload.response.InformationResponse;
 import com.aplicaciones13.gestor.services.InformationService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -28,7 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/information")
+@Tag(name = "Informacion", description = "Servicio para CRUD de Informacion")
 @Valid
+@Slf4j
 public class InformationController {
 
     @Autowired
@@ -95,15 +102,22 @@ public class InformationController {
      * @param name
      * @return
      */
-    @GetMapping("/paginado")
-    public Map<String, Object> getAllInformationWithPaginado(
+    @GetMapping("/paginated")
+    @Operation(summary = "Obtiene la lista de informaciones paginadas", description = "Recibe los parámetros de paginación y filtrado", responses = {
+            @ApiResponse(responseCode = "200", description = "Información recuperada exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
+    })
+    public ResponseEntity<Map<String, Object>> getAllInformationWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name,desc") String[] sort,
             @RequestParam(required = false) String name) {
+
+        log.error("getAllInformationWithPaginado - page: {}, size: {}, sort: {}, name: {}", page, size, sort, name);
+
         Page<Information> pageInformation = informationService.findByName(name,
                 ControllerTools.generateOrders(page, size, sort));
 
-        return ControllerTools.generateFooterPage(pageInformation);
+        Map<String, Object> response = ControllerTools.generateFooterPage(pageInformation);
+        return ResponseEntity.ok(response);
     }
 }

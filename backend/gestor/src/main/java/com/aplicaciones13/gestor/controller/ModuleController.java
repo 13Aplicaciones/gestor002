@@ -40,7 +40,7 @@ import jakarta.validation.Valid;
 @Valid
 @RestController
 @RequestMapping("/api/modules")
-@Tag(name = "1.- Modules", description = "Servicio para CRUD de Modules")
+@Tag(name = "Modules", description = "Servicio para CRUD de Modules")
 public class ModuleController {
 
     @Autowired

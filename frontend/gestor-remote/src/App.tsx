@@ -68,14 +68,14 @@ const App = () => {
   return (
     <>
       <Flex direction="row" align={"center"} gap="1" px="1" py="2">
+      <Button size="3" onClick={() => heandleToken(Menus.INFORMATION)}>
+          Information
+        </Button>
         <Button size="3" onClick={() => heandleToken(Menus.MODULE)}>
           Module
         </Button>
         <Button size="3" onClick={() => heandleToken(Menus.ERROR)}>
           Error
-        </Button>
-        <Button size="3" onClick={() => heandleToken("GS-IN-001")}>
-          Information
         </Button>
         <Button size="3" onClick={() => heandleToken("GS-US-001")}>
           User

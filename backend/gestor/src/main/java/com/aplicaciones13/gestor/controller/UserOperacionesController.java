@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Valid
 @RestController
 @RequestMapping("/api/users/operaciones")
-@Tag(name = "users Operaciones", description = "Operaciones relacionadas con users")
+@Tag(name = "Users Operaciones", description = "Operaciones relacionadas con users")
 public class UserOperacionesController {
 
     @Autowired

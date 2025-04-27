@@ -161,7 +161,48 @@
       "icon": "InfoCircledIcon",
       "title": "Información",
       "description": "Datos de información del módulo",
-      "path": "Information"
+      "path": "Information",
+      "panel": {
+        "find": "Buscar Informaciones",
+        "see": "Vista previa de la Información",
+        "edit": "Editar Información",
+        "create": "Crear Información"
+      },
+      "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name":{
+          "title": "Nombre",
+          "placeholder": "Nombre de la información"
+        },
+        "value01":{
+          "title": "Valor",
+          "placeholder": "Titulo de la información"
+        },
+        "value02":{
+          "title": "Complemento",
+          "placeholder": "Complemento de la información"
+        },
+        "userDate":{
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user":{
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp":{
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones":{
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      }
     },
     "GS-CC-001": {
       "icon": "LockClosedIcon",
