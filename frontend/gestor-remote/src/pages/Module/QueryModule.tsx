@@ -26,7 +26,7 @@ import { IQueryProps } from "ux-ui/src/components/crud/Types";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { listaQueryModule, tableQueryModule } from "./Estructures/Presentations";
-import queryMenu from "./QueryMenu";
+import queryActionsModule from "./QueryActionsModule";
 import { IRowDataModule } from "./Estructures/Types";
 
 /**
@@ -66,7 +66,7 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
       };
 
       tableFormat.items[5].component = (row) =>
-        queryMenu({
+        queryActionsModule({
           row,
           onEditRow: (row) => {
             if (onEditRow) {

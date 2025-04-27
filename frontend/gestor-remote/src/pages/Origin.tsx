@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { getIconComponent, PageCrud } from "ux-ui";
 import { Menus } from "../utils/Constants";
 import { createIRowDataError } from "./Error/Estructures/Types";
-import { FormEditError } from "./Error/Form";
-import { PreviewError } from "./Error/Preview";
-import { QueryError } from "./Error/Query";
+import { FormEditError } from "./Error/FormEditError";
+import { PreviewError } from "./Error/PreviewError";
+import { QueryError } from "./Error/QueryError";
 import Information from "./Information";
 import { createIRowDataModule } from "./Module/Estructures/Types";
-import { FormEditModule } from "./Module/Form";
-import { PreviewModule } from "./Module/Preview";
-import { QueryModule } from "./Module/Query";
+import { FormEditModule } from "./Module/FormEditModule";
+import { PreviewModule } from "./Module/PreviewModule";
+import { QueryModule } from "./Module/QueryModule";
 import User from "./User";
 
 /**

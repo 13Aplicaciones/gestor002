@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
 import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";

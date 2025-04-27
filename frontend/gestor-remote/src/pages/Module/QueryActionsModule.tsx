@@ -9,7 +9,7 @@ import { IRowDataModule } from "./Estructures/Types";
  * @param param0
  * @returns
  */
-const queryMenu = ({
+const queryActionsModule = ({
   row,
   onEditRow,
 }: {
@@ -60,4 +60,4 @@ const queryMenu = ({
   );
 };
 
-export default queryMenu;
+export default queryActionsModule;
