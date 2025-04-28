@@ -1,54 +1,26 @@
-import { Flex } from "@radix-ui/themes";
-import {
-  getParameter,
-  IParameter,
-} from "orchestrator_remote/service/Parameter";
-import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
-} from "orchestrator_remote/service/Tokens";
-import { useEffect, useState } from "react";
-import {
-  CreateSearchFieldOrder,
-  IParametersQuery,
-  IPresentationTable
-} from "ux-ui";
+import { IPresentationTable } from "ux-ui";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { Menus, MODULE } from "../../utils/Constants";
+import { GenericQuery } from "../../components/forms/GenericQuery";
+import { Menus } from "../../utils/Constants";
 import queryActionsModule from "./QueryActionsModule";
+import { QueryFormModule } from "./QueryFormModule";
 import { tableQueryModule } from "./Structures/Presentations";
 import { IRowDataModule } from "./Structures/Types";
-import { QueryFormModule } from "./QueryFormModule";
 
 /**
- * Tabla de Modulees del sistema.
- *
- * @param onEditRow Funcion para editar una fila.
- * @param onSeeRow Funcion para ver una fila.
- * @returns
+ * Tabla de Modules del sistema.
  */
 const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "10",
-    indexModule: "",
-    message: "",
-  });
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
-  const [presentacionTabla, setPresentacionTabla] =
-    useState<IPresentationTable>({} as IPresentationTable);
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-
   /**
-   * Funcion para inicializar la tabla
-   *
+   * Configurar las acciones específicas para la tabla de Modules
    */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      const tableFormat = await tableQueryModule();
-
+  const configureModuleTableActions = async (
+    tableFormat: IPresentationTable,
+    onEditRow?: (row: IRowDataModule) => void,
+    onSeeRow?: (row: IRowDataModule) => void
+  ) => {
+    // Configurar acción para ver detalle
+    if (tableFormat.items[1]) {
       tableFormat.items[1].onAction = {
         onAction: (row: IRowDataModule) => {
           if (onSeeRow) {
@@ -56,7 +28,10 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
           }
         },
       };
+    }
 
+    // Configurar acciones personalizadas
+    if (tableFormat.items[5]) {
       tableFormat.items[5].component = (row) =>
         queryActionsModule({
           row,
@@ -66,59 +41,26 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
             }
           },
         });
+    }
 
-      setPresentacionTabla(tableFormat);
-    };
-
-    initializeStructure();
-  }, []);
-
-  /**
-   * Funcion para inicializar el token
-   *
-   */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      const tokenTemp: ITokenRoot = await getToken();
-      setToken(tokenTemp);
-
-      const parameter: IParameter = await getParameter(MODULE, "200");
-      parameter.valueText01 = parameter.valueText01 + Menus.MODULE_ENDPOINT;
-      setParameterUrl(parameter);
-    };
-
-    initializeStructure();
-  }, []);
-
-  /**
-   * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
-   *
-   * @param data
-   */
-  const handleFormFind = (data: IParametersQuery) => {
-    parametersQuery.indexModule = data.indexModule;
-    parametersQuery.name = data.name;
-    parametersQuery.status = data.status;
-    setParametersQuery({ ...parametersQuery });
+    return tableFormat;
   };
 
   return (
-    <Flex direction="column" gap="3">
-      {token?.access_token && parameterUrl?.valueText01 && (
-        <>
-          <QueryFormModule onFind={handleFormFind} />
-          <CreateSearchFieldOrder
-            apiUrl={parameterUrl?.valueText01 + "/paginated"}
-            parametersToConsult={parametersQuery}
-            presentationTable={presentacionTabla}
-            token={token.access_token}
-            getToken={async () => {
-              return await refreshToken();
-            }}
-          />
-        </>
-      )}
-    </Flex>
+    <GenericQuery<IRowDataModule>
+      QueryForm={QueryFormModule}
+      endpoint={Menus.MODULE_ENDPOINT}
+      getTablePresentation={tableQueryModule}
+      initialParameters={{
+        size: "10",
+        indexModule: "",
+        name: "",
+        status: ""
+      }}
+      configureTableActions={configureModuleTableActions}
+      onEditRow={onEditRow}
+      onSeeRow={onSeeRow}
+    />
   );
 };
 

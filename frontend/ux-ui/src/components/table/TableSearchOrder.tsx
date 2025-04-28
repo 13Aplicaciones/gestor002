@@ -14,11 +14,13 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import {
+  Alerts,
   BandPresentation,
   Direction,
   SortColumn,
 } from "../../ConstantsPresentation";
 import { InputSubmit } from "../input/Input";
+import { useToastContext } from "../toast/useToastContext";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { IParametersQuery } from "./TableSearch";
 
@@ -48,15 +50,14 @@ const getSorts = (presentationTable: IPresentationTable) => {
   return sortsFind;
 };
 
-/*
+/**
  * Componente para crear un field de busqueda.
  *
- * @param apiUrl URL de la API.
- * @param nameIndex Nombre del indice.
- * @param parameters Parameters de la API.
- * @param presentationItem Presentacion de los items.
- * @param children Hijos del componente.
- *
+ * @param apiUrl
+ * @param parametersToConsult
+ * @param presentationTable
+ * @param token
+ * @param getToken
  * @returns
  */
 const CreateSearchFieldOrder = ({
@@ -85,6 +86,7 @@ const CreateSearchFieldOrder = ({
   const [currentPage, setCurrentPage] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const { showToast } = useToastContext();
 
   /**
    * Validacion de los fields del formulario.
@@ -105,22 +107,22 @@ const CreateSearchFieldOrder = ({
    * Funcion para ejecutar la api.
    *
    */
-  const runApi = async () => {
+  const runApi = async (parametersUrl: IParametersQuery) => {
     if (
-      parametersQuery.page === undefined ||
-      parametersQuery.page === null ||
-      parametersQuery.page < 0
+      parametersUrl.page === undefined ||
+      parametersUrl.page === null ||
+      parametersUrl.page < 0
     ) {
-      parametersQuery.page = 0;
+      parametersUrl.page = 0;
     }
 
     if (totalPages === undefined || totalPages === null || totalPages <= 0) {
       setTotalPages(1);
     }
 
-    if (parametersQuery.page >= totalPages) {
+    if (parametersUrl.page >= totalPages) {
       const pageTemp = totalPages - 1 > 0 ? totalPages - 1 : 0;
-      parametersQuery.page = pageTemp;
+      parametersUrl.page = pageTemp;
     }
 
     setTotalPages(0);
@@ -129,15 +131,16 @@ const CreateSearchFieldOrder = ({
 
     const sortsAnility = createSorts();
 
-    const parametersQueryTem = Object.keys(parametersQuery)
+    const parametersQueryTem = Object.keys(parametersUrl)
       .sort()
       .reduce((sortedQuery, key) => {
-        sortedQuery[key] = parametersQuery[key];
+        sortedQuery[key] = parametersUrl[key];
         return sortedQuery;
       }, {} as IParametersQuery);
 
     const parametersComplete = { ...parametersQueryTem, ...sortsAnility };
 
+    setParametersQuery(parametersUrl);
     fetchData({
       url: apiUrl,
       methodRest: MethodREST.GET,
@@ -148,12 +151,15 @@ const CreateSearchFieldOrder = ({
     })
       .then((response) => {
         if (response.error) {
-          //TODO: Implementar alertas
-          /*showToast(
+          const alertError =
+            response.status >= 300 && response.status <= 499
+              ? Alerts.warning
+              : Alerts.error;
+          showToast(
             response.error + " (" + response.status.toString() + ")",
-            t("httpStatusResolve." + response.status.toString()),
-            Alerts.warning
-          );*/
+            response.error,
+            alertError
+          );
           return;
         } else {
           const data = response.response.items;
@@ -164,7 +170,7 @@ const CreateSearchFieldOrder = ({
         }
       })
       .catch((error) => {
-        console.error("Error: " + error); 
+        console.error("Error: " + error);
       });
   };
 
@@ -214,13 +220,16 @@ const CreateSearchFieldOrder = ({
    * Ejecuta al iniciar de user effect.
    */
   useEffect(() => {
-    setLoading(true);
-
-    parametersQuery.page = 0;
-    setParametersQuery(parametersToConsult);
-    setPresentation(presentationTable);
-    setSorts(getSorts(presentationTable));
-    paginationPresentation();
+    const invokePresentation = () => {
+      setLoading(true);
+      const parametersPivot = parametersToConsult;
+      parametersPivot.page = 0;
+      setParametersQuery(parametersPivot);
+      setPresentation(presentationTable);
+      setSorts(getSorts(presentationTable));
+      paginationPresentation(parametersPivot);
+    };
+    invokePresentation();
   }, [parametersToConsult]);
 
   /**
@@ -247,16 +256,16 @@ const CreateSearchFieldOrder = ({
    */
   const consultPage = async (data: any) => {
     parametersQuery.page = data.page - 1;
-    paginationPresentation();
+    paginationPresentation(parametersQuery);
   };
 
   /**
    * Metodo para el orderamiento, y; paginacion de botones inicio, atras, siguiente y fin.
    */
-  const paginationPresentation = () => {
+  const paginationPresentation = (parametersUrl: IParametersQuery) => {
     setLoading(true);
     setTimeout(async () => {
-      await runApi();
+      await runApi(parametersUrl);
       setLoading(false);
     }, 333);
   };
@@ -278,7 +287,7 @@ const CreateSearchFieldOrder = ({
               variant="outline"
               onClick={async () => {
                 parametersQuery.page = 0;
-                paginationPresentation();
+                paginationPresentation(parametersQuery);
               }}
             >
               <DoubleArrowLeftIcon width="14" height="14" />
@@ -287,7 +296,7 @@ const CreateSearchFieldOrder = ({
               variant="outline"
               onClick={async () => {
                 parametersQuery.page = currentPage - 1;
-                paginationPresentation();
+                paginationPresentation(parametersQuery);
               }}
             >
               <ChevronLeftIcon width="14" height="14" />
@@ -306,7 +315,7 @@ const CreateSearchFieldOrder = ({
               variant="outline"
               onClick={async () => {
                 parametersQuery.page = currentPage + 1;
-                paginationPresentation();
+                paginationPresentation(parametersQuery);
               }}
             >
               <ChevronRightIcon width="14" height="14" />
@@ -315,7 +324,7 @@ const CreateSearchFieldOrder = ({
               variant="outline"
               onClick={async () => {
                 parametersQuery.page = totalPages - 1;
-                paginationPresentation();
+                paginationPresentation(parametersQuery);
               }}
             >
               <DoubleArrowRightIcon width="14" height="14" />
@@ -335,30 +344,30 @@ const CreateSearchFieldOrder = ({
 
   return (
     <Theme asChild={true}>
-    <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
-      {loading ? (
-        <TableSkeleton column={presentationTable.items.length} />
-      ) : (
-        <>
-          <TableConfigurable
-            data={data}
-            isBand={presentation.banding}
-            presentationTable={presentation}
-            presentationSorts={sorts}
-            isHeader={presentation.headers}
-            isLineNumber={presentation.numberLinea}
-            onOrderChange={{
-              onOrderChange: (name: string, direccion: SortColumn) => {
-                sorts[name] = direccion;
-                setSorts(sorts);
-                paginationPresentation();
-              },
-            }}
-          />
-          {pageForm()}
-        </>
-      )}
-    </Flex>
+      <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
+        {loading ? (
+          <TableSkeleton column={presentationTable.items.length} />
+        ) : (
+          <>
+            <TableConfigurable
+              data={data}
+              isBand={presentation.banding}
+              presentationTable={presentation}
+              presentationSorts={sorts}
+              isHeader={presentation.headers}
+              isLineNumber={presentation.numberLinea}
+              onOrderChange={{
+                onOrderChange: (name: string, direccion: SortColumn) => {
+                  sorts[name] = direccion;
+                  setSorts(sorts);
+                  paginationPresentation(parametersQuery);
+                },
+              }}
+            />
+            {pageForm()}
+          </>
+        )}
+      </Flex>
     </Theme>
   );
 };

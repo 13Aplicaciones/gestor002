@@ -1,4 +1,4 @@
-import { GenericPreview } from "../../components/forms/GenericPreviewProps";
+import { GenericPreview } from "../../components/forms/GenericPreview";
 import { Menus } from "../../utils/Constants";
 import { dataViewPresentation } from "./Structures/Presentations";
 import { createIRowDataModule, IRowDataModule } from "./Structures/Types";
@@ -9,7 +9,7 @@ import { createIRowDataModule, IRowDataModule } from "./Structures/Types";
 const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
   return (
     <GenericPreview<IRowDataModule>
-      row={row || createIRowDataModule()}
+      rowId={row?.uuid || ""}
       endpoint={Menus.MODULE_ENDPOINT}
       createEmptyData={createIRowDataModule}
       getPresentationData={dataViewPresentation}

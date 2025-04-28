@@ -24,7 +24,7 @@ export { ButtonCreateRecordFloating, ButtonBackFloating } from './components/but
 export { AreaField, InputField, InputSelect, InputFieldDate, InputSearchDynamic, InputSecretField, InputSubmit } from './components/input/Input';
 export type { IPresentationInputSelect } from './components/input/Input';
 
-export { FormState, FooterForm } from './components/form/Form';
+export { FormState, FooterForm } from './components/form/Form.tsx';
 
 // Exportar elementos Tipos de datos
 export type { DataItemBadge } from './components/grid/Card';

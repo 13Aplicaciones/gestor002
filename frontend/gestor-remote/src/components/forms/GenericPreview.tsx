@@ -9,7 +9,7 @@ import { MODULE } from "../../utils/Constants";
 
 export interface GenericPreviewProps<T> {
   /** Fila de datos a visualizar */
-  row: T;
+  rowId: string;
   
   /** Endpoint específico del módulo (/modules, /errors, etc.) */
   endpoint: string;
@@ -28,7 +28,7 @@ export interface GenericPreviewProps<T> {
  * Componente genérico para previsualizar datos de cualquier entidad
  */
 export function GenericPreview<T extends { uuid?: string }>({
-  row,
+  rowId,
   endpoint,
   createEmptyData,
   getPresentationData,
@@ -43,24 +43,24 @@ export function GenericPreview<T extends { uuid?: string }>({
    * Cargar la vista previa del registro
    */
   useEffect(() => {
-    const loadPreview = (rowData: any) => {
+    const loadPreview = (rowIndex: string) => {
       setLoading(true);
       setTimeout(async () => {
-        await runApi(rowData.uuid || "");
+        await runApi(rowIndex);
         setLoading(false);
       }, 333);
     };
 
-    loadPreview(row);
-  }, [row]);
+    loadPreview(rowId);
+  }, [rowId]);
 
   /**
    * Ejecutar la API para obtener los datos
    */
-  const runApi = async (uuid: string): Promise<void> => {
+  const runApi = async (rowIndex: string): Promise<void> => {
     const tokenTemp: ITokenRoot = await getToken();
     const parameterTemp: IParameter = await getParameter(MODULE, "200");
-    const url = parameterTemp.valueText01 + endpoint + "/" + uuid;
+    const url = parameterTemp.valueText01 + endpoint + "/" + rowIndex;
 
     try {
       const response: IFetchData = await fetchData({

@@ -1,4 +1,4 @@
-import { GenericPreview } from "../../components/forms/GenericPreviewProps";
+import { GenericPreview } from "../../components/forms/GenericPreview";
 import { Menus } from "../../utils/Constants";
 import { dataViewPresentation } from "./Structures/Presentations";
 import { createIRowDataError, IRowDataError } from "./Structures/Types";
@@ -9,7 +9,7 @@ import { createIRowDataError, IRowDataError } from "./Structures/Types";
 const PreviewError = ({ row }: { row?: IRowDataError }) => {
   return (
     <GenericPreview<IRowDataError>
-      row={row || createIRowDataError()}
+      rowId={row?.uuid || ""}
       endpoint={Menus.ERROR_ENDPOINT}
       createEmptyData={createIRowDataError}
       getPresentationData={dataViewPresentation}

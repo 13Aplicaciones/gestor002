@@ -1,62 +1,27 @@
-import { Button, Flex } from "@radix-ui/themes";
-import {
-  getParameter,
-  IParameter,
-} from "orchestrator_remote/service/Parameter";
-import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
-} from "orchestrator_remote/service/Tokens";
-import { useEffect, useState } from "react";
-import {
-  CreateSearchFieldOrder,
-  IParametersQuery,
-  IPresentationTable,
-} from "ux-ui";
+import { Button } from "@radix-ui/themes";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { Menus, MODULE } from "../../utils/Constants";
+import { Menus } from "../../utils/Constants";
 import { QueryFormInformation } from "./QueryFormInformation";
 import { tableQueryInformation } from "./Structures/Presentations";
 import { IRowDataInformation } from "./Structures/Types";
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import { IPresentationTable } from "ux-ui";
+import { GenericQuery } from "../../components/forms/GenericQuery";
 
 /**
- * Tabla de informacion del sistema.
- *
- * @param onEditRow Funcion para editar una fila.
- * @param onSeeRow Funcion para ver una fila.
- * @returns
+ * Tabla de información del sistema.
  */
 const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
-    size: "10",
-    indexError: "",
-    message: "",
-  });
-  const [presentacionTabla, setPresentacionTabla] =
-    useState<IPresentationTable>({} as IPresentationTable);
-
   /**
-   * Funcion para inicializar el token
-   *
+   * Configurar las acciones específicas para la tabla de información
    */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      const tokenTemp: ITokenRoot = await getToken();
-      setToken(tokenTemp);
-
-      const parameter: IParameter = await getParameter(MODULE, "200");
-      parameter.valueText01 =
-        parameter.valueText01 + Menus.INFORMATION_ENDPOINT;
-      setParameterUrl(parameter);
-
-      const tableFormat = tableQueryInformation();
-
+  const configureInformationTableActions = (
+    tableFormat: IPresentationTable,
+    onEditRow?: (row: IRowDataInformation) => void,
+    onSeeRow?: (row: IRowDataInformation) => void
+  ) => {
+    // Configurar acción para ver detalle
+    if (tableFormat.items[1]) {
       tableFormat.items[1].onAction = {
         onAction: (row: IRowDataInformation) => {
           if (onSeeRow) {
@@ -64,7 +29,10 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
           }
         },
       };
+    }
 
+    // Configurar acción de edición
+    if (tableFormat.items[3]) {
       tableFormat.items[3].component = (row: IRowDataInformation) => (
         <Button
           size="1"
@@ -78,41 +46,24 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
           <DotsVerticalIcon width="16" height="16" />
         </Button>
       );
+    }
 
-      setPresentacionTabla(tableFormat);
-    };
-
-    initializeStructure();
-  }, []);
-
-  /**
-   * Funcion para manejar la busqueda de los datos y pasar los datos al componente de busqueda.
-   *
-   * @param data
-   */
-  const handleFormFind = (data: IParametersQuery) => {
-    parametersQuery.indexError = data.indexError;
-    parametersQuery.name = data.name;
-    setParametersQuery({ ...parametersQuery });
+    return tableFormat;
   };
 
   return (
-    <Flex direction="column" gap="3">
-      {token?.access_token && parameterUrl?.valueText01 && (
-        <>
-          <QueryFormInformation onFind={handleFormFind} />
-          <CreateSearchFieldOrder
-            apiUrl={parameterUrl?.valueText01 + "/paginated"}
-            parametersToConsult={parametersQuery}
-            presentationTable={presentacionTabla}
-            token={token.access_token}
-            getToken={async () => {
-              return await refreshToken();
-            }}
-          />
-        </>
-      )}
-    </Flex>
+    <GenericQuery<IRowDataInformation>
+      QueryForm={QueryFormInformation}
+      endpoint={Menus.INFORMATION_ENDPOINT}
+      getTablePresentation={tableQueryInformation}
+      initialParameters={{
+        size: "10",
+        name: ""
+      }}
+      configureTableActions={configureInformationTableActions}
+      onEditRow={onEditRow}
+      onSeeRow={onSeeRow}
+    />
   );
 };
 
