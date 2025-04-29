@@ -116,6 +116,5 @@ function GenericQuery<T>({
   );
 }
 
-
 export type {GenericQueryProps};
 export { GenericQuery };
