@@ -1,17 +1,41 @@
-import { Button } from "@radix-ui/themes";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { Menus } from "../../utils/Constants";
+import { Button } from "@radix-ui/themes";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
+import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
+import { Menus, MODULE } from "../../utils/Constants";
 import { QueryFormInformation } from "./QueryFormInformation";
 import { tableQueryInformation } from "./Structures/Presentations";
 import { IRowDataInformation } from "./Structures/Types";
-import { IPresentationTable } from "ux-ui";
-import { GenericQuery } from "../../components/forms/GenericQuery";
 
 /**
  * Tabla de información del sistema.
  */
 const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
+  const [apiUrl, setApiUrl] = useState("");
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  /**
+   * Inicializar token y parámetros de URL
+   */
+  useEffect(() => {
+    const initializeStructure = async () => {
+      const tokenTemp: ITokenRoot = await getToken();
+      setToken(tokenTemp.access_token);
+
+      const parameter: IParameter = await getParameter(MODULE, "200");
+      setApiUrl(
+        parameter.valueText01 + Menus.INFORMATION_ENDPOINT + "/paginated"
+      );
+    };
+
+    initializeStructure();
+  }, []);
+
   /**
    * Configurar las acciones específicas para la tabla de información
    */
@@ -54,13 +78,15 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
   return (
     <GenericQuery<IRowDataInformation>
       QueryForm={QueryFormInformation}
-      endpoint={Menus.INFORMATION_ENDPOINT}
       getTablePresentation={tableQueryInformation}
       initialParameters={{
         size: "10",
-        name: ""
+        name: "",
       }}
       configureTableActions={configureInformationTableActions}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={getToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
     />

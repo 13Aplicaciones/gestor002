@@ -25,6 +25,11 @@ export { AreaField, InputField, InputSelect, InputFieldDate, InputSearchDynamic,
 export type { IPresentationInputSelect } from './components/input/Input';
 
 export { FormState, FooterForm } from './components/form/Form.tsx';
+export type { GenericQueryFormProps } from './components/form/GenericQueryForm';
+export { GenericQueryForm } from './components/form/GenericQueryForm';
+export type {GenericQueryProps} from './components/form/GenericQuery';
+export { GenericQuery } from './components/form/GenericQuery';
+
 
 // Exportar elementos Tipos de datos
 export type { DataItemBadge } from './components/grid/Card';

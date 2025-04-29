@@ -1,39 +1,30 @@
 import { Flex } from "@radix-ui/themes";
-import {
-    getParameter,
-    IParameter,
-} from "orchestrator_remote/service/Parameter";
-import {
-    getToken,
-    ITokenRoot,
-    refreshToken,
-} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import {
-    CreateSearchFieldOrder,
-    IParametersQuery,
-    IPresentationTable
-} from "ux-ui";
-import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { MODULE } from "../../utils/Constants";
+import { IQueryProps } from "../crud/Types";
+import { IParametersQuery } from "../table/TableSearch";
+import { IPresentationTable } from "../table/Table";
+import { CreateSearchFieldOrder } from "../table/TableSearchOrder";
 
-export interface GenericQueryProps<T> extends IQueryProps {
+interface GenericQueryProps<T> extends IQueryProps {
   /** Componente del formulario de búsqueda */
   QueryForm: React.ComponentType<{ onFind: (data: IParametersQuery) => void }>;
-  
+
   /** Endpoint para la API (ej: "/modules", "/errors") */
-  endpoint: string;
-  
+  apiUrl: string;
+
   /** Función para obtener la configuración de la tabla */
   getTablePresentation: () => IPresentationTable | Promise<IPresentationTable>;
-  
+
   /** Parámetros iniciales para la consulta */
   initialParameters?: IParametersQuery;
-  
+
+  token?: string;
+  getToken?: (() => Promise<string>) | undefined;
+
   /** Función para configurar acciones específicas en la tabla */
   configureTableActions?: (
-    table: IPresentationTable, 
-    onEditRow?: (row: T) => void, 
+    table: IPresentationTable,
+    onEditRow?: (row: T) => void,
     onSeeRow?: (row: T) => void
   ) => IPresentationTable | Promise<IPresentationTable>;
 }
@@ -41,19 +32,21 @@ export interface GenericQueryProps<T> extends IQueryProps {
 /**
  * Componente genérico para consultas con tabla y formulario de búsqueda
  */
-export function GenericQuery<T>({
+function GenericQuery<T>({
   QueryForm,
-  endpoint,
+  apiUrl,
   getTablePresentation,
   initialParameters = { size: "10" },
   configureTableActions,
+  token,
+  getToken,
   onEditRow,
-  onSeeRow
+  onSeeRow,
 }: GenericQueryProps<T>) {
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [parameterUrl, setParameterUrl] = useState<IParameter>({} as IParameter);
-  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>(initialParameters);
-  const [presentacionTabla, setPresentacionTabla] = useState<IPresentationTable>({} as IPresentationTable);
+  const [parametersQuery, setParametersQuery] =
+    useState<IParametersQuery>(initialParameters);
+  const [presentacionTabla, setPresentacionTabla] =
+    useState<IPresentationTable>({} as IPresentationTable);
 
   /**
    * Inicializar configuración de tabla
@@ -63,10 +56,14 @@ export function GenericQuery<T>({
       try {
         // Obtener la configuración base de la tabla
         const tableFormat = await getTablePresentation();
-        
+
         // Si hay una función para configurar acciones específicas, usarla
         if (configureTableActions) {
-          const configuredTable = await configureTableActions(tableFormat, onEditRow, onSeeRow);
+          const configuredTable = await configureTableActions(
+            tableFormat,
+            onEditRow,
+            onSeeRow
+          );
           setPresentacionTabla(configuredTable);
         } else {
           setPresentacionTabla(tableFormat);
@@ -80,70 +77,45 @@ export function GenericQuery<T>({
   }, [getTablePresentation, configureTableActions]);
 
   /**
-   * Inicializar token y parámetros de URL
-   */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      try {
-        const tokenTemp: ITokenRoot = await getToken();
-        setToken(tokenTemp);
-
-        const parameter: IParameter = await getParameter(MODULE, "200");
-        parameter.valueText01 = parameter.valueText01 + endpoint;
-        setParameterUrl(parameter);
-      } catch (error) {
-        console.error("Error initializing structure:", error);
-      }
-    };
-
-    initializeStructure();
-  }, [endpoint]);
-
-  /**
    * Manejar la búsqueda y actualizar los parámetros
    */
   const handleFormFind = (data: IParametersQuery) => {
-
     console.log("Data de mi busqueda", JSON.stringify(data));
-
-    /*setParametersQuery({
-      ...parametersQuery,
-      ...data
-    });*/
 
     setParametersQuery((prevParameters) => {
       const updatedParameters = {
-      ...prevParameters,
-      ...data,
+        ...prevParameters,
+        ...data,
       };
 
       // Trigger a refresh by updating the key prop or state
       setPresentacionTabla((prevTable) => ({
-      ...prevTable,
-      refreshKey: Date.now(), // Add a unique key to force re-render
+        ...prevTable,
+        refreshKey: Date.now(), // Add a unique key to force re-render
       }));
 
       return updatedParameters;
     });
-
   };
 
   return (
     <Flex direction="column" gap="3">
-      {token?.access_token && parameterUrl?.valueText01 && Object.keys(presentacionTabla).length > 0 && (
+      {token && apiUrl && Object.keys(presentacionTabla).length > 0 && (
         <>
           <QueryForm onFind={handleFormFind} />
           <CreateSearchFieldOrder
-            apiUrl={parameterUrl?.valueText01 + "/paginated"}
+            apiUrl={apiUrl}
             parametersToConsult={parametersQuery}
             presentationTable={presentacionTabla}
-            token={token.access_token}
-            getToken={async () => {
-              return await refreshToken();
-            }}
+            token={token}
+            getToken={getToken}
           />
         </>
       )}
     </Flex>
   );
 }
+
+
+export type {GenericQueryProps};
+export { GenericQuery };

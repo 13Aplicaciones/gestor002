@@ -2,11 +2,11 @@ import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   Direction,
+  GenericQueryForm,
   InputField,
   IParametersQuery
 } from "ux-ui";
 import * as yup from "yup";
-import { GenericQueryForm } from "../../components/forms/GenericQueryForm";
 
 interface ErrorQueryFormValues {
   indexError: string;

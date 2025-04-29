@@ -1,14 +1,16 @@
-import { Controller } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Control, Controller, FieldValues } from 'react-hook-form';
+
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   Direction,
   InputField,
   InputSelect,
-  IParametersQuery
+  IParametersQuery,
+  GenericQueryForm
 } from "ux-ui";
 import * as yup from "yup";
-import { GenericQueryForm } from "../../components/forms/GenericQueryForm";
 import { listaQueryModule } from "./Structures/Presentations";
 
 interface ModuleQueryFormValues {
@@ -62,7 +64,7 @@ const QueryFormModule = ({
           />
           <Controller
             name="status"
-            control={control}
+            control={control as unknown as Control<FieldValues, any>}
             render={({ field }) => (
               <InputSelect
                 title={t("modules.GS-MD-001.fields.status.title")}

@@ -1,17 +1,39 @@
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { Menus } from "../../utils/Constants";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
+import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
+import { Menus, MODULE } from "../../utils/Constants";
 import { QueryFormError } from "./QueryFormError";
 import { tableQueryModule } from "./Structures/Presentations";
 import { IRowDataError } from "./Structures/Types";
-import { IPresentationTable } from "ux-ui";
-import { GenericQuery } from "../../components/forms/GenericQuery";
 
 /**
  * Tabla de errores del sistema.
  */
 const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
+  const [apiUrl, setApiUrl] = useState("");
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  /**
+   * Inicializar token y parámetros de URL
+   */
+  useEffect(() => {
+    const initializeStructure = async () => {
+      const tokenTemp: ITokenRoot = await getToken();
+      setToken(tokenTemp.access_token);
+
+      const parameter: IParameter = await getParameter(MODULE, "200");
+      setApiUrl(parameter.valueText01 + Menus.ERROR_ENDPOINT + "/paginated");
+    };
+
+    initializeStructure();
+  }, []);
+
   /**
    * Configurar las acciones específicas para la tabla de errores
    */
@@ -54,14 +76,16 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
   return (
     <GenericQuery<IRowDataError>
       QueryForm={QueryFormError}
-      endpoint={Menus.ERROR_ENDPOINT}
       getTablePresentation={tableQueryModule}
       initialParameters={{
         size: "10",
         indexError: "",
-        message: ""
+        message: "",
       }}
       configureTableActions={configureErrorTableActions}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={getToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
     />

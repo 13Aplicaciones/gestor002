@@ -2,32 +2,29 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@radix-ui/themes";
 import { ReactNode } from "react";
-import { 
-  DeepPartial, 
-  DefaultValues, 
-  FieldValues, 
-  useForm, 
-  UseFormReturn 
+import {
+  DeepPartial,
+  DefaultValues,
+  FieldValues,
+  useForm,
+  UseFormReturn,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  BandPresentation,
-  Direction,
-  FooterForm,
-  IParametersQuery
-} from "ux-ui";
 import { ObjectSchema } from "yup";
+import { IParametersQuery } from "../table/TableSearch";
+import { FooterForm } from "./Form";
+import { BandPresentation, Direction } from "../../ConstantsPresentation";
 
-export interface GenericQueryFormProps<TFormValues extends FieldValues> {
+interface GenericQueryFormProps<TFormValues extends FieldValues> {
   /** Esquema de validación para el formulario */
   validationSchema: ObjectSchema<any>;
-  
+
   /** Valores iniciales del formulario */
   defaultValues: DeepPartial<TFormValues>;
-  
+
   /** Función que se llama cuando se realiza la búsqueda */
   onFind: (data: IParametersQuery) => void;
-  
+
   /** Función para renderizar los campos del formulario */
   renderFields: (form: UseFormReturn<TFormValues>) => ReactNode;
 }
@@ -35,11 +32,11 @@ export interface GenericQueryFormProps<TFormValues extends FieldValues> {
 /**
  * Componente genérico para formularios de búsqueda
  */
-export function GenericQueryForm<TFormValues extends FieldValues>({
+function GenericQueryForm<TFormValues extends FieldValues>({
   validationSchema,
   defaultValues,
   onFind,
-  renderFields
+  renderFields,
 }: GenericQueryFormProps<TFormValues>) {
   const [t] = useTranslation("global_gestor");
 
@@ -48,7 +45,7 @@ export function GenericQueryForm<TFormValues extends FieldValues>({
    */
   const form = useForm<TFormValues>({
     resolver: yupResolver(validationSchema),
-    defaultValues: defaultValues as DefaultValues<TFormValues>
+    defaultValues: defaultValues as DefaultValues<TFormValues>,
   });
 
   /**
@@ -74,7 +71,7 @@ export function GenericQueryForm<TFormValues extends FieldValues>({
   return (
     <form onSubmit={form.handleSubmit(submitForm)}>
       {renderFields(form)}
-      
+
       <FooterForm
         directionLabel={Direction.horizontal}
         columns={BandPresentation.column_2}
@@ -87,3 +84,6 @@ export function GenericQueryForm<TFormValues extends FieldValues>({
     </form>
   );
 }
+
+export type { GenericQueryFormProps };
+export { GenericQueryForm };
