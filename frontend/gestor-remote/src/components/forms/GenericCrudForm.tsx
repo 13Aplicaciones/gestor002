@@ -79,8 +79,6 @@ export function GenericCrudForm<T extends { uuid?: string }>({
    */
   const actuate = async (data: any) => {
 
-    console.log("actuate 001", data);
-
     setLoading(true);
     const nameApp = window.location.pathname.split("/").pop() + t("nameApp");
 
@@ -90,10 +88,6 @@ export function GenericCrudForm<T extends { uuid?: string }>({
     } else {
       data = { ...data, userApp: nameApp };
     }
-
-    console.log("actuate 002", data);
-
-    console.log("actuate 003",  JSON.stringify(data) );
 
     try {
       setTimeout(async () => {
