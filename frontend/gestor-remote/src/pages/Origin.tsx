@@ -6,6 +6,8 @@ import { FormEditError } from "./Error/FormEditError";
 import { PreviewError } from "./Error/PreviewError";
 import { QueryError } from "./Error/QueryError";
 import { createIRowDataError } from "./Error/Structures/Types";
+import { FormEditInformation } from "./Information/FormEditInformation";
+import { PreviewInformation } from "./Information/PreviewInformation";
 import { QueryInformation } from "./Information/QueryInformation";
 import { createIRowDataInformation } from "./Information/Structures/Types";
 import { FormEditModule } from "./Module/FormEditModule";
@@ -13,7 +15,6 @@ import { PreviewModule } from "./Module/PreviewModule";
 import { QueryModule } from "./Module/QueryModule";
 import { createIRowDataModule } from "./Module/Structures/Types";
 import User from "./User";
-import { PreviewInformation } from "./Information/PreviewInformation";
 
 /**
  * Funcion para mostrar el titulo de la aplicacion.
@@ -85,9 +86,7 @@ const Origin = ({ name }: { name: string }) => {
           createIRowDataCustom={createIRowDataInformation}
           QueryPanel={QueryInformation}
           PreviewPanel={PreviewInformation}
-          
-          // TODO: Cambiar el preview y el form por los de la informacion
-          FormPanel={FormEditModule}
+          FormPanel={FormEditInformation}
         />;
       case Menus.MODULE:
         return <PageCrud
@@ -105,9 +104,7 @@ const Origin = ({ name }: { name: string }) => {
         createIRowDataCustom={createIRowDataInformation}
         QueryPanel={QueryInformation}
         PreviewPanel={PreviewInformation}
-        
-        // TODO: Cambiar el preview y el form por los de la informacion
-        FormPanel={FormEditModule}
+        FormPanel={FormEditInformation}
       />;
     }
   };

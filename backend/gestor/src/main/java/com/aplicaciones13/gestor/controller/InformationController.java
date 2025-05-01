@@ -1,21 +1,5 @@
 package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.base.controller.ControllerTools;
-import com.aplicaciones13.base.validations.ValidUUID;
-import com.aplicaciones13.gestor.model.Information;
-import com.aplicaciones13.gestor.payload.request.InformationRequest;
-import com.aplicaciones13.gestor.payload.response.InformationResponse;
-import com.aplicaciones13.gestor.services.InformationService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +11,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.base.controller.ControllerTools;
+import com.aplicaciones13.base.validations.ValidUUID;
+import com.aplicaciones13.gestor.model.Information;
+import com.aplicaciones13.gestor.payload.request.InformationRequest;
+import com.aplicaciones13.gestor.payload.response.InformationResponse;
+import com.aplicaciones13.gestor.services.InformationService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/information")
 @Tag(name = "Informacion", description = "Servicio para CRUD de Informacion")
-@Valid
-@Slf4j
 public class InformationController {
 
     @Autowired
@@ -63,7 +60,7 @@ public class InformationController {
      * @return Respuesta con la information creada.
      */
     @PostMapping
-    public ResponseEntity<InformationResponse> crearInformation(@RequestBody InformationRequest request) {
+    public ResponseEntity<InformationResponse> crearInformation(@RequestBody @Valid InformationRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(informationService.create(request));
     }
 
@@ -76,8 +73,8 @@ public class InformationController {
      */
     @PutMapping("/{uuid}")
     public ResponseEntity<InformationResponse> actualizarInformation(
-            @PathVariable @ValidUUID String uuid,
-            @RequestBody @Valid InformationRequest informationrRequest) {
+            @PathVariable String uuid,
+            @Valid @RequestBody InformationRequest informationrRequest) {
         return ResponseEntity.ok(informationService.update(uuid, informationrRequest));
     }
 
@@ -111,9 +108,6 @@ public class InformationController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name,desc") String[] sort,
             @RequestParam(required = false) String name) {
-
-        log.error("getAllInformationWithPaginado - page: {}, size: {}, sort: {}, name: {}", page, size, sort, name);
-
         Page<Information> pageInformation = informationService.findByName(name,
                 ControllerTools.generateOrders(page, size, sort));
 
