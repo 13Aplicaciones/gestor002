@@ -1,7 +1,7 @@
 {
   "actions": {
     "add": "Agregar",
-    "addDescription": "Agregar item para {{description}}",
+    "addDescription": "Agregar Nuevo",
     "back": "Atrás",
     "cancel": "Cancelar",
     "clear": "Limpiar",

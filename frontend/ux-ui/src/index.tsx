@@ -29,6 +29,8 @@ export type { GenericQueryFormProps } from './components/form/GenericQueryForm';
 export { GenericQueryForm } from './components/form/GenericQueryForm';
 export type {GenericQueryProps} from './components/form/GenericQuery';
 export { GenericQuery } from './components/form/GenericQuery';
+export type { GenericPreviewProps } from './components/form/GenericPreview';
+export { GenericPreview } from './components/form/GenericPreview';
 
 
 // Exportar elementos Tipos de datos

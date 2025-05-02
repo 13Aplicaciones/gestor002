@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";

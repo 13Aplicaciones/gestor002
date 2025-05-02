@@ -4,7 +4,7 @@
   "subTitle": "Administración de recursos del sistema",
   "icon": "GearIcon",
   "description": "Gestor de Modulos, Menús, Roles, Códigos Definidos, Usuarios, Errores, Información y Cambio de Clave de los usuarios",
-  "actions":{
+  "actions": {
     "edit": "Editar",
     "delete": "Borrar",
     "save": "Guardar",
@@ -27,7 +27,7 @@
     "required": "Campo requerido",
     "typeNumber": "El valor debe ser un número"
   },
-  
+
   "modules": {
     "GS-MD-001": {
       "icon": "CubeIcon",
@@ -46,39 +46,39 @@
           "title": "UUID",
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
-        "indexModule":{
+        "indexModule": {
           "title": "Indice",
           "placeholder": "GS-MD-001"
         },
-        "context":{
+        "context": {
           "title": "Contexto",
           "placeholder": "/WEB-INF/rol-task-flow.xml#rol-task-flow"
         },
-        "name":{
+        "name": {
           "title": "Nombre",
           "placeholder": "Cliente"
         },
-        "status":{
+        "status": {
           "title": "Estado",
           "placeholder": "Estado del módulo A"
         },
-        "orden":{
+        "orden": {
           "title": "Orden",
           "placeholder": "10"
         },
-        "userDate":{
+        "userDate": {
           "title": "Fecha",
           "placeholder": "Fecha del error"
         },
-        "user":{
+        "user": {
           "title": "Usuario",
           "placeholder": "Usuario que generó el error"
         },
-        "userApp":{
+        "userApp": {
           "title": "Aplicación",
           "placeholder": "Aplicación que generó el error"
         },
-        "acciones":{
+        "acciones": {
           "title": "Acciones",
           "placeholder": "Acciones a realizar",
           "abrev": "Acci."
@@ -126,31 +126,31 @@
           "title": "UUID",
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
-        "indexError":{
+        "indexError": {
           "title": "Indice",
           "placeholder": "ERROR-000"
         },
-        "message":{
+        "message": {
           "title": "Mensaje",
           "placeholder": "Mensaje del error"
         },
-        "description":{
+        "description": {
           "title": "Descripción",
           "placeholder": "Descripción del error"
         },
-        "userDate":{
+        "userDate": {
           "title": "Fecha",
           "placeholder": "Fecha del error"
         },
-        "user":{
+        "user": {
           "title": "Usuario",
           "placeholder": "Usuario que generó el error"
         },
-        "userApp":{
+        "userApp": {
           "title": "Aplicación",
           "placeholder": "Aplicación que generó el error"
         },
-        "acciones":{
+        "acciones": {
           "title": "Acciones",
           "placeholder": "Acciones a realizar",
           "abrev": "Acci."
@@ -173,31 +173,31 @@
           "title": "UUID",
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
-        "name":{
+        "name": {
           "title": "Nombre",
           "placeholder": "Nombre de la información"
         },
-        "value01":{
+        "value01": {
           "title": "Valor",
           "placeholder": "Titulo de la información"
         },
-        "value02":{
+        "value02": {
           "title": "Complemento",
           "placeholder": "Complemento de la información"
         },
-        "userDate":{
+        "userDate": {
           "title": "Fecha",
           "placeholder": "Fecha del error"
         },
-        "user":{
+        "user": {
           "title": "Usuario",
           "placeholder": "Usuario que generó el error"
         },
-        "userApp":{
+        "userApp": {
           "title": "Aplicación",
           "placeholder": "Aplicación que generó el error"
         },
-        "acciones":{
+        "acciones": {
           "title": "Acciones",
           "placeholder": "Acciones a realizar",
           "abrev": "Acci."

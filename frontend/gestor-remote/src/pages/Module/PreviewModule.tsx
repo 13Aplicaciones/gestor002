@@ -1,16 +1,18 @@
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { GenericPreview } from "../../components/forms/GenericPreview";
+import { GenericPreview } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import { dataViewPresentation } from "./Structures/Presentations";
 import { createIRowDataModule, IRowDataModule } from "./Structures/Types";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
-import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
 
 /**
  * Función para tener una vista previa de los Modules del sistema.
  */
 const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
-
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -18,29 +20,44 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
    * Inicializar token y parámetros de URL
    */
   useEffect(() => {
-    const initializeStructure = async () => {
-      const tokenTemp: ITokenRoot = await getToken();
-      setToken(tokenTemp.access_token);
+    getToken()
+      .then((t: ITokenRoot) => setToken(t.access_token))
+      .catch(console.error);
+  }, []);
 
-      const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(
-        parameter.valueText01 + Menus.MODULE_ENDPOINT + "/" + row?.uuid
-      );
-    };
+  useEffect(() => {
+    if (!row) {
+      setApiUrl("");
+      return;
+    }
 
-    initializeStructure();
+    (async () => {
+      try {
+        const param: IParameter = await getParameter(MODULE, "200");
+        const url = `${param.valueText01}${Menus.MODULE_ENDPOINT}/${row.uuid}`;
+        setApiUrl(url);
+      } catch (err) {
+        console.error("Error generando API URL:", err);
+        setApiUrl("");
+      }
+    })();
   }, [row]);
 
-
   return (
-    <GenericPreview<IRowDataModule>
-      apiUrl={apiUrl}
-      createEmptyData={createIRowDataModule}
-      getPresentationData={dataViewPresentation}
-      token={token}
-      getToken={getToken}
-      entityName="Module"
-    />
+    <>
+      {!apiUrl || !token ? (
+        <></>
+      ) : (
+        <GenericPreview<IRowDataModule>
+          apiUrl={apiUrl}
+          createEmptyData={createIRowDataModule}
+          getPresentationData={dataViewPresentation}
+          token={token}
+          getToken={getToken}
+          entityName="Module"
+        />
+      )}
+    </>
   );
 };
 
