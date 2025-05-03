@@ -4,12 +4,25 @@ import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts, StatusEdit } from "../../ConstantsPresentation";
-import { useToastContext } from "../toast/useToastContext";
-import { DialogDelete } from "../crud/DialogDelete";
 import { BannerInformation, InformationPanelRegistration } from "../callout/Information";
+import { DialogDelete } from "../crud/DialogDelete";
+import { useToastContext } from "../toast/useToastContext";
 import { FormState } from "./Form";
 
+/**
+ * Funciones de presentación de pie en los formularios y estos son resize.
+ * 
+ * @autor @omargo33
+ * @since 2025-05-03
+ * 
+ */
 
+/**
+ * Interfaz para las propiedades del formulario CRUD genérico.
+ * 
+ * @template T Tipo de datos del formulario
+ * 
+ */
 interface GenericCrudFormProps<T> {
   /** Estado inicial del formulario (crear, editar, ver) */
   status: StatusEdit;
@@ -17,6 +30,7 @@ interface GenericCrudFormProps<T> {
   /** Datos de la fila que se está editando */
   row: T & Record<string, any>;
 
+  /** Nombre del índice para identificar el registro */
   indexName: string;
 
   /** Función que se llama al volver atrás */
@@ -25,7 +39,10 @@ interface GenericCrudFormProps<T> {
   /** Endpoint para la API (ej: "/modules", "/errors") */
   apiUrl: string;
 
+  /** Token de autenticación (opcional) */
   token?: string;
+
+  /** Función para obtener el token de autenticación (opcional) */
   getToken?: (() => Promise<string>) | undefined;
 
   /** Función para preparar los datos antes de enviarlos al servidor */
@@ -33,13 +50,35 @@ interface GenericCrudFormProps<T> {
 
   /** Renderizado del formulario */
   renderForm: (props: {
+    /** Estado del formulario (crear, editar, ver) */
     formStatus: StatusEdit;
+
+    /** Datos de la fila que se está editando */
     loading: boolean;
+    
+    /** Función para manejar el envío del formulario */
     handleSubmit: (data: any) => Promise<void>;
+
+    /** Función para mostrar el pop-up de eliminación */
     showPopUpDelete: () => void;
   }) => ReactNode;
 }
 
+/**
+ * Funcion para el comportamiento de los formularios CRUD.
+ * 
+ * @param status Estado inicial del formulario (crear, editar, ver)
+ * @param row Datos de la fila que se está editando
+ * @param indexName Nombre del índice para identificar el registro
+ * @param onAtras Función que se llama al volver atrás
+ * @param apiUrl Endpoint para la API (ej: "/modules", "/errors")
+ * @param token Token de autenticación (opcional)
+ * @param getToken Función para obtener el token de autenticación (opcional)
+ * @param prepareData Función para preparar los datos antes de enviarlos al servidor
+ * @param renderForm Renderizado del formulario
+ * 
+ * @returns 
+ */
 function GenericCrudForm<T>({
   status,
   row,

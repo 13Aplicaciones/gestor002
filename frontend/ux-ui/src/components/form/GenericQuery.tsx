@@ -1,10 +1,23 @@
 import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { IQueryProps } from "../crud/Types";
-import { IParametersQuery } from "../table/TableSearch";
 import { IPresentationTable } from "../table/Table";
+import { IParametersQuery } from "../table/TableSearch";
 import { CreateSearchFieldOrder } from "../table/TableSearchOrder";
 
+/**
+ * Funciones de presentación de pie en los formularios y estos son resize.
+ * 
+ * @autor @omargo33
+ * @since 2025-05-03
+ */
+
+/**
+ * Funciones de presentación de Busqueda y tabla.
+ * 
+ *  @template T Tipo de datos del formulario
+ *  
+ */
 interface GenericQueryProps<T> extends IQueryProps {
   /** Componente del formulario de búsqueda */
   QueryForm: React.ComponentType<{ onFind: (data: IParametersQuery) => void }>;
@@ -18,19 +31,40 @@ interface GenericQueryProps<T> extends IQueryProps {
   /** Parámetros iniciales para la consulta */
   initialParameters?: IParametersQuery;
 
+  /** Función para manejar la edición de una fila */
   token?: string;
+
+  /** Función para obtener el token de autenticación (opcional) */
   getToken?: (() => Promise<string>) | undefined;
 
   /** Función para configurar acciones específicas en la tabla */
   configureTableActions?: (
+
+    /** Configuración de la tabla */
     table: IPresentationTable,
+
+    /** Función para manejar la edición de una fila */
     onEditRow?: (row: T) => void,
+    
+    /** Función para manejar la visualización de una fila */
     onSeeRow?: (row: T) => void
   ) => IPresentationTable | Promise<IPresentationTable>;
 }
 
 /**
  * Componente genérico para consultas con tabla y formulario de búsqueda
+ * 
+ * @param QueryForm Componente del formulario de búsqueda
+ * @param apiUrl URL de la API para obtener los datos
+ * @param getTablePresentation Función para obtener la configuración de la tabla
+ * @param initialParameters Parámetros iniciales para la consulta
+ * @param configureTableActions Función para configurar acciones específicas en la tabla
+ * @param token Token de autenticación (opcional)
+ * @param getToken Función para obtener el token de autenticación (opcional)
+ * @param onEditRow Función para manejar la edición de una fila
+ * @param onSeeRow Función para manejar la visualización de una fila
+ * 
+ * @returns 
  */
 function GenericQuery<T>({
   QueryForm,
@@ -80,7 +114,6 @@ function GenericQuery<T>({
    * Manejar la búsqueda y actualizar los parámetros
    */
   const handleFormFind = (data: IParametersQuery) => {
-    console.log("Data de mi busqueda", JSON.stringify(data));
 
     setParametersQuery((prevParameters) => {
       const updatedParameters = {
@@ -116,5 +149,5 @@ function GenericQuery<T>({
   );
 }
 
-export type {GenericQueryProps};
 export { GenericQuery };
+export type { GenericQueryProps };

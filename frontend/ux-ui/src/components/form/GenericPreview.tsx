@@ -6,6 +6,20 @@ import { Alerts } from "../../ConstantsPresentation";
 import { BannerInformation } from "../callout/Information";
 import { DataListConfigurable, DataListSkeleton } from "../dataList/DataList";
 
+
+/**
+ * Funciones de presentación de pie en los formularios y estos son resize.
+ * 
+ * @autor @omargo33
+ * @since 2025-05-03
+ */
+
+/**
+ * Funciones de presentación de pie en los formularios y estos son resize.
+ * 
+ *  @template T Tipo de datos del formulario
+ *  
+ */
 interface GenericPreviewProps<T> {
   /** Endpoint para la API (ej: "/modules", "/errors") */
   apiUrl: string;
@@ -16,7 +30,10 @@ interface GenericPreviewProps<T> {
   /** Presentación de datos para el componente DataListConfigurable */
   getPresentationData: () => any;
 
+  /** Función para obtener el token de autenticación (opcional) */
   token?: string;
+
+  /** Función para obtener el token de autenticación (opcional) */
   getToken?: (() => Promise<string>) | undefined;
 
   /** Nombre personalizado para los mensajes de error (opcional) */
@@ -25,6 +42,15 @@ interface GenericPreviewProps<T> {
 
 /**
  * Componente genérico para previsualizar datos de cualquier entidad
+ * 
+ * @param apiUrl URL de la API para obtener los datos
+ * @param createEmptyData Función para crear un objeto vacío del tipo de datos
+ * @param token Token de autenticación (opcional)
+ * @param getToken Función para obtener el token de autenticación (opcional)
+ * @param getPresentationData Función para obtener la presentación de datos
+ * @param entityName Nombre personalizado para los mensajes de error (opcional)
+ * 
+ * @returns 
  */
 function GenericPreview<T extends { uuid?: string }>({
   apiUrl,

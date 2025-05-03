@@ -1,9 +1,9 @@
-import { alertColor } from "../IconosColoresAlerts";
-import { Alerts, BandPresentation, Direction, StatusEdit } from "../../ConstantsPresentation";
-import { Badge, Flex } from "@radix-ui/themes";
 import { EyeOpenIcon, LockClosedIcon, Pencil1Icon, PlusIcon } from "@radix-ui/react-icons";
+import { Badge, Flex } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { Alerts, BandPresentation, Direction, StatusEdit } from "../../ConstantsPresentation";
+import { alertColor } from "../IconosColoresAlerts";
 import useCalculatePresentation from "../input/Calculations";
 
 /**
@@ -73,4 +73,4 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
     );
 }
 
-export { FormState, FooterForm };
+export { FooterForm, FormState };
