@@ -13,13 +13,18 @@ import {
 } from "ux-ui";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { GenericCrudForm } from "../../components/forms/GenericCrudForm";
+import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
+import { useEffect, useState } from "react";
+import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
 
 /**
  * Formulario de edición de errores del sistema.
  */
 const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
+  const [apiUrl, setApiUrl] = useState("");
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   /**
    * Esquema de validación de formulario
@@ -35,8 +40,7 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
       .required(t("validation.required"))
       .min(5, t("validation.min", { min: 5 }))
       .max(128, t("validation.max", { max: 256 })),
-    value02: yup
-      .string().max(256, t("validation.max", { max: 256 })),
+    value02: yup.string().max(256, t("validation.max", { max: 256 })),
     userApp: yup.string(),
   });
 
@@ -57,13 +61,42 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
     },
   });
 
+  /**
+   * Inicializar token y parámetros de URL
+   */
+  useEffect(() => {
+    getToken()
+      .then((t: ITokenRoot) => setToken(t.access_token))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!row) {
+      setApiUrl("");
+      return;
+    }
+
+    (async () => {
+      try {
+        const param: IParameter = await getParameter(MODULE, "200");
+        const url = `${param.valueText01}${Menus.INFORMATION_ENDPOINT}`;
+        setApiUrl(url);
+      } catch (err) {
+        console.error("Error generando API URL:", err);
+        setApiUrl("");
+      }
+    })();
+  }, [row]);
+
   return (
     <GenericCrudForm
       status={status}
       row={row}
+      indexName="uuid"
       onAtras={onAtras}
-      endpoint={Menus.INFORMATION_ENDPOINT}
-      moduleCode={MODULE}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={getToken}
       renderForm={({
         formStatus,
         loading,

@@ -1,42 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
-import {
-  getParameter,
-  IParameter,
-} from "orchestrator_remote/service/Parameter";
-import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
-} from "orchestrator_remote/service/Tokens";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Alerts,
-  BannerInformation,
-  DialogDelete,
-  FormState,
-  InformationPanelRegistration,
-  StatusEdit,
-  useToastContext,
-} from "ux-ui";
+import { Alerts, StatusEdit } from "../../ConstantsPresentation";
+import { useToastContext } from "../toast/useToastContext";
+import { DialogDelete } from "../crud/DialogDelete";
+import { BannerInformation, InformationPanelRegistration } from "../callout/Information";
+import { FormState } from "./Form";
 
-export interface GenericCrudFormProps<T> {
+
+interface GenericCrudFormProps<T> {
   /** Estado inicial del formulario (crear, editar, ver) */
   status: StatusEdit;
 
   /** Datos de la fila que se está editando */
-  row: T;
+  row: T & Record<string, any>;
+
+  indexName: string;
 
   /** Función que se llama al volver atrás */
   onAtras?: () => void;
 
-  /** Endpoint específico del módulo (/modules, /errors, etc.) */
-  endpoint: string;
+  /** Endpoint para la API (ej: "/modules", "/errors") */
+  apiUrl: string;
 
-  /** Código del módulo para obtener el parámetro URL base */
-  moduleCode: string;
+  token?: string;
+  getToken?: (() => Promise<string>) | undefined;
 
   /** Función para preparar los datos antes de enviarlos al servidor */
   prepareData?: (data: T) => any;
@@ -50,28 +40,24 @@ export interface GenericCrudFormProps<T> {
   }) => ReactNode;
 }
 
-export function GenericCrudForm<T extends { uuid?: string }>({
+function GenericCrudForm<T>({
   status,
   row,
+  indexName,
   onAtras,
-  endpoint,
-  moduleCode,
+  apiUrl,
+  token,
+  getToken,
   prepareData,
   renderForm,
 }: GenericCrudFormProps<T>) {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(
-    status || StatusEdit.create
-  );
+  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [index, setIndex] = useState<string>((row[indexName] as string) || "");
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [parameterUrl, setParameterUrl] = useState<IParameter>(
-    {} as IParameter
-  );
   const [t] = useTranslation("global_gestor");
-  const [token, setToken] = useState<ITokenRoot>({} as ITokenRoot);
-  const [uuid, setUuid] = useState(row?.uuid || "");
   const { showToast } = useToastContext();
 
   /**
@@ -95,12 +81,12 @@ export function GenericCrudForm<T extends { uuid?: string }>({
         // Crear nuevo registro
         if (formStatus === StatusEdit.create) {
           response = await fetchData({
-            url: parameterUrl?.valueText01,
+            url: apiUrl,
             methodRest: MethodREST.POST,
             typeBody: TypeBody.JSON,
             bodyParameter: data,
-            token: token.access_token,
-            getToken: await refreshToken(),
+            token: token,
+            getToken: getToken,
           });
 
           if (!response.error) {
@@ -111,24 +97,24 @@ export function GenericCrudForm<T extends { uuid?: string }>({
         // Actualizar registro existente
         else if (formStatus === StatusEdit.edit) {
           response = await fetchData({
-            url: parameterUrl?.valueText01 + "/" + uuid,
+            url: apiUrl + "/" + index,
             methodRest: MethodREST.PUT,
             typeBody: TypeBody.JSON,
             bodyParameter: data,
-            token: token.access_token,
-            getToken: await refreshToken(),
+            token: token,
+            getToken: getToken,
           });
         }
 
         // Eliminar registro
         else if (formStatus === StatusEdit.block) {
           response = await fetchData({
-            url: parameterUrl?.valueText01 + "/" + uuid,
+            url: apiUrl + "/" + index,
             methodRest: MethodREST.DELETE,
             typeBody: TypeBody.NONE,
             bodyParameter: null,
-            token: token.access_token,
-            getToken: await refreshToken(),
+            token: token,
+            getToken: getToken,
           });
 
           if (!response.error) {
@@ -168,13 +154,13 @@ export function GenericCrudForm<T extends { uuid?: string }>({
       }
       return;
     } else {
-      const respuesta = response;
-      if (respuesta.response && respuesta.response.uuid) {
-        setUuid(respuesta.response.uuid);
+      const answer = response;
+      if (answer.response && answer.response[indexName]) {
+        setIndex(answer.response[indexName]);
       }
 
       showToast(
-        t("actions.saveSatisfactory", { status: respuesta.status.toString() }),
+        t("actions.saveSatisfactory", { status: answer.status.toString() }),
         t("actions.saveSatisfactoryDescription"),
         Alerts.success
       );
@@ -188,22 +174,6 @@ export function GenericCrudForm<T extends { uuid?: string }>({
     setFormStatus(StatusEdit.block);
     setDialogStatus(true);
   };
-
-  /**
-   * Inicializar el token y parámetros URL
-   */
-  useEffect(() => {
-    const initializeStructure = async () => {
-      const tokenTemp: ITokenRoot = await getToken();
-      setToken(tokenTemp);
-
-      const parameter: IParameter = await getParameter(moduleCode, "200");
-      parameter.valueText01 = parameter.valueText01 + endpoint;
-      setParameterUrl(parameter);
-    };
-
-    initializeStructure();
-  }, [endpoint, moduleCode]);
 
   /**
    * Actualizar el refrescador de diálogo
@@ -246,3 +216,7 @@ export function GenericCrudForm<T extends { uuid?: string }>({
     </>
   );
 }
+
+export { GenericCrudForm };
+export type { GenericCrudFormProps };
+
