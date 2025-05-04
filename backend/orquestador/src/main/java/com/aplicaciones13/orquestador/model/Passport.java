@@ -3,7 +3,6 @@ package com.aplicaciones13.orquestador.model;
 import lombok.Data;
 import java.io.Serializable;
 
-import java.util.Date;
 /**
  * Modelo de datos para el pasaporte
  * 

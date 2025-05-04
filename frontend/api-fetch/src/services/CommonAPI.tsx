@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MethodREST, TypeBody } from "../APIConstants";
 import { convertJsontToUrlParams, removeEmptyFields } from "../utils/ToolsJSON";
+import { IFetchData } from "./Api";
 
 /**
  * Funciones comunes para las consultas a API Rest.
@@ -162,4 +164,41 @@ const generateParametersUrl = (typeBody: TypeBody, bodyParameter: any) => {
 
    return "?" + parametrosURL;
 }
-export { generateRequestBody, generateParametersUrl };
+
+  /**
+   * Función para formatear el mensaje JSON
+   *
+   * @param response
+   * @returns
+   */
+  const formatMessageJson = (response: IFetchData) => {
+   try {
+     const parsedMessage = response.responseErrorJSON;
+     const title = parsedMessage.message
+       ? "<strong>" + parsedMessage.message + "</strong>"
+       : "";
+
+     delete parsedMessage.details;
+     delete parsedMessage.timestamp;
+     delete parsedMessage.message;
+
+     if (Object.keys(parsedMessage).length > 0) {
+       const all =
+         `<br>${title}</br></br>` +
+         Object.entries(parsedMessage)
+           .map(([key, value]) => {
+             const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+             return `<strong>${capitalizedKey}</strong>: ${value} </br>`;
+           })
+           .join(" ");
+       return all;
+     } else {
+       return title;
+     }
+   } catch (error) {
+     return response.responseErrorText || "";
+   }
+ };
+
+
+export { generateRequestBody, generateParametersUrl, formatMessageJson };

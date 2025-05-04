@@ -2,6 +2,8 @@ package com.aplicaciones13.gestor.repository;
 
 import com.aplicaciones13.gestor.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @param email
      * @return
      */
+    @Query("SELECT t FROM Token t WHERE t.email = ?1 AND t.status != 'X'")
     Optional<Token> findByEmail(String email);
         
     /**
@@ -29,6 +32,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @param socialNick
      * @return
      */
+    @Query("SELECT t FROM Token t WHERE t.socialNick = ?1 AND t.status != 'X'")
     Optional<Token> findBySocialNick(String socialNick);
     
     /**
@@ -37,5 +41,17 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @param idUser
      * @return
      */
+    @Query("SELECT t FROM Token t WHERE t.idUser = ?1 AND t.status != 'X'")
     List<Token> findByIdUser(Long idUser);
+
+    /**
+     * Metodo para Borrar logimante todas los items de un token.
+     * 
+     * @param idUser
+     * @param type
+     * @return
+     */
+    @Modifying
+    @Query("UPDATE Token t SET t.status = 'X' WHERE t.idUser = ?1 AND t.type = ?2")
+    void deleteByIdUser(Long idUser, String type);
 }

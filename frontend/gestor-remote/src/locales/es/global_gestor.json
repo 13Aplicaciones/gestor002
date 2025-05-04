@@ -13,6 +13,8 @@
     "close": "Cerrar",
     "change": "Cambiar",
     "clean": "Limpiar",
+    "inactive": "Inactivar",
+    "active": "Activar",
     "saveSatisfactory": "Guardado ({{status}})",
     "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
     "errorFetch": "Error en la petición {{error}}"
@@ -60,7 +62,7 @@
         },
         "status": {
           "title": "Estado",
-          "placeholder": "Estado del módulo A"
+          "placeholder": "Estado del módulo"
         },
         "orden": {
           "title": "Orden",
@@ -107,7 +109,52 @@
       "icon": "PersonIcon",
       "title": "Usuarios",
       "description": "Usuarios del sistema",
-      "path": "User"
+      "path": "User",
+      "panel": {
+        "find": "Buscar Usuarios",
+        "see": "Vista previa del Usuario",
+        "edit": "Editar Usuario",
+        "create": "Crear Usuario"
+      },
+      "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "nick": {
+          "title": "Nick",
+          "placeholder": "Nick del usuario"
+        },
+        "name": {
+          "title": "Nombre",
+          "placeholder": "Nombre del usuario"
+        },
+        "lastName": {
+          "title": "Apellido",
+          "placeholder": "Apellido del usuario"
+        },
+        "status": {
+          "title": "Estado",
+          "placeholder": "Estado del usuario"
+        },
+        "userDate": {
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user": {
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp": {
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones": {
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      }
     },
     "GS-ER-001": {
       "icon": "Cross1Icon",

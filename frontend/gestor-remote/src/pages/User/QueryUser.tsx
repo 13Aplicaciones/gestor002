@@ -1,21 +1,24 @@
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormInformation } from "./QueryFormInformation";
-import { tableQueryInformation } from "./Structures/Presentations";
-import { IRowDataInformation } from "./Structures/Types";
+import QueryActionsUser from "./QueryActionsUser";
+import { QueryFormUser } from "./QueryFormUser";
+import { tableQueryUser } from "./Structures/Presentations";
+import { IRowDataUser } from "./Structures/Types";
 
 /**
  * Tabla de información del sistema.
  */
-const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryUser = ({ onEditRow, onSeeRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -28,9 +31,7 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(
-        parameter.valueText01 + Menus.INFORMATION_ENDPOINT + "/paginated"
-      );
+      setApiUrl(parameter.valueText01 + Menus.USER_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
@@ -39,15 +40,15 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
   /**
    * Configurar las acciones específicas para la tabla de información
    */
-  const configureInformationTableActions = (
+  const configureUserTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataInformation) => void,
-    onSeeRow?: (row: IRowDataInformation) => void
+    onEditRow?: (row: IRowDataUser) => void,
+    onSeeRow?: (row: IRowDataUser) => void
   ) => {
     // Configurar acción para ver detalle
-    if (tableFormat.items[1]) {
-      tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataInformation) => {
+    if (tableFormat.items[0]) {
+      tableFormat.items[0].onAction = {
+        onAction: (row: IRowDataUser) => {
           if (onSeeRow) {
             onSeeRow(row);
           }
@@ -56,19 +57,16 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
     }
 
     // Configurar acción de edición
-    if (tableFormat.items[3]) {
-      tableFormat.items[3].component = (row: IRowDataInformation) => (
-        <Button
-          size="1"
-          variant="ghost"
-          onClick={() => {
+    if (tableFormat.items[5]) {
+      tableFormat.items[5].component = (row: IRowDataUser) => (
+        <QueryActionsUser
+          row={row}
+          onEditRow={(row: IRowDataUser) => {
             if (onEditRow) {
               onEditRow(row);
             }
           }}
-        >
-          <DotsVerticalIcon width="16" height="16" />
-        </Button>
+        />
       );
     }
 
@@ -76,14 +74,14 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
   };
 
   return (
-    <GenericQuery<IRowDataInformation>
-      QueryForm={QueryFormInformation}
-      getTablePresentation={tableQueryInformation}
+    <GenericQuery<IRowDataUser>
+      QueryForm={QueryFormUser}
+      getTablePresentation={tableQueryUser}
       initialParameters={{
         size: "10",
         name: "",
       }}
-      configureTableActions={configureInformationTableActions}
+      configureTableActions={configureUserTableActions}
       apiUrl={apiUrl}
       token={token}
       getToken={refreshToken}
@@ -93,4 +91,4 @@ const QueryInformation = ({ onEditRow, onSeeRow }: IQueryProps) => {
   );
 };
 
-export { QueryInformation };
+export { QueryUser };

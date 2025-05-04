@@ -10,7 +10,7 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 
 /**
@@ -83,7 +83,7 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
       configureTableActions={configureModuleTableActions}
       apiUrl={apiUrl}
       token={token}
-      getToken={getToken}
+      getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
     />

@@ -16,7 +16,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 import { listaFormModule } from "./Structures/Presentations";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import { useEffect, useState } from "react";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
 
 /**
@@ -112,7 +112,7 @@ const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
       onAtras={onAtras}
       apiUrl={apiUrl}
       token={token}
-      getToken={getToken}      
+      getToken={refreshToken}      
       renderForm={({ formStatus, loading, handleSubmit: submitData, showPopUpDelete }) => (
         <form onSubmit={handleSubmit(submitData)}>
           <InputField

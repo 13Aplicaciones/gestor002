@@ -1,27 +1,31 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
-import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
+import { fetchData, formatMessageJson, IFetchData, MethodREST, TypeBody } from "api-fetch";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts, StatusEdit } from "../../ConstantsPresentation";
-import { BannerInformation, InformationPanelRegistration } from "../callout/Information";
+import {
+  BannerInformation,
+  InformationPanelRegistration,
+} from "../callout/Information";
 import { DialogDelete } from "../crud/DialogDelete";
 import { useToastContext } from "../toast/useToastContext";
 import { FormState } from "./Form";
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.
- * 
+ *
  * @autor @omargo33
  * @since 2025-05-03
- * 
+ *
  */
 
 /**
  * Interfaz para las propiedades del formulario CRUD genérico.
- * 
+ *
  * @template T Tipo de datos del formulario
- * 
+ *
  */
 interface GenericCrudFormProps<T> {
   /** Estado inicial del formulario (crear, editar, ver) */
@@ -55,7 +59,7 @@ interface GenericCrudFormProps<T> {
 
     /** Datos de la fila que se está editando */
     loading: boolean;
-    
+
     /** Función para manejar el envío del formulario */
     handleSubmit: (data: any) => Promise<void>;
 
@@ -66,7 +70,7 @@ interface GenericCrudFormProps<T> {
 
 /**
  * Funcion para el comportamiento de los formularios CRUD.
- * 
+ *
  * @param status Estado inicial del formulario (crear, editar, ver)
  * @param row Datos de la fila que se está editando
  * @param indexName Nombre del índice para identificar el registro
@@ -76,8 +80,8 @@ interface GenericCrudFormProps<T> {
  * @param getToken Función para obtener el token de autenticación (opcional)
  * @param prepareData Función para preparar los datos antes de enviarlos al servidor
  * @param renderForm Renderizado del formulario
- * 
- * @returns 
+ *
+ * @returns
  */
 function GenericCrudForm<T>({
   status,
@@ -92,11 +96,13 @@ function GenericCrudForm<T>({
 }: GenericCrudFormProps<T>) {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
-  const [formStatus, setFormStatus] = useState<StatusEdit>(status || StatusEdit.create);
+  const [formStatus, setFormStatus] = useState<StatusEdit>(
+    status || StatusEdit.create
+  );
   const [index, setIndex] = useState<string>((row[indexName] as string) || "");
   const [loading, setLoading] = useState(false);
   const [messageFormulario, setMessageForm] = useState("");
-  const [t] = useTranslation("global_gestor");
+  const [t] = useTranslation("global_ux");
   const { showToast } = useToastContext();
 
   /**
@@ -185,7 +191,7 @@ function GenericCrudForm<T>({
       if (response.status === 400) {
         showToast(
           response.error + " (" + response.status.toString() + ")",
-          response.error,
+          formatMessageJson(response) || "",
           Alerts.warning
         );
       } else {

@@ -1,13 +1,7 @@
 package com.aplicaciones13.gestor.services;
 
-import com.aplicaciones13.base.anotacion.InvokeUser;
-import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.model.Token;
-import com.aplicaciones13.gestor.model.User;
-import com.aplicaciones13.gestor.payload.procesos.CreatePasswordRequest;
-import com.aplicaciones13.gestor.payload.procesos.OperationsResponse;
-import com.aplicaciones13.gestor.repository.TokenRepository;
-import com.aplicaciones13.gestor.repository.UserRepository;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,19 +9,60 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aplicaciones13.base.anotacion.InvokeUser;
+import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
+import com.aplicaciones13.base.security.Hash;
+import com.aplicaciones13.base.security.KeyGenerator;
+import com.aplicaciones13.base.services.JwtService;
+import com.aplicaciones13.gestor.mapping.TokenMapper;
+import com.aplicaciones13.gestor.model.Token;
+import com.aplicaciones13.gestor.model.TokenServer;
+import com.aplicaciones13.gestor.model.User;
+import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
+import com.aplicaciones13.gestor.payload.procesos.CreatePasswordRequest;
+import com.aplicaciones13.gestor.payload.procesos.OperationsResponse;
+import com.aplicaciones13.gestor.payload.request.TokenEmailRequest;
+import com.aplicaciones13.gestor.payload.response.TokenResponse;
+import com.aplicaciones13.gestor.repository.TokenRepository;
+import com.aplicaciones13.gestor.repository.TokenServerRepository;
+import com.aplicaciones13.gestor.repository.UserRepository;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Clase para el servicio de la entidad Token.
  * 
  */
+@Slf4j
 @Service
 @Transactional
 public class TokenService {
 
     @Autowired
     private TokenRepository tokenRepository;
-    
+
+    @Autowired
+    private TokenServerRepository tokenServerRepository;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtService jwtService;
+
+    public List<TokenResponse> findByUuidUser(String uuidUser) {
+        User user = userRepository.findByUuid(uuidUser)
+                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+
+        List<Token> tokens = tokenRepository.findByIdUser(user.getIdUser());
+        return tokens.stream().map(TokenMapper.INSTANCE::toResponse).toList();
+    }
 
     /**
      * Valida que el token sea único.
@@ -52,44 +87,115 @@ public class TokenService {
     }
 
     /**
+     * Elimina todos los tokens de correo para el usuario.
+     * 
+     * @param uuidUser
+     */
+    public void deleteByUuidUser(String uuidUser) {
+        User user = userRepository.findByUuid(uuidUser)
+                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+        //TODO: solo borra los email = E
+        tokenRepository.deleteByIdUser(user.getIdUser(), "E");
+    }
+
+    /**
+     * Crea un token de correo para el user.
+     * 
+     * Busca si el usuario existe, si no existe lanza una excepción.
+     * Valida el que el correo no exista en la base de datos.
+     * Elimina todos los tokens de correo existentes para el usuario.
+     * 
+     * Genera una clave aleatoria de 6 caracteres alfanuméricos.
+     * Crea un nuevo token con el correo y la clave generada.
+     * 
+     * @param request
+     * @return
+     */
+    public TokenResponse createEmail(TokenEmailRequest request) {        
+        User user = userRepository.findByUuid(request.getUuidUser())
+                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+        validateUniqueEmail(request.getEmail());        
+        tokenRepository.deleteByIdUser(user.getIdUser(), "E");
+       
+        String password = KeyGenerator.getPassword(KeyGenerator.KEY_ALFANUMERICS, 6);
+        Token token = new Token();
+        token.setIdUser(user.getIdUser());
+        token.setType("E");
+        token.setSocialNick(user.getNick());
+        token.setEmail(request.getEmail());
+        token.setToken(password);
+        token.setValidator(Hash.crearHash(user.getNick(), request.getEmail(), password));
+        token.setStatus("C");
+        token.setUser(jwtService.getUsername());
+        token.setUserApp(request.getUserApp());
+
+        Token savedToken = tokenRepository.save(token);
+        user.setStatus("A");
+        user.setUser(jwtService.getUsername());
+        user.setUserApp(request.getUserApp());
+        userRepository.save(user);
+        //TODO: Enviar correo con la clave temporal: token.getToken()
+        log.info("Se ha enviado un correo a " + request.getEmail() + " con la clave temporal: " + password);
+
+        return TokenMapper.INSTANCE.toResponse(savedToken);
+    }
+
+    /**
      * Crea una clave temporal para el user.
      * 
      * @param crearClaveRequesta
      * @return
      */
     @InvokeUser
-    public OperationsResponse crearPassword(CreatePasswordRequest crearClaveRequesta) {
-        validateUniqueEmail(crearClaveRequesta.getEmail());
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        
+        User user = userRepository.findByUuid(changePasswordRequest.getUuidUser())
+                .orElseThrow(() -> new ResourceHttpStatusException("User no encontrado", HttpStatus.NOT_FOUND));
 
-        User user =  userRepository.findByUuid(crearClaveRequesta.getUuid().toString())
-        .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+        List<Token> tokens = tokenRepository.findByIdUser(user.getIdUser());
 
-        validateUniqueToken(user.getIdUser());
+        if (tokens.isEmpty()) {
+            throw new ResourceHttpStatusException("No se encontraron tokens para el user", HttpStatus.NOT_FOUND);
+        }
 
-        Token token = new Token();
-        token.setIdUser(user.getIdUser());
-        token.setType(crearClaveRequesta.getType().getValue());
-        token.setSocialNick(user.getNick());
-        token.setEmail(crearClaveRequesta.getEmail());
-
-        // TODO : Implementar la generación de la clave con el type de token y con llave secreta en el validador
-        token.setToken("12341234s"/*crearClaveRequesta.getToken()*/);
-
-        // TODO: Implementar la generación de la llave randomica
-        token.setValidator("En un lugar de la Mancha, de cuyo name no quiero acordarme"/*crearClaveRequesta.getValidator()*/);
-        token.setStatus("C");
-        token.setUserApp(crearClaveRequesta.getUserApp());
+        Token token = tokens.get(0);
+        validateToken(token, changePasswordRequest);
+        token.setToken(changePasswordRequest.getNewToken());
+        token.setStatus("A");
+        token.setUser(jwtService.getUsername());
+        token.setValidator(Hash.crearHash(user.getNick(), changePasswordRequest.getEmail(), changePasswordRequest.getNewToken()));
         tokenRepository.saveAndFlush(token);
 
-        //TODO enviar correo con la clave temporal: token.getToken()
+        TokenServer tokenServer = new TokenServer();
+        tokenServer.setIdToken(token.getIdToken());
+        tokenServer.setType(token.getType());
+        tokenServer.setToken(changePasswordRequest.getToken());        
+        tokenServerRepository.saveAndFlush(tokenServer);
 
-        // TODO: Implementar la respuesta de la operación
-        OperationsResponse operationsResponse = new OperationsResponse();
-        operationsResponse.setCode(HttpStatus.OK.value());
-        operationsResponse.setMessage("Clave temporal creada");
-        operationsResponse.setStatus(HttpStatus.OK.getReasonPhrase());
-        operationsResponse.setData(null);
+        //TODO: Enviar correo con la nueva clave temporal: token.getToken()
+        log.info("Se ha enviado un correo a " + changePasswordRequest.getEmail() + " con la nueva clave temporal: " + changePasswordRequest.getNewToken());
+    }
 
-        return operationsResponse;
-    }   
+
+    /**
+     * Valida el token para el cambio de contraseña.
+     * 
+     * @param token
+     * @param changePasswordRequest
+     */
+    private void validateToken(Token token, ChangePasswordRequest changePasswordRequest) {
+        if(!token.getToken().equals(changePasswordRequest.getToken())) {
+            throw new DataIntegrityViolationException("Clave incorrecta");
+        }
+
+        if (!changePasswordRequest.getNewToken().equals(changePasswordRequest.getConfirmToken())) {
+            throw new DataIntegrityViolationException("La clave nueva no coincide con la confirmación");
+        }
+
+        if (!changePasswordRequest.getEmail().equals(token.getEmail())) {
+            throw new DataIntegrityViolationException("El correo no coincide con el token");
+        }
+
+        //TODO validar que el token no exista ya en token server
+    }
 }

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { StatusEdit } from "../../ConstantsPresentation";
-
 
 /**
  * Interfaz para el Query.

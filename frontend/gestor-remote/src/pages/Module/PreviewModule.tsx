@@ -2,7 +2,7 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { GenericPreview } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
@@ -53,7 +53,7 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
           createEmptyData={createIRowDataModule}
           getPresentationData={dataViewPresentation}
           token={token}
-          getToken={getToken}
+          getToken={refreshToken}
           entityName="Module"
         />
       )}

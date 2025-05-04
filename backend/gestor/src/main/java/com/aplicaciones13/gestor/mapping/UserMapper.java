@@ -18,6 +18,7 @@ public interface UserMapper {
     @Mapping(target = "userDate", ignore = true)
     @Mapping(target = "uuid", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "validator", ignore = true)
     User toEntity(UserRequest request);
 
     UserResponse toResponse(User user);

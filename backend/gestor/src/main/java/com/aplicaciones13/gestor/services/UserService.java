@@ -1,16 +1,5 @@
 package com.aplicaciones13.gestor.services;
 
-import com.aplicaciones13.base.anotacion.InvokeUser;
-import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
-import com.aplicaciones13.gestor.mapping.UserMapper;
-import com.aplicaciones13.gestor.model.User;
-import com.aplicaciones13.gestor.payload.request.UserRequest;
-import com.aplicaciones13.gestor.payload.response.UserResponse;
-import com.aplicaciones13.gestor.repository.UserRepository;
-
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +9,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.aplicaciones13.base.anotacion.InvokeUser;
+import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
+import com.aplicaciones13.base.services.JwtService;
+import com.aplicaciones13.gestor.mapping.UserMapper;
+import com.aplicaciones13.gestor.model.User;
+import com.aplicaciones13.gestor.payload.request.UserPatchStatusRequest;
+import com.aplicaciones13.gestor.payload.request.UserRequest;
+import com.aplicaciones13.gestor.payload.response.UserResponse;
+import com.aplicaciones13.gestor.repository.UserRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para el servicio de la entidad user.
@@ -34,6 +35,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtService jwtService;
 
     /**
      * Valida que el nick sea único en la base de datos con excepción del uuid
@@ -66,15 +70,12 @@ public class UserService {
      * @param name
      * @param apellido
      * @param status
-     * @param fechaInicio
-     * @param fechaFin
      * @param pageable
      * @return
      */
      
-    public Page<User> findAll(String nick, String name, String lastName, String status,
-            Date startDate, Date endDate, Pageable pageable) {
-        return userRepository.paginado(nick, name, lastName,status,startDate, endDate, pageable);
+    public Page<User> findAll(String nick, String name, String lastName, String status, Pageable pageable) {
+        return userRepository.paginado(nick, name, lastName,status, pageable);
     }
     
     /**
@@ -99,6 +100,32 @@ public class UserService {
     public UserResponse create(UserRequest userRequest) {
         User user = UserMapper.INSTANCE.toEntity(userRequest);
         validateUniqueNick(user.getNick());
+        
+        user.setValidator(userRequest.getNick().hashCode()+ "-" + String.valueOf(userRequest.getNick().hashCode()).hashCode());
+        user.setUser(jwtService.getUsername());    
+        
+        user = userRepository.saveAndFlush(user);
+        return UserMapper.INSTANCE.toResponse(user);
+    }
+
+
+/**
+     * Actualiza un registro de la entidad user.
+     * 
+     * @param uuid
+     * @param userPatchStatusRequest
+     * @return
+     */
+    @InvokeUser
+    public UserResponse updateStatus(String uuid, UserPatchStatusRequest userPatchStatusRequest) {
+
+        User user = userRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+
+        user.setUserApp(userPatchStatusRequest.getUserApp());
+        user.setStatus(userPatchStatusRequest.getStatus());
+        user.setUser(jwtService.getUsername());    
+
         user = userRepository.saveAndFlush(user);
         return UserMapper.INSTANCE.toResponse(user);
     }
@@ -117,12 +144,11 @@ public class UserService {
         User user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
 
-        user.setNick(userRequest.getNick());
         user.setName(userRequest.getName());
         user.setLastName(userRequest.getLastName());
-        user.setValidator(userRequest.getValidator());
         user.setUserApp(userRequest.getUserApp());
         user.setStatus(userRequest.getStatus());
+        user.setUser(jwtService.getUsername());    
 
         user = userRepository.saveAndFlush(user);
         return UserMapper.INSTANCE.toResponse(user);

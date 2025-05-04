@@ -15,6 +15,7 @@
  */
 export { createFetchData } from './services/Api.tsx';
 export { fetchData } from './services/Api.tsx';
+export { formatMessageJson } from './services/CommonAPI.tsx';
 export { TypeBody, MethodREST } from './APIConstants';
 export type { IFetchData } from './services/Api.tsx';
 

@@ -14,7 +14,10 @@ import { FormEditModule } from "./Module/FormEditModule";
 import { PreviewModule } from "./Module/PreviewModule";
 import { QueryModule } from "./Module/QueryModule";
 import { createIRowDataModule } from "./Module/Structures/Types";
-import User from "./User";
+import { FormEditUser } from "./User/FormEditUser";
+import { PreviewUser } from "./User/PreviewUser";
+import { QueryUser } from "./User/QueryUser";
+import { createIRowDataUser } from "./User/Structures/Types";
 
 /**
  * Funcion para mostrar el titulo de la aplicacion.
@@ -65,47 +68,63 @@ const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
 
 /**
  * Funcion para mostrar los paneles de los modulos de la aplicacion.
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 const Origin = ({ name }: { name: string }) => {
   const flow = () => {
     switch (name) {
       case Menus.ERROR:
-        return <PageCrud
-          tranlation={Menus.ERROR}
-          createIRowDataCustom={createIRowDataError}
-          QueryPanel={QueryError}
-          PreviewPanel={PreviewError}
-          FormPanel={FormEditError}
-        />;
+        return (
+          <PageCrud
+            tranlation={Menus.ERROR}
+            createIRowDataCustom={createIRowDataError}
+            QueryPanel={QueryError}
+            PreviewPanel={PreviewError}
+            FormPanel={FormEditError}
+          />
+        );
       case Menus.INFORMATION:
-        return <PageCrud
-          tranlation={Menus.INFORMATION}
-          createIRowDataCustom={createIRowDataInformation}
-          QueryPanel={QueryInformation}
-          PreviewPanel={PreviewInformation}
-          FormPanel={FormEditInformation}
-        />;
+        return (
+          <PageCrud
+            tranlation={Menus.INFORMATION}
+            createIRowDataCustom={createIRowDataInformation}
+            QueryPanel={QueryInformation}
+            PreviewPanel={PreviewInformation}
+            FormPanel={FormEditInformation}
+          />
+        );
       case Menus.MODULE:
-        return <PageCrud
-          tranlation={Menus.MODULE}
-          createIRowDataCustom={createIRowDataModule}
-          QueryPanel={QueryModule}
-          PreviewPanel={PreviewModule}
-          FormPanel={FormEditModule}
-        />;      
-      case "GS-US-001":
-        return <User />;
+        return (
+          <PageCrud
+            tranlation={Menus.MODULE}
+            createIRowDataCustom={createIRowDataModule}
+            QueryPanel={QueryModule}
+            PreviewPanel={PreviewModule}
+            FormPanel={FormEditModule}
+          />
+        );
+      case Menus.USER:
+        return (
+          <PageCrud
+            tranlation={Menus.USER}
+            createIRowDataCustom={createIRowDataUser}
+            QueryPanel={QueryUser}
+            PreviewPanel={PreviewUser}
+            FormPanel={FormEditUser}
+          />
+        );
       default:
-        return <PageCrud
-        tranlation={Menus.INFORMATION}
-        createIRowDataCustom={createIRowDataInformation}
-        QueryPanel={QueryInformation}
-        PreviewPanel={PreviewInformation}
-        FormPanel={FormEditInformation}
-      />;
+        return (
+          <PageCrud
+            tranlation={Menus.INFORMATION}
+            createIRowDataCustom={createIRowDataInformation}
+            QueryPanel={QueryInformation}
+            PreviewPanel={PreviewInformation}
+            FormPanel={FormEditInformation}
+          />
+        );
     }
   };
 
@@ -118,4 +137,3 @@ const Origin = ({ name }: { name: string }) => {
 };
 
 export { Origin, SubTitle, Title };
-

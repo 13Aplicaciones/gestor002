@@ -4,7 +4,7 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
@@ -85,7 +85,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       configureTableActions={configureErrorTableActions}
       apiUrl={apiUrl}
       token={token}
-      getToken={getToken}
+      getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
     />

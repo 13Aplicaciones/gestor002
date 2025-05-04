@@ -4,6 +4,7 @@ import com.aplicaciones13.base.controller.ControllerTools;
 import com.aplicaciones13.base.tools.Conversions;
 import com.aplicaciones13.base.validations.ValidUUID;
 import com.aplicaciones13.gestor.model.User;
+import com.aplicaciones13.gestor.payload.request.UserPatchStatusRequest;
 import com.aplicaciones13.gestor.payload.request.UserRequest;
 import com.aplicaciones13.gestor.payload.response.UserResponse;
 import com.aplicaciones13.gestor.services.UserService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -80,6 +82,20 @@ public class UserController {
     }
 
     /**
+     * Actualizar stado un user.
+     * 
+     * @param uuid
+     * @param userPatchStatusRequest
+     * @return
+     */
+    @PatchMapping("/status/{uuid}")
+    public ResponseEntity<UserResponse> pathcUser(
+            @PathVariable @ValidUUID String uuid,
+            @RequestBody @Valid UserPatchStatusRequest userPatchStatusRequest) {
+        return ResponseEntity.ok(userService.updateStatus(uuid, userPatchStatusRequest));
+    }
+
+    /**
      * Actualizar un user.
      * 
      * @param uuid
@@ -87,7 +103,7 @@ public class UserController {
      * @return
      */
     @PutMapping("/{uuid}")
-    public ResponseEntity<UserResponse> actualizaruser(
+    public ResponseEntity<UserResponse> updateUser(
             @PathVariable @ValidUUID String uuid,
             @RequestBody @Valid UserRequest userRequest) {
         return ResponseEntity.ok(userService.update(uuid, userRequest));
@@ -111,7 +127,7 @@ public class UserController {
      * @return
      */
    
-     @GetMapping("/paginado")
+     @GetMapping("/paginated")
     public Map<String, Object> getAllusersWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -119,11 +135,9 @@ public class UserController {
             @RequestParam(required = false) String nick,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = true) Date startDate,
-            @RequestParam(required = true) Date endDate) {
+            @RequestParam(required = false) String status) {
 
-        Page<User> pageusers = userService.findAll(nick, name, lastName, status, startDate, endDate,
+        Page<User> pageusers = userService.findAll(nick, name, lastName, status,
                 ControllerTools.generateOrders(page, size, sort));
                 
         return ControllerTools.generateFooterPage(pageusers);

@@ -15,7 +15,7 @@ import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import { useEffect, useState } from "react";
-import { getToken, ITokenRoot } from "orchestrator_remote/service/Tokens";
+import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import {
   getParameter,
   IParameter,
@@ -102,7 +102,7 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
           indexName="uuid"
           apiUrl={apiUrl}
           token={token}
-          getToken={getToken}
+          getToken={refreshToken}
           renderForm={({
             formStatus,
             loading,

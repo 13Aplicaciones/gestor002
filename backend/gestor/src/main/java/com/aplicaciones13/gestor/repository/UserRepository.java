@@ -1,15 +1,14 @@
 package com.aplicaciones13.gestor.repository;
 
-import com.aplicaciones13.gestor.model.User;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.Date;
-import java.util.Optional;
+import com.aplicaciones13.gestor.model.User;
 
 /**
  * Repositorio de la entidad user.
@@ -34,16 +33,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
      
-    @Query(value = "SELECT * FROM GS_002_01.User u WHERE (?1 IS NULL OR upper(u.nick) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(u.name) LIKE '%' || upper('?2') || '%') AND (?3 IS NULL OR upper(u.lastName) LIKE '%' || upper('?3') || '%') AND (?4 IS NULL OR upper(u.status) LIKE '%' || upper('?4') || '%') AND (u.userDate > ?5 AND u.userDate < ?6)",
-        countQuery = "SELECT count(*) FROM GS_002_01.User u WHERE (?1 IS NULL OR upper(u.nick) LIKE '%' || upper('?1') || '%') AND (?2 IS NULL OR upper(u.name) LIKE '%' || upper('?2') || '%') AND (?3 IS NULL OR upper(u.lastName) LIKE '%' || upper('?3') || '%') AND (?4 IS NULL OR upper(u.status) LIKE '%' || upper('?4') || '%') AND (u.userDate > ?5 AND u.userDate < ?6)",
+    @Query(value = "SELECT * FROM GS_002_01.user u WHERE u.status != 'X' and (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%', upper(?1),  '%')) AND (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3), '%')) AND (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))",
+        countQuery = "SELECT count(*) FROM GS_002_01.user u WHERE u.status != 'X' and (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%',  upper(?1) , '%')) AND (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3) , '%')) AND (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))",
         nativeQuery = true)
     Page<User> paginado(
             String nick,
             String name,
             String lastName,
             String status,
-            Date userDateInicio,
-            Date userDateFin,
             Pageable pageable);
 
 
@@ -54,7 +51,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param uuid
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.User WHERE uuid = ?1 and status != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.user WHERE uuid = ?1 and status != 'X'", nativeQuery = true)
     Optional<User> findByUuid(String uuid);
 
     /**
@@ -64,6 +61,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param index
      * @return
      */
-    @Query(value = "SELECT * FROM GS_002_01.User WHERE nick = ?1 and status != 'X'", nativeQuery = true)
+    @Query(value = "SELECT * FROM GS_002_01.user WHERE nick = ?1 and status != 'X'", nativeQuery = true)
     Optional<User> findByNick(String nick);
 }

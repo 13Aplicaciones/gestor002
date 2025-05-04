@@ -33,9 +33,5 @@ public class UserRequest extends StatusAppRequest {
     @Size(max = 128)
     @Schema(description = "LastName del user", example = "Pérez")
     private String lastName;
-  
-    @NotNull
-    @Size(max = 512)
-    @Schema(description = "Validator del user", example = "validador123")
-    private String validator;   
+     
 }

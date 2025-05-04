@@ -9,7 +9,12 @@
     "delete": "Eliminar",
     "edit": "Editar",
     "save": "Guardar",
-    "search": "Buscar"
+    "search": "Buscar",
+    "change": "Cambiar",
+    "clean": "Limpiar",
+    "saveSatisfactory": "Guardado ({{status}})",
+    "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
+    "errorFetch": "Error en la petición {{error}}"
   },
   "stateForm": {
     "block": "Registro No Editable",
