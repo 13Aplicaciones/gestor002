@@ -1,16 +1,23 @@
 package com.aplicaciones13.gestor.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
 import com.aplicaciones13.gestor.services.TokenService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Clase controladora para las operaciones de user.
@@ -29,31 +36,36 @@ public class UserOperacionesController {
 
     @PostMapping("resetPassword")
     public String resetPassword(@Valid @RequestBody String entity) {
-        //TODO: process POST request
+        
         return entity;
     }
 
+    @Operation(summary = "Cambiar Password", description = "Cambiar Password")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Cambiar password de usuario", content = @Content(schema = @Schema(implementation = ChangePasswordRequest.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cambio de contraseña exitoso"),
+    })
     @PostMapping("changePassword")
-    public String changePassword(@Valid @RequestBody String entity) {
-        //TODO: process POST request
-        return entity;
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        tokenService.changePassword(changePasswordRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PostMapping("lock")
     public String lockUser(@Valid @RequestBody String entity) {
-        //TODO: process POST request
+        
         return entity;
     }
 
     @PostMapping("unlock")
     public String unlockUser(@Valid @RequestBody String entity) {
-        //TODO: process POST request
+        
         return entity;
     }
 
     @PostMapping("synchronize")
     public String synchronize(@Valid @RequestBody String entity) {
-        //TODO: process POST request
+        
         return entity;
     }
 }

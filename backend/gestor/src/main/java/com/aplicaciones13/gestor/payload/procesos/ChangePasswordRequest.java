@@ -1,6 +1,6 @@
 package com.aplicaciones13.gestor.payload.procesos;
 
-import com.aplicaciones13.base.payload.common.UserDateAppResponse;
+import com.aplicaciones13.base.payload.common.AppRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Schema(description = "DTO para la solicitud de cambio de contraseña")
-public class ChangePasswordRequest extends UserDateAppResponse {
+public class ChangePasswordRequest extends AppRequest {
     
     @Schema(description = "UUID del usuario", example = "123e4567-e89b-12d3-a456-426614174000")
     private String uuidUser;

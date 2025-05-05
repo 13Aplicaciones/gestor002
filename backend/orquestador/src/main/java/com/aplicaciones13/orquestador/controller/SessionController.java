@@ -65,7 +65,6 @@ public class SessionController {
      */
     @PostMapping("/loggout")
     public String postMethodName(@RequestBody String entity) {
-        //TODO: process POST request
         
         return entity;
     }

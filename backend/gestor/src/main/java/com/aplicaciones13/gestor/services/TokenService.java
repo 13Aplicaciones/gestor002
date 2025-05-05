@@ -1,6 +1,5 @@
 package com.aplicaciones13.gestor.services;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +18,12 @@ import com.aplicaciones13.gestor.model.Token;
 import com.aplicaciones13.gestor.model.TokenServer;
 import com.aplicaciones13.gestor.model.User;
 import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
-import com.aplicaciones13.gestor.payload.procesos.CreatePasswordRequest;
-import com.aplicaciones13.gestor.payload.procesos.OperationsResponse;
 import com.aplicaciones13.gestor.payload.request.TokenEmailRequest;
 import com.aplicaciones13.gestor.payload.response.TokenResponse;
 import com.aplicaciones13.gestor.repository.TokenRepository;
 import com.aplicaciones13.gestor.repository.TokenServerRepository;
 import com.aplicaciones13.gestor.repository.UserRepository;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -193,7 +184,7 @@ public class TokenService {
         }
 
         if (!changePasswordRequest.getEmail().equals(token.getEmail())) {
-            throw new DataIntegrityViolationException("El correo no coincide con el token");
+            throw new DataIntegrityViolationException("El correo no ingresado no coincide con el correo del usuario");
         }
 
         //TODO validar que el token no exista ya en token server
