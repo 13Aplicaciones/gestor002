@@ -48,6 +48,7 @@ public class UserController {
      * 
      * @param binder
      */
+    //TODO: Pendiente para controlar el formato de fecha
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Conversions.ISO_8601_DATE);

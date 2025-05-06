@@ -16,4 +16,7 @@ public class TokenResponse extends UserDateAppResponse {
 
     @Schema(description = "Message de error", example = "Error al procesar la solicitud")
     private String email;
+
+    @Schema(description = "Type of token", example = "C")
+    private String type;
 }

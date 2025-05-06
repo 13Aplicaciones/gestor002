@@ -48,12 +48,12 @@ public class TokenController {
      * @return
      */
     @Operation(summary = "Buscar Tokens", description = "Buscar tokens")
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Token a buscar", content = @Content(schema = @Schema(implementation = String.class)))
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Token a buscar")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "TokenResponse", content = @Content(schema = @Schema(implementation = TokenResponse.class))),
     })
     @GetMapping("/{uuidUser}")
-    public ResponseEntity<List<TokenResponse>> getTokenByUser(@PathVariable @ValidUUID String uuidUser) {
+    public ResponseEntity<List<TokenResponse>> getTokenByUser(@PathVariable String uuidUser) {
         List<TokenResponse> response = tokenService.findByUuidUser(uuidUser);
         return ResponseEntity.ok(response);
     }

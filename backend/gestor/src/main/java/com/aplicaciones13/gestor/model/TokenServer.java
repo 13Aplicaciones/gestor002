@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
  *
  */
 @Entity
-@Table(name = "token_servidor")
+@Table(name = "token_server")
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class TokenServer extends DateApp {

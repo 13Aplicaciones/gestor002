@@ -18,6 +18,7 @@ import com.aplicaciones13.gestor.model.Token;
 import com.aplicaciones13.gestor.model.TokenServer;
 import com.aplicaciones13.gestor.model.User;
 import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
+import com.aplicaciones13.gestor.payload.procesos.ResetPasswordRequest;
 import com.aplicaciones13.gestor.payload.request.TokenEmailRequest;
 import com.aplicaciones13.gestor.payload.response.TokenResponse;
 import com.aplicaciones13.gestor.repository.TokenRepository;
@@ -47,34 +48,16 @@ public class TokenService {
     @Autowired
     private JwtService jwtService;
 
+    User user = new User();
+
+    /**
+     * Busca los tokens por el uuid del usuario.
+     * 
+     * @param uuidUser
+     * @return
+     */
     public List<TokenResponse> findByUuidUser(String uuidUser) {
-        User user = userRepository.findByUuid(uuidUser)
-                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
-
-        List<Token> tokens = tokenRepository.findByIdUser(user.getIdUser());
-        return tokens.stream().map(TokenMapper.INSTANCE::toResponse).toList();
-    }
-
-    /**
-     * Valida que el token sea único.
-     * 
-     * @param idUser
-     */
-    public void validateUniqueToken(Long idUser) {
-        if (tokenRepository.findByIdUser(idUser).size() > 0) {
-            throw new DataIntegrityViolationException("Ya se encuetra registrada una Clave de user");
-        }
-    }
-
-    /**
-     * Valida que el correo sea único.
-     * 
-     * @param email
-     */
-    public void validateUniqueEmail(String email) {
-        if (tokenRepository.findByEmail(email).isPresent()) {
-            throw new DataIntegrityViolationException("El Correo ya existe");
-        }
+        return findTokensByUuidUser(uuidUser).stream().map(TokenMapper.INSTANCE::toResponse).toList();
     }
 
     /**
@@ -83,10 +66,12 @@ public class TokenService {
      * @param uuidUser
      */
     public void deleteByUuidUser(String uuidUser) {
-        User user = userRepository.findByUuid(uuidUser)
-                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
-        //TODO: solo borra los email = E
-        tokenRepository.deleteByIdUser(user.getIdUser(), "E");
+        Token token = findTokensByUuidUser(uuidUser).get(0);
+
+        // TODO: solo borra los email = E
+        log.info("Eliminando token de correo para el usuario: " + uuidUser);
+        log.info("Token: " + token);
+        tokenRepository.deleteByIdUser(token.getIdUser(), "E");
     }
 
     /**
@@ -102,33 +87,27 @@ public class TokenService {
      * @param request
      * @return
      */
-    public TokenResponse createEmail(TokenEmailRequest request) {        
-        User user = userRepository.findByUuid(request.getUuidUser())
+    public TokenResponse createEmail(TokenEmailRequest request) {
+        user = userRepository.findByUuid(request.getUuidUser())
                 .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
-        validateUniqueEmail(request.getEmail());        
+        validateUniqueEmail(request.getEmail());
         tokenRepository.deleteByIdUser(user.getIdUser(), "E");
-       
-        String password = KeyGenerator.getPassword(KeyGenerator.KEY_ALFANUMERICS, 6);
-        Token token = new Token();
-        token.setIdUser(user.getIdUser());
-        token.setType("E");
-        token.setSocialNick(user.getNick());
-        token.setEmail(request.getEmail());
-        token.setToken(password);
-        token.setValidator(Hash.crearHash(user.getNick(), request.getEmail(), password));
-        token.setStatus("C");
-        token.setUser(jwtService.getUsername());
-        token.setUserApp(request.getUserApp());
 
-        Token savedToken = tokenRepository.save(token);
-        user.setStatus("A");
-        user.setUser(jwtService.getUsername());
-        user.setUserApp(request.getUserApp());
-        userRepository.save(user);
-        //TODO: Enviar correo con la clave temporal: token.getToken()
-        log.info("Se ha enviado un correo a " + request.getEmail() + " con la clave temporal: " + password);
+        Token token = proccesToken(null, request.getEmail(), request.getUserApp(), null);
 
-        return TokenMapper.INSTANCE.toResponse(savedToken);
+        return TokenMapper.INSTANCE.toResponse(token);
+    }
+
+    /**
+     * Resetea la contraseña del user enviando un correo con una nueva clave.
+     * 
+     * @param resetPasswordRequest
+     */
+    @InvokeUser
+    public void resetPassword(ResetPasswordRequest resetPasswordRequest) {
+        Token token = findTokensByUuidUser(resetPasswordRequest.getUuidUser()).get(0);
+
+        proccesToken(null, resetPasswordRequest.getEmail(), resetPasswordRequest.getUserApp(), token);
     }
 
     /**
@@ -139,9 +118,22 @@ public class TokenService {
      */
     @InvokeUser
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
-        
-        User user = userRepository.findByUuid(changePasswordRequest.getUuidUser())
-                .orElseThrow(() -> new ResourceHttpStatusException("User no encontrado", HttpStatus.NOT_FOUND));
+        Token token = findTokensByUuidUser(changePasswordRequest.getUuidUser()).get(0);
+
+        validateToken(token, changePasswordRequest);
+        proccesToken(changePasswordRequest.getNewToken(), changePasswordRequest.getEmail(),
+                changePasswordRequest.getUserApp(), token);
+    }
+
+    /**
+     * Busca los tokens por el uuid del usuario.
+     * 
+     * @param uuidUser
+     * @return
+     */
+    private List<Token> findTokensByUuidUser(String uuidUser) {
+        user = userRepository.findByUuid(uuidUser)
+                .orElseThrow(() -> new ResourceHttpStatusException("User No encontrado", HttpStatus.NOT_FOUND));
 
         List<Token> tokens = tokenRepository.findByIdUser(user.getIdUser());
 
@@ -149,24 +141,37 @@ public class TokenService {
             throw new ResourceHttpStatusException("No se encontraron tokens para el user", HttpStatus.NOT_FOUND);
         }
 
-        Token token = tokens.get(0);
-        validateToken(token, changePasswordRequest);
-        token.setToken(changePasswordRequest.getNewToken());
-        token.setStatus("A");
-        token.setUser(jwtService.getUsername());
-        token.setValidator(Hash.crearHash(user.getNick(), changePasswordRequest.getEmail(), changePasswordRequest.getNewToken()));
-        tokenRepository.saveAndFlush(token);
-
-        TokenServer tokenServer = new TokenServer();
-        tokenServer.setIdToken(token.getIdToken());
-        tokenServer.setType(token.getType());
-        tokenServer.setToken(changePasswordRequest.getToken());        
-        tokenServerRepository.saveAndFlush(tokenServer);
-
-        //TODO: Enviar correo con la nueva clave temporal: token.getToken()
-        log.info("Se ha enviado un correo a " + changePasswordRequest.getEmail() + " con la nueva clave temporal: " + changePasswordRequest.getNewToken());
+        return tokens;
     }
 
+    /**
+     * Valida que el token sea único en el historial de tokens.
+     * 
+     * @param idUser
+     */
+    private void validateUniqueToken(Long idToken, String token) {
+        List<TokenServer> tokenServers = tokenServerRepository.findByIdToken(idToken)
+                .orElseThrow(() -> new DataIntegrityViolationException("El token serve no existe"));
+
+        int limit = Math.min(10, tokenServers.size());
+        for (int i = 0; i < limit; i++) {
+            TokenServer tokenServer = tokenServers.get(i);
+            if (tokenServer.getToken().equals(token)) {
+                throw new DataIntegrityViolationException("El token ya ha sido utilizado");
+            }
+        }
+    }
+
+    /**
+     * Valida que el correo sea único.
+     * 
+     * @param email
+     */
+    private void validateUniqueEmail(String email) {
+        if (tokenRepository.findByEmail(email).isPresent()) {
+            throw new DataIntegrityViolationException("El Correo ya existe");
+        }
+    }
 
     /**
      * Valida el token para el cambio de contraseña.
@@ -175,7 +180,7 @@ public class TokenService {
      * @param changePasswordRequest
      */
     private void validateToken(Token token, ChangePasswordRequest changePasswordRequest) {
-        if(!token.getToken().equals(changePasswordRequest.getToken())) {
+        if (!token.getToken().equals(changePasswordRequest.getToken())) {
             throw new DataIntegrityViolationException("Clave incorrecta");
         }
 
@@ -187,6 +192,65 @@ public class TokenService {
             throw new DataIntegrityViolationException("El correo no ingresado no coincide con el correo del usuario");
         }
 
-        //TODO validar que el token no exista ya en token server
+        validateUniqueToken(token.getIdToken(), changePasswordRequest.getConfirmToken());
+    }
+
+    /**
+     * Metodo para procesar el token (Credencial)
+     * 
+     * @param password
+     * @param email
+     * @param userApp
+     * @param tokenInfo
+     */
+    private Token proccesToken(String password, String email, String userApp, Token tokenInfo) {
+
+        boolean sendPassword = false;
+        String userName = jwtService.getUsername();
+
+        if (password == null || password.isEmpty()) {
+            password = KeyGenerator.getPassword(KeyGenerator.KEY_ALFANUMERICS, 6);
+            sendPassword = true;
+        }
+
+        if (tokenInfo == null) {
+            tokenInfo = new Token();
+            tokenInfo.setIdUser(user.getIdUser());
+            tokenInfo.setType("E");
+            tokenInfo.setSocialNick(user.getNick());
+            tokenInfo.setEmail(email);
+            tokenInfo.setToken(password);
+            tokenInfo.setValidator(Hash.crearHash(user.getNick(), email, password));
+            tokenInfo.setStatus("C");
+            tokenInfo.setUser(userName);
+            tokenInfo.setUserApp(userApp);
+        }
+
+        Token token = tokenInfo;
+        token.setToken(password);
+        token.setStatus("A");
+        token.setUser(userName);
+        token.setValidator(Hash.crearHash(userName, tokenInfo.getEmail(), password));
+        tokenRepository.saveAndFlush(token);
+
+        TokenServer tokenServer = new TokenServer();
+        tokenServer.setIdToken(token.getIdToken());
+        tokenServer.setType(token.getType());
+        tokenServer.setToken(password);
+        tokenServerRepository.saveAndFlush(tokenServer);
+
+        user.setStatus("A");
+        user.setUser(token.getUser());
+        user.setUserApp(userApp);
+        userRepository.save(user);
+
+        // TODO: Enviar correo con la nueva clave temporal: token.getToken()
+        if (sendPassword) {
+            log.info("Se ha enviado un correo a " + tokenInfo.getEmail() + " con la nueva clave temporal: " + password);
+        } else {
+            log.info("Se ha cambiado la clave de " + tokenInfo.getEmail());
+        }
+
+        return token;
     }
 }
