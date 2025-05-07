@@ -41,8 +41,8 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
      * @param idUser
      * @return
      */
-    @Query("SELECT t FROM Token t WHERE t.idUser = ?1 AND t.status != 'X'")
-    List<Token> findByIdUser(Long idUser);
+    @Query("SELECT t FROM Token t WHERE t.idUser = ?1 AND t.type = ?2 AND t.status != 'X'")
+    List<Token> findByIdUserAndType(Long idUser, String type);
 
     /**
      * Metodo para Borrar logimante todas los items de un token.

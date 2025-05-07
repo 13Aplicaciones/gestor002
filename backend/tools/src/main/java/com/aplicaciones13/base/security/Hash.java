@@ -25,7 +25,7 @@ public class Hash {
      * @return
      */
     public static String crearHash(String... params) {
-        StringJoiner sj = new StringJoiner(" ");
+        StringJoiner sj = new StringJoiner("-");
         for (String param : params) {
             sj.add(String.valueOf(param.hashCode()));
         }

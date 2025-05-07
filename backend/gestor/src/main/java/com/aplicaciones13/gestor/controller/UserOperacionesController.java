@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
+import com.aplicaciones13.gestor.payload.procesos.LockRequest;
+import com.aplicaciones13.gestor.payload.procesos.ResetPasswordRequest;
 import com.aplicaciones13.gestor.services.TokenService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,16 +36,33 @@ public class UserOperacionesController {
     @Autowired
     TokenService tokenService;
 
+    /**
+     * Restablece la contraseña del usuario.
+     * 
+     * @param resetPasswordRequest
+     * @return
+     */
+    @Operation(summary = "Reset Password", description = "Restablecer la contraseña del usuario")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Restablecer la contraseña del usuario", content = @Content(schema = @Schema(implementation = ResetPasswordRequest.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Cambio de contraseña exitoso"),
+    })
     @PostMapping("resetPassword")
-    public String resetPassword(@Valid @RequestBody String entity) {
-        
-        return entity;
+    public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        tokenService.resetPassword(resetPasswordRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * Cambia la contraseña del usuario.
+     * 
+     * @param changePasswordRequest
+     * @return
+     */
     @Operation(summary = "Cambiar Password", description = "Cambiar Password")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Cambiar password de usuario", content = @Content(schema = @Schema(implementation = ChangePasswordRequest.class)))
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cambio de contraseña exitoso"),
+            @ApiResponse(responseCode = "204", description = "Cambio de contraseña exitoso"),
     })
     @PostMapping("changePassword")
     public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
@@ -51,16 +70,38 @@ public class UserOperacionesController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * Bloquea o desbloquea un usuario.
+     * 
+     * @param lockRequest
+     * @return
+     */
+    @Operation(summary = "Bloquear Usuario", description = "Bloquear un usuario")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Bloquear usuario", content = @Content(schema = @Schema(implementation = LockRequest.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Usuario bloqueado exitosamente"),
+    })
     @PostMapping("lock")
-    public String lockUser(@Valid @RequestBody String entity) {
-        
-        return entity;
+    public ResponseEntity<Void> lockUser(@Valid @RequestBody LockRequest lockRequest) {
+        tokenService.lockUser(lockRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * Desbloquea un usuario.
+     * 
+     * @param lockRequest
+     * @return
+     */
+    @Operation(summary = "Desbloquear Usuario", description = "Desbloquear un usuario")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Desbloquear usuario", content = @Content(schema = @Schema(implementation = LockRequest.class)))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Usuario desbloqueado exitosamente"),
+    })
     @PostMapping("unlock")
-    public String unlockUser(@Valid @RequestBody String entity) {
-        
-        return entity;
+    public ResponseEntity<Void> unlockUser(@Valid @RequestBody LockRequest lockRequest) {
+        tokenService.unlockUser(lockRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PostMapping("synchronize")

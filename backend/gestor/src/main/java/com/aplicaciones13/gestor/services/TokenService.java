@@ -18,6 +18,7 @@ import com.aplicaciones13.gestor.model.Token;
 import com.aplicaciones13.gestor.model.TokenServer;
 import com.aplicaciones13.gestor.model.User;
 import com.aplicaciones13.gestor.payload.procesos.ChangePasswordRequest;
+import com.aplicaciones13.gestor.payload.procesos.LockRequest;
 import com.aplicaciones13.gestor.payload.procesos.ResetPasswordRequest;
 import com.aplicaciones13.gestor.payload.request.TokenEmailRequest;
 import com.aplicaciones13.gestor.payload.response.TokenResponse;
@@ -29,6 +30,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para el servicio de la entidad Token.
+ * 
+ * @autor omargo33
+ * @since 2025-05-04
  * 
  */
 @Slf4j
@@ -69,8 +73,6 @@ public class TokenService {
         Token token = findTokensByUuidUser(uuidUser).get(0);
 
         // TODO: solo borra los email = E
-        log.info("Eliminando token de correo para el usuario: " + uuidUser);
-        log.info("Token: " + token);
         tokenRepository.deleteByIdUser(token.getIdUser(), "E");
     }
 
@@ -133,9 +135,9 @@ public class TokenService {
      */
     private List<Token> findTokensByUuidUser(String uuidUser) {
         user = userRepository.findByUuid(uuidUser)
-                .orElseThrow(() -> new ResourceHttpStatusException("User No encontrado", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
 
-        List<Token> tokens = tokenRepository.findByIdUser(user.getIdUser());
+        List<Token> tokens = tokenRepository.findByIdUserAndType(user.getIdUser(), "E");
 
         if (tokens.isEmpty()) {
             throw new ResourceHttpStatusException("No se encontraron tokens para el user", HttpStatus.NOT_FOUND);
@@ -189,7 +191,7 @@ public class TokenService {
         }
 
         if (!changePasswordRequest.getEmail().equals(token.getEmail())) {
-            throw new DataIntegrityViolationException("El correo no ingresado no coincide con el correo del usuario");
+            throw new DataIntegrityViolationException("El correo ingresado no coincide con el correo del usuario");
         }
 
         validateUniqueToken(token.getIdToken(), changePasswordRequest.getConfirmToken());
@@ -240,6 +242,7 @@ public class TokenService {
         tokenServerRepository.saveAndFlush(tokenServer);
 
         user.setStatus("A");
+        user.setIncomeCounter(0L);
         user.setUser(token.getUser());
         user.setUserApp(userApp);
         userRepository.save(user);
@@ -251,6 +254,42 @@ public class TokenService {
             log.info("Se ha cambiado la clave de " + tokenInfo.getEmail());
         }
 
+        log.info("Sincronizar el usuario " + user.getNick() + " con el servidor de autenticación");
+
         return token;
+    }
+
+
+    /**
+     * Bloquea el usuario en la base de datos.
+     * 
+     * @param lockRequest
+     */
+    public void lockUser(LockRequest lockRequest) {
+        user = userRepository.findByUuid(lockRequest.getUuidUser())
+                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
+
+        user.setStatus("I");
+        userRepository.save(user);
+
+        log.info("Enviar correo de bloqueo al usuario " + lockRequest.getEmail());
+        log.info("Sincronizar el usuario " + user.getNick() + " con el servidor de autenticación");
+    }
+
+    /**
+     * Desbloquea el usuario en la base de datos.
+     * 
+     * @param l
+     */
+    public void unlockUser(LockRequest lockRequest) {
+        user = userRepository.findByUuid(lockRequest.getUuidUser())
+                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
+
+        user.setStatus("A");
+        user.setIncomeCounter(0L);
+        userRepository.save(user);
+
+        log.info("Enviar correo de desbloqueo al usuario " + lockRequest.getEmail());
+        log.info("Sincronizar el usuario " + user.getNick() + " con el servidor de autenticación");
     }
 }
