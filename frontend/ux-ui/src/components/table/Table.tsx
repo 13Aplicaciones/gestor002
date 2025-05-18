@@ -334,19 +334,19 @@ const Title = ({
  */
 const TableConfigurable = ({
   presentationTable,
-  presentationSorts,
   data,
   isHeader,
   isLineNumber,
   isBand,
+  presentationSorts,
   onOrderChange,
 }: {
   presentationTable: IPresentationTable;
-  presentationSorts: IParametersQuery;
   data: any;
   isHeader?: boolean;
   isLineNumber?: boolean;
   isBand?: boolean;
+  presentationSorts?: IParametersQuery;
   onOrderChange?: {
     onOrderChange: (title: string, direction: SortColumn) => void;
   };

@@ -7,7 +7,7 @@ import { STORE } from "../Constants";
 /**
  * Función para obtener la estructura de los módulos.
  * 
- * Toma la url del orquestador y realiza la consulta de los módulos.
+ * Toma la url del orchestrator y realiza la consulta de los módulos.
  * 
  * @param token Token de autenticación
  * @returns 
@@ -19,7 +19,7 @@ const getStructure = async () => {
     return iRootData;
   }
 
-  const url = import.meta.env.VITE_ORQUESTADOR_URL + 'structure/modules';
+  const url = import.meta.env.VITE_ORCHESTRATOR_URL + 'structure/modules';
   let iFetchData = createFetchData();
   const token: ITokenRoot = await getToken();
 

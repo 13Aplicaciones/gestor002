@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { IQueryProps } from "../crud/Types";
 import { IPresentationTable } from "../table/Table";
 import { IParametersQuery } from "../table/TableSearch";
-import { CreateSearchFieldOrder } from "../table/TableSearchOrder";
+import { TableSearchOrder } from "../table/TableSearchOrder";
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.
@@ -108,7 +108,7 @@ function GenericQuery<T>({
     };
 
     initializeTable();
-  }, [getTablePresentation, configureTableActions]);
+  }, [getTablePresentation, configureTableActions, onEditRow, onSeeRow]);
 
   /**
    * Manejar la búsqueda y actualizar los parámetros
@@ -136,7 +136,7 @@ function GenericQuery<T>({
       {token && apiUrl && Object.keys(presentacionTabla).length > 0 && (
         <>
           <QueryForm onFind={handleFormFind} />
-          <CreateSearchFieldOrder
+          <TableSearchOrder
             apiUrl={apiUrl}
             parametersToConsult={parametersQuery}
             presentationTable={presentacionTabla}
@@ -151,3 +151,4 @@ function GenericQuery<T>({
 
 export { GenericQuery };
 export type { GenericQueryProps };
+

@@ -1,261 +1,307 @@
 {
-  "nameApp": "gestor",
-  "title": "Gestor de Tareas",
-  "subTitle": "Administración de recursos del sistema",
-  "icon": "GearIcon",
-  "description": "Gestor de Modulos, Menús, Roles, Códigos Definidos, Usuarios, Errores, Información y Cambio de Clave de los usuarios",
-  "actions": {
-    "edit": "Editar",
-    "delete": "Borrar",
-    "save": "Guardar",
-    "cancel": "Cancelar",
-    "search": "Buscar",
-    "close": "Cerrar",
-    "change": "Cambiar",
-    "clean": "Limpiar",
-    "inactive": "Inactivar",
-    "active": "Activar",
-    "saveSatisfactory": "Guardado ({{status}})",
-    "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
-    "errorFetch": "Error en la petición {{error}}"
-  },
-  "validation": {
-    "email": "Correo electrónico no válido",
-    "error": "Error en el campo",
-    "max": "El valor máximo es {{max}}",
-    "min": "El valor mínimo es {{min}}",
-    "password": "La contraseña debe tener al menos 8 caracteres",
-    "passwordMatch": "Las contraseñas no coinciden",
-    "required": "Campo requerido",
-    "typeNumber": "El valor debe ser un número"
-  },
-
-  "modules": {
-    "GS-MD-001": {
-      "icon": "CubeIcon",
-      "title": "Módulos",
-      "add": "Módulo",
-      "description": "Módulos del Sistema",
-      "path": "Module",
-      "panel": {
-        "find": "Buscar Módulos de Sistema",
-        "see": "Vista previa del Módulo",
-        "edit": "Editar Módulo",
-        "create": "Crear Módulo"
-      },
-      "fields": {
-        "uuid": {
-          "title": "UUID",
-          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+    "nameApp": "gestor",
+    "title": "Gestor de Tareas",
+    "subTitle": "Administración de recursos del sistema",
+    "icon": "GearIcon",
+    "description": "Gestor de Modulos, Menús, Roles, Códigos Definidos, Usuarios, Errores, Información y Cambio de Clave de los usuarios",
+    "actions": {
+        "edit": "Editar",
+        "delete": "Borrar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "search": "Buscar",
+        "close": "Cerrar",
+        "change": "Cambiar",
+        "clean": "Limpiar",
+        "inactive": "Inactivar",
+        "active": "Activar",
+        "saveSatisfactory": "Guardado ({{status}})",
+        "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
+        "errorFetch": "Error en la petición {{error}}"
+    },
+    "validation": {
+        "email": "Correo electrónico no válido",
+        "error": "Error en el campo",
+        "max": "El valor máximo es {{max}}",
+        "min": "El valor mínimo es {{min}}",
+        "password": "La contraseña debe tener al menos 8 caracteres",
+        "passwordMatch": "Las contraseñas no coinciden",
+        "required": "Campo requerido",
+        "typeNumber": "El valor debe ser un número"
+    },
+    "modules": {
+        "GS-MD-001": {
+            "icon": "CubeIcon",
+            "title": "Módulos",
+            "add": "Módulo",
+            "description": "Módulos del Sistema",
+            "path": "Module",
+            "panel": {
+                "find": "Buscar Módulos de Sistema",
+                "see": "Vista previa del Módulo",
+                "edit": "Editar Módulo",
+                "create": "Crear Módulo"
+            },
+            "fields": {
+                "uuid": {
+                    "title": "UUID",
+                    "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                },
+                "indexModule": {
+                    "title": "Indice",
+                    "placeholder": "GS-MD-001"
+                },
+                "context": {
+                    "title": "Contexto",
+                    "placeholder": "/WEB-INF/rol-task-flow.xml#rol-task-flow"
+                },
+                "name": {
+                    "title": "Nombre",
+                    "placeholder": "Cliente"
+                },
+                "status": {
+                    "title": "Estado",
+                    "placeholder": "Estado del módulo"
+                },
+                "orden": {
+                    "title": "Orden",
+                    "placeholder": "10"
+                },
+                "userDate": {
+                    "title": "Fecha",
+                    "placeholder": "Fecha del error"
+                },
+                "user": {
+                    "title": "Usuario",
+                    "placeholder": "Usuario que generó el error"
+                },
+                "userApp": {
+                    "title": "Aplicación",
+                    "placeholder": "Aplicación que generó el error"
+                },
+                "acciones": {
+                    "title": "Acciones",
+                    "placeholder": "Acciones a realizar",
+                    "abrev": "Acci."
+                }
+            }
         },
-        "indexModule": {
-          "title": "Indice",
-          "placeholder": "GS-MD-001"
+        "GS-MN-001": {
+            "icon": "DropdownMenuIcon",
+            "title": "Menús",
+            "description": "Menús del sistema",
+            "path": "Menu"
         },
-        "context": {
-          "title": "Contexto",
-          "placeholder": "/WEB-INF/rol-task-flow.xml#rol-task-flow"
+        "GS-RL-001": {
+            "icon": "Link2Icon",
+            "title": "Roles",
+            "description": "Roles de los usuarios",
+            "path": "Role"
         },
-        "name": {
-          "title": "Nombre",
-          "placeholder": "Cliente"
+        "GS-CD-001": {
+            "icon": "ListBulletIcon",
+            "title": "Códigos Definidos",
+            "description": "Códigos definidos del sistema",
+            "path": "DefinedCodes"
         },
-        "status": {
-          "title": "Estado",
-          "placeholder": "Estado del módulo"
+        "GS-US-001": {
+            "icon": "PersonIcon",
+            "title": "Usuarios",
+            "description": "Usuarios del sistema",
+            "path": "User",
+            "panel": {
+                "find": "Buscar Usuarios",
+                "see": "Vista previa del Usuario",
+                "edit": "Editar Usuario",
+                "create": "Crear Usuario"
+            },
+            "fields": {
+                "uuid": {
+                    "title": "UUID",
+                    "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                },
+                "nick": {
+                    "title": "Nick",
+                    "placeholder": "Nick del usuario"
+                },
+                "name": {
+                    "title": "Nombre",
+                    "placeholder": "Nombre del usuario"
+                },
+                "lastName": {
+                    "title": "Apellido",
+                    "placeholder": "Apellido del usuario"
+                },
+                "status": {
+                    "title": "Estado",
+                    "placeholder": "Estado del usuario"
+                },
+                "userDate": {
+                    "title": "Fecha",
+                    "placeholder": "Fecha del error"
+                },
+                "user": {
+                    "title": "Usuario",
+                    "placeholder": "Usuario que generó el error"
+                },
+                "userApp": {
+                    "title": "Aplicación",
+                    "placeholder": "Aplicación que generó el error"
+                },
+                "acciones": {
+                    "title": "Acciones",
+                    "placeholder": "Acciones a realizar",
+                    "abrev": "Acci."
+                }
+            }
         },
-        "orden": {
-          "title": "Orden",
-          "placeholder": "10"
+        "GS-UC-001": {
+            "icon": "LockClosedIcon",
+            "title": "Credenciales de Usuario",
+            "description": "Credenciales de los usuarios del sistema",
+            "path": "Credenciales",
+            "panel": {
+                "find": "Buscar Credenciales",
+                "see": "Vista previa de la Credencial",
+                "edit": "Editar Credencial",
+                "create": "Crear Credencial"
+            },
+            "fields": {
+                "//uuid": {
+                    "//title": "UUID",
+                    "//placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                },
+                "socialNick": {
+                    "title": "Nick",
+                    "placeholder": "Nick del usuario"
+                },
+                "email": {
+                    "title": "Correo Electrónico",
+                    "placeholder": "Correo Electrónico del usuario"
+                },
+                "type": {
+                    "title": "Tipo",
+                    "placeholder": "Tipo de credencial"
+                },
+                "userDate": {
+                    "title": "Fecha",
+                    "placeholder": "Fecha del error"
+                },
+                "user": {
+                    "title": "Usuario",
+                    "placeholder": "Usuario que generó el error"
+                },
+                "userApp": {
+                    "title": "Aplicación",
+                    "placeholder": "Aplicación que generó el error"
+                },
+                "acciones": {
+                    "title": "Acciones",
+                    "placeholder": "Acciones a realizar",
+                    "abrev": "Acci."
+                }
+            }
         },
-        "userDate": {
-          "title": "Fecha",
-          "placeholder": "Fecha del error"
+        "GS-ER-001": {
+            "icon": "Cross1Icon",
+            "title": "Errores",
+            "add": "Error",
+            "description": "Información de errores del sistema y cómo se pueden solucionar",
+            "path": "Error",
+            "panel": {
+                "find": "Buscar Errores",
+                "see": "Vista previa del Error",
+                "edit": "Editar Error",
+                "create": "Crear Error"
+            },
+            "fields": {
+                "uuid": {
+                    "title": "UUID",
+                    "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                },
+                "indexError": {
+                    "title": "Indice",
+                    "placeholder": "ERROR-000"
+                },
+                "message": {
+                    "title": "Mensaje",
+                    "placeholder": "Mensaje del error"
+                },
+                "description": {
+                    "title": "Descripción",
+                    "placeholder": "Descripción del error"
+                },
+                "userDate": {
+                    "title": "Fecha",
+                    "placeholder": "Fecha del error"
+                },
+                "user": {
+                    "title": "Usuario",
+                    "placeholder": "Usuario que generó el error"
+                },
+                "userApp": {
+                    "title": "Aplicación",
+                    "placeholder": "Aplicación que generó el error"
+                },
+                "acciones": {
+                    "title": "Acciones",
+                    "placeholder": "Acciones a realizar",
+                    "abrev": "Acci."
+                }
+            }
         },
-        "user": {
-          "title": "Usuario",
-          "placeholder": "Usuario que generó el error"
+        "GS-IN-001": {
+            "icon": "InfoCircledIcon",
+            "title": "Información",
+            "description": "Datos de información del módulo",
+            "path": "Information",
+            "panel": {
+                "find": "Buscar Informaciones",
+                "see": "Vista previa de la Información",
+                "edit": "Editar Información",
+                "create": "Crear Información"
+            },
+            "fields": {
+                "uuid": {
+                    "title": "UUID",
+                    "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                },
+                "name": {
+                    "title": "Nombre",
+                    "placeholder": "Nombre de la información"
+                },
+                "value01": {
+                    "title": "Valor",
+                    "placeholder": "Titulo de la información"
+                },
+                "value02": {
+                    "title": "Complemento",
+                    "placeholder": "Complemento de la información"
+                },
+                "userDate": {
+                    "title": "Fecha",
+                    "placeholder": "Fecha del error"
+                },
+                "user": {
+                    "title": "Usuario",
+                    "placeholder": "Usuario que generó el error"
+                },
+                "userApp": {
+                    "title": "Aplicación",
+                    "placeholder": "Aplicación que generó el error"
+                },
+                "acciones": {
+                    "title": "Acciones",
+                    "placeholder": "Acciones a realizar",
+                    "abrev": "Acci."
+                }
+            }
         },
-        "userApp": {
-          "title": "Aplicación",
-          "placeholder": "Aplicación que generó el error"
-        },
-        "acciones": {
-          "title": "Acciones",
-          "placeholder": "Acciones a realizar",
-          "abrev": "Acci."
+        "GS-CC-001": {
+            "icon": "LockClosedIcon",
+            "title": "Cambio Clave",
+            "description": "Cambio de clave del usuario",
+            "path": "ChangePassword"
         }
-      }
-    },
-    "GS-MN-001": {
-      "icon": "DropdownMenuIcon",
-      "title": "Menús",
-      "description": "Menús del sistema",
-      "path": "Menu"
-    },
-    "GS-RL-001": {
-      "icon": "Link2Icon",
-      "title": "Roles",
-      "description": "Roles de los usuarios",
-      "path": "Role"
-    },
-    "GS-CD-001": {
-      "icon": "ListBulletIcon",
-      "title": "Códigos Definidos",
-      "description": "Códigos definidos del sistema",
-      "path": "DefinedCodes"
-    },
-    "GS-US-001": {
-      "icon": "PersonIcon",
-      "title": "Usuarios",
-      "description": "Usuarios del sistema",
-      "path": "User",
-      "panel": {
-        "find": "Buscar Usuarios",
-        "see": "Vista previa del Usuario",
-        "edit": "Editar Usuario",
-        "create": "Crear Usuario"
-      },
-      "fields": {
-        "uuid": {
-          "title": "UUID",
-          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
-        },
-        "nick": {
-          "title": "Nick",
-          "placeholder": "Nick del usuario"
-        },
-        "name": {
-          "title": "Nombre",
-          "placeholder": "Nombre del usuario"
-        },
-        "lastName": {
-          "title": "Apellido",
-          "placeholder": "Apellido del usuario"
-        },
-        "status": {
-          "title": "Estado",
-          "placeholder": "Estado del usuario"
-        },
-        "userDate": {
-          "title": "Fecha",
-          "placeholder": "Fecha del error"
-        },
-        "user": {
-          "title": "Usuario",
-          "placeholder": "Usuario que generó el error"
-        },
-        "userApp": {
-          "title": "Aplicación",
-          "placeholder": "Aplicación que generó el error"
-        },
-        "acciones": {
-          "title": "Acciones",
-          "placeholder": "Acciones a realizar",
-          "abrev": "Acci."
-        }
-      }
-    },
-    "GS-ER-001": {
-      "icon": "Cross1Icon",
-      "title": "Errores",
-      "add": "Error",
-      "description": "Información de errores del sistema y cómo se pueden solucionar",
-      "path": "Error",
-      "panel": {
-        "find": "Buscar Errores",
-        "see": "Vista previa del Error",
-        "edit": "Editar Error",
-        "create": "Crear Error"
-      },
-      "fields": {
-        "uuid": {
-          "title": "UUID",
-          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
-        },
-        "indexError": {
-          "title": "Indice",
-          "placeholder": "ERROR-000"
-        },
-        "message": {
-          "title": "Mensaje",
-          "placeholder": "Mensaje del error"
-        },
-        "description": {
-          "title": "Descripción",
-          "placeholder": "Descripción del error"
-        },
-        "userDate": {
-          "title": "Fecha",
-          "placeholder": "Fecha del error"
-        },
-        "user": {
-          "title": "Usuario",
-          "placeholder": "Usuario que generó el error"
-        },
-        "userApp": {
-          "title": "Aplicación",
-          "placeholder": "Aplicación que generó el error"
-        },
-        "acciones": {
-          "title": "Acciones",
-          "placeholder": "Acciones a realizar",
-          "abrev": "Acci."
-        }
-      }
-    },
-    "GS-IN-001": {
-      "icon": "InfoCircledIcon",
-      "title": "Información",
-      "description": "Datos de información del módulo",
-      "path": "Information",
-      "panel": {
-        "find": "Buscar Informaciones",
-        "see": "Vista previa de la Información",
-        "edit": "Editar Información",
-        "create": "Crear Información"
-      },
-      "fields": {
-        "uuid": {
-          "title": "UUID",
-          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
-        },
-        "name": {
-          "title": "Nombre",
-          "placeholder": "Nombre de la información"
-        },
-        "value01": {
-          "title": "Valor",
-          "placeholder": "Titulo de la información"
-        },
-        "value02": {
-          "title": "Complemento",
-          "placeholder": "Complemento de la información"
-        },
-        "userDate": {
-          "title": "Fecha",
-          "placeholder": "Fecha del error"
-        },
-        "user": {
-          "title": "Usuario",
-          "placeholder": "Usuario que generó el error"
-        },
-        "userApp": {
-          "title": "Aplicación",
-          "placeholder": "Aplicación que generó el error"
-        },
-        "acciones": {
-          "title": "Acciones",
-          "placeholder": "Acciones a realizar",
-          "abrev": "Acci."
-        }
-      }
-    },
-    "GS-CC-001": {
-      "icon": "LockClosedIcon",
-      "title": "Cambio Clave",
-      "description": "Cambio de clave del usuario",
-      "path": "ChangePassword"
     }
-  }
 }

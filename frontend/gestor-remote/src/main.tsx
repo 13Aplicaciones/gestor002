@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
       scaling="90%"
       radius="medium"
       panelBackground="translucent"
-      appearance="light"
+      appearance="dark"
     >
       <I18nextProvider i18n={i18next}>
         <App />

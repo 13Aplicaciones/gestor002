@@ -11,7 +11,7 @@
 			"gestor": false,
 			"keycloak": false,
 			"manager": true,
-			"orquestador": false,
+			"orchetrator": false,
 			"tools": false,
 			"**/target": true,
 			"**/.mvn": true,

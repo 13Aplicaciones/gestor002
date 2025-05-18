@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
-import { CreateSearchField, IParametersQuery } from "../components/table/TableSearch";
-import { IPresentationTable } from "../components/table/Table";
 import {
   GearIcon,
   MagnifyingGlassIcon,
   MixerHorizontalIcon,
 } from "@radix-ui/react-icons";
+import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
 import PopoverDemo from "../components/popover/Popover";
-import { JustificationText, TextFormat } from "../ConstantsPresentation";
 
 /**
  * Funcion para crear una tabla que consume un api para la generacion.
@@ -16,55 +12,7 @@ import { JustificationText, TextFormat } from "../ConstantsPresentation";
  * @returns
  */
 const miTablaApiDemo = () => {
-  const parametros: IParametersQuery = {
-    page: 0,
-    size: 10,
-    sort: "index",
-    "sort ": "asc", // Espacio en blanco para que no lo tome como repetido, se recomienda no usarlo en la paginacion.
-    index: "",
-    message: "",
-  };
-
-  const presentationItems: IPresentationTable = {
-    banding: false,
-    headers: true,
-    numberLinea: false,
-    skeletonWidth: "50vw",
-    items: [
-      {
-        name: "indice",
-        title: "Indice",
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        onAction: {
-          onAction: (row: any) => {
-            console.log("indice" + JSON.stringify(row));
-          },
-        },
-      },
-      {
-        name: "message",
-        title: "Mensaje",
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "30vw",
-      },
-      {
-        name: "usuarioFecha",
-        title: "Fecha",
-        justification: JustificationText.start,
-        format: TextFormat.date,
-        width: "10vw",
-        onAction: {
-          onAction: (row: any) => {
-            console.log("indice" + JSON.stringify(row));
-          },
-        },
-      },
-    ],
-  };
-
+  
   const panelAvanzdo = () => {
     return (
       <Tabs.Root defaultValue="account">
@@ -127,14 +75,7 @@ const miTablaApiDemo = () => {
 
   return (
     <Flex direction="column" p="5" gap="3">
-      <CreateSearchField
-        apiUrl="http://localhost:8090/gestor-ws/api/errors/paginado"
-        nameIndex="indice"
-        parametersApi={parametros}
-        presentationTable={presentationItems}
-      >
-        {busquedaPersonalizada()}
-      </CreateSearchField>
+      {busquedaPersonalizada()}
     </Flex>
   );
 };

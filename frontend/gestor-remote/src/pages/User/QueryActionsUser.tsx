@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import {
@@ -34,11 +33,9 @@ import { IRowDataUser } from "./Structures/Types";
 const QueryActionsUser = ({
   row,
   onEditRow,
-  onDetailRow,
 }: {
   row: IRowDataUser;
   onEditRow: (row: IRowDataUser) => void;
-  onDetailRow?: (page:string, row: IRowDataUser) => void;
 }) => {
   const [apiUrl, setApiUrl] = useState<string>("");
   const [t] = useTranslation("global_gestor");
@@ -176,8 +173,6 @@ const QueryActionsUser = ({
           </DropdownMenu.Item>
         )}        
         <DropdownMenu.Separator />
-        <DropdownMenu.Item>Credenciales</DropdownMenu.Item>
-        <DropdownMenu.Item>Permisos</DropdownMenu.Item>
         <DropdownMenu.Item>Sincronizar</DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

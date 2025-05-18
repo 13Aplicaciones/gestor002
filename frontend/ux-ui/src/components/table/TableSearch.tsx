@@ -49,7 +49,7 @@ interface IParametersQuery {
  *
  * @returns
  */
-const CreateSearchField = ({
+const TableSearch = ({
   apiUrl,
   nameIndex,
   parametersApi,
@@ -361,5 +361,5 @@ const CreateSearchField = ({
   );
 };
 
-export { CreateSearchField };
+export { TableSearch };
 export type { IParametersQuery };

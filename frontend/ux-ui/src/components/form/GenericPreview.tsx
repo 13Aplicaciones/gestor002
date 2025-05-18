@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
@@ -5,7 +6,6 @@ import { ReactElement, useEffect, useState } from "react";
 import { Alerts } from "../../ConstantsPresentation";
 import { BannerInformation } from "../callout/Information";
 import { DataListConfigurable, DataListSkeleton } from "../dataList/DataList";
-
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.

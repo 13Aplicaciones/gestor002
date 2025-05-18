@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { fetchData, formatMessageJson, IFetchData, MethodREST, TypeBody } from "api-fetch";

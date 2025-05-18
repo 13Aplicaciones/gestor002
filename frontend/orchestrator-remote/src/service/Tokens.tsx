@@ -44,7 +44,7 @@ const getToken = async () => {
  */
 const refreshToken = async () => {
     const token: ITokenRoot = await getToken();
-    const url = import.meta.env.VITE_ORQUESTADOR_URL + 'login/refreshToken/' + token.refresh_token;
+    const url = import.meta.env.VITE_ORCHESTRATOR_URL + 'login/refreshToken/' + token.refresh_token;
 
     let iFetchData = createFetchData();
     iFetchData = await fetchData({

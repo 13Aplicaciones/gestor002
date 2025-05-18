@@ -4,13 +4,13 @@ import { getToken, ITokenRoot, refreshToken } from "./Tokens";
 /**
  * Función para obtener la estadistica basica de un card.
  * 
- * Toma la url del orquestador y realiza la consulta de los módulos.
+ * Toma la url del orchestrator y realiza la consulta de los módulos.
  * 
  * @param token Token de autenticación
  * @returns 
  */
 const getStatic = async (index:string) => {
-    const url = import.meta.env.VITE_ORQUESTADOR_URL + 'structure/menu/static=' + index;
+    const url = import.meta.env.VITE_ORCHESTRATOR_URL + 'structure/menu/static=' + index;
     let iFetchData = createFetchData();
     const token: ITokenRoot = await getToken();
 

@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Anotación que se encarga de asignar el user logueado a las entidades que implementan la interfaz UuidUserDateApp.
+ * Anotación que se encarga de asignar el user logueado a las entidades que
+ * implementan la interfaz UuidUserDateApp.
  * 
  * @author omargo33
  * @since 2025-01-24

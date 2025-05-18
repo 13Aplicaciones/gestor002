@@ -18,11 +18,15 @@ import {
   FooterForm,
   IFormProps,
   InputField,
-  StatusEdit
+  PageCrud,
+  StatusEdit,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
+import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
+import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
+import { PreviewUser } from "./PreviewUser";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -52,7 +56,7 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
       .min(5, t("validation.min", { min: 5 }))
       .max(128, t("validation.max", { max: 256 })),
     userApp: yup.string(),
-    status: yup.string()
+    status: yup.string(),
   });
 
   /**
@@ -101,65 +105,75 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
   }, [row]);
 
   return (
-    <GenericCrudForm
-      status={status}
-      row={row}
-      indexName="uuid"
-      onAtras={onAtras}
-      apiUrl={apiUrl}
-      token={token}
-      getToken={refreshToken}
-      renderForm={({
-        formStatus,
-        loading,
-        handleSubmit: submitData,
-        showPopUpDelete,
-      }) => (
-        <form onSubmit={handleSubmit(submitData)}>
-          <InputField
-            title={t("modules.GS-US-001.fields.nick.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-US-001.fields.nick.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("nick")}
-            messageError={errors.nick?.message}
-          />
-          <InputField
-            title={t("modules.GS-US-001.fields.name.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-US-001.fields.name.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("name")}
-            messageError={errors.name?.message}
-          />
-          <InputField
-            title={t("modules.GS-US-001.fields.lastName.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-US-001.fields.lastName.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("lastName")}
-            messageError={errors.lastName?.message}
-          />
-          <FooterForm
-            directionLabel={Direction.horizontal}
-            columns={BandPresentation.column_2}
-          >
-            <Button type="submit" disabled={loading}>
-              {t("actions.save")}
-            </Button>
-            <Button
-              type="button"
-              form="none"
-              variant="surface"
-              disabled={formStatus === StatusEdit.create}
-              onClick={showPopUpDelete}
+    <>
+      <GenericCrudForm
+        status={status}
+        row={row}
+        indexName="uuid"
+        onAtras={onAtras}
+        apiUrl={apiUrl}
+        token={token}
+        getToken={refreshToken}
+        renderForm={({
+          formStatus,
+          loading,
+          handleSubmit: submitData,
+          showPopUpDelete,
+        }) => (
+          <form onSubmit={handleSubmit(submitData)}>
+            <InputField
+              title={t("modules.GS-US-001.fields.nick.title")}
+              columns={BandPresentation.column_3}
+              placeholder={t("modules.GS-US-001.fields.nick.placeholder")}
+              directionLabel={Direction.horizontal}
+              register={register("nick")}
+              messageError={errors.nick?.message}
+            />
+            <InputField
+              title={t("modules.GS-US-001.fields.name.title")}
+              columns={BandPresentation.column_3}
+              placeholder={t("modules.GS-US-001.fields.name.placeholder")}
+              directionLabel={Direction.horizontal}
+              register={register("name")}
+              messageError={errors.name?.message}
+            />
+            <InputField
+              title={t("modules.GS-US-001.fields.lastName.title")}
+              columns={BandPresentation.column_3}
+              placeholder={t("modules.GS-US-001.fields.lastName.placeholder")}
+              directionLabel={Direction.horizontal}
+              register={register("lastName")}
+              messageError={errors.lastName?.message}
+            />
+            <FooterForm
+              directionLabel={Direction.horizontal}
+              columns={BandPresentation.column_2}
             >
-              {t("actions.delete")}
-            </Button>
-          </FooterForm>
-        </form>
-      )}
-    />
+              <Button type="submit" disabled={loading}>
+                {t("actions.save")}
+              </Button>
+              <Button
+                type="button"
+                form="none"
+                variant="surface"
+                disabled={formStatus === StatusEdit.create}
+                onClick={showPopUpDelete}
+              >
+                {t("actions.delete")}
+              </Button>
+            </FooterForm>
+          </form>
+        )}
+      />
+      {/* TODO cambiar previewPanel, formPanel */}
+      <PageCrud
+        tranlation={Menus.ERROR}
+        createIRowDataCustom={createIRowDataCredential}
+        QueryPanel={QueryCredentials}
+        PreviewPanel={PreviewUser}
+        FormPanel={FormEditUser}
+      />
+    </>
   );
 };
 

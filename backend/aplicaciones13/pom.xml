@@ -22,8 +22,12 @@
 		</developer>
 	</developers>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<admin.starter.client>3.1.5</admin.starter.client>
 		<java.version>17</java.version>
+		<lombok.version>1.18.22</lombok.version>
+		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<openapi.version>2.8.3</openapi.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 
@@ -80,7 +84,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -88,14 +92,14 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.4.2.Final</version>
+			<version>${mapstruct.version}</version>
 		</dependency>
 
 		<!-- mapeo Procesador Estructuras -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>1.4.2.Final</version>
+			<version>${mapstruct.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -125,14 +129,14 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.3</version>
+			<version>${openapi.version}</version>
 		</dependency>
 
 		<!-- cliente administracion -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>3.1.5</version>
+			<version>${admin.starter.client}</version>
 		</dependency>
 	</dependencies>
 	<build>

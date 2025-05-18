@@ -26,7 +26,7 @@ export interface IUserDefinedCode {
 /**
  * Funcion para obtener los codigos definidos por el usuario de los modulos.
  * 
- * Toma la url del orquestador y realiza la consulta de los codigos definidos por el usuario por index de modulos.
+ * Toma la url del orchestrator y realiza la consulta de los codigos definidos por el usuario por index de modulos.
  * 
  * @param indexModule Index del módulo
  * @returns 
@@ -44,7 +44,7 @@ const getUserDefinedCodes = async (indexModule: string) => {
     }
 
     const url =
-        import.meta.env.VITE_ORQUESTADOR_URL +
+        import.meta.env.VITE_ORCHESTRATOR_URL +
         "structure/udc/module=" +
         indexModule;
 

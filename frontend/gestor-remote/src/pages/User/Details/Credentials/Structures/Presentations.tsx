@@ -1,5 +1,4 @@
 import { t } from "i18next";
-import { getUserDefinedCodeByGroup } from "orchestrator_remote/service/UserDefineCode";
 import {
   IPresentationDataList,
   IPresentationInputSelect,
@@ -14,10 +13,7 @@ import {
  *
  * @returns
  */
-const tableQueryUser = async (): Promise<IPresentationTable> => {
-
-  const statusList = await getUserDefinedCodeByGroup("LG_001_00", "AD_CD_01");
-
+const tableQueryCredentials = async (): Promise<IPresentationTable> => {
   return {
     banding: true,
     headers: true,
@@ -25,35 +21,29 @@ const tableQueryUser = async (): Promise<IPresentationTable> => {
     skeletonWidth: "90vw",
     items: [
       {
-        name: "nick",
-        title: t("modules.GS-US-001.fields.nick.title"),
+        name: "type",
+        title: t("modules.GS-UC-001.fields.type.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "14vw",
-        order: SortColumn.asc,
-        orderNameColumn: "nick",
       },
       {
-        name: "name",
-        title: t("modules.GS-US-001.fields.name.title"),
+        name: "email",
+        title: t("modules.GS-UC-001.fields.email.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
-        order: SortColumn.asc,
-        orderNameColumn: "name",
       },
       {
-        name: "lastName",
-        title: t("modules.GS-US-001.fields.lastName.title"),
+        name: "socialNick",
+        title: t("modules.GS-UC-001.fields.socialNick.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
-        order: SortColumn.asc,
-        orderNameColumn: "last_name",
       },
       {
         name: "userDate",
-        title: t("modules.GS-US-001.fields.userDate.title"),
+        title: t("modules.GS-UC-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
         width: "20vw",
@@ -61,16 +51,8 @@ const tableQueryUser = async (): Promise<IPresentationTable> => {
         orderNameColumn: "user_date",
       },
       {
-        name: "status",
-        title: t("modules.GS-US-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        cellSelect: statusList,
-      },
-      {
         name: "acciones",
-        title: t("modules.GS-US-001.fields.acciones.abrev"),
+        title: t("modules.GS-UC-001.fields.acciones.abrev"),
         justification: JustificationText.center,
         format: TextFormat.action,
         width: "6vw",
@@ -89,51 +71,38 @@ const dataViewPresentation = (): IPresentationDataList => {
     skeletonWidth: "90vw",
     items: [
       {
-        name: "uuid",
-        title: t("modules.GS-US-001.fields.uuid.title"),
+        name: "socialNick",
+        title: t("modules.GS-UC-001.fields.socialNick.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
-        name: "nick",
-        title: t("modules.GS-US-001.fields.nick.title"),
+        name: "email",
+        title: t("modules.GS-UC-001.fields.email.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
-        name: "name",
-        title: t("modules.GS-US-001.fields.name.title"),
+        name: "type",
+        title: t("modules.GS-UC-001.fields.type.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
-      {
-        name: "lastName",
-        title: t("modules.GS-US-001.fields.lastName.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "status",
-        title: t("modules.GS-US-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-
       {
         name: "user",
-        title: t("modules.GS-US-001.fields.user.title"),
+        title: t("modules.GS-UC-001.fields.user.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "userDate",
-        title: t("modules.GS-US-001.fields.userDate.title"),
+        title: t("modules.GS-UC-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
       },
       {
         name: "userApp",
-        title: t("modules.GS-US-001.fields.userApp.title"),
+        title: t("modules.GS-UC-001.fields.userApp.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
@@ -146,31 +115,33 @@ const dataViewPresentation = (): IPresentationDataList => {
  *
  * @returns
  */
-const listQueryUser = (): IPresentationInputSelect => {
+const listQueryCredentials = (): IPresentationInputSelect => {
   return {
     items: [
       {
         order: 0,
         justification: JustificationText.end,
-        codeText: "A",
-        name: "Activo",
-        description: "Activo",
+        codeText: "E",
+        name: "Email",
+        description: "Email",
         width: "100%",
         separator: false,
       },
       {
         order: 1,
         justification: JustificationText.start,
-        codeText: "I",
-        name: "Inactivo",
+        codeText: "G",
+        name: "Google",
+        description: "Usuario de Google",
         width: "100%",
         separator: false,
       },
       {
         order: 2,
         justification: JustificationText.start,
-        codeText: "C",
-        name: "Creado",
+        codeText: "F",
+        name: "Facebook",
+        description: "Usuario de Facebook",
         width: "100%",
         separator: false,
       },
@@ -178,6 +149,5 @@ const listQueryUser = (): IPresentationInputSelect => {
   };
 };
 
+export { tableQueryCredentials, dataViewPresentation, listQueryCredentials };
 
-export { tableQueryUser, dataViewPresentation, listQueryUser };
-//

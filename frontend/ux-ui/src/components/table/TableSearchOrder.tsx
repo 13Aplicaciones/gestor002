@@ -6,8 +6,11 @@ import {
   ChevronRightIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
+  PlusIcon,
+  ReloadIcon,
+  StopwatchIcon,
 } from "@radix-ui/react-icons";
-import { Flex, IconButton, Text, Theme } from "@radix-ui/themes";
+import { Box, Card, Flex, IconButton, Separator, Text } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +26,13 @@ import { InputSubmit } from "../input/Input";
 import { useToastContext } from "../toast/useToastContext";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { IParametersQuery } from "./TableSearch";
+
+// Extiende la interfaz Window para permitir __tableSearchOrderIntervalId
+declare global {
+  interface Window {
+    __tableSearchOrderIntervalId?: ReturnType<typeof setInterval>;
+  }
+}
 
 /**
  * Componete para crear un field de busqueda.
@@ -60,7 +70,7 @@ const getSorts = (presentationTable: IPresentationTable) => {
  * @param getToken
  * @returns
  */
-const CreateSearchFieldOrder = ({
+const TableSearchOrder = ({
   apiUrl,
   parametersToConsult,
   presentationTable,
@@ -87,6 +97,7 @@ const CreateSearchFieldOrder = ({
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const { showToast } = useToastContext();
+  const [timer, setTimer] = useState(false);
 
   /**
    * Validacion de los fields del formulario.
@@ -270,6 +281,24 @@ const CreateSearchFieldOrder = ({
     }, 333);
   };
 
+  const workTimer = (timer: boolean) => {
+    setTimer(!timer);
+    if (!timer) {
+      showToast(
+        "Inicia Timer",
+        "Inicia consulta automatica cada 30 segundos",
+        Alerts.warning
+      );
+      const intervalId = setInterval(() => {
+        paginationPresentation(parametersQuery);
+      }, 30000);
+      window.__tableSearchOrderIntervalId = intervalId;
+    } else {
+      showToast("Finaliza Timer", "Finaliza consulta automatica", Alerts.info);
+      clearInterval(window.__tableSearchOrderIntervalId);
+    }
+  };
+
   /**
    * Formulario para el paginado.
    *
@@ -343,7 +372,7 @@ const CreateSearchFieldOrder = ({
   };
 
   return (
-    <Theme asChild={true}>
+    <Flex direction="row" gap="2" width={presentation.skeletonWidth}>
       <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
         {loading ? (
           <TableSkeleton column={presentationTable.items.length} />
@@ -368,8 +397,42 @@ const CreateSearchFieldOrder = ({
           </>
         )}
       </Flex>
-    </Theme>
+
+      <Box>
+        <Card>
+          <Flex direction="column" gap="2" align="center">
+            <IconButton radius="full" variant="soft">
+              <PlusIcon />
+            </IconButton>
+
+            <Separator orientation="horizontal" size="4" />
+
+            <IconButton
+              radius="full"
+              variant="soft"
+              loading={loading}
+              onClick={() => {
+                paginationPresentation(parametersQuery);
+              }}
+            >
+              <ReloadIcon />
+            </IconButton>
+
+            <IconButton
+              radius="full"
+              loading={loading}
+              variant={timer ? "solid" : "soft"}
+              onClick={() => {
+                workTimer(timer);
+              }}
+            >
+              <StopwatchIcon />
+            </IconButton>
+          </Flex>
+        </Card>
+      </Box>
+    </Flex>
   );
 };
 
-export { CreateSearchFieldOrder };
+export { TableSearchOrder };

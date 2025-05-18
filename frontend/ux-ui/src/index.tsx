@@ -91,8 +91,8 @@ export {
 
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from "./components/table/Table";
-export { CreateSearchField } from "./components/table/TableSearch";
-export { CreateSearchFieldOrder } from "./components/table/TableSearchOrder";
+export { TableSearch } from "./components/table/TableSearch";
+export { TableSearchOrder } from "./components/table/TableSearchOrder";
 
 // Exportar elementos de la libreria para Toast
 export { ToastContextProvider } from "./components/toast/ToastContextProvider";

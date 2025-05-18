@@ -24,7 +24,7 @@ export interface IParameter {
 /**
  * Función para obtener los parametros de los módulos.
  *
- * Toma la url del orquestador y realiza la consulta de los parametros por index de módulos.
+ * Toma la url del orchestrator y realiza la consulta de los parametros por index de módulos.
  *
  * @param indexModule Index del módulo
  * @returns
@@ -41,7 +41,7 @@ const getParameters = async (indexModule: string) => {
   }
 
   const url =
-    import.meta.env.VITE_ORQUESTADOR_URL +
+    import.meta.env.VITE_ORCHESTRATOR_URL +
     "structure/parameter/module=" +
     indexModule;
   let iFetchData = createFetchData();
