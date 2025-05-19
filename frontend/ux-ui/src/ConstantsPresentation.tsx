@@ -64,6 +64,13 @@ const enum JustificationText {
   end = "end", // Fin
 }
 
+const enum MenuTableRefresh {
+  refresh = "refresh",
+  refreshTimmer = "refreshTimmer",
+  refreshFull = "refreshFull",
+  none = "none",
+}
+
 /**
  * Enumeración para la presentación para la presentación de las columns de las tablas.
  *
@@ -107,4 +114,5 @@ export {
   JustificationText,
   SortColumn,
   StatusEdit,
+  MenuTableRefresh,
 };

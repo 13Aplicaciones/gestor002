@@ -2,7 +2,7 @@ import { alertColor, mapStatusToAlert } from "../IconosColoresAlerts";
 import { Alerts } from "../../ConstantsPresentation";
 import { Badge, Box, Card, Flex, Heading, Link, Text, Skeleton } from "@radix-ui/themes";
 import { blackA, whiteA } from "@radix-ui/colors"
-import { getIconComponent } from "../icon/IconDynamic";
+import { IconComponent } from "../icon/IconDynamic";
 import { MouseEventHandler } from "react";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
@@ -115,7 +115,7 @@ const CardGrid = (
                     direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
                 >
                     <Flex align="start" direction="column" gap="2">
-                        {getIconComponent(iconName, "5vw", "5vw")}
+                        <IconComponent iconName={iconName} width="5vw" height="5vw" />
                         <Box>
                             {title &&
                                 <Text as="p" size="2" weight="bold">

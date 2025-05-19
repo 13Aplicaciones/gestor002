@@ -6,11 +6,8 @@ import {
   ChevronRightIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
-  PlusIcon,
-  ReloadIcon,
-  StopwatchIcon,
 } from "@radix-ui/react-icons";
-import { Box, Card, Flex, IconButton, Separator, Text } from "@radix-ui/themes";
+import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -20,10 +17,12 @@ import {
   Alerts,
   BandPresentation,
   Direction,
+  MenuTableRefresh,
   SortColumn,
 } from "../../ConstantsPresentation";
 import { InputSubmit } from "../input/Input";
 import { useToastContext } from "../toast/useToastContext";
+import { MenuTable } from "./MenuTable";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { IParametersQuery } from "./TableSearch";
 
@@ -76,12 +75,16 @@ const TableSearchOrder = ({
   presentationTable,
   token,
   getToken,
+  menuTableRefresh = MenuTableRefresh.none,
+  childrenMenu,
 }: {
   apiUrl: string;
   parametersToConsult: IParametersQuery;
   presentationTable: IPresentationTable;
   token?: string;
   getToken?: (() => Promise<string>) | undefined;
+  menuTableRefresh?: MenuTableRefresh;
+  childrenMenu?: React.ReactNode;
 }) => {
   const [t] = useTranslation("global_ux");
   const [loading, setLoading] = useState(false);
@@ -97,7 +100,6 @@ const TableSearchOrder = ({
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const { showToast } = useToastContext();
-  const [timer, setTimer] = useState(false);
 
   /**
    * Validacion de los fields del formulario.
@@ -281,24 +283,6 @@ const TableSearchOrder = ({
     }, 333);
   };
 
-  const workTimer = (timer: boolean) => {
-    setTimer(!timer);
-    if (!timer) {
-      showToast(
-        "Inicia Timer",
-        "Inicia consulta automatica cada 30 segundos",
-        Alerts.warning
-      );
-      const intervalId = setInterval(() => {
-        paginationPresentation(parametersQuery);
-      }, 30000);
-      window.__tableSearchOrderIntervalId = intervalId;
-    } else {
-      showToast("Finaliza Timer", "Finaliza consulta automatica", Alerts.info);
-      clearInterval(window.__tableSearchOrderIntervalId);
-    }
-  };
-
   /**
    * Formulario para el paginado.
    *
@@ -371,8 +355,16 @@ const TableSearchOrder = ({
     );
   };
 
+  /**
+   * Funcion para manejar el evento de ordenamiento y paginacion.
+   *
+   */
+  const handlePaginationPresentation = () => {
+    paginationPresentation(parametersQuery);
+  };
+
   return (
-    <Flex direction="row" gap="2" width={presentation.skeletonWidth}>
+    <Flex direction="row" gap="2">
       <Flex direction="column" gap="2" width={presentation.skeletonWidth}>
         {loading ? (
           <TableSkeleton column={presentationTable.items.length} />
@@ -389,7 +381,7 @@ const TableSearchOrder = ({
                 onOrderChange: (name: string, direccion: SortColumn) => {
                   sorts[name] = direccion;
                   setSorts(sorts);
-                  paginationPresentation(parametersQuery);
+                  handlePaginationPresentation();
                 },
               }}
             />
@@ -397,40 +389,12 @@ const TableSearchOrder = ({
           </>
         )}
       </Flex>
-
-      <Box>
-        <Card>
-          <Flex direction="column" gap="2" align="center">
-            <IconButton radius="full" variant="soft">
-              <PlusIcon />
-            </IconButton>
-
-            <Separator orientation="horizontal" size="4" />
-
-            <IconButton
-              radius="full"
-              variant="soft"
-              loading={loading}
-              onClick={() => {
-                paginationPresentation(parametersQuery);
-              }}
-            >
-              <ReloadIcon />
-            </IconButton>
-
-            <IconButton
-              radius="full"
-              loading={loading}
-              variant={timer ? "solid" : "soft"}
-              onClick={() => {
-                workTimer(timer);
-              }}
-            >
-              <StopwatchIcon />
-            </IconButton>
-          </Flex>
-        </Card>
-      </Box>
+      <MenuTable
+        loading={loading}
+        handlePaginationPresentation={handlePaginationPresentation}
+        menuTableRefresh={menuTableRefresh}>
+        {childrenMenu}
+      </MenuTable>
     </Flex>
   );
 };

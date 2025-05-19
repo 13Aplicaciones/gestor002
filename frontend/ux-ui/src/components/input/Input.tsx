@@ -5,7 +5,7 @@ import { MouseEventHandler, ReactNode, useState } from "react";
 import { Alerts, BandPresentation, Direction, JustificationText } from "../../ConstantsPresentation";
 import useCalculatePresentation from "./Calculations";
 import { MessageField } from "./Menssages";
-import { getIconComponent } from "../icon/IconDynamic";
+import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Componentes de input del sistema. 
@@ -326,7 +326,7 @@ const InputSelect = ({
                                     >
                                         {item.iconName ? (
                                             <Flex justify="center" align="center" gap="2" >
-                                                {getIconComponent(item.iconName || "", "18", "18")}
+                                                <IconComponent iconName={item.iconName || ""} width="18" height="18" />
                                                 {item.name}
                                             </Flex>) : item.name}
                                     </Select.Item>

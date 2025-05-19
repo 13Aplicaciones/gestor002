@@ -43,7 +43,7 @@ export {
   CardGridSkeleton,
   ValueDescriptionCard,
 } from "./components/grid/Card";
-export { getIconComponent } from "./components/icon/IconDynamic";
+export { IconComponent } from "./components/icon/IconDynamic";
 export {
   ButtonCreateRecordFloating,
   ButtonBackFloating,

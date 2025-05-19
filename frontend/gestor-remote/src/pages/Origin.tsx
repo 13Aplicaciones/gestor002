@@ -1,6 +1,6 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
-import { getIconComponent, PageCrud } from "ux-ui";
+import { IconComponent, PageCrud } from "ux-ui";
 import { Menus } from "../utils/Constants";
 import { FormEditError } from "./Error/FormEditError";
 import { PreviewError } from "./Error/PreviewError";
@@ -30,7 +30,7 @@ const Title = () => {
   return (
     <>
       <Flex direction="row" gap="2" align="center">
-        {getIconComponent(t("GearIcon"), "36", "36")}
+        <IconComponent iconName={t("GearIcon")} width="36" height="36" />
         <Flex direction="column">
           <Heading>{t("title")}</Heading>
           <Text>{t("description")}</Text>
@@ -55,7 +55,7 @@ const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
     <>
       {ifFound && (
         <Flex direction="row" gap="2" align="center">
-          {getIconComponent(icon, "36", "36")}
+          <IconComponent iconName={icon} width="36" height="36" />
           <Flex direction="column">
             <Heading>{t("modules." + nameMenu + ".title")}</Heading>
             <Text>{t("modules." + nameMenu + ".description")}</Text>

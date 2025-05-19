@@ -1,16 +1,26 @@
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button } from "@radix-ui/themes";
+import { Button, IconButton } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
+import {
+  GenericQuery,
+  IconComponent,
+  IPresentationTable,
+  IQueryProps,
+} from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import { QueryFormError } from "./QueryFormError";
 import { tableQueryModule } from "./Structures/Presentations";
 import { IRowDataError } from "./Structures/Types";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 
 /**
  * Tabla de errores del sistema.
@@ -73,6 +83,14 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
     return tableFormat;
   };
 
+  const Menu = () => {
+    return (
+      <IconButton radius="full" variant="soft">
+        <IconComponent iconName="PlusIcon" width="16" height="16" />
+      </IconButton>
+    );
+  };
+
   return (
     <GenericQuery<IRowDataError>
       QueryForm={QueryFormError}
@@ -85,6 +103,8 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       configureTableActions={configureErrorTableActions}
       apiUrl={apiUrl}
       token={token}
+      menuTableRefresh={MenuTableRefresh.refresh}
+      childrenMenu={<Menu />}
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
