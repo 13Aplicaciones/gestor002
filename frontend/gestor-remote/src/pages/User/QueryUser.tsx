@@ -8,20 +8,24 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { GenericQuery, IPresentationTable, IQueryProps } from "ux-ui";
+import { GenericQuery, IconComponent, IPresentationTable, IQueryProps } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import QueryActionsUser from "./QueryActionsUser";
 import { QueryFormUser } from "./QueryFormUser";
 import { tableQueryUser } from "./Structures/Presentations";
 import { IRowDataUser } from "./Structures/Types";
+import { IconButton, Tooltip } from "@radix-ui/themes";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
+import { useTranslation } from "react-i18next";
 
 /**
  * Tabla de información del sistema.
  */
-const QueryUser = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryUser = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
-
+  const [t] = useTranslation("global_gestor");
+  
   /**
    * Inicializar token y parámetros de URL
    */
@@ -73,6 +77,20 @@ const QueryUser = ({ onEditRow, onSeeRow }: IQueryProps) => {
     return tableFormat;
   };
 
+  /**
+   * Configurar el menú de la tabla de errores
+   * 
+   */
+  const MenuTable = () => {
+    return (
+      <Tooltip content={t("modules." + Menus.USER + ".add")} side="left">
+        <IconButton radius="full" variant="soft" onClick={onCreateRow}>
+          <IconComponent iconName="PlusIcon" width="16" height="16" />
+        </IconButton>
+      </Tooltip>
+    );
+  };
+
   return (
     <GenericQuery<IRowDataUser>
       QueryForm={QueryFormUser}
@@ -84,9 +102,12 @@ const QueryUser = ({ onEditRow, onSeeRow }: IQueryProps) => {
       configureTableActions={configureUserTableActions}
       apiUrl={apiUrl}
       token={token}
+      menuTableRefresh={MenuTableRefresh.refresh}
+      childrenMenu={<MenuTable />}      
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
+      onCreateRow={onCreateRow}
     />
   );
 };

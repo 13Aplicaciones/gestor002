@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@radix-ui/themes";
+import { Button, IconButton } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,8 +15,16 @@ import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import { useEffect, useState } from "react";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
-import { getParameter, IParameter } from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -134,6 +142,9 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
             directionLabel={Direction.horizontal}
             columns={BandPresentation.column_2}
           >
+            <IconButton form="none" variant="solid" onClick={onAtras}>
+              <ResetIcon />
+            </IconButton>
             <Button type="submit" disabled={loading}>
               {t("actions.save")}
             </Button>

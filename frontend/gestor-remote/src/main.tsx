@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <Theme
       accentColor="indigo"
       grayColor="auto"
-      scaling="90%"
+      scaling="110%"
       radius="medium"
       panelBackground="translucent"
       appearance="dark"

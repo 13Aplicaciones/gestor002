@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@radix-ui/themes";
+import { Button, IconButton } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -27,6 +27,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
 import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
 import { PreviewUser } from "./PreviewUser";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -149,6 +150,9 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
               directionLabel={Direction.horizontal}
               columns={BandPresentation.column_2}
             >
+              <IconButton form="none" variant="solid" onClick={onAtras}>
+                <ResetIcon />
+              </IconButton>
               <Button type="submit" disabled={loading}>
                 {t("actions.save")}
               </Button>

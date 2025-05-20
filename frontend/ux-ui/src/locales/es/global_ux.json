@@ -28,6 +28,20 @@
     "orderDesc": "Ordenar desc",
     "unordered": "Sin Ordenar"
   },
+
+  "menuTable":{
+    "timer": {
+        "start": "Iniciar temporizador",
+        "startDescription": "Inicia consulta automatica cada 30 segundos",
+        "stop": "Detener temporizador",
+        "stopDescription": "Detiene consulta automatica cada 30 segundos",
+        "label": "Temporizador a 30'"
+      },
+    "refresh": {
+      "label": "Actualizar"
+    }
+  },  
+
   "httpStatus": {
     "100": "Continuar",
     "101": "Cambiando protocolos",

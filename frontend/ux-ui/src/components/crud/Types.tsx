@@ -7,6 +7,7 @@ import { StatusEdit } from "../../ConstantsPresentation";
 interface IQueryProps {
     onEditRow: (row: any) => void;
     onSeeRow: (row: any) => void;
+    onCreateRow: () => void;
 }
 
 /**

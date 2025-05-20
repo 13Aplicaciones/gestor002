@@ -1,5 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@radix-ui/themes";
+import { ResetIcon } from "@radix-ui/react-icons";
+import { Button, IconButton } from "@radix-ui/themes";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,15 +22,9 @@ import {
   InputField,
   StatusEdit,
 } from "ux-ui";
+import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
-import { useEffect, useState } from "react";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
-import {
-  getParameter,
-  IParameter,
-} from "orchestrator_remote/service/Parameter";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -142,9 +147,12 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
               />
               <FooterForm
                 directionLabel={Direction.horizontal}
-                columns={BandPresentation.column_2}
+                columns={BandPresentation.column_1}
               >
-                <Button type="submit" disabled={loading}>
+                <IconButton form="none" variant="solid" onClick={onAtras}>
+                  <ResetIcon />
+                </IconButton>
+                <Button type="submit" variant="solid" disabled={loading}>
                   {t("actions.save")}
                 </Button>
                 <Button

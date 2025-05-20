@@ -1,5 +1,5 @@
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button, IconButton } from "@radix-ui/themes";
+import { Button, IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -21,13 +21,15 @@ import { QueryFormError } from "./QueryFormError";
 import { tableQueryModule } from "./Structures/Presentations";
 import { IRowDataError } from "./Structures/Types";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
+import { useTranslation } from "react-i18next";
 
 /**
  * Tabla de errores del sistema.
  */
-const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
+  const [t] = useTranslation("global_gestor");
 
   /**
    * Inicializar token y parámetros de URL
@@ -50,7 +52,7 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
   const configureErrorTableActions = (
     tableFormat: IPresentationTable,
     onEditRow?: (row: IRowDataError) => void,
-    onSeeRow?: (row: IRowDataError) => void
+    onSeeRow?: (row: IRowDataError) => void,
   ) => {
     // Configurar acción para ver detalle
     if (tableFormat.items[1]) {
@@ -83,11 +85,17 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
     return tableFormat;
   };
 
-  const Menu = () => {
+  /**
+   * Configurar el menú de la tabla de errores
+   * 
+   */
+  const MenuTable = () => {
     return (
-      <IconButton radius="full" variant="soft">
-        <IconComponent iconName="PlusIcon" width="16" height="16" />
-      </IconButton>
+      <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
+        <IconButton radius="full" variant="soft" onClick={onCreateRow}>
+          <IconComponent iconName="PlusIcon" width="16" height="16" />
+        </IconButton>
+      </Tooltip>
     );
   };
 
@@ -104,10 +112,11 @@ const QueryError = ({ onEditRow, onSeeRow }: IQueryProps) => {
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
-      childrenMenu={<Menu />}
+      childrenMenu={<MenuTable />}
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
+      onCreateRow={onCreateRow}
     />
   );
 };

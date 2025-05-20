@@ -1,24 +1,28 @@
-import { IPresentationTable } from "ux-ui";
-import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { GenericQuery } from "ux-ui/src/components/form/GenericQuery";
-import { Menus, MODULE } from "../../utils/Constants";
-import queryActionsModule from "./QueryActionsModule";
-import { QueryFormModule } from "./QueryFormModule";
-import { tableQueryModule } from "./Structures/Presentations";
-import { IRowDataModule } from "./Structures/Types";
+import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
 import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { IconComponent, IPresentationTable } from "ux-ui";
+import { IQueryProps } from "ux-ui/src/components/crud/Types";
+import { GenericQuery } from "ux-ui/src/components/form/GenericQuery";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
+import { Menus, MODULE } from "../../utils/Constants";
+import queryActionsModule from "./QueryActionsModule";
+import { QueryFormModule } from "./QueryFormModule";
+import { tableQueryModule } from "./Structures/Presentations";
+import { IRowDataModule } from "./Structures/Types";
 
 /**
  * Tabla de Modules del sistema.
  */
-const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
+  const [t] = useTranslation ("global_gestor");
 
   /**
    * Inicializar token y parámetros de URL
@@ -69,6 +73,19 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
 
     return tableFormat;
   };
+/**
+   * Configurar el menú de la tabla de errores
+   * 
+   */
+  const MenuTable = () => {
+    return (
+      <Tooltip content={t("modules." + Menus.MODULE + ".add")} side="left">
+        <IconButton radius="full" variant="soft" onClick={onCreateRow}>
+          <IconComponent iconName="PlusIcon" width="16" height="16" />
+        </IconButton>
+      </Tooltip>
+    );
+  };
 
   return (
     <GenericQuery<IRowDataModule>
@@ -83,9 +100,12 @@ const QueryModule = ({ onEditRow, onSeeRow }: IQueryProps) => {
       configureTableActions={configureModuleTableActions}
       apiUrl={apiUrl}
       token={token}
+      menuTableRefresh={MenuTableRefresh.refresh}
+      childrenMenu={<MenuTable />}
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
+      onCreateRow={onCreateRow}
     />
   );
 };

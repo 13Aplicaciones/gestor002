@@ -16,7 +16,7 @@ import { IRowDataCredential } from "./Structures/Types";
 /**
  * Tabla de información del sistema.
  */
-const QueryCredentials = ({ onEditRow, onSeeRow }: IQueryProps) => {
+const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -70,6 +70,7 @@ const QueryCredentials = ({ onEditRow, onSeeRow }: IQueryProps) => {
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
+      onCreateRow={onCreateRow}
     />
   );
 };

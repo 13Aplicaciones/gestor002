@@ -33,7 +33,7 @@
         "GS-MD-001": {
             "icon": "CubeIcon",
             "title": "Módulos",
-            "add": "Módulo",
+            "add": "Crear nuevo 'Módulo'",
             "description": "Módulos del Sistema",
             "path": "Module",
             "panel": {
@@ -108,6 +108,7 @@
             "icon": "PersonIcon",
             "title": "Usuarios",
             "description": "Usuarios del sistema",
+            "add": "Crear nuevo 'Usuario'",
             "path": "User",
             "panel": {
                 "find": "Buscar Usuarios",
@@ -205,7 +206,7 @@
         "GS-ER-001": {
             "icon": "Cross1Icon",
             "title": "Errores",
-            "add": "Error",
+            "add": "Crear nuevo 'Error'",
             "description": "Información de errores del sistema y cómo se pueden solucionar",
             "path": "Error",
             "panel": {
@@ -253,6 +254,7 @@
         "GS-IN-001": {
             "icon": "InfoCircledIcon",
             "title": "Información",
+            "add": "Crear nueva 'Información'",
             "description": "Datos de información del módulo",
             "path": "Information",
             "panel": {

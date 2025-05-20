@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
-import { fetchData, formatMessageJson, IFetchData, MethodREST, TypeBody } from "api-fetch";
+import {
+  fetchData,
+  formatMessageJson,
+  IFetchData,
+  MethodREST,
+  TypeBody,
+} from "api-fetch";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts, StatusEdit } from "../../ConstantsPresentation";
@@ -246,9 +252,9 @@ function GenericCrudForm<T>({
         onCancel={handleOnCancelDelete}
       />
       <BannerInformation message={messageFormulario} alert={Alerts.error} />
-      <Flex direction="row" gap="3" align="center">
-        <FormState statusEdit={formStatus} />
-        <InformationPanelRegistration row={row} />
+      <Flex direction="row" align="baseline" gap="3">
+          <FormState statusEdit={formStatus} />
+          <InformationPanelRegistration row={row} />
       </Flex>
 
       {renderForm({

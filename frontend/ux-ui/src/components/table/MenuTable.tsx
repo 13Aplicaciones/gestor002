@@ -1,4 +1,3 @@
-import { StopwatchIcon } from "@radix-ui/react-icons";
 import {
   Box,
   Card,
@@ -8,10 +7,21 @@ import {
   Tooltip,
 } from "@radix-ui/themes";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alerts, MenuTableRefresh } from "../../ConstantsPresentation";
 import { IconComponent } from "../icon/IconDynamic";
 import { useToastContext } from "../toast/useToastContext";
 
+/**
+ * Componente para el menú de la tabla.
+ *
+ * @param loading - Indica si la tabla está cargando.
+ * @param handlePaginationPresentation - Función para manejar la presentación de la paginación.
+ * @param menuTableRefresh - Tipo de refresco de la tabla.
+ * @param children - Elementos secundarios que se mostrarán en el menú.
+ *  
+ * @returns 
+ */
 const MenuTable = ({
   loading,
   handlePaginationPresentation,
@@ -23,6 +33,7 @@ const MenuTable = ({
   menuTableRefresh: MenuTableRefresh;
   children?: React.ReactNode;
 }) => {
+  const [t] = useTranslation("global_ux");
   const [timer, setTimer] = useState(false);
   const { showToast } = useToastContext();
 
@@ -35,8 +46,8 @@ const MenuTable = ({
     setTimer(!statusTimer);
     if (!timer) {
       showToast(
-        "Inicia Timer",
-        "Inicia consulta automatica cada 30 segundos",
+        t("menuTable.timer.start"),
+        t("menuTable.timer.startDescription"),
         Alerts.success
       );
       const intervalId = setInterval(() => {
@@ -44,7 +55,11 @@ const MenuTable = ({
       }, 30000);
       window.__tableSearchOrderIntervalId = intervalId;
     } else {
-      showToast("Finaliza Timer", "Finaliza consulta automatica", Alerts.info);
+      showToast(
+        t("menuTable.timer.stop"),
+        t("menuTable.timer.stopDescription"),
+        Alerts.info
+      );
       clearInterval(window.__tableSearchOrderIntervalId);
     }
   };
@@ -60,7 +75,7 @@ const MenuTable = ({
 
           {(menuTableRefresh === MenuTableRefresh.refresh ||
             menuTableRefresh === MenuTableRefresh.refreshFull) && (
-            <Tooltip content="reload" side="left">
+            <Tooltip content={t("menuTable.refresh.label")} side="left">
               <IconButton
                 radius="full"
                 variant="soft"
@@ -76,7 +91,7 @@ const MenuTable = ({
 
           {(menuTableRefresh === MenuTableRefresh.refreshTimmer ||
             menuTableRefresh === MenuTableRefresh.refreshFull) && (
-            <Tooltip content="Add to library" side="left">
+            <Tooltip content={t("menuTable.timer.label")} side="left">
               <IconButton
                 radius="full"
                 loading={loading}
@@ -85,7 +100,7 @@ const MenuTable = ({
                   workTimer(timer);
                 }}
               >
-                <StopwatchIcon />
+                <IconComponent iconName="StopwatchIcon" width="16" height="16" />
               </IconButton>
             </Tooltip>
           )}
