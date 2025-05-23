@@ -17,14 +17,14 @@ import { FooterForm } from "./Form";
 
 /**
  * Funciones de query de presentación de formularios y estos son resize.
- * 
+ *
  * @autor @omargo33
  * @since 2025-05-03
  */
 
 /**
  * Interfaz para las propiedades del formulario de búsqueda genérico.
- * 
+ *
  * @template TFormValues Tipo de datos del formulario
  */
 interface GenericQueryFormProps<TFormValues extends FieldValues> {
@@ -43,13 +43,13 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
 
 /**
  * Componente genérico para formularios de búsqueda
- * 
+ *
  * @param validationSchema Esquema de validación para el formulario
  * @param defaultValues Valores iniciales del formulario
  * @param onFind Función que se llama cuando se realiza la búsqueda
  * @param renderFields Función para renderizar los campos del formulario
- * 
- * @returns 
+ *
+ * @returns
  */
 function GenericQueryForm<TFormValues extends FieldValues>({
   validationSchema,
@@ -105,4 +105,3 @@ function GenericQueryForm<TFormValues extends FieldValues>({
 
 export { GenericQueryForm };
 export type { GenericQueryFormProps };
-

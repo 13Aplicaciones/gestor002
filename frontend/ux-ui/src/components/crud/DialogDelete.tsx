@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 
 /**
  * Dialogo de confirmación de eliminación de registro.
- * 
- * @param dialogRefresh si se refresca el dialogo 
+ *
+ * @param dialogRefresh si se refresca el dialogo
  * @param dialogStatus en que estado se va a refrerscar el dialogo
  * @param loadingOnDelete si se esta cargando la eliminación se deshabilita los botones
  * @param onDelete función a ejecutar cuando se confirma la eliminación
  * @param onCancel función a ejecutar cuando se cancela la eliminación
- * @returns 
+ * @returns
  */
 const DialogDelete = ({
   dialogRefresh,
@@ -40,7 +40,6 @@ const DialogDelete = ({
       buttons={
         <>
           <Button
-            size="3"
             disabled={loadingOnDelete}
             color={alertColor({ alert: Alerts.error })}
             variant="solid"
@@ -51,7 +50,6 @@ const DialogDelete = ({
             {t("actions.delete")}
           </Button>
           <Button
-            size="3"
             disabled={loadingOnDelete}
             variant="solid"
             onClick={() => {

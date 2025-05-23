@@ -1,6 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ResetIcon } from "@radix-ui/react-icons";
-import { Button, IconButton } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -17,10 +15,9 @@ import {
   AreaField,
   BandPresentation,
   Direction,
-  FooterForm,
+  FooterFormAction,
   IFormProps,
-  InputField,
-  StatusEdit,
+  InputField
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
@@ -145,26 +142,12 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
                 register={register("description")}
                 messageError={errors.description?.message}
               />
-              <FooterForm
-                directionLabel={Direction.horizontal}
-                columns={BandPresentation.column_1}
-              >
-                <IconButton form="none" variant="solid" onClick={onAtras}>
-                  <ResetIcon />
-                </IconButton>
-                <Button type="submit" variant="solid" disabled={loading}>
-                  {t("actions.save")}
-                </Button>
-                <Button
-                  type="button"
-                  form="none"
-                  variant="surface"
-                  disabled={formStatus === StatusEdit.create}
-                  onClick={showPopUpDelete}
-                >
-                  {t("actions.delete")}
-                </Button>
-              </FooterForm>
+              <FooterFormAction
+                loading={loading}
+                onAtras={onAtras}
+                showPopUpDelete={showPopUpDelete}
+                formStatus={formStatus}
+              />              
             </form>
           )}
         />

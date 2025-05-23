@@ -60,7 +60,7 @@ export {
 export type { IPresentationInputSelect } from "./components/input/Input";
 
 // Exportar elementos de la libreria para formularios
-export { FormState, FooterForm } from "./components/form/Form.tsx";
+export { FormState, FooterFormAction,  FooterForm } from "./components/form/Form.tsx";
 export { GenericCrudForm } from "./components/form/GenericCrudForm";
 export { GenericPreview } from "./components/form/GenericPreview";
 export { GenericQuery } from "./components/form/GenericQuery";

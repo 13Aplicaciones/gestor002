@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, IconButton } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -15,19 +14,17 @@ import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   Direction,
-  FooterForm,
+  FooterFormAction,
   IFormProps,
   InputField,
-  PageCrud,
-  StatusEdit,
+  PageCrud
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
 import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
+import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
 import { PreviewUser } from "./PreviewUser";
-import { ResetIcon } from "@radix-ui/react-icons";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -146,26 +143,12 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
               register={register("lastName")}
               messageError={errors.lastName?.message}
             />
-            <FooterForm
-              directionLabel={Direction.horizontal}
-              columns={BandPresentation.column_2}
-            >
-              <IconButton form="none" variant="solid" onClick={onAtras}>
-                <ResetIcon />
-              </IconButton>
-              <Button type="submit" disabled={loading}>
-                {t("actions.save")}
-              </Button>
-              <Button
-                type="button"
-                form="none"
-                variant="surface"
-                disabled={formStatus === StatusEdit.create}
-                onClick={showPopUpDelete}
-              >
-                {t("actions.delete")}
-              </Button>
-            </FooterForm>
+          <FooterFormAction
+                loading={loading}
+                onAtras={onAtras}
+                showPopUpDelete={showPopUpDelete}
+                formStatus={formStatus}
+              />
           </form>
         )}
       />

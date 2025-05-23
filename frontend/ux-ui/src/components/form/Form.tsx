@@ -4,7 +4,7 @@ import {
   Pencil1Icon,
   PlusIcon,
 } from "@radix-ui/react-icons";
-import { Badge, Flex } from "@radix-ui/themes";
+import { Badge, Button, Flex, Separator } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -128,4 +128,47 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
   );
 };
 
-export { FooterForm, FormState };
+/**
+ * Funcion para mostrar los botones de acción en el pie de los formularios.
+ * 
+ * @param param0 
+ * @returns 
+ */
+const FooterFormAction = ({
+  loading,
+  onAtras,
+  showPopUpDelete,
+  formStatus,
+}: {
+  loading: boolean;
+  onAtras: () => void;
+  showPopUpDelete: () => void;
+  formStatus: StatusEdit;
+}) => {
+  const [t] = useTranslation("global_ux");
+
+  return (
+    <FooterForm
+      directionLabel={Direction.horizontal}
+      columns={BandPresentation.column_1}
+    >
+      <Button type="submit" variant="solid" disabled={loading}>
+        {t("actions.save")}
+      </Button>
+      <Button form="none" variant="surface" onClick={onAtras}>
+        {t("actions.cancel")}
+      </Button>
+      <Separator orientation="vertical" />
+      <Button
+        form="none"
+        variant="outline"
+        onClick={showPopUpDelete}
+        disabled={formStatus === StatusEdit.create}
+      >
+        {t("actions.delete")}
+      </Button>
+    </FooterForm>
+  );
+};
+
+export { FooterForm, FooterFormAction, FormState };

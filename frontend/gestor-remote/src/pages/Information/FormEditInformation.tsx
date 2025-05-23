@@ -1,30 +1,27 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, IconButton } from "@radix-ui/themes";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   AreaField,
   BandPresentation,
   Direction,
-  FooterForm,
+  FooterFormAction,
   IFormProps,
   InputField,
-  StatusEdit,
 } from "ux-ui";
+import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
-import { useEffect, useState } from "react";
-import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
-} from "orchestrator_remote/service/Tokens";
-import {
-  getParameter,
-  IParameter,
-} from "orchestrator_remote/service/Parameter";
-import { ResetIcon } from "@radix-ui/react-icons";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -138,26 +135,12 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
             register={register("value02")}
             messageError={errors.value02?.message}
           />
-          <FooterForm
-            directionLabel={Direction.horizontal}
-            columns={BandPresentation.column_2}
-          >
-            <IconButton form="none" variant="solid" onClick={onAtras}>
-              <ResetIcon />
-            </IconButton>
-            <Button type="submit" disabled={loading}>
-              {t("actions.save")}
-            </Button>
-            <Button
-              type="button"
-              form="none"
-              variant="surface"
-              disabled={formStatus === StatusEdit.create}
-              onClick={showPopUpDelete}
-            >
-              {t("actions.delete")}
-            </Button>
-          </FooterForm>
+          <FooterFormAction
+            loading={loading}
+            onAtras={onAtras}
+            showPopUpDelete={showPopUpDelete}
+            formStatus={formStatus}
+          />
         </form>
       )}
     />
