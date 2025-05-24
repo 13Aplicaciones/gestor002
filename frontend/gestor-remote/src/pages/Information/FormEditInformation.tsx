@@ -26,7 +26,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 /**
  * Formulario de edición de errores del sistema.
  */
-const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
+const FormEditInformation = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -98,7 +98,7 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
       status={status}
       row={row}
       indexName="uuid"
-      onAtras={onAtras}
+      onBack={onBack}
       apiUrl={apiUrl}
       token={token}
       getToken={refreshToken}
@@ -137,7 +137,7 @@ const FormEditInformation = ({ status, row, onAtras }: IFormProps) => {
           />
           <FooterFormAction
             loading={loading}
-            onAtras={onAtras}
+            onBack={onBack}
             showPopUpDelete={showPopUpDelete}
             formStatus={formStatus}
           />

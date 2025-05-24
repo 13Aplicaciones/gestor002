@@ -28,15 +28,13 @@ const Title = () => {
   const [t] = useTranslation("global_gestor");
 
   return (
-    <>
-      <Flex direction="row" gap="2" align="center">
-        <IconComponent iconName={t("GearIcon")} width="36" height="36" />
-        <Flex direction="column">
-          <Heading>{t("title")}</Heading>
-          <Text>{t("description")}</Text>
-        </Flex>
+    <Flex direction="row" gap="2" align="center">
+      <IconComponent iconName={t("GearIcon")} width="36" height="36" />
+      <Flex direction="column">
+        <Heading>{t("title")}</Heading>
+        <Text>{t("description")}</Text>
       </Flex>
-    </>
+    </Flex>
   );
 };
 
@@ -49,7 +47,7 @@ const Title = () => {
 const SubTitle = ({ nameMenu }: { nameMenu?: string }) => {
   const [t] = useTranslation("global_gestor");
   const icon = t("modules." + nameMenu + ".icon");
-  const ifFound: boolean = !(icon === "modules." + nameMenu + ".icon");
+  const ifFound: boolean = icon !== "modules." + nameMenu + ".icon";
 
   return (
     <>

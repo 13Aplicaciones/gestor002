@@ -75,7 +75,7 @@ export type { DataItemBadge } from "./components/grid/Card";
 
 // Exportar elementos Tipos de Tablas
 export type { IPresentationTable } from "./components/table/Table";
-export type { IParametersQuery } from "./components/table/TableSearch";
+export type { IParametersQuery } from "./components/table/TableSearchOrder";
 export type {
   IQueryProps,
   IFormProps,
@@ -91,7 +91,6 @@ export {
 
 // Exportar elementos de la libreria para tabla
 export { TableConfigurable } from "./components/table/Table";
-export { TableSearch } from "./components/table/TableSearch";
 export { TableSearchOrder } from "./components/table/TableSearchOrder";
 
 // Exportar elementos de la libreria para Toast

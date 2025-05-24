@@ -130,18 +130,18 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
 
 /**
  * Funcion para mostrar los botones de acción en el pie de los formularios.
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
 const FooterFormAction = ({
   loading,
-  onAtras,
+  onBack,
   showPopUpDelete,
   formStatus,
 }: {
   loading: boolean;
-  onAtras: () => void;
+  onBack: () => void;
   showPopUpDelete: () => void;
   formStatus: StatusEdit;
 }) => {
@@ -155,7 +155,7 @@ const FooterFormAction = ({
       <Button type="submit" variant="solid" disabled={loading}>
         {t("actions.save")}
       </Button>
-      <Button form="none" variant="surface" onClick={onAtras}>
+      <Button form="none" variant="surface" onClick={onBack}>
         {t("actions.cancel")}
       </Button>
       <Separator orientation="vertical" />

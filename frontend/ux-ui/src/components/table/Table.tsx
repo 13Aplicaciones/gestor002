@@ -25,7 +25,7 @@ import {
 } from "../../ConstantsPresentation";
 import { formatFromTextFormat } from "../../utils/FormatMask";
 import { BannerInformation } from "../callout/Information";
-import { IParametersQuery } from "./TableSearch";
+import { IParametersQuery } from "./TableSearchOrder";
 
 /**
  * Componente de tabla paginada.

@@ -26,7 +26,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 /**
  * Formulario de edición de errores del sistema.
  */
-const FormEditError = ({ status, row, onAtras }: IFormProps) => {
+const FormEditError = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -58,10 +58,10 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      indexError: row?.indexError || "",
-      message: row?.message || "",
-      description: row?.description || "",
-      userApp: row?.userApp || "",
+      indexError: row?.indexError ?? "",
+      message: row?.message ?? "",
+      description: row?.description ?? "",
+      userApp: row?.userApp ?? "",
     },
   });
 
@@ -100,7 +100,7 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
         <GenericCrudForm
           status={status}
           row={row}
-          onAtras={onAtras}
+          onBack={onBack}
           indexName="uuid"
           apiUrl={apiUrl}
           token={token}
@@ -144,7 +144,7 @@ const FormEditError = ({ status, row, onAtras }: IFormProps) => {
               />
               <FooterFormAction
                 loading={loading}
-                onAtras={onAtras}
+                onBack={onBack}
                 showPopUpDelete={showPopUpDelete}
                 formStatus={formStatus}
               />              

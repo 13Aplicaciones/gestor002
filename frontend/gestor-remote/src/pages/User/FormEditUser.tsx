@@ -29,7 +29,7 @@ import { PreviewUser } from "./PreviewUser";
 /**
  * Formulario de edición de errores del sistema.
  */
-const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
+const FormEditUser = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -67,11 +67,11 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      nick: row?.nick || "",
-      name: row?.name || "",
-      lastName: row?.lastName || "",
-      userApp: row?.userApp || "",
-      status: row?.status || "C",
+      nick: row?.nick ?? "",
+      name: row?.name ?? "",
+      lastName: row?.lastName ?? "",
+      userApp: row?.userApp ?? "",
+      status: row?.status ?? "C",
     },
   });
 
@@ -108,7 +108,7 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
         status={status}
         row={row}
         indexName="uuid"
-        onAtras={onAtras}
+        onBack={onBack}
         apiUrl={apiUrl}
         token={token}
         getToken={refreshToken}
@@ -145,14 +145,13 @@ const FormEditUser = ({ status, row, onAtras }: IFormProps) => {
             />
           <FooterFormAction
                 loading={loading}
-                onAtras={onAtras}
+                onBack={onBack}
                 showPopUpDelete={showPopUpDelete}
                 formStatus={formStatus}
               />
           </form>
         )}
-      />
-      {/* TODO cambiar previewPanel, formPanel */}
+      />      
       <PageCrud
         tranlation={Menus.ERROR}
         createIRowDataCustom={createIRowDataCredential}

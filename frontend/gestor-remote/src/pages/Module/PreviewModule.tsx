@@ -12,7 +12,7 @@ import { createIRowDataModule, IRowDataModule } from "./Structures/Types";
 /**
  * Función para tener una vista previa de los Modules del sistema.
  */
-const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
+const PreviewModule = ({ onBack, row  }: { onBack: () => void, row?: IRowDataModule  }) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -55,6 +55,7 @@ const PreviewModule = ({ row }: { row?: IRowDataModule }) => {
           token={token}
           getToken={refreshToken}
           entityName="Module"
+          onBack={() =>  onBack()}
         />
       )}
     </>

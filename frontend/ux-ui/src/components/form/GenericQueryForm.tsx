@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { ObjectSchema } from "yup";
 import { BandPresentation, Direction } from "../../ConstantsPresentation";
-import { IParametersQuery } from "../table/TableSearch";
+import { IParametersQuery } from "../table/TableSearchOrder";
 import { FooterForm } from "./Form";
 
 /**
@@ -56,7 +56,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   defaultValues,
   onFind,
   renderFields,
-}: GenericQueryFormProps<TFormValues>) {
+}: Readonly<GenericQueryFormProps<TFormValues>>) {
   const [t] = useTranslation("global_gestor");
 
   /**
@@ -105,3 +105,4 @@ function GenericQueryForm<TFormValues extends FieldValues>({
 
 export { GenericQueryForm };
 export type { GenericQueryFormProps };
+

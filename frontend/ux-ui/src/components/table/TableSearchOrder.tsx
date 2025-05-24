@@ -24,7 +24,6 @@ import { InputSubmit } from "../input/Input";
 import { useToastContext } from "../toast/useToastContext";
 import { MenuTable } from "./MenuTable";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
-import { IParametersQuery } from "./TableSearch";
 
 // Extiende la interfaz Window para permitir __tableSearchOrderIntervalId
 declare global {
@@ -40,6 +39,13 @@ declare global {
  * @since 2021-09-20
  *
  */
+
+/**
+ * Interfaz para los parametros de la API.
+ */
+interface IParametersQuery {
+  [key: string]: any;
+}
 
 /**
  * Funcion para obtener los ordenamientos desde la presentacion de la tabla.
@@ -82,7 +88,7 @@ const TableSearchOrder = ({
   parametersToConsult: IParametersQuery;
   presentationTable: IPresentationTable;
   token?: string;
-  getToken?: (() => Promise<string>) | undefined;
+  getToken?: () => Promise<string>;
   menuTableRefresh?: MenuTableRefresh;
   childrenMenu?: React.ReactNode;
 }) => {
@@ -110,8 +116,8 @@ const TableSearchOrder = ({
         .string()
         .test("max-page", t("page.errorPage", { maxPage }), (value) => {
           return (
-            parseInt(value || "0", 10) <= maxPage &&
-            parseInt(value || "0", 10) > 0
+            parseInt(value ?? "0", 10) <= maxPage &&
+            parseInt(value ?? "0", 10) > 0
           );
         }),
     });
@@ -173,7 +179,6 @@ const TableSearchOrder = ({
             response.error,
             alertError
           );
-          return;
         } else {
           const data = response.response.items;
           setData(data);
@@ -400,3 +405,5 @@ const TableSearchOrder = ({
 };
 
 export { TableSearchOrder };
+
+export type { IParametersQuery };

@@ -15,6 +15,7 @@ interface IQueryProps {
  */
 interface IPreviewProps {
     row: any;
+    onBack: () => void;
 }
 
 /**
@@ -23,7 +24,7 @@ interface IPreviewProps {
 interface IFormProps {
     status: StatusEdit;
     row: any;
-    onAtras: () => void;
+    onBack: () => void;
 }
 
 export type { IQueryProps, IFormProps, IPreviewProps };

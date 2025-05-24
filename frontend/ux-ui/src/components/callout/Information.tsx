@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { alertColor, alertIcon, alertVariant } from "../IconosColoresAlerts";
-import { Alerts, FormatMaskISO } from "../../ConstantsPresentation";
 import {
   Badge,
   Callout,
@@ -13,7 +11,9 @@ import {
   Separator,
 } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
+import { Alerts, FormatMaskISO } from "../../ConstantsPresentation";
 import { formatDateMask } from "../../utils/FormatMask";
+import { alertColor, alertIcon, alertVariant } from "../IconosColoresAlerts";
 
 /**
  * Clase que representa los tipos de messages que se pueden mostrar en la aplicación.
@@ -85,36 +85,24 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
   return (
     <HoverCard.Root>
       <HoverCard.Trigger>
-        <Link size="2">@{t("infoPanelRegistration.title")}</Link>
+        <Link size="2">@{t("infoPanelRegistration.link")}</Link>
       </HoverCard.Trigger>
       <HoverCard.Content>
-        <Flex direction="column" gap="3">
+        <Flex direction="column" gap="2">
           <Heading size="2">{t("infoPanelRegistration.title")}</Heading>
           <Separator orientation="horizontal" size="4" />
           <DataList.Root>
-            {row.user && (
+            {row.userApp && (
               <DataList.Item>
-                <DataList.Label minWidth={{ md: "80px" }}>
-                  {t("infoPanelRegistration.usuario")}
+                <DataList.Label>
+                  {t("infoPanelRegistration.usuarioPrograma")}
                 </DataList.Label>
-                <DataList.Value>
-                  <Badge color="crimson" variant="soft" radius="full">
-                    {row.user}
-                  </Badge>
-                </DataList.Value>
-              </DataList.Item>
-            )}
-            {row.userModify && (
-              <DataList.Item>
-                <DataList.Label minWidth={{ md: "80px" }}>
-                  {t("infoPanelRegistration.usuarioFechaModify")}
-                </DataList.Label>
-                {formatDateMask(row.userModify, FormatMaskISO.dateHour)}
+                <DataList.Value>{row.userApp}</DataList.Value>
               </DataList.Item>
             )}
             {row.userDate && (
               <DataList.Item>
-                <DataList.Label minWidth={{ md: "80px" }}>
+                <DataList.Label>
                   {t("infoPanelRegistration.usuarioFecha")}
                 </DataList.Label>
                 <DataList.Value>
@@ -122,12 +110,26 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                 </DataList.Value>
               </DataList.Item>
             )}
-            {row.userApp && (
+            {row.userModify && (
               <DataList.Item>
-                <DataList.Label minWidth={{ md: "80px" }}>
-                  {t("infoPanelRegistration.usuarioPrograma")}
+                <DataList.Label>
+                  {t("infoPanelRegistration.usuarioFechaModify")}
                 </DataList.Label>
-                <DataList.Value>{row.userApp}</DataList.Value>
+                <DataList.Value>
+                  {formatDateMask(row.userModify, FormatMaskISO.dateHour)}
+                </DataList.Value>
+              </DataList.Item>
+            )}
+            {row.user && (
+              <DataList.Item>
+                <DataList.Label>
+                  {t("infoPanelRegistration.usuario")}
+                </DataList.Label>
+                <DataList.Value>
+                  <Badge color="crimson" variant="soft" radius="full">
+                    {row.user}
+                  </Badge>
+                </DataList.Value>
               </DataList.Item>
             )}
           </DataList.Root>

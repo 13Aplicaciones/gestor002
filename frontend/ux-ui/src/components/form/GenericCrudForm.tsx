@@ -43,7 +43,7 @@ interface GenericCrudFormProps<T> {
   indexName: string;
 
   /** Función que se llama al volver atrás */
-  onAtras?: () => void;
+  onBack?: () => void;
 
   /** Endpoint para la API (ej: "/modules", "/errors") */
   apiUrl: string;
@@ -52,7 +52,7 @@ interface GenericCrudFormProps<T> {
   token?: string;
 
   /** Función para obtener el token de autenticación (opcional) */
-  getToken?: (() => Promise<string>) | undefined;
+  getToken?: () => Promise<string>;
 
   /** Función para preparar los datos antes de enviarlos al servidor */
   prepareData?: (data: T) => any;
@@ -79,7 +79,7 @@ interface GenericCrudFormProps<T> {
  * @param status Estado inicial del formulario (crear, editar, ver)
  * @param row Datos de la fila que se está editando
  * @param indexName Nombre del índice para identificar el registro
- * @param onAtras Función que se llama al volver atrás
+ * @param onBack Función que se llama al volver atrás
  * @param apiUrl Endpoint para la API (ej: "/modules", "/errors")
  * @param token Token de autenticación (opcional)
  * @param getToken Función para obtener el token de autenticación (opcional)
@@ -92,7 +92,7 @@ function GenericCrudForm<T>({
   status,
   row,
   indexName,
-  onAtras,
+  onBack,
   apiUrl,
   token,
   getToken,
@@ -106,7 +106,7 @@ function GenericCrudForm<T>({
   );
   const [index, setIndex] = useState<string>((row[indexName] as string) || "");
   const [loading, setLoading] = useState(false);
-  const [messageFormulario, setMessageForm] = useState("");
+  const [messageForm, setMessageForm] = useState("");
   const [t] = useTranslation("global_ux");
   const { showToast } = useToastContext();
 
@@ -170,8 +170,8 @@ function GenericCrudForm<T>({
           if (!response.error) {
             setFormStatus(StatusEdit.find);
             setDialogStatus(false);
-            if (onAtras) {
-              onAtras();
+            if (onBack) {
+              onBack();
             }
           }
         }
@@ -202,10 +202,9 @@ function GenericCrudForm<T>({
       } else {
         showToast(response.status.toString(), response.error, Alerts.warning);
       }
-      return;
     } else {
       const answer = response;
-      if (answer.response && answer.response[indexName]) {
+      if (answer.response?.[indexName]) {
         setIndex(answer.response[indexName]);
       }
 
@@ -251,10 +250,13 @@ function GenericCrudForm<T>({
         onDelete={handleOnDelete}
         onCancel={handleOnCancelDelete}
       />
-      <BannerInformation message={messageFormulario} alert={Alerts.error} />
-      <Flex direction="row" align="baseline" gap="3">
-          <FormState statusEdit={formStatus} />
-          <InformationPanelRegistration row={row} />
+      <BannerInformation
+        message={messageForm}
+        alert={Alerts.error}
+      />
+      <Flex direction="row" align="start" gapX="4" >
+        <FormState statusEdit={formStatus} />
+        <InformationPanelRegistration row={row} />        
       </Flex>
 
       {renderForm({
@@ -269,4 +271,3 @@ function GenericCrudForm<T>({
 
 export { GenericCrudForm };
 export type { GenericCrudFormProps };
-

@@ -1,24 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Flex } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import { fetchData, IFetchData, MethodREST, TypeBody } from "api-fetch";
 import { ReactElement, useEffect, useState } from "react";
-import { Alerts } from "../../ConstantsPresentation";
+import {
+  Alerts,
+  BandPresentation,
+  Direction,
+} from "../../ConstantsPresentation";
 import { BannerInformation } from "../callout/Information";
 import { DataListConfigurable, DataListSkeleton } from "../dataList/DataList";
+import { FooterForm } from "./Form";
+import { useTranslation } from "react-i18next";
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.
- * 
+ *
  * @autor @omargo33
  * @since 2025-05-03
  */
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.
- * 
+ *
  *  @template T Tipo de datos del formulario
- *  
+ *
  */
 interface GenericPreviewProps<T> {
   /** Endpoint para la API (ej: "/modules", "/errors") */
@@ -30,11 +36,14 @@ interface GenericPreviewProps<T> {
   /** Presentación de datos para el componente DataListConfigurable */
   getPresentationData: () => any;
 
+  /** Función que se llama al volver atrás */
+  onBack: () => void;
+
   /** Función para obtener el token de autenticación (opcional) */
   token?: string;
 
   /** Función para obtener el token de autenticación (opcional) */
-  getToken?: (() => Promise<string>) | undefined;
+  getToken?: () => Promise<string>;
 
   /** Nombre personalizado para los mensajes de error (opcional) */
   entityName?: string;
@@ -42,15 +51,16 @@ interface GenericPreviewProps<T> {
 
 /**
  * Componente genérico para previsualizar datos de cualquier entidad
- * 
+ *
  * @param apiUrl URL de la API para obtener los datos
  * @param createEmptyData Función para crear un objeto vacío del tipo de datos
  * @param token Token de autenticación (opcional)
  * @param getToken Función para obtener el token de autenticación (opcional)
+ * @param onBack Función que se llama al volver atrás
  * @param getPresentationData Función para obtener la presentación de datos
  * @param entityName Nombre personalizado para los mensajes de error (opcional)
- * 
- * @returns 
+ *
+ * @returns
  */
 function GenericPreview<T extends { uuid?: string }>({
   apiUrl,
@@ -58,12 +68,14 @@ function GenericPreview<T extends { uuid?: string }>({
   token,
   getToken,
   getPresentationData,
+  onBack,
   entityName = "Entity",
 }: GenericPreviewProps<T>): ReactElement {
   const [alertForm, setAlertForm] = useState<Alerts>(Alerts.warning);
   const [loading, setLoading] = useState(false);
   const [messageForm, setMessageForm] = useState<string>("");
   const [rowFound, setRowFound] = useState<T | null>(createEmptyData());
+  const [t] = useTranslation("global_ux");
 
   /**
    * Cargar la vista previa del registro
@@ -120,10 +132,17 @@ function GenericPreview<T extends { uuid?: string }>({
             data={rowFound}
           />
         ))}
+      <FooterForm
+        directionLabel={Direction.horizontal}
+        columns={BandPresentation.column_1}
+      >
+        <Button variant="solid" onClick={() => onBack?.()}>
+          {t("actions.cancel")}
+        </Button>
+      </FooterForm>
     </Flex>
   );
 }
 
 export { GenericPreview };
 export type { GenericPreviewProps };
-

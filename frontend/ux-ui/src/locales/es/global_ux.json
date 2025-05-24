@@ -178,11 +178,12 @@
     "pagePlaceholder": "Página"
   },
   "infoPanelRegistration": {
+    "link": "Detalle del Registro",
     "title": "Información del Registro",
     "usuario": "Usuario",
     "usuarioFechaModify": "Modificación",
     "usuarioFecha": "Creación",
-    "usuarioPrograma": "Programa"
+    "usuarioPrograma": "Aplicación"
   },
   "dialogDelete": {
     "title": "Desae borrar el Registro",

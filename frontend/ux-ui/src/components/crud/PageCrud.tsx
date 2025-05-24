@@ -65,12 +65,16 @@ const PageCrud = ({
     setRowSelecionado(createIRowDataCustom());
   };
 
+  const onBackPreview = () => {
+    setStatus(StatusEdit.find);
+  }
+
   return (
     <ToastContextProvider>
       <Flex direction="column" gap="2" p="2">
         <Separator orientation="horizontal" size="4" />
         <Flex maxWidth="60vw">
-          <Heading size="4" wrap="pretty">
+          <Heading size="2">
             {t("modules." + tranlation + ".panel." + status)}
           </Heading>
         </Flex>
@@ -83,17 +87,17 @@ const PageCrud = ({
           />
         )}
 
-        {status == StatusEdit.see && <PreviewPanel row={rowSelecionado} />}
+        {status == StatusEdit.see && <PreviewPanel row={rowSelecionado} onBack={onBackPreview} />}
 
         {status == StatusEdit.detail && MasterPreviewPanel && (
-          <MasterPreviewPanel row={rowSelecionado} />
+          <MasterPreviewPanel row={rowSelecionado} onBack={onBackPreview} />
         )}
 
         {(status == StatusEdit.create || status == StatusEdit.edit) && (
           <FormPanel
             status={status}
             row={rowSelecionado}
-            onAtras={() => {
+            onBack={() => {
               setStatus(StatusEdit.find);
             }}
           />

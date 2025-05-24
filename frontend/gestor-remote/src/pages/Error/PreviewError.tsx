@@ -12,7 +12,7 @@ import { createIRowDataError, IRowDataError } from "./Structures/Types";
 /**
  * Función para tener una vista previa de los errores del sistema.
  */
-const PreviewError = ({ row }: { row?: IRowDataError }) => {
+const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError }) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -55,6 +55,7 @@ const PreviewError = ({ row }: { row?: IRowDataError }) => {
           token={token}
           getToken={refreshToken}
           entityName="Error"
+          onBack={() => onBack()}
         />
       )}
     </>

@@ -143,8 +143,8 @@ const InputSecretField = ({ title, placeholder, messageError, columns, direction
  * 
  * @returns 
  */
-const AreaField = ({ title, placeholder, messageError, columns, rows, directionLabel, register }:
-    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, rows?: number | 2, directionLabel: Direction | Direction.horizontal, register?: any }) => {
+const AreaField = ({ title, placeholder, messageError, columns, rows=2, directionLabel, register }:
+    { title?: string, placeholder?: string, messageError?: string, columns?: BandPresentation, rows?: number, directionLabel: Direction | Direction.horizontal, register?: any }) => {
     const presentation = useCalculatePresentation(directionLabel, columns, '60vw');
 
     return (
@@ -218,7 +218,7 @@ const InputSearchDynamic = ({ placeholder, columna, messageError, onClick, regis
  *  
  * @returns 
  */
-const InputSubmit = ({type, placeholder, columna, messageError, onClick, directionLabel, register, children, size }:
+const InputSubmit = ({type, placeholder, columna, messageError, onClick, directionLabel, register, children, size = "3"}:
     {
         type?: string;
         placeholder?: string;
@@ -228,7 +228,7 @@ const InputSubmit = ({type, placeholder, columna, messageError, onClick, directi
         directionLabel: Direction;
         register?: any;
         children?: ReactNode,
-        size?: string | "3"
+        size?: string,
     }) => {
     const presentation = useCalculatePresentation(directionLabel, columna, '30vw');
 
@@ -261,7 +261,7 @@ interface IPresentationInputSelect {
         codeNumber?: number;
         name?: string;
         description?: string;
-        disabled?: boolean | undefined;
+        disabled?: boolean;
         width?: string;
         color?: string;
         iconName?: string;
@@ -290,7 +290,7 @@ const InputSelect = ({
     onChange?: (newValue: any) => void;
 }) => {
 
-    const presentation = useCalculatePresentation(directionLabel || Direction.horizontal, columns, '60vw');
+    const presentation = useCalculatePresentation(directionLabel ?? Direction.horizontal, columns, '60vw');
     items.items.sort((a, b) => a.order - b.order);
 
     /**
@@ -310,27 +310,25 @@ const InputSelect = ({
                 <Text size="2" as="div" weight="bold" truncate trim="normal">{title}</Text>
             </Flex>
             <Flex direction={"column"} style={{ marginBottom: '1vh', width: presentation.width }} >
-                <Select.Root onValueChange={handleValueChange} value={value || ""} >
+                <Select.Root onValueChange={handleValueChange} value={value ?? ""} >
                     <Select.Trigger placeholder={placeholder} />
                     <Select.Content >
                         {items.items.map((item) => (
                             item.separator ? (
                                 <Select.Separator key={item.order} />
                             ) : (
-                                <>
-                                    <Select.Item
-                                        disabled={item.disabled || false}
-                                        key={item.order}
-                                        value={item.codeText || ""}
-                                        style={{ color: item.color || 'inherit' }}
-                                    >
-                                        {item.iconName ? (
-                                            <Flex justify="center" align="center" gap="2" >
-                                                <IconComponent iconName={item.iconName || ""} width="18" height="18" />
-                                                {item.name}
-                                            </Flex>) : item.name}
-                                    </Select.Item>
-                                </>
+                                <Select.Item
+                                    disabled={item.disabled || false}
+                                    key={item.order}
+                                    value={item.codeText ?? ""}
+                                    style={{ color: item.color ?? 'inherit' }}
+                                >
+                                    {item.iconName ? (
+                                        <Flex justify="center" align="center" gap="2" >
+                                            <IconComponent iconName={item.iconName || ""} width="18" height="18" />
+                                            {item.name}
+                                        </Flex>) : item.name}
+                                </Select.Item>
                             )
                         ))}
                     </Select.Content>

@@ -12,7 +12,7 @@ import {
   IRowDataInformation,
 } from "./Structures/Types";
 
-const PreviewInformation = ({ row }: { row?: IRowDataInformation }) => {
+const PreviewInformation = ({onBack, row }: { onBack: () => void; row?: IRowDataInformation }) => {
   const [token, setToken] = useState<string>();
   const [apiUrl, setApiUrl] = useState<string>("");
 
@@ -55,6 +55,7 @@ const PreviewInformation = ({ row }: { row?: IRowDataInformation }) => {
           token={token}
           getToken={refreshToken}
           entityName="Information"
+          onBack={onBack}
         />
       )}
     </>

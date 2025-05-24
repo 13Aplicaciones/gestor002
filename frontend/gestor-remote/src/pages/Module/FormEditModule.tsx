@@ -27,7 +27,7 @@ import { listaFormModule } from "./Structures/Presentations";
 /**
  * Formulario de edición de Modules del sistema.
  */
-const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
+const FormEditModule = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -72,12 +72,12 @@ const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      indexModule: row?.indexModule || "",
-      name: row?.name || "",
-      context: row?.context || "",
-      status: row?.status || "A",
-      userApp: row?.userApp || "",
-      orden: row?.orden || 1,
+      indexModule: row?.indexModule ?? "",
+      name: row?.name ?? "",
+      context: row?.context ?? "",
+      status: row?.status ?? "A",
+      userApp: row?.userApp ?? "",
+      orden: row?.orden ?? 1,
     },
   });
 
@@ -113,7 +113,7 @@ const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
       status={status}
       row={row}
       indexName="uuid"
-      onAtras={onAtras}
+      onBack={onBack}
       apiUrl={apiUrl}
       token={token}
       getToken={refreshToken}
@@ -165,7 +165,7 @@ const FormEditModule = ({ status, row, onAtras }: IFormProps) => {
           />
           <FooterFormAction
             loading={loading}
-            onAtras={onAtras}
+            onBack={onBack}
             showPopUpDelete={showPopUpDelete}
             formStatus={formStatus}
           />

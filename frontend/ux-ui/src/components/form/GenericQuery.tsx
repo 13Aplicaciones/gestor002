@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { MenuTableRefresh } from "../../ConstantsPresentation";
 import { IQueryProps } from "../crud/Types";
 import { IPresentationTable } from "../table/Table";
-import { IParametersQuery } from "../table/TableSearch";
-import { TableSearchOrder } from "../table/TableSearchOrder";
+import { IParametersQuery, TableSearchOrder } from "../table/TableSearchOrder";
 
 /**
  * Funciones de presentación de pie en los formularios y estos son resize.
@@ -42,7 +41,7 @@ interface GenericQueryProps<T> extends IQueryProps {
   token?: string;
 
   /** Función para obtener el token de autenticación (opcional) */
-  getToken?: (() => Promise<string>) | undefined;
+  getToken?: () => Promise<string>;
 
   /** Función para configurar acciones específicas en la tabla */
   configureTableActions?: (
@@ -66,6 +65,8 @@ interface GenericQueryProps<T> extends IQueryProps {
  * @param initialParameters Parámetros iniciales para la consulta
  * @param configureTableActions Función para configurar acciones específicas en la tabla
  * @param token Token de autenticación (opcional)
+ * @param menuTableRefresh Función para manejar refresh de menu
+ * @param childrenMenu Función para manejar la acción del menu
  * @param getToken Función para obtener el token de autenticación (opcional)
  * @param onEditRow Función para manejar la edición de una fila
  * @param onSeeRow Función para manejar la visualización de una fila
