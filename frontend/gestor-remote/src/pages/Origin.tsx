@@ -114,15 +114,7 @@ const Origin = ({ name }: { name: string }) => {
           />
         );
       default:
-        return (
-          <PageCrud
-            tranlation={Menus.INFORMATION}
-            createIRowDataCustom={createIRowDataInformation}
-            QueryPanel={QueryInformation}
-            PreviewPanel={PreviewInformation}
-            FormPanel={FormEditInformation}
-          />
-        );
+        return <>No definido</>;
     }
   };
 

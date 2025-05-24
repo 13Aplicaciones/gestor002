@@ -172,7 +172,7 @@ const DataListSkeleton = ({ column }: { column: number }) => {
     <Flex direction="column" gap="3" maxWidth={{ md: "50vw", xl: "1400px" }}>
       <DataList.Root>
         {Array.from({ length: column }).map((_, index) => (
-          <DataList.Item key={index} align={"start"}>
+          <DataList.Item key={index + ""} align={"start"}>
             <DataList.Label minWidth="12vh">
               <Skeleton width="12vw">
                 <Text>#</Text>
