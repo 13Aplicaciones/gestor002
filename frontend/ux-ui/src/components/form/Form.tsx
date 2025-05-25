@@ -3,8 +3,9 @@ import {
   LockClosedIcon,
   Pencil1Icon,
   PlusIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons";
-import { Badge, Button, Flex, Separator } from "@radix-ui/themes";
+import { Badge, Button, Flex, IconButton, Separator } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -159,14 +160,14 @@ const FooterFormAction = ({
         {t("actions.cancel")}
       </Button>
       <Separator orientation="vertical" />
-      <Button
+      <IconButton
         form="none"
         variant="outline"
         onClick={showPopUpDelete}
         disabled={formStatus === StatusEdit.create}
       >
-        {t("actions.delete")}
-      </Button>
+        <TrashIcon />
+      </IconButton>
     </FooterForm>
   );
 };

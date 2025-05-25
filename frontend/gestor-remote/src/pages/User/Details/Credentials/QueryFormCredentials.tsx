@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
@@ -9,7 +10,7 @@ import {
 import * as yup from "yup";
 
 interface CredentialsQueryFormValues {
-  socialNick: string;
+  uuidUser: string;
 }
 
 /**
@@ -17,35 +18,33 @@ interface CredentialsQueryFormValues {
  */
 const QueryFormCredentials = ({
   onFind,
+  initialRow,
 }: {
   onFind: (data: IParametersQuery) => void;
+  initialRow?: any;
 }) => {
   const [t] = useTranslation("global_gestor");
-
   const schema = yup.object({
-    nick: yup
-      .string()
-      .required(t("modules.GS-UC-001.fields.socialNick.required")),
+    uuidUser: yup.string().required(t("validation.required")),
   });
 
   return (
     <GenericQueryForm<CredentialsQueryFormValues>
+      disableSubmit={true}
       validationSchema={schema}
       defaultValues={{
-        socialNick: "",
+        uuidUser: initialRow?.uuidUser ?? "",
       }}
       onFind={onFind}
       renderFields={({ register, formState }) => (
-        <>
-          <InputField
-            title={t("modules.GS-UC-001.fields.socialNick.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-US-001.fields.nick.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("socialNick")}
-            messageError={formState.errors.socialNick?.message}
-          />
-        </>
+        <InputField
+          title={t("modules.GS-US-001.fields.uuid.title")}
+          columns={BandPresentation.column_3}
+          placeholder={t("modules.GS-US-001.fields.uuid.placeholder")}
+          directionLabel={Direction.horizontal}
+          register={register("uuidUser")}
+          messageError={formState.errors.uuidUser?.message}
+        />
       )}
     />
   );

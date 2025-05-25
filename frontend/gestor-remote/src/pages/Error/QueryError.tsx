@@ -92,7 +92,7 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const MenuTable = () => {
     return (
       <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
-        <IconButton radius="full" variant="soft" onClick={onCreateRow}>
+        <IconButton  variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
       </Tooltip>

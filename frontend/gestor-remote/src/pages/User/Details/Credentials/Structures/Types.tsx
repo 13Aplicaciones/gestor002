@@ -5,6 +5,7 @@ interface IRowDataCredential {
   email: string;
   socialNick: string;
   type: string;
+  uuid: string;
   user: string;
   userApp: string;
   userDate: string;
@@ -20,6 +21,7 @@ const createIRowDataCredential = (): IRowDataCredential => {
     email: "",
     socialNick: "",
     type: "",
+    uuid: "",
     user: "",
     userApp: "",
     userDate: "",

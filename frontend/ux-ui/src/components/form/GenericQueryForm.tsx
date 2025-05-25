@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@radix-ui/themes";
+import { ResetIcon } from "@radix-ui/react-icons";
+import { Button, IconButton } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import {
   DeepPartial,
@@ -39,6 +40,9 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
 
   /** Función para renderizar los campos del formulario */
   renderFields: (form: UseFormReturn<TFormValues>) => ReactNode;
+
+  /** Deshabilitar la presentacion para la busqueda automatica */
+  disableSubmit?: boolean;
 }
 
 /**
@@ -56,6 +60,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   defaultValues,
   onFind,
   renderFields,
+  disableSubmit,
 }: Readonly<GenericQueryFormProps<TFormValues>>) {
   const [t] = useTranslation("global_gestor");
 
@@ -86,7 +91,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
     form.reset();
   };
 
-  return (
+  return disableSubmit ? null : (
     <form onSubmit={form.handleSubmit(submitForm)}>
       {renderFields(form)}
 
@@ -95,9 +100,9 @@ function GenericQueryForm<TFormValues extends FieldValues>({
         columns={BandPresentation.column_2}
       >
         <Button type="submit">{t("actions.search")}</Button>
-        <Button type="button" variant="surface" onClick={resetForm}>
-          {t("actions.clean")}
-        </Button>
+        <IconButton variant="surface" onClick={resetForm}>
+          <ResetIcon />
+        </IconButton>
       </FooterForm>
     </form>
   );

@@ -162,15 +162,15 @@
             "description": "Credenciales de los usuarios del sistema",
             "path": "Credenciales",
             "panel": {
-                "find": "Buscar Credenciales",
+                "find": "Listar Credenciales",
                 "see": "Vista previa de la Credencial",
                 "edit": "Editar Credencial",
                 "create": "Crear Credencial"
             },
             "fields": {
-                "//uuid": {
-                    "//title": "UUID",
-                    "//placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+                "uuid": {
+                    "title": "UUID",
+                    "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
                 },
                 "socialNick": {
                     "title": "Nick",

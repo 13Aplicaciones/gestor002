@@ -138,9 +138,9 @@ public class UserController {
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String status) {
 
-        Page<User> pageusers = userService.findAll(nick, name, lastName, status,
+        Page<User> pageUsers = userService.findAll(nick, name, lastName, status,
                 ControllerTools.generateOrders(page, size, sort));
                 
-        return ControllerTools.generateFooterPage(pageusers);
+        return ControllerTools.generateFooterPage(pageUsers);
     }
 }

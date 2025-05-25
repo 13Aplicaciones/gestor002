@@ -1,9 +1,6 @@
 package com.aplicaciones13.gestor.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import com.aplicaciones13.base.model.common.UserDateApp;
+import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Clase que representa la tabla token
@@ -23,7 +22,7 @@ import jakarta.persistence.Table;
 @Table(name = "token")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Token extends UserDateApp{
+public class Token extends UuidUserDateApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_token")
@@ -41,8 +40,8 @@ public class Token extends UserDateApp{
     @Column(length = 256)
     private String email;
 
-    @Column(length = 512, nullable = false)
-    private String token;
+    @Column(name = "token", length = 512, nullable = false)
+    private String credential;
 
     @Column(length = 512, nullable = false)
     private String validator;
@@ -50,6 +49,7 @@ public class Token extends UserDateApp{
     @Column(length = 8, nullable = false)
     private String status;
 
+    @Override
     @PrePersist
     protected void onCreate() {
         super.onCreate();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { MenuTableRefresh } from "../../ConstantsPresentation";
@@ -20,7 +21,7 @@ import { IParametersQuery, TableSearchOrder } from "../table/TableSearchOrder";
  */
 interface GenericQueryProps<T> extends IQueryProps {
   /** Componente del formulario de búsqueda */
-  QueryForm: React.ComponentType<{ onFind: (data: IParametersQuery) => void }>;
+  QueryForm: React.ComponentType<{ onFind: (data: IParametersQuery) => void , initialRow?: any}>;
 
   /** Endpoint para la API (ej: "/modules", "/errors") */
   apiUrl: string;
@@ -42,6 +43,9 @@ interface GenericQueryProps<T> extends IQueryProps {
 
   /** Función para obtener el token de autenticación (opcional) */
   getToken?: () => Promise<string>;
+
+  /** Función para manejar Filas con datos de inicio */
+  initialRow?: any;
 
   /** Función para configurar acciones específicas en la tabla */
   configureTableActions?: (
@@ -85,9 +89,12 @@ function GenericQuery<T>({
   childrenMenu,
   onEditRow,
   onSeeRow,
+  initialRow,
 }: GenericQueryProps<T>) {
-  const [parametersQuery, setParametersQuery] =
-    useState<IParametersQuery>(initialParameters);
+  const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
+    ...initialParameters,
+    ...(initialRow ?? {}),
+  });
   const [presentacionTabla, setPresentacionTabla] =
     useState<IPresentationTable>({} as IPresentationTable);
 
@@ -143,7 +150,7 @@ function GenericQuery<T>({
     <Flex direction="column" gap="3">
       {token && apiUrl && Object.keys(presentacionTabla).length > 0 && (
         <>
-          <QueryForm onFind={handleFormFind} />
+          <QueryForm onFind={handleFormFind} initialRow={initialRow} />
           <TableSearchOrder
             apiUrl={apiUrl}
             parametersToConsult={parametersQuery}

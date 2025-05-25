@@ -153,11 +153,12 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
         )}
       />      
       <PageCrud
-        tranlation={Menus.ERROR}
+        tranlation={Menus.CREDENTIALS}
         createIRowDataCustom={createIRowDataCredential}
         QueryPanel={QueryCredentials}
         PreviewPanel={PreviewUser}
         FormPanel={FormEditUser}
+        initialRow={{ uuidUser: row.uuid }}
       />
     </>
   );

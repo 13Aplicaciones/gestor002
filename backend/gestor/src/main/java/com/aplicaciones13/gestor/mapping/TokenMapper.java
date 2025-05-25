@@ -24,7 +24,7 @@ public interface TokenMapper {
     @Mapping(target = "idToken", ignore = true)
     @Mapping(target = "idUser", ignore = true)
     @Mapping(target = "socialNick", ignore = true)
-    @Mapping(target = "token", ignore = true)
+    @Mapping(target = "credential", ignore = true)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "validator", ignore = true)
     Token toEntity(TokenEmailRequest tokenEmailRequest);

@@ -1,7 +1,6 @@
 package com.aplicaciones13.gestor.payload.response;
 
 import com.aplicaciones13.base.payload.common.UserDateAppResponse;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,4 +18,7 @@ public class TokenResponse extends UserDateAppResponse {
 
     @Schema(description = "Type of token", example = "C")
     private String type;
+
+    @Schema(description = "UUID del token", example = "1234567890abcdef")
+    private String uuid;
 }

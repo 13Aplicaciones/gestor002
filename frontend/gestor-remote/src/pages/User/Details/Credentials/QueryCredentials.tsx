@@ -16,7 +16,7 @@ import { IRowDataCredential } from "./Structures/Types";
 /**
  * Tabla de información del sistema.
  */
-const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow, initialRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
@@ -29,7 +29,7 @@ const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.USER_ENDPOINT + "/paginated");
+      setApiUrl(parameter.valueText01 + Menus.CREDENTIALS_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
@@ -63,6 +63,7 @@ const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       initialParameters={{
         size: "10",
         name: "",
+        uuidUser: initialRow?.uuid ?? "",
       }}
       configureTableActions={configureCredentialsTableActions}
       apiUrl={apiUrl}
@@ -71,7 +72,7 @@ const QueryCredentials = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
       onCreateRow={onCreateRow}
-    />
+      initialRow={initialRow}    />
   );
 };
 

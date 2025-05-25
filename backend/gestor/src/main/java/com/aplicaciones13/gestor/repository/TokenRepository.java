@@ -1,5 +1,8 @@
 package com.aplicaciones13.gestor.repository;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.aplicaciones13.gestor.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -54,4 +57,19 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     @Modifying
     @Query("UPDATE Token t SET t.status = 'X' WHERE t.idUser = ?1 AND t.type = ?2")
     void deleteByIdUser(Long idUser, String type);
+
+    /**
+     * Metodo para buscar un token por su uuid.
+     * 
+     * @param idUser
+     * @param pageable
+     * @return
+     */
+    @Query(value = "SELECT * FROM GS_002_01.token t WHERE t.id_user = ?1",
+        countQuery = "SELECT count(*) FROM GS_002_01.token t WHERE t.idUser = ?1",
+        nativeQuery = true)
+    Page<Token> paginated(
+            Long idUser,            
+            Pageable pageable);
+    
 }

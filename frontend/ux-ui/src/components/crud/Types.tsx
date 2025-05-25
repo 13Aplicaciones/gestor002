@@ -8,6 +8,7 @@ interface IQueryProps {
     onEditRow: (row: any) => void;
     onSeeRow: (row: any) => void;
     onCreateRow: () => void;
+    initialRow?: any;
 }
 
 /**
@@ -23,8 +24,9 @@ interface IPreviewProps {
  */
 interface IFormProps {
     status: StatusEdit;
-    row: any;
+    row: any;    
     onBack: () => void;
+    initialRow?: any;
 }
 
 export type { IQueryProps, IFormProps, IPreviewProps };

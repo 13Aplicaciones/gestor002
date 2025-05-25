@@ -75,7 +75,7 @@ public class UserService {
      */
      
     public Page<User> findAll(String nick, String name, String lastName, String status, Pageable pageable) {
-        return userRepository.paginado(nick, name, lastName,status, pageable);
+        return userRepository.paginated(nick, name, lastName,status, pageable);
     }
     
     /**

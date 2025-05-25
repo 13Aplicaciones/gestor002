@@ -26,6 +26,7 @@ const PageCrud = ({
   FormPanel,
   PreviewPanel,
   MasterPreviewPanel,
+  initialRow,
 }: {
   tranlation: string;
   createIRowDataCustom: () => any;
@@ -33,6 +34,7 @@ const PageCrud = ({
   FormPanel: ComponentType<IFormProps>;
   PreviewPanel: ComponentType<IPreviewProps>;
   MasterPreviewPanel?: ComponentType<IPreviewProps>;
+  initialRow?: any;
 }) => {
   // Crear un componente interno único para cada instanceId
   const PageCrudInstance = useMemo(() => {
@@ -96,6 +98,7 @@ const PageCrud = ({
                 onEditRow={onEditarRow}
                 onSeeRow={onSeeRow}
                 onCreateRow={onCreateRow}
+                initialRow={initialRow}
               />
             )}
 
@@ -114,6 +117,7 @@ const PageCrud = ({
                 onBack={() => {
                   setStatus(StatusEdit.find);
                 }}
+                initialRow={initialRow}
               />
             )}
           </Flex>

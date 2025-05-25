@@ -77,7 +77,6 @@ const MenuTable = ({
             menuTableRefresh === MenuTableRefresh.refreshFull) && (
             <Tooltip content={t("menuTable.refresh.label")} side="left">
               <IconButton
-                radius="full"
                 variant="soft"
                 loading={loading}
                 onClick={() => {
@@ -93,7 +92,6 @@ const MenuTable = ({
             menuTableRefresh === MenuTableRefresh.refreshFull) && (
             <Tooltip content={t("menuTable.timer.label")} side="left">
               <IconButton
-                radius="full"
                 loading={loading}
                 variant={timer ? "solid" : "soft"}
                 onClick={() => {

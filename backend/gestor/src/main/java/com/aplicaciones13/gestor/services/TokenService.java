@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,9 +73,21 @@ public class TokenService {
      */
     public void deleteByUuidUser(String uuidUser) {
         Token token = findTokensByUuidUser(uuidUser).get(0);
-
-        // TODO: solo borra los email = E
         tokenRepository.deleteByIdUser(token.getIdUser(), "E");
+    }
+
+    /**
+     * Obtiene todos los registros de la entidad user de manera paginada.
+     * 
+     * @param uuidUser
+     * @param pageable
+     * @return
+     */
+
+    public Page<Token> findAll(String uuidUser, Pageable pageable) {
+        user= getUser(uuidUser);
+
+        return tokenRepository.paginated(user.getIdUser(), pageable);
     }
 
     /**
@@ -90,8 +104,8 @@ public class TokenService {
      * @return
      */
     public TokenResponse createEmail(TokenEmailRequest request) {
-        user = userRepository.findByUuid(request.getUuidUser())
-                .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
+        user = getUser(request.getUuidUser());
+        
         validateUniqueEmail(request.getEmail());
         tokenRepository.deleteByIdUser(user.getIdUser(), "E");
 
@@ -134,9 +148,7 @@ public class TokenService {
      * @return
      */
     private List<Token> findTokensByUuidUser(String uuidUser) {
-        user = userRepository.findByUuid(uuidUser)
-                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
-
+        user = getUser(uuidUser);
         List<Token> tokens = tokenRepository.findByIdUserAndType(user.getIdUser(), "E");
 
         if (tokens.isEmpty()) {
@@ -182,7 +194,7 @@ public class TokenService {
      * @param changePasswordRequest
      */
     private void validateToken(Token token, ChangePasswordRequest changePasswordRequest) {
-        if (!token.getToken().equals(changePasswordRequest.getToken())) {
+        if (!token.getCredential().equals(changePasswordRequest.getToken())) {
             throw new DataIntegrityViolationException("Clave incorrecta");
         }
 
@@ -221,7 +233,7 @@ public class TokenService {
             tokenInfo.setType("E");
             tokenInfo.setSocialNick(user.getNick());
             tokenInfo.setEmail(email);
-            tokenInfo.setToken(password);
+            tokenInfo.setCredential(password);
             tokenInfo.setValidator(Hash.crearHash(user.getNick(), email, password));
             tokenInfo.setStatus("C");
             tokenInfo.setUser(userName);
@@ -229,7 +241,7 @@ public class TokenService {
         }
 
         Token token = tokenInfo;
-        token.setToken(password);
+        token.setCredential(password);
         token.setStatus("A");
         token.setUser(userName);
         token.setValidator(Hash.crearHash(userName, tokenInfo.getEmail(), password));
@@ -247,18 +259,15 @@ public class TokenService {
         user.setUserApp(userApp);
         userRepository.save(user);
 
-        // TODO: Enviar correo con la nueva clave temporal: token.getToken()
         if (sendPassword) {
-            log.info("Se ha enviado un correo a " + tokenInfo.getEmail() + " con la nueva clave temporal: " + password);
+            log.warn("Se ha enviado un correo a {} con la nueva clave temporal: {}", tokenInfo.getEmail(), password);
         } else {
-            log.info("Se ha cambiado la clave de " + tokenInfo.getEmail());
+            log.warn("Se ha cambiado la clave de {}", tokenInfo.getEmail());
         }
 
-        log.info("Sincronizar el usuario " + user.getNick() + " con el servidor de autenticación");
-
+        log.warn("Sincronizar el usuario {} con el servidor de autenticación", user.getNick());
         return token;
     }
-
 
     /**
      * Bloquea el usuario en la base de datos.
@@ -266,9 +275,7 @@ public class TokenService {
      * @param lockRequest
      */
     public void lockUser(LockRequest lockRequest) {
-        user = userRepository.findByUuid(lockRequest.getUuidUser())
-                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
-
+        user = getUser(lockRequest.getUuidUser());
         user.setStatus("I");
         userRepository.save(user);
 
@@ -282,14 +289,23 @@ public class TokenService {
      * @param l
      */
     public void unlockUser(LockRequest lockRequest) {
-        user = userRepository.findByUuid(lockRequest.getUuidUser())
-                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
-
+        user = getUser(lockRequest.getUuidUser());
         user.setStatus("A");
         user.setIncomeCounter(0L);
         userRepository.save(user);
 
         log.info("Enviar correo de desbloqueo al usuario " + lockRequest.getEmail());
         log.info("Sincronizar el usuario " + user.getNick() + " con el servidor de autenticación");
+    }
+
+    /**
+     * Obtiene el usuario por su UUID.
+     * 
+     * @param uuidUser
+     * @return
+     */
+    private User getUser(String uuidUser) {
+        return userRepository.findByUuid(uuidUser)
+                .orElseThrow(() -> new ResourceHttpStatusException("Usuario No encontrado", HttpStatus.NOT_FOUND));
     }
 }
