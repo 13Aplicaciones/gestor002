@@ -17,7 +17,8 @@ import {
   FooterFormAction,
   IFormProps,
   InputField,
-  PageCrud
+  PageCrud,
+  StatusEdit
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
@@ -151,15 +152,17 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
               />
           </form>
         )}
-      />      
-      <PageCrud
-        tranlation={Menus.CREDENTIALS}
-        createIRowDataCustom={createIRowDataCredential}
-        QueryPanel={QueryCredentials}
-        PreviewPanel={PreviewUser}
-        FormPanel={FormEditUser}
-        initialRow={{ uuidUser: row.uuid }}
       />
+     {status == StatusEdit.edit && (
+       <PageCrud
+         tranlation={Menus.CREDENTIALS}
+         createIRowDataCustom={createIRowDataCredential}
+         QueryPanel={QueryCredentials}
+         PreviewPanel={PreviewUser}
+         FormPanel={FormEditUser}
+         initialRow={{ uuidUser: row.uuid }}
+       />
+     )}
     </>
   );
 };
