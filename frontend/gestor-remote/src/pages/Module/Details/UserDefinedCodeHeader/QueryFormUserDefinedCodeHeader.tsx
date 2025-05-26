@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Control, Controller, FieldValues } from 'react-hook-form';
 
 import { useTranslation } from "react-i18next";
 import {
   BandPresentation,
   Direction,
+  GenericQueryForm,
   InputField,
-  InputSelect,
   IParametersQuery,
-  GenericQueryForm
 } from "ux-ui";
 import * as yup from "yup";
-import { listaQueryUserDefinedCodeHeader } from "./Structures/Presentations";
 
 interface UserDefinedCodeHeaderQueryFormValues {
-  indexUserDefinedCodeHeader: string;
+  uuidModule: string;
+  group: string;
   name: string;
-  status: string;
+  description: string;
 }
 
 /**
@@ -24,58 +22,62 @@ interface UserDefinedCodeHeaderQueryFormValues {
  */
 const QueryFormUserDefinedCodeHeader = ({
   onFind,
+  initialRow,
 }: {
   onFind: (data: IParametersQuery) => void;
+  initialRow?: any;
 }) => {
   const [t] = useTranslation("global_gestor");
-
   const schema = yup.object({
-    indexUserDefinedCodeHeader: yup.string().max(128, t("validation.max", { max: 128 })),
+    uuidModule: yup.string().max(128, t("validation.max", { max: 128 })),
+    group: yup.string().max(128, t("validation.max", { max: 128 })),
     name: yup.string().max(1024, t("validation.max", { max: 1024 })),
-    status: yup.string(),
+    description: yup.string().max(1024, t("validation.max", { max: 1024 })),
   });
 
   return (
     <GenericQueryForm<UserDefinedCodeHeaderQueryFormValues>
       validationSchema={schema}
       defaultValues={{
-        indexUserDefinedCodeHeader: "",
+        uuidModule: initialRow?.uuidModule ?? "",
+        group: "",
         name: "",
-        status: "",
+        description: "",
       }}
       onFind={onFind}
-      renderFields={({ register, control, formState }) => (
+      renderFields={({ register, formState }) => (
         <>
           <InputField
-            title={t("modules.GS-MD-001.fields.indexUserDefinedCodeHeader.title")}
+            title={t("modules.GS-UD-001.fields.uuidModule.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-MD-001.fields.indexUserDefinedCodeHeader.placeholder")}
+            placeholder={t("modules.GS-UD-001.fields.uuidModule.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("indexUserDefinedCodeHeader")}
-            messageError={formState.errors.indexUserDefinedCodeHeader?.message}
+            register={register("uuidModule")}
+            messageError={formState.errors.uuidModule?.message}
           />
           <InputField
-            title={t("modules.GS-MD-001.fields.name.title")}
+            title={t("modules.GS-UD-001.fields.group.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
+            placeholder={t("modules.GS-UD-001.fields.group.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("group")}
+            messageError={formState.errors.group?.message}
+          />
+          <InputField
+            title={t("modules.GS-UD-001.fields.name.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-UD-001.fields.name.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("name")}
             messageError={formState.errors.name?.message}
           />
-          <Controller
-            name="status"
-            control={control as unknown as Control<FieldValues, any>}
-            render={({ field }) => (
-              <InputSelect
-                title={t("modules.GS-MD-001.fields.status.title")}
-                placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
-                messageError={formState.errors.status?.message}
-                columns={BandPresentation.column_6}
-                directionLabel={Direction.horizontal}
-                items={listaQueryUserDefinedCodeHeader()}
-                {...field}
-              />
-            )}
+          <InputField
+            title={t("modules.GS-UD-001.fields.description.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-UD-001.fields.description.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("description")}
+            messageError={formState.errors.description?.message}
           />
         </>
       )}

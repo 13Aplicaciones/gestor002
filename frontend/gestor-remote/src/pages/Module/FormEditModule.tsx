@@ -189,7 +189,7 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
           QueryPanel={QueryUserDefinedCodeHeader}
           PreviewPanel={PreviewUser}
           FormPanel={FormEditUserDefinedCodeHeader}
-          initialRow={{ uuidUser: row.uuid }}
+          initialRow={{ uuidModule: row.uuid }}
         />
       )}
     </>

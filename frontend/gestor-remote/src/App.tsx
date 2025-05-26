@@ -13,7 +13,7 @@ import { Menus } from "./utils/Constants";
  * @returns
  */
 const App = () => {
-  const [name, setName] = useState(Menus.USER);
+  const [name, setName] = useState(Menus.MODULE);
 
   /**
    * Funcion para ejecutar una api.
@@ -69,11 +69,11 @@ const App = () => {
     <>
       <Origin name={name} />
       <Flex direction="row" align={"center"} gap="1" px="1" py="2">
+        <Button onClick={() => heandleToken(Menus.MODULE)}>Module</Button>
         <Button onClick={() => heandleToken(Menus.USER)}>User</Button>
         <Button onClick={() => heandleToken(Menus.INFORMATION)}>
           Information
         </Button>
-        <Button onClick={() => heandleToken(Menus.MODULE)}>Module</Button>
         <Button onClick={() => heandleToken(Menus.ERROR)}>Error</Button>
       </Flex>
     </>
