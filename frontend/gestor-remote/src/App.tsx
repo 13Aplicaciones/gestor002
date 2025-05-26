@@ -67,6 +67,7 @@ const App = () => {
 
   return (
     <>
+      <Origin name={name} />
       <Flex direction="row" align={"center"} gap="1" px="1" py="2">
         <Button onClick={() => heandleToken(Menus.USER)}>User</Button>
         <Button onClick={() => heandleToken(Menus.INFORMATION)}>
@@ -75,7 +76,6 @@ const App = () => {
         <Button onClick={() => heandleToken(Menus.MODULE)}>Module</Button>
         <Button onClick={() => heandleToken(Menus.ERROR)}>Error</Button>
       </Flex>
-      <Origin name={name} />
     </>
   );
 };

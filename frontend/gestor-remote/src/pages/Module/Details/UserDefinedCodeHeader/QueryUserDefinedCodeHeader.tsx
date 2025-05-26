@@ -1,22 +1,26 @@
-import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { GenericQuery, IconComponent, IPresentationTable, IQueryProps } from "ux-ui";
+import { Menus, MODULE } from "../../../../utils/Constants";
+import { QueryFormUserDefinedCodeHeader } from "./QueryFormUserDefinedCodeHeader";
+import { tableQueryUserDefinedCodeHeader } from "./Structures/Presentations";
+import { IRowDataUserDefinedCodeHeader } from "./Structures/Types";
+import { IconButton, Tooltip } from "@radix-ui/themes";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
-import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormInformation } from "./QueryFormInformation";
-import { tableQueryInformation } from "./Structures/Presentations";
-import { IRowDataInformation } from "./Structures/Types";
+import { useTranslation } from "react-i18next";
 
 /**
  * Tabla de información del sistema.
  */
-const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryUserDefinedCodeHeader = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
@@ -30,9 +34,7 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(
-        parameter.valueText01 + Menus.INFORMATION_ENDPOINT + "/paginated"
-      );
+      setApiUrl(parameter.valueText01 + Menus.USER_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
@@ -41,15 +43,15 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
   /**
    * Configurar las acciones específicas para la tabla de información
    */
-  const configureInformationTableActions = (
+  const configureUserDefinedCodeHeaderTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataInformation) => void,
-    onSeeRow?: (row: IRowDataInformation) => void
+    //onEditRow?: (row: IRowDataUserDefinedCodeHeader) => void,
+    onSeeRow?: (row: IRowDataUserDefinedCodeHeader) => void
   ) => {
     // Configurar acción para ver detalle
-    if (tableFormat.items[1]) {
-      tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataInformation) => {
+    if (tableFormat.items[0]) {
+      tableFormat.items[0].onAction = {
+        onAction: (row: IRowDataUserDefinedCodeHeader) => {
           if (onSeeRow) {
             onSeeRow(row);
           }
@@ -57,33 +59,16 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       };
     }
 
-    // Configurar acción de edición
-    if (tableFormat.items[3]) {
-      tableFormat.items[3].component = (row: IRowDataInformation) => (
-        <IconButton
-          size="1"
-          variant="ghost"
-          onClick={() => {
-            if (onEditRow) {
-              onEditRow(row);
-            }
-          }}
-        >
-          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
-        </IconButton>
-      );
-    }
-
     return tableFormat;
   };
 
- /**
+  /**
    * Configurar el menú de la tabla de errores
    * 
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules."+Menus.INFORMATION+".add")} side="left">
+      <Tooltip content={t("modules." + Menus.USER + ".add")} side="left">
         <IconButton  variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -92,19 +77,18 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
   };
 
   return (
-    <GenericQuery<IRowDataInformation>
-      QueryForm={QueryFormInformation}
-      getTablePresentation={tableQueryInformation}
+    <GenericQuery<IRowDataUserDefinedCodeHeader>
+      QueryForm={QueryFormUserDefinedCodeHeader}
+      getTablePresentation={tableQueryUserDefinedCodeHeader}
       initialParameters={{
         size: "10",
         name: "",
       }}
-      configureTableActions={configureInformationTableActions}
+      configureTableActions={configureUserDefinedCodeHeaderTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
-      childrenMenu={<MenuTable />}
-
+      childrenMenu={<MenuTable />}      
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
@@ -113,4 +97,4 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
   );
 };
 
-export { QueryInformation };
+export { QueryUserDefinedCodeHeader };

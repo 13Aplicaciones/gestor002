@@ -48,7 +48,7 @@ public class UserController {
      * 
      * @param binder
      */
-    //TODO: Pendiente para controlar el formato de fecha
+    // TODO: Pendiente para controlar el formato de fecha
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Conversions.ISO_8601_DATE);
@@ -127,8 +127,7 @@ public class UserController {
      * 
      * @return
      */
-   
-     @GetMapping("/paginated")
+    @GetMapping("/paginated")
     public Map<String, Object> getAllusersWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -140,7 +139,7 @@ public class UserController {
 
         Page<User> pageUsers = userService.findAll(nick, name, lastName, status,
                 ControllerTools.generateOrders(page, size, sort));
-                
+
         return ControllerTools.generateFooterPage(pageUsers);
     }
 }

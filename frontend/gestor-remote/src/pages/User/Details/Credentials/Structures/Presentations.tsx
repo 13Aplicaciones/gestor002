@@ -1,4 +1,5 @@
 import { t } from "i18next";
+import { getUserDefinedCodeByGroup } from "orchestrator_remote/service/UserDefineCode";
 import {
   IPresentationDataList,
   IPresentationInputSelect,
@@ -14,11 +15,13 @@ import {
  * @returns
  */
 const tableQueryCredentials = async (): Promise<IPresentationTable> => {
+  const statusList = await getUserDefinedCodeByGroup("LG_001_00", "AD_TK_01");
+
   return {
     banding: true,
     headers: true,
     numberLinea: false,
-    skeletonWidth: "90vw",
+    skeletonWidth: "60vw",
     items: [
       {
         name: "type",
@@ -26,27 +29,21 @@ const tableQueryCredentials = async (): Promise<IPresentationTable> => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "14vw",
+        cellSelect: statusList,
       },
       {
         name: "email",
         title: t("modules.GS-UC-001.fields.email.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
-        width: "20vw",
-      },
-      {
-        name: "socialNick",
-        title: t("modules.GS-UC-001.fields.socialNick.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "20vw",
+        width: "25vw",
       },
       {
         name: "userDate",
         title: t("modules.GS-UC-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
-        width: "20vw",
+        width: "15vw",
         order: SortColumn.desc,
         orderNameColumn: "user_date",
       },
@@ -149,5 +146,4 @@ const listQueryCredentials = (): IPresentationInputSelect => {
   };
 };
 
-export { tableQueryCredentials, dataViewPresentation, listQueryCredentials };
-
+export { dataViewPresentation, listQueryCredentials, tableQueryCredentials };

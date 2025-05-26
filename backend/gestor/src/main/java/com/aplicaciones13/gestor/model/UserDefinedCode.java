@@ -1,6 +1,6 @@
 package com.aplicaciones13.gestor.model;
 
-import com.aplicaciones13.base.model.common.UserDateApp;
+import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "user_defined_code")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserDefinedCode extends UserDateApp {
+public class UserDefinedCode extends UuidUserDateApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +58,7 @@ public class UserDefinedCode extends UserDateApp {
     @Column(nullable = false, length = 8)
     private String status;
 
+    @Override
     @PrePersist
     public void onUpdate() {
         super.onUpdate();

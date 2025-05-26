@@ -1,5 +1,5 @@
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button, DropdownMenu } from "@radix-ui/themes";
+import { DropdownMenu, IconButton } from "@radix-ui/themes";
+import { IconComponent } from "ux-ui";
 import { IRowDataModule } from "./Structures/Types";
 
 /**
@@ -26,9 +26,9 @@ const queryActionsModule = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button size="1" variant="ghost">
-          <DotsVerticalIcon width="16" height="16" />
-        </Button>
+        <IconButton size="1" variant="ghost">
+          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
+        </IconButton>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Item

@@ -9,11 +9,11 @@ import i18next from "./i18n";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Theme
-      accentColor="sky"
+      accentColor="cyan"
       grayColor="auto"
-      scaling="90%"
-      radius="large"
-      panelBackground="translucent"
+      scaling="100%"
+      radius="small"
+      panelBackground="solid"
       appearance="dark"
     >
       <I18nextProvider i18n={i18next}>

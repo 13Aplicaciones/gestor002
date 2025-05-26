@@ -1,5 +1,4 @@
 import { t } from "i18next";
-import { getUserDefinedCodeByGroup } from "orchestrator_remote/service/UserDefineCode";
 import {
   IPresentationDataList,
   IPresentationInputSelect,
@@ -14,9 +13,8 @@ import {
  *
  * @returns
  */
-const tableQueryModule = async (): Promise<IPresentationTable> => {
-  const statusList = await getUserDefinedCodeByGroup("LG_001_00", "AD_CD_01");
-
+const tableQueryUserDefinedCodeHeader = async (): Promise<IPresentationTable> => {
+  
   return {
     banding: true,
     headers: true,
@@ -61,7 +59,7 @@ const tableQueryModule = async (): Promise<IPresentationTable> => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
-        cellSelect: statusList,
+        // cellSelect: statusList,
       },
       {
         name: "acciones",
@@ -79,7 +77,7 @@ const tableQueryModule = async (): Promise<IPresentationTable> => {
  *
  * @returns
  */
-const listaQueryModule = (): IPresentationInputSelect => {
+const listaQueryUserDefinedCodeHeader = (): IPresentationInputSelect => {
   return {
     items: [
       {
@@ -179,7 +177,7 @@ const dataViewPresentation = (): IPresentationDataList => {
   };
 };
 
-const listaFormModule = (): IPresentationInputSelect => {
+const listaFormUserDefinedCodeHeader = (): IPresentationInputSelect => {
   return {
     items: [
       {
@@ -200,4 +198,4 @@ const listaFormModule = (): IPresentationInputSelect => {
   };
 };
 
-export { dataViewPresentation, listaFormModule, listaQueryModule, tableQueryModule };
+export { dataViewPresentation, listaFormUserDefinedCodeHeader, listaQueryUserDefinedCodeHeader, tableQueryUserDefinedCodeHeader };

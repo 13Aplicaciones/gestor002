@@ -1,60 +1,54 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
-  getParameter,
-  IParameter,
+    getParameter,
+    IParameter,
 } from "orchestrator_remote/service/Parameter";
 import {
-  getToken,
-  ITokenRoot,
-  refreshToken,
+    getToken,
+    ITokenRoot,
+    refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
-  BandPresentation,
-  Direction,
-  FooterFormAction,
-  IFormProps,
-  InputField,
-  PageCrud,
-  StatusEdit
+    BandPresentation,
+    Direction,
+    FooterFormAction,
+    IFormProps,
+    InputField,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
-import { Menus, MODULE } from "../../utils/Constants";
-import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
-import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
-import { PreviewUser } from "./PreviewUser";
-import { FormEditCredentials } from "./Details/Credentials/FormEditCredentials";
+import { Menus, MODULE } from "../../../../utils/Constants";
 
 /**
  * Formulario de edición de errores del sistema.
  */
-const FormEditUser = ({ status, row, onBack }: IFormProps) => {
+const FormEditCredentials = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
   /**
    * Esquema de validación de formulario
+   * 
+   * {
+  "userApp": "AppEjemplo",
+  "status": "C",
+  "uuidUser": "123e4567-e89b-12d3-a456-426614174000",
+  "email": "omargo33@gmail.com"
+}
+   * 
    */
   const schema = yup.object({
-    nick: yup
+    email: yup
       .string()
       .required(t("validation.required"))
-      .min(3, t("validation.min", { min: 3 }))
-      .max(128, t("validation.max", { max: 128 })),
-    name: yup
+      .email(t("validation.email")),
+    uuidUser: yup
       .string()
-      .required(t("validation.required"))
-      .min(5, t("validation.min", { min: 5 }))
-      .max(128, t("validation.max", { max: 128 })),
-    lastName: yup
-      .string()
-      .required(t("validation.required"))
-      .min(5, t("validation.min", { min: 5 }))
-      .max(128, t("validation.max", { max: 256 })),
+      .required(t("validation.required")),
     userApp: yup.string(),
     status: yup.string(),
   });
@@ -69,11 +63,10 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      nick: row?.nick ?? "",
-      name: row?.name ?? "",
-      lastName: row?.lastName ?? "",
+      email: row?.email ?? "",
+      uuidUser: row?.uuidUser ?? "",
       userApp: row?.userApp ?? "",
-      status: row?.status ?? "C",
+      status: row?.status ?? "E",
     },
   });
 
@@ -122,28 +115,20 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
         }) => (
           <form onSubmit={handleSubmit(submitData)}>
             <InputField
-              title={t("modules.GS-US-001.fields.nick.title")}
+              title={t("modules.GS-UC-001.fields.email.title")}
               columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-US-001.fields.nick.placeholder")}
+              placeholder={t("modules.GS-UC-001.fields.email.placeholder")}
               directionLabel={Direction.horizontal}
-              register={register("nick")}
-              messageError={errors.nick?.message}
+              register={register("email")}
+              messageError={errors.email?.message}
             />
             <InputField
-              title={t("modules.GS-US-001.fields.name.title")}
+              title={t("modules.GS-UC-001.fields.uuid.title")}
               columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-US-001.fields.name.placeholder")}
+              placeholder={t("modules.GS-UC-001.fields.uuid.placeholder")}
               directionLabel={Direction.horizontal}
-              register={register("name")}
-              messageError={errors.name?.message}
-            />
-            <InputField
-              title={t("modules.GS-US-001.fields.lastName.title")}
-              columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-US-001.fields.lastName.placeholder")}
-              directionLabel={Direction.horizontal}
-              register={register("lastName")}
-              messageError={errors.lastName?.message}
+              register={register("uuidUser")}
+              messageError={errors.uuidUser?.message}
             />
           <FooterFormAction
                 loading={loading}
@@ -154,18 +139,8 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
           </form>
         )}
       />
-     {status == StatusEdit.edit && (
-       <PageCrud
-         tranlation={Menus.CREDENTIALS}
-         createIRowDataCustom={createIRowDataCredential}
-         QueryPanel={QueryCredentials}
-         PreviewPanel={PreviewUser}
-         FormPanel={FormEditCredentials}
-         initialRow={{ uuidUser: row.uuid }}
-       />
-     )}
     </>
   );
 };
 
-export { FormEditUser };
+export { FormEditCredentials };

@@ -39,4 +39,7 @@ public class UserDefinedCodeResponse extends UserDateAppResponse {
 
     @Schema(description = "Status del user", example = "activo")
     private String status;
+
+    @Schema(description = "uuid", example = "123e4567-e89b-12d3-a456-426614174000")
+    private String uuid;
 }

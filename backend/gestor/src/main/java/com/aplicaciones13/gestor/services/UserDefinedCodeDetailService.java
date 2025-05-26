@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UserDefinedCodeService {
+public class UserDefinedCodeDetailService {
 
     @Autowired
     private UserDefinedCodeRepository codigoDefinidouserRepository;

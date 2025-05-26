@@ -1,5 +1,4 @@
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button, DropdownMenu } from "@radix-ui/themes";
+import { DropdownMenu, IconButton } from "@radix-ui/themes";
 import {
   fetchData,
   formatMessageJson,
@@ -18,7 +17,7 @@ import {
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alerts, useToastContext } from "ux-ui";
+import { Alerts, IconComponent, useToastContext } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import { IRowDataUser } from "./Structures/Types";
 
@@ -135,7 +134,6 @@ const QueryActionsUser = ({
    */
   const handleActivar = () => {
     changeStatus({ status: "A", apiUrl, token: token ?? "", row });
-    
   };
 
   /**
@@ -148,9 +146,9 @@ const QueryActionsUser = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button size="1" variant="ghost">
-          <DotsVerticalIcon width="16" height="16" />
-        </Button>
+        <IconButton size="1" variant="ghost">
+          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
+        </IconButton>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
         <DropdownMenu.Item
@@ -171,7 +169,7 @@ const QueryActionsUser = ({
           <DropdownMenu.Item onClick={handleActivar}>
             {t("actions.active")}
           </DropdownMenu.Item>
-        )}        
+        )}
         <DropdownMenu.Separator />
         <DropdownMenu.Item>Sincronizar</DropdownMenu.Item>
       </DropdownMenu.Content>

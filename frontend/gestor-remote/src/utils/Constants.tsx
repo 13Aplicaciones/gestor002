@@ -27,5 +27,12 @@ export const Menus: { [key: string]: string } = {
     CREDENTIALS_ENDPOINT: "/token",
     CREDENTIALS: "GS-UC-001",
 
+    // menu user defined code header
+    USER_DEFINED_CODE_HEADER_ENDPOINT: "/cduHeader",
+    USER_DEFINED_CODE_HEADER: "GS-UD-001",
+
+    // menu user defined code detail
+    USER_DEFINED_CODE_DETAIL_ENDPOINT: "/cduDetail",
+    USER_DEFINED_CODE_DETAIL: "GS-UD-002",
 
 };

@@ -1,0 +1,161 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import {
+  BandPresentation,
+  Direction,
+  FooterFormAction,
+  IFormProps,
+  InputField
+} from "ux-ui";
+import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
+import * as yup from "yup";
+import { Menus, MODULE } from "../../../../utils/Constants";
+
+/**
+ * Formulario de edición de UserDeFormEditUserDefinedCodeHeaders del sistema.
+ */
+const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
+  const [t] = useTranslation("global_gestor");
+  const [apiUrl, setApiUrl] = useState("");
+  const [token, setToken] = useState<string | undefined>(undefined);
+
+  /**
+   * Esquema de validación de formulario
+   */
+  const schema = yup.object({
+    indexUserDeFormEditUserDefinedCodeHeader: yup
+      .string()
+      .required(t("validation.required"))
+      .min(5, t("validation.min", { min: 5 }))
+      .max(128, t("validation.max", { max: 32 })),
+    name: yup
+      .string()
+      .required(t("validation.required"))
+      .max(128, t("validation.max", { max: 128 })),
+    context: yup
+      .string()
+      .required(t("validation.required"))
+      .max(128, t("validation.max", { max: 128 })),
+    status: yup
+      .string()
+      .required(t("validation.required"))
+      .max(8, t("validation.max", { max: 8 })),
+    userApp: yup.string(),
+    orden: yup
+      .number()
+      .typeError(t("validation.typeNumber"))
+      .min(0, t("validation.min", { min: 0 }))
+      .max(9999, t("validation.max", { max: 9999 })),
+  });
+
+  /**
+   * Hook para el manejo de formularios
+   */
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      indexUserDeFormEditUserDefinedCodeHeader: row?.indexUserDeFormEditUserDefinedCodeHeader ?? "",
+      name: row?.name ?? "",
+      context: row?.context ?? "",
+      status: row?.status ?? "A",
+      userApp: row?.userApp ?? "",
+      orden: row?.orden ?? 1,
+    },
+  });
+
+  /**
+   * Inicializar token y parámetros de URL
+   */
+  useEffect(() => {
+    getToken()
+      .then((t: ITokenRoot) => setToken(t.access_token))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!row) {
+      setApiUrl("");
+      return;
+    }
+
+    (async () => {
+      try {
+        const param: IParameter = await getParameter(MODULE, "200");
+        const url = `${param.valueText01}${Menus.MODULE_ENDPOINT}`;
+        setApiUrl(url);
+      } catch (err) {
+        console.error("Error generando API URL:", err);
+        setApiUrl("");
+      }
+    })();
+  }, [row]);
+
+  return (
+    <GenericCrudForm
+      status={status}
+      row={row}
+      indexName="uuid"
+      onBack={onBack}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={refreshToken}
+      renderForm={({
+        formStatus,
+        loading,
+        handleSubmit: submitData,
+        showPopUpDelete,
+      }) => (
+        <form onSubmit={handleSubmit(submitData)}>
+          <InputField
+            title={t("modules.GS-MD-001.fields.indexUserDeFormEditUserDefinedCodeHeader.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-MD-001.fields.indexUserDeFormEditUserDefinedCodeHeader.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("indexUserDeFormEditUserDefinedCodeHeader")}
+            messageError={errors.indexUserDeFormEditUserDefinedCodeHeader?.message}
+          />
+          <InputField
+            title={t("modules.GS-MD-001.fields.name.title")}
+            columns={BandPresentation.column_2}
+            placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("name")}
+            messageError={errors.name?.message}
+          />
+          <InputField
+            title={t("modules.GS-MD-001.fields.context.title")}
+            columns={BandPresentation.column_1}
+            placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("context")}
+            messageError={errors.context?.message}
+          />
+          
+          <FooterFormAction
+            loading={loading}
+            onBack={onBack}
+            showPopUpDelete={showPopUpDelete}
+            formStatus={formStatus}
+          />
+        </form>
+      )}
+    />
+  );
+};
+
+export { FormEditUserDefinedCodeHeader };

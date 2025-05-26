@@ -1,5 +1,4 @@
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
-import { Button, IconButton, Tooltip } from "@radix-ui/themes";
+import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -10,18 +9,18 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   GenericQuery,
   IconComponent,
   IPresentationTable,
   IQueryProps,
 } from "ux-ui";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../utils/Constants";
 import { QueryFormError } from "./QueryFormError";
 import { tableQueryModule } from "./Structures/Presentations";
 import { IRowDataError } from "./Structures/Types";
-import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
-import { useTranslation } from "react-i18next";
 
 /**
  * Tabla de errores del sistema.
@@ -52,7 +51,7 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const configureErrorTableActions = (
     tableFormat: IPresentationTable,
     onEditRow?: (row: IRowDataError) => void,
-    onSeeRow?: (row: IRowDataError) => void,
+    onSeeRow?: (row: IRowDataError) => void
   ) => {
     // Configurar acción para ver detalle
     if (tableFormat.items[1]) {
@@ -68,7 +67,7 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
     // Configurar acción de edición
     if (tableFormat.items[4]) {
       tableFormat.items[4].component = (row: IRowDataError) => (
-        <Button
+        <IconButton
           size="1"
           variant="ghost"
           onClick={() => {
@@ -77,8 +76,8 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
             }
           }}
         >
-          <DotsVerticalIcon width="16" height="16" />
-        </Button>
+          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
+        </IconButton>
       );
     }
 
@@ -87,12 +86,12 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
 
   /**
    * Configurar el menú de la tabla de errores
-   * 
+   *
    */
   const MenuTable = () => {
     return (
       <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
-        <IconButton  variant="soft" onClick={onCreateRow}>
+        <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
       </Tooltip>

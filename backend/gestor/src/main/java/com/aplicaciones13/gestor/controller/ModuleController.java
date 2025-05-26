@@ -1,5 +1,6 @@
 package com.aplicaciones13.gestor.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +153,7 @@ public class ModuleController {
             @ApiResponse(responseCode = "200", description = "Modules Listado corto", content = @Content(schema = @Schema(implementation = ModuleListaResponse[].class))),
     })
     @GetMapping("/list")
-    public ResponseEntity<?> listado() {
+    public ResponseEntity<List<ModuleListaResponse>> listado() {
         return ResponseEntity.ok(moduleService.findAll());
     }
 }
