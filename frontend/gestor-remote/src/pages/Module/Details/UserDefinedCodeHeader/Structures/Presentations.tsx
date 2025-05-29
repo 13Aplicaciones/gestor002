@@ -27,8 +27,6 @@ const tableQueryUserDefinedCodeHeader = async (): Promise<IPresentationTable> =>
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "10vw",
-        order: SortColumn.desc,
-        orderNameColumn: "index_module",
       },
       {
         name: "name",

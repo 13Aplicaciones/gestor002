@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Flex, Heading, Separator } from "@radix-ui/themes";
+import { Flex, Heading } from "@radix-ui/themes";
 import { ComponentType, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StatusEdit } from "../../ConstantsPresentation";
@@ -86,7 +86,6 @@ const PageCrud = ({
       return (
         <ToastContextProvider>
           <Flex direction="column" gap="2" p="2">
-            <Separator orientation="horizontal" size="4" />
             <Flex maxWidth="60vw">
               <Heading size="3">
                 {t("modules." + tranlation + ".panel." + status)}

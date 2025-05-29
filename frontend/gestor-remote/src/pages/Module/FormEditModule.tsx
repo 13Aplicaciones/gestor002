@@ -29,6 +29,7 @@ import { createIRowDataUserDefinedCodeHeader } from "./Details/UserDefinedCodeHe
 import { QueryUserDefinedCodeHeader } from "./Details/UserDefinedCodeHeader/QueryUserDefinedCodeHeader";
 import { FormEditUserDefinedCodeHeader } from "./Details/UserDefinedCodeHeader/FormEditUserDefinedCodeHeader";
 import { PreviewUser } from "../User/PreviewUser";
+import { Box, Tabs, Text } from "@radix-ui/themes";
 
 /**
  * Formulario de edición de Modules del sistema.
@@ -183,14 +184,36 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
       />
 
       {status == StatusEdit.edit && (
-        <PageCrud
-          tranlation={Menus.USER_DEFINED_CODE_HEADER}
-          createIRowDataCustom={createIRowDataUserDefinedCodeHeader}
-          QueryPanel={QueryUserDefinedCodeHeader}
-          PreviewPanel={PreviewUser}
-          FormPanel={FormEditUserDefinedCodeHeader}
-          initialRow={{ uuidModule: row.uuid }}
-        />
+        <Tabs.Root defaultValue="account">
+          <Tabs.List>
+            <Tabs.Trigger value="account">Account</Tabs.Trigger>
+            <Tabs.Trigger value="documents">Documents</Tabs.Trigger>
+            <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+          </Tabs.List>
+
+          <Box pt="3">
+            <Tabs.Content value="account">
+              <PageCrud
+                tranlation={Menus.USER_DEFINED_CODE_HEADER}
+                createIRowDataCustom={createIRowDataUserDefinedCodeHeader}
+                QueryPanel={QueryUserDefinedCodeHeader}
+                PreviewPanel={PreviewUser}
+                FormPanel={FormEditUserDefinedCodeHeader}
+                initialRow={{ uuidModule: row.uuid }}
+              />
+            </Tabs.Content>
+
+            <Tabs.Content value="documents">
+              <Text size="2">Access and update your documents.</Text>
+            </Tabs.Content>
+
+            <Tabs.Content value="settings">
+              <Text size="2">
+                Edit your profile or update contact information.
+              </Text>
+            </Tabs.Content>
+          </Box>
+        </Tabs.Root>
       )}
     </>
   );

@@ -3,9 +3,9 @@ import { EnterIcon, EyeClosedIcon, EyeOpenIcon, MagnifyingGlassIcon } from "@rad
 import { Flex, Select, Slot, Text, TextArea, TextField } from "@radix-ui/themes";
 import { MouseEventHandler, ReactNode, useState } from "react";
 import { Alerts, BandPresentation, Direction, JustificationText } from "../../ConstantsPresentation";
+import { IconComponent } from "../icon/IconDynamic";
 import useCalculatePresentation from "./Calculations";
 import { MessageField } from "./Menssages";
-import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Componentes de input del sistema. 
@@ -339,5 +339,6 @@ const InputSelect = ({
     )
 };
 
-export { AreaField, InputField, InputSelect, InputFieldDate, InputSearchDynamic, InputSecretField, InputSubmit };
+export { AreaField, InputField, InputFieldDate, InputSearchDynamic, InputSecretField, InputSelect, InputSubmit };
 export type { IPresentationInputSelect };
+

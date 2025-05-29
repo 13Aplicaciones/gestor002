@@ -27,6 +27,7 @@ import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
 import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
 import { PreviewUser } from "./PreviewUser";
 import { FormEditCredentials } from "./Details/Credentials/FormEditCredentials";
+import { Box, Tabs } from "@radix-ui/themes";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -154,15 +155,34 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
           </form>
         )}
       />
+
       {status == StatusEdit.edit && (
-        <PageCrud
-          tranlation={Menus.CREDENTIALS}
-          createIRowDataCustom={createIRowDataCredential}
-          QueryPanel={QueryCredentials}
-          PreviewPanel={PreviewUser}
-          FormPanel={FormEditCredentials}
-          initialRow={{ uuidUser: row.uuid }}
-        />
+        <Tabs.Root defaultValue="credentials">
+          <Tabs.List size="2">
+            <Tabs.Trigger value="credentials">Credenciales</Tabs.Trigger>
+            <Tabs.Trigger value="documents">Documents</Tabs.Trigger>
+            <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+          </Tabs.List>
+
+          <Box pt="3">
+            <Tabs.Content value="credentials">
+              <PageCrud
+                tranlation={Menus.CREDENTIALS}
+                createIRowDataCustom={createIRowDataCredential}
+                QueryPanel={QueryCredentials}
+                PreviewPanel={PreviewUser}
+                FormPanel={FormEditCredentials}
+                initialRow={{ uuidUser: row.uuid }}
+              />
+            </Tabs.Content>
+            <Tabs.Content value="documents">
+              {/* Aquí puedes agregar el contenido para la pestaña de documentos */}
+            </Tabs.Content>
+            <Tabs.Content value="settings">
+              {/* Aquí puedes agregar el contenido para la pestaña de configuraciones */}
+            </Tabs.Content>
+          </Box>
+        </Tabs.Root>
       )}
     </>
   );
