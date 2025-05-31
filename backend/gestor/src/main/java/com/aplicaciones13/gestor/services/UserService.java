@@ -72,8 +72,7 @@ public class UserService {
      * @param status
      * @param pageable
      * @return
-     */
-     
+     */     
     public Page<User> findAll(String nick, String name, String lastName, String status, Pageable pageable) {
         return userRepository.paginated(nick, name, lastName,status, pageable);
     }

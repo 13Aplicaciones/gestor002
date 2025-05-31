@@ -29,10 +29,10 @@ export const Menus: { [key: string]: string } = {
 
     // menu user defined code header
     USER_DEFINED_CODE_HEADER_ENDPOINT: "/cduHeader",
-    USER_DEFINED_CODE_HEADER: "GS-UD-001",
+    USER_DEFINED_CODE_HEADER: "GS-CD-001",
 
     // menu user defined code detail
     USER_DEFINED_CODE_DETAIL_ENDPOINT: "/cduDetail",
-    USER_DEFINED_CODE_DETAIL: "GS-UD-002",
+    USER_DEFINED_CODE_DETAIL: "GS-CD-002",
 
 };

@@ -96,7 +96,7 @@ const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.MODULE_ENDPOINT}`;
+        const url = `${param.valueText01}${Menus.USER_DEFINED_CODE_HEADER_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
         console.error("Error generando API URL:", err);

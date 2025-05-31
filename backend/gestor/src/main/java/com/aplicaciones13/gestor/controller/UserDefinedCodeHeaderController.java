@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,38 +31,52 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Codigo Definido User - Encabezado", description = "Servicio para CRUD de Codigos Definidos por el user (CDU) encabezado")
 public class UserDefinedCodeHeaderController {
 
-    @Autowired
-    private UserDefinedCodeHeaderService userDefinedCodeHeaderService;
+    private final UserDefinedCodeHeaderService userDefinedCodeHeaderService;
+
+    public UserDefinedCodeHeaderController(UserDefinedCodeHeaderService userDefinedCodeHeaderService) {
+        this.userDefinedCodeHeaderService = userDefinedCodeHeaderService;
+    }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<UserDefinedCodeResponse> getAllCodigosDefinidos( @PathVariable @ValidUUID String uuid) {
+    public ResponseEntity<UserDefinedCodeResponse> getAllCodigosDefinidos(@PathVariable @ValidUUID String uuid) {
         UserDefinedCodeResponse codigo = new UserDefinedCodeResponse();
         return ResponseEntity.ok(codigo);
     }
 
+    /**
+     * Obtiene todos los registros de la entidad codigo definodo por el usuario para el encabezado.
+     * 
+     * @param page
+     * @param size
+     * @param sort
+     * @param uuidModule
+     * @param name
+     * @param description
+     * @return
+     */
     @GetMapping("/paginated")
     public Map<String, Object> getAllusersWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "order,desc") String[] sort,
             @RequestParam(required = true) String uuidModule,
-            @RequestParam(required = false) String group,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String description) {
-
-        Page<UserDefinedCode> pageUserDefinedCode = null; 
-        
+        Page<UserDefinedCode> pageUserDefinedCode = userDefinedCodeHeaderService.findPage(uuidModule, name,
+                description, ControllerTools.generateOrders(page, size, sort));
         return ControllerTools.generateFooterPage(pageUserDefinedCode);
     }
 
     @PostMapping
-    public ResponseEntity<UserDefinedCodeResponse> createCodigoDefinido(@RequestBody UserDefinedCodeRequest userDefinedCodeRequest) {
+    public ResponseEntity<UserDefinedCodeResponse> createCodigoDefinido(
+            @RequestBody UserDefinedCodeRequest userDefinedCodeRequest) {
         UserDefinedCodeResponse updatedCodigoResponse = new UserDefinedCodeResponse();
         return ResponseEntity.status(HttpStatus.CREATED).body(updatedCodigoResponse);
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<UserDefinedCodeResponse> updateCodigoDefinido(@PathVariable @ValidUUID String uuid, @RequestBody UserDefinedCodeRequest userDefinedCodeRequest) {
+    public ResponseEntity<UserDefinedCodeResponse> updateCodigoDefinido(@PathVariable @ValidUUID String uuid,
+            @RequestBody UserDefinedCodeRequest userDefinedCodeRequest) {
         UserDefinedCodeResponse updatedCodigoResponse = new UserDefinedCodeResponse();
         return ResponseEntity.ok(updatedCodigoResponse);
     }

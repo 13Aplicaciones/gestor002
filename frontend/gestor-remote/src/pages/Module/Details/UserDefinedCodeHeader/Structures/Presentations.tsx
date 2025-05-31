@@ -9,66 +9,66 @@ import {
 } from "ux-ui";
 
 /**
- * Presentacion de la tabla de Modulos
+ * Presentación de la tabla de UserDefinedCodeHeader
  *
  * @returns
  */
-const tableQueryUserDefinedCodeHeader = async (): Promise<IPresentationTable> => {
-  
-  return {
-    banding: true,
-    headers: true,
-    numberLinea: false,
-    skeletonWidth: "90vw",
-    items: [
-      {
-        name: "indexModule",
-        title: t("modules.GS-MD-001.fields.indexModule.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-      },
-      {
-        name: "name",
-        title: t("modules.GS-MD-001.fields.name.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "20vw",
-      },
-      {
-        name: "context",
-        title: t("modules.GS-MD-001.fields.context.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "34vw",
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-MD-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-        width: "20vw",
-        order: SortColumn.desc,
-        orderNameColumn: "user_date",
-      },
-      {
-        name: "status",
-        title: t("modules.GS-MD-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "10vw",
-        // cellSelect: statusList,
-      },
-      {
-        name: "acciones",
-        title: t("modules.GS-MD-001.fields.acciones.abrev"),
-        justification: JustificationText.center,
-        format: TextFormat.action,
-        width: "6vw",
-      },
-    ],
+const tableQueryUserDefinedCodeHeader =
+  async (): Promise<IPresentationTable> => {
+    return {
+      banding: true,
+      headers: true,
+      numberLinea: false,
+      skeletonWidth: "90vw",
+      items: [
+        {
+          name: "codeText",
+          title: t("modules.GS-CD-001.fields.codeText.title"),
+          justification: JustificationText.start,
+          format: TextFormat.none,
+          width: "10vw",
+        },
+        {
+          name: "name",
+          title: t("modules.GS-CD-001.fields.name.title"),
+          justification: JustificationText.start,
+          format: TextFormat.none,
+          width: "20vw",
+          order: SortColumn.asc,
+          orderNameColumn: "name",
+        },
+        {
+          name: "description",
+          title: t("modules.GS-CD-001.fields.description.title"),
+          justification: JustificationText.start,
+          format: TextFormat.none,
+          width: "34vw",
+        },
+        {
+          name: "userDate",
+          title: t("modules.GS-CD-001.fields.userDate.title"),
+          justification: JustificationText.start,
+          format: TextFormat.dateSocialNetworkDinamic,
+          width: "20vw",
+        },
+        {
+          name: "status",
+          title: t("modules.GS-CD-001.fields.status.title"),
+          justification: JustificationText.start,
+          format: TextFormat.none,
+          width: "10vw",
+          // cellSelect: statusList,
+        },
+        {
+          name: "acciones",
+          title: t("modules.GS-CD-001.fields.acciones.abrev"),
+          justification: JustificationText.center,
+          format: TextFormat.action,
+          width: "6vw",
+        },
+      ],
+    };
   };
-};
 
 /**
  * Lista de módulos
@@ -125,49 +125,49 @@ const dataViewPresentation = (): IPresentationDataList => {
     items: [
       {
         name: "uuid",
-        title: t("modules.GS-MD-001.fields.uuid.title"),
+        title: t("modules.GS-CD-001.fields.uuid.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "indexModule",
-        title: t("modules.GS-MD-001.fields.indexModule.title"),
+        title: t("modules.GS-CD-001.fields.indexModule.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "name",
-        title: t("modules.GS-MD-001.fields.name.title"),
+        title: t("modules.GS-CD-001.fields.name.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "context",
-        title: t("modules.GS-MD-001.fields.context.title"),
+        title: t("modules.GS-CD-001.fields.context.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "status",
-        title: t("modules.GS-MD-001.fields.status.title"),
+        title: t("modules.GS-CD-001.fields.status.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "user",
-        title: t("modules.GS-MD-001.fields.user.title"),
+        title: t("modules.GS-CD-001.fields.user.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
         name: "userDate",
-        title: t("modules.GS-MD-001.fields.userDate.title"),
+        title: t("modules.GS-CD-001.fields.userDate.title"),
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
       },
       {
         name: "userApp",
-        title: t("modules.GS-MD-001.fields.userApp.title"),
+        title: t("modules.GS-CD-001.fields.userApp.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
@@ -196,4 +196,9 @@ const listaFormUserDefinedCodeHeader = (): IPresentationInputSelect => {
   };
 };
 
-export { dataViewPresentation, listaFormUserDefinedCodeHeader, listaQueryUserDefinedCodeHeader, tableQueryUserDefinedCodeHeader };
+export {
+  dataViewPresentation,
+  listaFormUserDefinedCodeHeader,
+  listaQueryUserDefinedCodeHeader,
+  tableQueryUserDefinedCodeHeader,
+};

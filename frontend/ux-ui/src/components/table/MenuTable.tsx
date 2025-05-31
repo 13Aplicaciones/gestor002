@@ -1,6 +1,5 @@
 import {
   Box,
-  Card,
   Flex,
   IconButton,
   Separator,
@@ -19,8 +18,8 @@ import { useToastContext } from "../toast/useToastContext";
  * @param handlePaginationPresentation - Función para manejar la presentación de la paginación.
  * @param menuTableRefresh - Tipo de refresco de la tabla.
  * @param children - Elementos secundarios que se mostrarán en el menú.
- *  
- * @returns 
+ *
+ * @returns
  */
 const MenuTable = ({
   loading,
@@ -66,44 +65,42 @@ const MenuTable = ({
 
   return menuTableRefresh !== MenuTableRefresh.none || children ? (
     <Box>
-      <Card>
-        <Flex direction="column" gap="2" align="center">
-          {children}
-          {children && menuTableRefresh !== MenuTableRefresh.none && (
-            <Separator orientation="horizontal" size="4" />
-          )}
+      <Flex direction="column" gap="1" align="center">
+        {children}
+        {children && menuTableRefresh !== MenuTableRefresh.none && (
+          <Separator orientation="horizontal" size="4" />
+        )}
 
-          {(menuTableRefresh === MenuTableRefresh.refresh ||
-            menuTableRefresh === MenuTableRefresh.refreshFull) && (
-            <Tooltip content={t("menuTable.refresh.label")} side="left">
-              <IconButton
-                variant="soft"
-                loading={loading}
-                onClick={() => {
-                  handlePaginationPresentation();
-                }}
-              >
-                <IconComponent iconName="ReloadIcon" width="16" height="16" />
-              </IconButton>
-            </Tooltip>
-          )}
+        {(menuTableRefresh === MenuTableRefresh.refresh ||
+          menuTableRefresh === MenuTableRefresh.refreshFull) && (
+          <Tooltip content={t("menuTable.refresh.label")} side="left">
+            <IconButton
+              variant="soft"
+              loading={loading}
+              onClick={() => {
+                handlePaginationPresentation();
+              }}
+            >
+              <IconComponent iconName="ReloadIcon" width="16" height="16" />
+            </IconButton>
+          </Tooltip>
+        )}
 
-          {(menuTableRefresh === MenuTableRefresh.refreshTimmer ||
-            menuTableRefresh === MenuTableRefresh.refreshFull) && (
-            <Tooltip content={t("menuTable.timer.label")} side="left">
-              <IconButton
-                loading={loading}
-                variant={timer ? "solid" : "soft"}
-                onClick={() => {
-                  workTimer(timer);
-                }}
-              >
-                <IconComponent iconName="StopwatchIcon" width="16" height="16" />
-              </IconButton>
-            </Tooltip>
-          )}
-        </Flex>
-      </Card>
+        {(menuTableRefresh === MenuTableRefresh.refreshTimmer ||
+          menuTableRefresh === MenuTableRefresh.refreshFull) && (
+          <Tooltip content={t("menuTable.timer.label")} side="left">
+            <IconButton
+              loading={loading}
+              variant={timer ? "solid" : "soft"}
+              onClick={() => {
+                workTimer(timer);
+              }}
+            >
+              <IconComponent iconName="StopwatchIcon" width="16" height="16" />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Flex>
     </Box>
   ) : (
     <></>

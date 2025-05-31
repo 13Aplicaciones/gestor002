@@ -184,15 +184,15 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
       />
 
       {status == StatusEdit.edit && (
-        <Tabs.Root defaultValue="account">
+        <Tabs.Root defaultValue="cdu">
           <Tabs.List>
-            <Tabs.Trigger value="account">Account</Tabs.Trigger>
-            <Tabs.Trigger value="documents">Documents</Tabs.Trigger>
-            <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+            <Tabs.Trigger value="cdu">{t("modules.GS-CD-001.title")}</Tabs.Trigger>
+            <Tabs.Trigger value="documents">{t("modules.GS-MD-001.title")}</Tabs.Trigger>
+            <Tabs.Trigger value="settings">{t("modules.GS-MD-001.title")}</Tabs.Trigger>
           </Tabs.List>
 
           <Box pt="3">
-            <Tabs.Content value="account">
+            <Tabs.Content value="cdu">
               <PageCrud
                 tranlation={Menus.USER_DEFINED_CODE_HEADER}
                 createIRowDataCustom={createIRowDataUserDefinedCodeHeader}

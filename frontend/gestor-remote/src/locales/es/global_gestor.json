@@ -98,12 +98,6 @@
       "description": "Roles de los usuarios",
       "path": "Role"
     },
-    "GS-CD-001": {
-      "icon": "ListBulletIcon",
-      "title": "Códigos Definidos",
-      "description": "Códigos definidos del sistema",
-      "path": "DefinedCodes"
-    },
     "GS-US-001": {
       "icon": "PersonIcon",
       "title": "Usuarios",
@@ -210,7 +204,119 @@
       "description": "Credenciales de los usuarios del sistema",
       "path": "Credenciales",
       "panel": {
-        "find": "Listar Codigos Definidos por Usuario",
+        "find": "Listar de Credenciales de Usuario",
+        "see": "Vista previa Codigos Definidos por Usuario",
+        "edit": "Editar Codigo Definido por Usuario",
+        "create": "Crear Codigo Definido por Usuario"
+      },
+      "fields": {
+        "uuidModule": {
+          "title": "UUID Módulo",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "group": {
+          "title": "Grupo",
+          "placeholder": "001"
+        },
+        "name": {
+          "title": "Nombre",
+          "placeholder": "Nombre del usuario"
+        },
+        "description": {
+          "title": "Descripción",
+          "placeholder": "Descripción"
+        },
+
+        "userDate": {
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user": {
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp": {
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones": {
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      }
+    },
+
+    "GS-CD-001": {
+      "icon": "ListBulletIcon",
+      "title": "Cód. Definidos Usuario (CDU)",
+      "description": "Códigos definidos por los usuarios del sistema",
+      "path": "cduHeader",
+      "panel": {
+        "find": "Listar de Códigos Definidos por el Usuario",
+        "see": "Vista previa Códigos Definidos por el Usuario",
+        "edit": "Editar Código Definido por el Usuario",
+        "create": "Crear Código Definido por el Usuario"
+      },
+      "fields": {
+        "uuidModule": {
+          "title": "UUID Módulo",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+
+        "codeText": {
+          "title": "Indice",
+          "placeholder": "AD_CD_01"
+        },
+
+        "codeNumber": {
+          "title": "Cód. Numérico",
+          "placeholder": "0"
+        },
+
+        "group": {
+          "title": "Grupo",
+          "placeholder": "001"
+        },
+        "name": {
+          "title": "Nombre",
+          "placeholder": "Nombre CDU"
+        },
+        "description": {
+          "title": "Descripción",
+          "placeholder": "Descripción"
+        },
+        "status": {
+          "title": "Estado",
+          "placeholder": "Estado del usuario"
+        },
+        "userDate": {
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+        "user": {
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        "userApp": {
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones": {
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      }
+    },
+
+    "GS-CD-002": {
+      "icon": "ListBulletIcon",
+      "title": "Detalle de Credenciales de Usuario",
+      "description": "Detalle de las Credenciales de los usuarios del sistema",
+      "path": "Credenciales",
+      "panel": {
+        "find": "Listar de Credenciales de Usuario",
         "see": "Vista previa Codigos Definidos por Usuario",
         "edit": "Editar Codigo Definido por Usuario",
         "create": "Crear Codigo Definido por Usuario"

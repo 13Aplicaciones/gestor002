@@ -50,6 +50,7 @@ export {
 } from "./components/button/Button";
 export {
   AreaField,
+  InputHidden,
   InputField,
   InputSelect,
   InputFieldDate,
@@ -64,6 +65,7 @@ export { FormState, FooterFormAction,  FooterForm } from "./components/form/Form
 export { GenericCrudForm } from "./components/form/GenericCrudForm";
 export { GenericPreview } from "./components/form/GenericPreview";
 export { GenericQuery } from "./components/form/GenericQuery";
+
 export { GenericQueryForm } from "./components/form/GenericQueryForm";
 export type { GenericCrudFormProps } from "./components/form/GenericCrudForm";
 export type { GenericPreviewProps } from "./components/form/GenericPreview";

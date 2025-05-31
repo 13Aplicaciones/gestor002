@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ResetIcon } from "@radix-ui/react-icons";
-import { Button, IconButton } from "@radix-ui/themes";
+import { Button, Flex, IconButton } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import {
   DeepPartial,
@@ -13,8 +12,10 @@ import {
 import { useTranslation } from "react-i18next";
 import { ObjectSchema } from "yup";
 import { BandPresentation, Direction } from "../../ConstantsPresentation";
+import { IconComponent } from "../icon/IconDynamic";
 import { IParametersQuery } from "../table/TableSearchOrder";
 import { FooterForm } from "./Form";
+import { useMediaQuery } from "react-responsive";
 
 /**
  * Funciones de query de presentación de formularios y estos son resize.
@@ -43,6 +44,8 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
 
   /** Deshabilitar la presentacion para la busqueda automatica */
   disableSubmit?: boolean;
+
+  buttonsDetails?: boolean;
 }
 
 /**
@@ -61,6 +64,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   onFind,
   renderFields,
   disableSubmit,
+  buttonsDetails = true,
 }: Readonly<GenericQueryFormProps<TFormValues>>) {
   const [t] = useTranslation("global_gestor");
 
@@ -91,23 +95,43 @@ function GenericQueryForm<TFormValues extends FieldValues>({
     form.reset();
   };
 
+  const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
+
   return disableSubmit ? null : (
     <form onSubmit={form.handleSubmit(submitForm)}>
-      {renderFields(form)}
-
-      <FooterForm
-        directionLabel={Direction.horizontal}
-        columns={BandPresentation.column_2}
-      >
-        <Button type="submit">{t("actions.search")}</Button>
-        <IconButton variant="surface" onClick={resetForm}>
-          <ResetIcon />
-        </IconButton>
-      </FooterForm>
+      {buttonsDetails ? (
+        <>
+          {renderFields(form)}
+          <FooterForm
+            directionLabel={Direction.horizontal}
+            columns={BandPresentation.column_2}
+          >
+            <Button type="submit">{t("actions.search")}</Button>
+            <IconButton variant="surface" onClick={resetForm}>
+              <IconComponent iconName="ResetIcon" width="16" height="16" />
+            </IconButton>
+          </FooterForm>
+        </>
+      ) : (
+        <Flex direction={isPortrait ? "column" : "row"} gap="2">
+          {renderFields(form)}
+          <Flex gap="2">
+            <IconButton type="submit">
+              <IconComponent
+                iconName="MagnifyingGlassIcon"
+                width="16"
+                height="16"
+              />
+            </IconButton>
+            <IconButton variant="surface" onClick={resetForm}>
+              <IconComponent iconName="ResetIcon" width="16" height="16" />
+            </IconButton>
+          </Flex>
+        </Flex>
+      )}
     </form>
   );
 }
 
 export { GenericQueryForm };
 export type { GenericQueryFormProps };
-

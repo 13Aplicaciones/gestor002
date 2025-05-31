@@ -1,3 +1,4 @@
+import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -8,19 +9,18 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   GenericQuery,
   IconComponent,
   IPresentationTable,
-  IQueryProps,
+  IQueryProps
 } from "ux-ui";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../../../utils/Constants";
 import { QueryFormUserDefinedCodeHeader } from "./QueryFormUserDefinedCodeHeader";
 import { tableQueryUserDefinedCodeHeader } from "./Structures/Presentations";
 import { IRowDataUserDefinedCodeHeader } from "./Structures/Types";
-import { IconButton, Tooltip } from "@radix-ui/themes";
-import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
-import { useTranslation } from "react-i18next";
 
 /**
  * Tabla de información del sistema.
@@ -44,7 +44,7 @@ const QueryUserDefinedCodeHeader = ({
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.USER_ENDPOINT + "/paginated");
+      setApiUrl(parameter.valueText01 + Menus.USER_DEFINED_CODE_HEADER_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
@@ -87,11 +87,11 @@ const QueryUserDefinedCodeHeader = ({
   };
 
   return (
-    <GenericQuery<IRowDataUserDefinedCodeHeader>
+    <GenericQuery<IRowDataUserDefinedCodeHeader>  
       QueryForm={QueryFormUserDefinedCodeHeader}
       getTablePresentation={tableQueryUserDefinedCodeHeader}
       initialParameters={{
-        size: "10",
+        size: "5",
         name: "",
         uuidModule: initialRow?.uuidModule ?? "",
       }}
