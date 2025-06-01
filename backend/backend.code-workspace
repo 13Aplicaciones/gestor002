@@ -15,7 +15,7 @@
 			"tools": false,
 			"**/target": true,
 			"**/.mvn": true,
-			".vscode": true,
+			".vscode": false,
 		},
 		"java.compile.nullAnalysis.mode": "automatic",
 		"java.configuration.updateBuildConfiguration": "automatic",

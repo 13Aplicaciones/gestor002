@@ -1,5 +1,12 @@
 package com.aplicaciones13.gestor.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.RolUserMapper;
@@ -10,21 +17,21 @@ import com.aplicaciones13.gestor.repository.RolUserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Slf4j
 @Service
 @Transactional
 public class RolUserService {
 
-    @Autowired
     private RolUserRepository roluserRepository;
+
+    /**
+     * Constructor del servicio RolUserService.
+     *
+     * @param roluserRepository Repositorio de RolUser
+     */
+    public RolUserService(RolUserRepository roluserRepository) {
+        this.roluserRepository = roluserRepository;
+    }
 
     public RolUserResponse findById(Long id) {
         RolUser roluser = roluserRepository.findById(id)

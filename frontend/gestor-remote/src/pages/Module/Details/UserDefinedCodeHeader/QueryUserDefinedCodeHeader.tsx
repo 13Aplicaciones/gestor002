@@ -14,7 +14,7 @@ import {
   GenericQuery,
   IconComponent,
   IPresentationTable,
-  IQueryProps
+  IQueryProps,
 } from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../../../utils/Constants";
@@ -44,7 +44,11 @@ const QueryUserDefinedCodeHeader = ({
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.USER_DEFINED_CODE_HEADER_ENDPOINT + "/paginated");
+      setApiUrl(
+        parameter.valueText01 +
+          Menus.USER_DEFINED_CODE_HEADER_ENDPOINT +
+          "/paginated"
+      );
     };
 
     initializeStructure();
@@ -55,18 +59,23 @@ const QueryUserDefinedCodeHeader = ({
    */
   const configureUserDefinedCodeHeaderTableActions = (
     tableFormat: IPresentationTable,
-    //onEditRow?: (row: IRowDataUserDefinedCodeHeader) => void,
-    onSeeRow?: (row: IRowDataUserDefinedCodeHeader) => void
+    onEditRow?: (row: IRowDataUserDefinedCodeHeader) => void
   ) => {
-    // Configurar acción para ver detalle
-    if (tableFormat.items[0]) {
-      tableFormat.items[0].onAction = {
-        onAction: (row: IRowDataUserDefinedCodeHeader) => {
-          if (onSeeRow) {
-            onSeeRow(row);
-          }
-        },
-      };
+    // Configurar acción de edición
+    if (tableFormat.items[5]) {
+      tableFormat.items[5].component = (row: IRowDataUserDefinedCodeHeader) => (
+        <IconButton
+          size="1"
+          variant="ghost"
+          onClick={() => {
+            if (onEditRow) {
+              onEditRow(row);
+            }
+          }}
+        >
+          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
+        </IconButton>
+      );
     }
 
     return tableFormat;
@@ -78,7 +87,10 @@ const QueryUserDefinedCodeHeader = ({
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules." + Menus.USER_DEFINED_CODE_HEADER + ".add")} side="left">
+      <Tooltip
+        content={t("modules." + Menus.USER_DEFINED_CODE_HEADER + ".add")}
+        side="left"
+      >
         <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -87,7 +99,7 @@ const QueryUserDefinedCodeHeader = ({
   };
 
   return (
-    <GenericQuery<IRowDataUserDefinedCodeHeader>  
+    <GenericQuery<IRowDataUserDefinedCodeHeader>
       QueryForm={QueryFormUserDefinedCodeHeader}
       getTablePresentation={tableQueryUserDefinedCodeHeader}
       initialParameters={{

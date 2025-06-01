@@ -1,5 +1,10 @@
 package com.aplicaciones13.gestor.services;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.ParameterMapper;
@@ -10,19 +15,21 @@ import com.aplicaciones13.gestor.repository.ParameterRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 @Slf4j
 @Service
 @Transactional
 public class ParameterService {
 
-    @Autowired
     private ParameterRepository parameterRepository;
+
+    /**
+     * Constructor del servicio ParameterService.
+     *
+     * @param parameterRepository Repositorio de parámetros
+     */
+    public ParameterService(ParameterRepository parameterRepository) {
+        this.parameterRepository = parameterRepository;
+    }
 
     public ParameterResponse findByIndexParameter(String index) {
         return parameterRepository.findByIndexParameter(index)

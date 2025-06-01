@@ -19,8 +19,11 @@ import java.util.List;
 @Tag(name = "Menus", description = "Servicio para CRUD de Menús")
 public class MenuController {
 
-    @Autowired
-    private MenuService menuService;
+    private final MenuService menuService;
+
+    public MenuController(@Autowired MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     @GetMapping
     public ResponseEntity<List<MenuResponse>> getAllMenus() {

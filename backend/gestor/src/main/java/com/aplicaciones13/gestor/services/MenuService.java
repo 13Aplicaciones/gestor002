@@ -1,6 +1,7 @@
 package com.aplicaciones13.gestor.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,14 +11,20 @@ import com.aplicaciones13.gestor.payload.request.MenuRequest;
 import com.aplicaciones13.gestor.payload.response.MenuResponse;
 import com.aplicaciones13.gestor.repository.MenuRepository;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class MenuService {
 
-    @Autowired
     private MenuRepository menuRepository;
+
+    /**
+     * Constructor del servicio MenuService.
+     * 
+     * @param menuRepository
+     */
+    public MenuService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
 
     public List<MenuResponse> findAll() {
         return menuRepository.findAll().stream()

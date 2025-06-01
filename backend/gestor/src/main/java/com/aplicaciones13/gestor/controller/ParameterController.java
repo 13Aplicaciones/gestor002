@@ -1,13 +1,5 @@
 package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.gestor.payload.request.ParameterRequest;
-import com.aplicaciones13.gestor.payload.response.ParameterResponse;
-import com.aplicaciones13.gestor.services.ParameterService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,14 +11,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.gestor.payload.request.ParameterRequest;
+import com.aplicaciones13.gestor.payload.response.ParameterResponse;
+import com.aplicaciones13.gestor.services.ParameterService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @Valid
 @RestController
 @RequestMapping("/api/parameters")
 @Tag(name = "Parameters", description = "Servicio para CRUD de Parameters")
 public class ParameterController {
 
-    @Autowired
-    private ParameterService parameterService;
+    private final ParameterService parameterService;
+
+    /**
+     * Constructor de ParameterController.
+     * 
+     * @param parameterService
+     */
+    public ParameterController(ParameterService parameterService) {
+        this.parameterService = parameterService;
+    }
+
 
     @GetMapping("/{index}")
     public ResponseEntity<ParameterResponse> getParameterByIndexParameter(@PathVariable String index) {

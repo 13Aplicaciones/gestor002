@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")!).render(
       accentColor="cyan"
       grayColor="auto"
       scaling="100%"
-      radius="small"
+      radius="full"
       panelBackground="solid"
       appearance="dark"
     >

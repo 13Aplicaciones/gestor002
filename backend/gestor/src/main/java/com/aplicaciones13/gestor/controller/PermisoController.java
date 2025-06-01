@@ -1,10 +1,6 @@
 package com.aplicaciones13.gestor.controller;
 
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,14 +16,25 @@ import com.aplicaciones13.gestor.payload.request.PermissionRequest;
 import com.aplicaciones13.gestor.payload.response.PermissionResponse;
 import com.aplicaciones13.gestor.services.PermissionService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @Valid
 @RestController
 @RequestMapping("/api/permisos")
 @Tag(name = "Permisos", description = "Servicio para CRUD de Permisos")
 public class PermisoController {
 
-    @Autowired
-    private PermissionService permisoService;
+    private final PermissionService permisoService;
+
+    /**
+     * Constructor de PermisoController.
+     *
+     * @param permisoService Servicio de permisos
+     */
+    public PermisoController(PermissionService permisoService) {
+        this.permisoService = permisoService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PermissionResponse> getPermisoById(@PathVariable Long id) {

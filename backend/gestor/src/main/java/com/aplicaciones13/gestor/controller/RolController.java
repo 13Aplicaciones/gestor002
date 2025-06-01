@@ -1,13 +1,5 @@
 package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.gestor.payload.request.RolRequest;
-import com.aplicaciones13.gestor.payload.response.RolResponse;
-import com.aplicaciones13.gestor.services.RolService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,14 +11,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.gestor.payload.request.RolRequest;
+import com.aplicaciones13.gestor.payload.response.RolResponse;
+import com.aplicaciones13.gestor.services.RolService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @Valid
 @RestController
 @RequestMapping("/api/roles")
 @Tag(name = "Roles", description = "Servicio para CRUD de Roles")
 public class RolController {
 
-    @Autowired
-    private RolService rolService;
+    private final RolService rolService;
+
+    /**
+     * Constructor de RolController.
+     * 
+     * @param rolService
+     */
+    public RolController(RolService rolService) {
+        this.rolService = rolService;
+    }
 
     @GetMapping("/{name}")
     public ResponseEntity<RolResponse> getRolByName(@PathVariable String name) {

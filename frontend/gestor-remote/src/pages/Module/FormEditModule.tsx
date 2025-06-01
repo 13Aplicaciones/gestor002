@@ -184,14 +184,18 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
       />
 
       {status == StatusEdit.edit && (
-        <Tabs.Root defaultValue="cdu">
+        <Tabs.Root defaultValue="menus">
           <Tabs.List>
+            <Tabs.Trigger value="menus">Menus</Tabs.Trigger>
             <Tabs.Trigger value="cdu">{t("modules.GS-CD-001.title")}</Tabs.Trigger>
-            <Tabs.Trigger value="documents">{t("modules.GS-MD-001.title")}</Tabs.Trigger>
-            <Tabs.Trigger value="settings">{t("modules.GS-MD-001.title")}</Tabs.Trigger>
+            <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
+            <Tabs.Trigger value="parameters">Parametros</Tabs.Trigger>
           </Tabs.List>
 
-          <Box pt="3">
+          <Box pt="3">           
+            <Tabs.Content value="menus">
+              <Text size="2">Work Menus</Text>
+            </Tabs.Content>          
             <Tabs.Content value="cdu">
               <PageCrud
                 tranlation={Menus.USER_DEFINED_CODE_HEADER}
@@ -201,16 +205,12 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
                 FormPanel={FormEditUserDefinedCodeHeader}
                 initialRow={{ uuidModule: row.uuid }}
               />
+            </Tabs.Content>           
+            <Tabs.Content value="roles">
+              <Text size="2">Work Roles</Text>
             </Tabs.Content>
-
-            <Tabs.Content value="documents">
-              <Text size="2">Access and update your documents.</Text>
-            </Tabs.Content>
-
-            <Tabs.Content value="settings">
-              <Text size="2">
-                Edit your profile or update contact information.
-              </Text>
+            <Tabs.Content value="parameters">
+              <Text size="2">Work Parameters</Text>
             </Tabs.Content>
           </Box>
         </Tabs.Root>

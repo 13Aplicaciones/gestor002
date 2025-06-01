@@ -1,6 +1,7 @@
 package com.aplicaciones13.gestor.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +13,20 @@ import com.aplicaciones13.gestor.payload.request.PermissionRequest;
 import com.aplicaciones13.gestor.payload.response.PermissionResponse;
 import com.aplicaciones13.gestor.repository.PermissionRepository;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class PermissionService {
 
-    @Autowired
-    private PermissionRepository permissionRepository;
+    private final PermissionRepository permissionRepository;
+
+    /**
+     * Constructor del servicio PermissionService.
+     *
+     * @param permissionRepository Repositorio de permisos
+     */
+    public PermissionService(PermissionRepository permissionRepository) {
+        this.permissionRepository = permissionRepository;
+    }
 
     public List<PermissionResponse> findAll() {
         return permissionRepository.findAll().stream()

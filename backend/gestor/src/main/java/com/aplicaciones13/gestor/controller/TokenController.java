@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +41,11 @@ import jakarta.validation.Valid;
 @Tag(name = "Token", description = "Servicio para manejo custom no CRUD de TokenServer")
 public class TokenController {
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
+
+    public TokenController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     /**
      * Metodo para obtener un token por su uuid.

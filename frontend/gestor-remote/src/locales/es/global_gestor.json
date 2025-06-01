@@ -250,6 +250,7 @@
     "GS-CD-001": {
       "icon": "ListBulletIcon",
       "title": "Cód. Definidos Usuario (CDU)",
+      "add": "Crear nuevo CDU Encabezado",
       "description": "Códigos definidos por los usuarios del sistema",
       "path": "cduHeader",
       "panel": {

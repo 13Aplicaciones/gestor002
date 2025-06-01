@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +12,10 @@ import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.gestor.mapping.ErrorMapper;
+import com.aplicaciones13.gestor.model.Error;
 import com.aplicaciones13.gestor.payload.request.ErrorRequest;
 import com.aplicaciones13.gestor.payload.response.ErrorResponse;
 import com.aplicaciones13.gestor.repository.ErrorRepository;
-import com.aplicaciones13.gestor.model.Error;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +25,20 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class ErrorService {
 
-    @Autowired
-    private ErrorRepository errorRepository;
+    private final ErrorRepository errorRepository;
     
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
+
+    /**
+     * Constructor del servicio ErrorService.
+     * 
+     * @param errorRepository
+     * @param jwtService
+     */
+    public ErrorService(ErrorRepository errorRepository, JwtService jwtService) {
+        this.errorRepository = errorRepository;
+        this.jwtService = jwtService;
+    }
 
     /**
      * Valida que el índice sea único en la base de datos con excepción del uuid

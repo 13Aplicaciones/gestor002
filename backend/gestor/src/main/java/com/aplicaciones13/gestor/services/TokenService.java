@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,19 +41,29 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class TokenService {
 
-    @Autowired
-    private TokenRepository tokenRepository;
-
-    @Autowired
-    private TokenServerRepository tokenServerRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private JwtService jwtService;
+    private final TokenRepository tokenRepository;
+    private final TokenServerRepository tokenServerRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     User user = new User();
+
+
+    /**
+     * Constructor del servicio TokenService.
+     * 
+     * @param tokenRepository
+     * @param tokenServerRepository
+     * @param userRepository
+     * @param jwtService
+     */
+    public TokenService(TokenRepository tokenRepository, TokenServerRepository tokenServerRepository,
+            UserRepository userRepository, JwtService jwtService) {
+        this.tokenRepository = tokenRepository;
+        this.tokenServerRepository = tokenServerRepository;
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+    }
 
     /**
      * Busca los tokens por el uuid del usuario.

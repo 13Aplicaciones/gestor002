@@ -1,5 +1,10 @@
 package com.aplicaciones13.gestor.services;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.RolMapper;
@@ -10,19 +15,21 @@ import com.aplicaciones13.gestor.repository.RolRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 @Slf4j
 @Service
 @Transactional
 public class RolService {
 
-    @Autowired
-    private RolRepository rolRepository;
+    private final RolRepository rolRepository;
+
+    /**
+     * Constructor del servicio RolService.
+     *
+     * @param rolRepository Repositorio de roles
+     */
+    public RolService(RolRepository rolRepository) {
+        this.rolRepository = rolRepository;
+    }
 
     public RolResponse findByName(String name) {
         return rolRepository.findByName(name)

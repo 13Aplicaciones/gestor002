@@ -7,14 +7,17 @@ import { ToastContextProvider } from "../toast/ToastContextProvider";
 import { IFormProps, IPreviewProps, IQueryProps } from "./Types";
 
 /**
- * Página Crud Basica del sistema.
+ * Página Crud para manejar operaciones de creación, edición, visualización y consulta de datos.
+ * 
+ * Este componente es genérico y facila para un header o detail, y para este ultimo caso se usa atributos iniciales en el row en initialRow.
+ * Se sugiere no usar el PreviewPanel en casos de detail para simpliricar la implementación.
  *
  * @param tranlation - Traducción del módulo.
  * @param createIRowDataCustom - Función para crear una fila personalizada.
  * @param QueryPanel - Componente de consulta.
- * @param PreviewPanel - Componente de vista previa.
  * @param FormPanel - Componente de edición de formulario.
- * @param MasterPreviewPanel - Componente de vista previa maestro.
+ * @param PreviewPanel - Componente de vista previa para usar en procesamientos puntuales como una impresion o exportación de datos etc.
+ * @param initialRow - Fila inicial se usa en caso de detail y se necesita atributos iniciales en el row.
  *
  * @returns Componente de página CRUD.
  *
@@ -25,15 +28,13 @@ const PageCrud = ({
   QueryPanel,
   FormPanel,
   PreviewPanel,
-  MasterPreviewPanel,
   initialRow,
 }: {
   tranlation: string;
   createIRowDataCustom: () => any;
   QueryPanel: ComponentType<IQueryProps>;
   FormPanel: ComponentType<IFormProps>;
-  PreviewPanel: ComponentType<IPreviewProps>;
-  MasterPreviewPanel?: ComponentType<IPreviewProps>;
+  PreviewPanel?: ComponentType<IPreviewProps>;
   initialRow?: any;
 }) => {
   // Crear un componente interno único para cada instanceId
@@ -101,12 +102,8 @@ const PageCrud = ({
               />
             )}
 
-            {status == StatusEdit.see && (
+            {status == StatusEdit.see && PreviewPanel && (
               <PreviewPanel row={rowSelecionado} onBack={onBackPreview} />
-            )}
-
-            {status == StatusEdit.detail && MasterPreviewPanel && (
-              <MasterPreviewPanel row={rowSelecionado} onBack={onBackPreview} />
             )}
 
             {(status == StatusEdit.create || status == StatusEdit.edit) && (
@@ -130,10 +127,9 @@ const PageCrud = ({
     QueryPanel,
     FormPanel,
     PreviewPanel,
-    MasterPreviewPanel,
-  ]); // El componente interno se recrea solo cuando cambian las dependencias
+    initialRow,
+  ]);
 
-  // Renderizar el componente interno
   return <PageCrudInstance />;
 };
 

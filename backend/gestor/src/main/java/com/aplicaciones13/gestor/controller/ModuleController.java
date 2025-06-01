@@ -43,9 +43,17 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/modules")
 @Tag(name = "Modules", description = "Servicio para CRUD de Modules")
 public class ModuleController {
+    
+    private final ModuleService moduleService;
 
-    @Autowired
-    private ModuleService moduleService;
+    /**
+     * Constructor de ModuleController.
+     * 
+     * @param moduleService
+     */
+    public ModuleController(@Autowired ModuleService moduleService) {
+        this.moduleService = moduleService;
+    }
 
     /**
      * Metodo para obtener un module por su UUID.

@@ -1,5 +1,11 @@
 package com.aplicaciones13.gestor.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.InformationMapper;
@@ -7,13 +13,6 @@ import com.aplicaciones13.gestor.model.Information;
 import com.aplicaciones13.gestor.payload.request.InformationRequest;
 import com.aplicaciones13.gestor.payload.response.InformationResponse;
 import com.aplicaciones13.gestor.repository.InformationRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Clase para el servicio de la entidad Information.
@@ -26,8 +25,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class InformationService {
 
-    @Autowired
-    private InformationRepository informationRepository;
+    private final InformationRepository informationRepository;
+
+    /**
+     * Constructor del servicio InformationService.
+     * 
+     * @param informationRepository Repositorio de información
+     */
+    public InformationService(InformationRepository informationRepository) {
+        this.informationRepository = informationRepository;
+    }
 
     /**
      * Metodo para obtener la busqueda de la information por el name y page

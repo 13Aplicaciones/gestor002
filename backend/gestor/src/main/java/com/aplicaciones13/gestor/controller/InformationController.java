@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +34,16 @@ import jakarta.validation.Valid;
 @Tag(name = "Informacion", description = "Servicio para CRUD de Informacion")
 public class InformationController {
 
-    @Autowired
-    private InformationService informationService;
+    private final InformationService informationService;
+
+    /**
+     * Constructor de InformationController.
+     * 
+     * @param informationService
+     */
+    public InformationController(InformationService informationService) {
+        this.informationService = informationService;
+    }
 
     /**
      * Metodo para obtener un information por su uuid.
@@ -45,7 +52,7 @@ public class InformationController {
      * @return
      */
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getInformationByUuid(@PathVariable @ValidUUID String uuid) {
+    public ResponseEntity<InformationResponse> getInformationByUuid(@PathVariable @ValidUUID String uuid) {
         InformationResponse response = informationService.findByUuid(uuid);
         if (response == null) {
             return ResponseEntity.notFound().build();

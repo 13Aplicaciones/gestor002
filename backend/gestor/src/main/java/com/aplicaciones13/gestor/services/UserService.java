@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,12 +31,20 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class UserService {
+    
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private JwtService jwtService;
+    /**
+     * Constructor del servicio UserService.
+     * 
+     * @param userRepository
+     * @param jwtService
+     */
+    public UserService(UserRepository userRepository, JwtService jwtService) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+    }
 
     /**
      * Valida que el nick sea único en la base de datos con excepción del uuid
@@ -47,7 +54,7 @@ public class UserService {
      */
     public void validateUniqueNickUuid(String nick, String uuid) {
         Optional<User> existingError = userRepository.findByNick(nick);
-        if (existingError.isPresent() && !existingError.get().getUuid().toString().equals(uuid)) {
+        if (existingError.isPresent() && !existingError.get().getUuid().equals(uuid)) {
             throw new DataIntegrityViolationException("El Nick ya existe");
         }
     }

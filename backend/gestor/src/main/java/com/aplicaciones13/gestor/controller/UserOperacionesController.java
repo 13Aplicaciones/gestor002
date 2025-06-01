@@ -1,6 +1,5 @@
 package com.aplicaciones13.gestor.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +32,11 @@ import jakarta.validation.Valid;
 @Tag(name = "Users Operaciones", description = "Operaciones relacionadas con users")
 public class UserOperacionesController {
 
-    @Autowired
-    TokenService tokenService;
+    private final TokenService tokenService;
+
+    public UserOperacionesController( TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     /**
      * Restablece la contraseña del usuario.

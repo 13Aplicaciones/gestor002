@@ -2,7 +2,6 @@ package com.aplicaciones13.gestor.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +38,16 @@ import jakarta.validation.Valid;
 @Tag(name = "Errores", description = "Servicio para CRUD de Errores")
 public class ErrorController {
 
-    @Autowired
-    private ErrorService errorService;
+    private final ErrorService errorService;
+
+    /**
+     * Constructor de ErrorController.
+     * 
+     * @param errorService
+     */
+    public ErrorController(ErrorService errorService) {
+        this.errorService = errorService;
+    }
 
     /**
      * Metodo para obtener todos los errores.
@@ -50,7 +57,7 @@ public class ErrorController {
      */
     @GetMapping("/index={index}")
     public ErrorResponse getErrorById(@PathVariable String index) {
-        return (ErrorResponse) errorService.findByIndexError(index);
+        return errorService.findByIndexError(index);
     }
 
     /**
@@ -60,7 +67,7 @@ public class ErrorController {
      * @return
      */
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getErrorByUuid(@PathVariable @ValidUUID String uuid) {
+    public ResponseEntity<ErrorResponse> getErrorByUuid(@PathVariable @ValidUUID String uuid) {
         ErrorResponse response = errorService.findByUuid(uuid);
         if (response == null) {
             return ResponseEntity.notFound().build();
@@ -75,7 +82,7 @@ public class ErrorController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<?> createError(@RequestBody @Valid ErrorRequest errorRequest) {
+    public ResponseEntity<ErrorResponse> createError(@RequestBody @Valid ErrorRequest errorRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(errorService.create(errorRequest));
     }
 

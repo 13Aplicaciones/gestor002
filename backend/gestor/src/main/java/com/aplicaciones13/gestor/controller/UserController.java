@@ -1,22 +1,9 @@
 package com.aplicaciones13.gestor.controller;
 
-import com.aplicaciones13.base.controller.ControllerTools;
-import com.aplicaciones13.base.tools.Conversions;
-import com.aplicaciones13.base.validations.ValidUUID;
-import com.aplicaciones13.gestor.model.User;
-import com.aplicaciones13.gestor.payload.request.UserPatchStatusRequest;
-import com.aplicaciones13.gestor.payload.request.UserRequest;
-import com.aplicaciones13.gestor.payload.response.UserResponse;
-import com.aplicaciones13.gestor.services.UserService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -34,21 +21,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aplicaciones13.base.controller.ControllerTools;
+import com.aplicaciones13.base.tools.Conversions;
+import com.aplicaciones13.base.validations.ValidUUID;
+import com.aplicaciones13.gestor.model.User;
+import com.aplicaciones13.gestor.payload.request.UserPatchStatusRequest;
+import com.aplicaciones13.gestor.payload.request.UserRequest;
+import com.aplicaciones13.gestor.payload.response.UserResponse;
+import com.aplicaciones13.gestor.services.UserService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 @Valid
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = "Users", description = "Servicio para CRUD de users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    /**
+     * Constructor de UserController.
+     * 
+     * @param userService
+     */
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Metodo para registrar un CustomDateEditor para el controlador.
      * 
      * @param binder
      */
-    // TODO: Pendiente para controlar el formato de fecha
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Conversions.ISO_8601_DATE);
@@ -63,7 +69,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getUserByUuid(@PathVariable @ValidUUID String uuid) {
+    public ResponseEntity<UserResponse> getUserByUuid(@PathVariable @ValidUUID String uuid) {
         UserResponse response = userService.findByUuid(uuid);
         if (response == null) {
             return ResponseEntity.notFound().build();
