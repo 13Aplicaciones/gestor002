@@ -13,12 +13,15 @@ import java.util.List;
 @Service
 public class RoleService {
 
-    @Autowired
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
     
-    @Autowired
-    private KeycloakConfig keycloakConfig;
+    private final KeycloakConfig keycloakConfig;
     
+    public RoleService(KeycloakService keycloakService, KeycloakConfig keycloakConfig) {
+        this.keycloakService = keycloakService;
+        this.keycloakConfig = keycloakConfig;
+    }
+
     /**
      * Obtiene todos los roles del reino
      */

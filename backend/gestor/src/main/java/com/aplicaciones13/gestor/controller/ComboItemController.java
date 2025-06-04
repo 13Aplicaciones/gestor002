@@ -52,34 +52,6 @@ public class ComboItemController {
     }
 
     /**
-     * Método para obtener un ítem de combo por su UUID.
-     * 
-     * @param uuid identificador único del ítem de combo
-     * @return respuesta con el ítem de combo encontrado
-     */
-    @GetMapping("/{uuid}")
-    @Operation(summary = "Obtener ítem de combo por UUID", description = "Obtiene un ítem de combo específico por su UUID")
-    public ResponseEntity<ComboItemResponse> getComboItemByUuid(@PathVariable @ValidUUID String uuid) {
-        ComboItemResponse response = comboItemService.findByUuid(uuid);
-        if (response == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(response);
-    }
-
-    /**
-     * Crear un nuevo ítem de combo.
-     * 
-     * @param request datos del nuevo ítem de combo
-     * @return respuesta con el ítem de combo creado
-     */
-    @PostMapping
-    @Operation(summary = "Crear ítem de combo", description = "Crea un nuevo ítem de combo")
-    public ResponseEntity<ComboItemResponse> crearComboItem(@RequestBody @Valid ComboItemRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(comboItemService.create(request));
-    }
-
-    /**
      * Actualizar un ítem de combo.
      * 
      * @param uuid identificador único del ítem de combo
@@ -92,6 +64,18 @@ public class ComboItemController {
             @PathVariable @ValidUUID String uuid,
             @Valid @RequestBody ComboItemRequest comboItemRequest) {
         return ResponseEntity.ok(comboItemService.update(uuid, comboItemRequest));
+    }
+
+    /**
+     * Crear un nuevo ítem de combo.
+     * 
+     * @param request datos del nuevo ítem de combo
+     * @return respuesta con el ítem de combo creado
+     */
+    @PostMapping
+    @Operation(summary = "Crear ítem de combo", description = "Crea un nuevo ítem de combo")
+    public ResponseEntity<ComboItemResponse> crearComboItem(@RequestBody @Valid ComboItemRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(comboItemService.create(request));
     }
 
     /**
@@ -113,7 +97,7 @@ public class ComboItemController {
      * @param page número de página
      * @param size tamaño de página
      * @param sort configuración de ordenamiento
-     * @param name filtro por nombre
+     * @param searchTerm filtro por índice o etiqueta
      * @return respuesta paginada con los ítems de combo
      */
     @GetMapping("/paginated")
@@ -126,12 +110,28 @@ public class ComboItemController {
     public ResponseEntity<Map<String, Object>> getAllComboItemWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "name,desc") String[] sort,
-            @RequestParam(required = false) String name) {
-        Page<ComboItem> pageComboItem = comboItemService.findByName(name,
+            @RequestParam(defaultValue = "orden,asc") String[] sort,
+            @RequestParam(required = false) String searchTerm) {
+        Page<ComboItem> pageComboItem = comboItemService.findByIndexOrLabel(searchTerm,
                 ControllerTools.generateOrders(page, size, sort));
 
         Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Método para obtener un ítem de combo por su UUID.
+     * 
+     * @param uuid identificador único del ítem de combo
+     * @return respuesta con el ítem de combo encontrado
+     */
+    @GetMapping("/{uuid}")
+    @Operation(summary = "Obtener ítem de combo por UUID", description = "Obtiene un ítem de combo específico por su UUID")
+    public ResponseEntity<ComboItemResponse> getComboItemByUuid(@PathVariable @ValidUUID String uuid) {
+        ComboItemResponse response = comboItemService.findByUuid(uuid);
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(response);
     }
 }

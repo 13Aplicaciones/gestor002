@@ -30,8 +30,16 @@ public class StaticsService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private MenuService menuService;
+    private final MenuService menuService;
+
+    /**
+     * Constructor del servicio StaticsService.
+     * 
+     * @param menuService Servicio para interactuar con los menús
+     */
+    public StaticsService(MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     /**
      * Metodo para ejecutar una consulta dinamica

@@ -15,6 +15,11 @@ interface CredentialsQueryFormValues {
 
 /**
  * Formulario de consulta de informaciones del sistema.
+ * 
+ * Este formulario permite filtrar las credenciales por UUID de usuario.
+ * 
+ * @param onFind Función que se ejecuta al enviar el formulario con los datos de búsqueda.
+ * @param initialRow Objeto que contiene los valores iniciales del formulario, como el UUID del usuario.
  */
 const QueryFormCredentials = ({
   onFind,

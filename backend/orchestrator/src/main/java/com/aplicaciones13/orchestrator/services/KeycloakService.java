@@ -13,13 +13,18 @@ import com.aplicaciones13.orchestrator.payload.response.ParameterResponse;
 @Service
 public class KeycloakService{
     
-    @Autowired
-    private ParameterService parameterService;
-
+    private final ParameterService parameterService;
     private final KeycloakClient keycloakClient;
 
-    public KeycloakService(KeycloakClient keycloakClient) {
+    /**
+     * Constructor del servicio KeycloakService.
+     * 
+     * @param keycloakClient Cliente para interactuar con Keycloak
+     * @param parameterService Servicio para interactuar con los parametros
+     */
+    public KeycloakService(KeycloakClient keycloakClient, ParameterService parameterService ) {
         this.keycloakClient = keycloakClient;
+        this.parameterService = parameterService;
     }
 
     public KeycloakTokenResponse getToken(String url, UserRequest userRequest) {

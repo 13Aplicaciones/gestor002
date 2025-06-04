@@ -14,12 +14,21 @@ import java.util.Map;
 @Service
 public class SessionManagementService {
 
-    @Autowired
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
     
-    @Autowired
-    private KeycloakConfig keycloakConfig;
+    private final KeycloakConfig keycloakConfig;
     
+    /**
+     * Constructor para inyectar las dependencias necesarias
+     * 
+     * @param keycloakService Servicio para interactuar con Keycloak
+     * @param keycloakConfig Configuración de Keycloak
+     */
+    public SessionManagementService(KeycloakService keycloakService, KeycloakConfig keycloakConfig) {
+        this.keycloakService = keycloakService;
+        this.keycloakConfig = keycloakConfig;
+    }
+
     /**
      * Cierra todas las sesiones activas en el reino
      */

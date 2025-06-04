@@ -4,9 +4,7 @@ import java.lang.reflect.Field;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aplicaciones13.base.anotacion.SetUser;
@@ -25,8 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class SetUserAspect {
 
-    @Autowired
-    private JwtService jwtService;
+    
+    private final JwtService jwtService;
+
+    /**
+     * Método que se ejecuta antes de cualquier método que tenga la anotación SetUser.
+     * 
+     * @param joinPoint El punto de unión del aspecto.
+     * @return El resultado del método original.
+     */
+    public SetUserAspect(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
                          
     @Around("@annotation(com.aplicaciones13.base.anotacion.InvokeUser)")
     public Object setUsuer(ProceedingJoinPoint joinPoint) throws Throwable  {

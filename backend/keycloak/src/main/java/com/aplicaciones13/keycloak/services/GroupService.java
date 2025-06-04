@@ -14,12 +14,15 @@ import java.util.List;
 @Service
 public class GroupService {
 
-    @Autowired
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
     
-    @Autowired
-    private KeycloakConfig keycloakConfig;
-    
+    private final KeycloakConfig keycloakConfig;
+
+    public GroupService(KeycloakService keycloakService, KeycloakConfig keycloakConfig) {
+        this.keycloakService = keycloakService;
+        this.keycloakConfig = keycloakConfig;
+    }
+
     /**
      * Obtiene todos los grupos
      */

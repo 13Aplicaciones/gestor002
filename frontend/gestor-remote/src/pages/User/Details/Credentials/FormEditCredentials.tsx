@@ -46,9 +46,7 @@ const FormEditCredentials = ({ status, row, onBack }: IFormProps) => {
       .string()
       .required(t("validation.required"))
       .email(t("validation.email")),
-    uuidUser: yup
-      .string()
-      .required(t("validation.required")),
+    uuidUser: yup.string().required(t("validation.required")),
     userApp: yup.string(),
     status: yup.string(),
   });
@@ -98,48 +96,46 @@ const FormEditCredentials = ({ status, row, onBack }: IFormProps) => {
   }, [row]);
 
   return (
-    <>
-      <GenericCrudForm
-        status={status}
-        row={row}
-        indexName="uuid"
-        onBack={onBack}
-        apiUrl={apiUrl}
-        token={token}
-        getToken={refreshToken}
-        renderForm={({
-          formStatus,
-          loading,
-          handleSubmit: submitData,
-          showPopUpDelete,
-        }) => (
-          <form onSubmit={handleSubmit(submitData)}>
-            <InputField
-              title={t("modules.GS-UC-001.fields.email.title")}
-              columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-UC-001.fields.email.placeholder")}
-              directionLabel={Direction.horizontal}
-              register={register("email")}
-              messageError={errors.email?.message}
-            />
-            <InputField
-              title={t("modules.GS-UC-001.fields.uuid.title")}
-              columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-UC-001.fields.uuid.placeholder")}
-              directionLabel={Direction.horizontal}
-              register={register("uuidUser")}
-              messageError={errors.uuidUser?.message}
-            />
+    <GenericCrudForm
+      status={status}
+      row={row}
+      indexName="uuid"
+      onBack={onBack}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={refreshToken}
+      renderForm={({
+        formStatus,
+        loading,
+        handleSubmit: submitData,
+        showPopUpDelete,
+      }) => (
+        <form onSubmit={handleSubmit(submitData)}>
+          <InputField
+            title={t("modules.GS-UC-001.fields.email.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-UC-001.fields.email.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("email")}
+            messageError={errors.email?.message}
+          />
+          <InputField
+            title={t("modules.GS-UC-001.fields.uuid.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-UC-001.fields.uuid.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("uuidUser")}
+            messageError={errors.uuidUser?.message}
+          />
           <FooterFormAction
-                loading={loading}
-                onBack={onBack}
-                showPopUpDelete={showPopUpDelete}
-                formStatus={formStatus}
-              />
-          </form>
-        )}
-      />
-    </>
+            loading={loading}
+            onBack={onBack}
+            showPopUpDelete={showPopUpDelete}
+            formStatus={formStatus}
+          />
+        </form>
+      )}
+    />
   );
 };
 

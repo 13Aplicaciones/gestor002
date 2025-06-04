@@ -12,8 +12,11 @@ import com.aplicaciones13.orchestrator.repository.MenuRepository;
 @Service
 public class MenuService {
 
-    @Autowired
-    private MenuRepository menuRepository;
+    private final MenuRepository menuRepository;
+
+    public MenuService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
 
     //TODO: validar si se puede cachear
     //@Cacheable(value = "menuService", key = "#index", cacheManager = "cacheManagerWithTtl")

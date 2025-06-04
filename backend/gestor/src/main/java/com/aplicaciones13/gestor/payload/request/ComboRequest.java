@@ -20,12 +20,12 @@ import lombok.EqualsAndHashCode;
 public class ComboRequest extends AppRequest{
 
     @NotNull
-    @Schema(description = "ID del módulo asociado al combo", example = "1")
-    private Long idModule;
+    @Schema(description = "UUID del módulo asociado al combo", example = "550e8400-e29b-41d4-a716-446655440000")
+    private String uuidModule;
 
     @NotNull
     @Schema(description = "Índice del combo", example = "0")
-    private Integer indexCombo;
+    private String indexCombo;
 
     @NotNull
     @Size(max = 128)

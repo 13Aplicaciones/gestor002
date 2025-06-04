@@ -1,17 +1,24 @@
 package com.aplicaciones13.gestor.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.gestor.payload.request.MenuRequest;
 import com.aplicaciones13.gestor.payload.response.MenuResponse;
 import com.aplicaciones13.gestor.services.MenuService;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @Valid
 @RestController
@@ -21,7 +28,7 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    public MenuController(@Autowired MenuService menuService) {
+    public MenuController(MenuService menuService) {
         this.menuService = menuService;
     }
 

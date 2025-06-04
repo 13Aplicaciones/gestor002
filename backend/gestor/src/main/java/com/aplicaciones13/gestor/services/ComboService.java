@@ -10,9 +10,11 @@ import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.ComboMapper;
 import com.aplicaciones13.gestor.model.Combo;
+import com.aplicaciones13.gestor.model.Module;
 import com.aplicaciones13.gestor.payload.request.ComboRequest;
 import com.aplicaciones13.gestor.payload.response.ComboResponse;
 import com.aplicaciones13.gestor.repository.ComboRepository;
+import com.aplicaciones13.gestor.repository.ModuleRepository;
 
 /**
  * Clase para el servicio de la entidad Combo.
@@ -28,14 +30,17 @@ import com.aplicaciones13.gestor.repository.ComboRepository;
 public class ComboService {
 
     private final ComboRepository comboRepository;
+    private final ModuleRepository moduleRepository;
 
     /**
      * Constructor del servicio ComboService.
      * 
      * @param comboRepository
+     * @param moduleRepository
      */
-    public ComboService(ComboRepository comboRepository) {
+    public ComboService(ComboRepository comboRepository, ModuleRepository moduleRepository) {
         this.comboRepository = comboRepository;
+        this.moduleRepository = moduleRepository;
     }
 
     /**
@@ -58,9 +63,15 @@ public class ComboService {
      */
     @InvokeUser
     public ComboResponse create(ComboRequest comboRequest) {
+        Module module = findModuleByUuid(comboRequest.getUuidModule());
+        
         Combo combo = ComboMapper.INSTANCE.toEntity(comboRequest);
+        combo.setIdModule(module.getIdModule());
         combo = comboRepository.saveAndFlush(combo);
-        return ComboMapper.INSTANCE.toResponse(combo);
+
+        ComboResponse response = ComboMapper.INSTANCE.toResponse(combo);
+        response.setUuidModule(comboRequest.getUuidModule());
+        return response;
     }
 
     /**
@@ -75,7 +86,9 @@ public class ComboService {
         Combo combo = comboRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("Combo no encontrado", HttpStatus.NOT_FOUND));
 
-        combo.setIdModule(comboRequest.getIdModule());
+
+        Module module = findModuleByUuid(comboRequest.getUuidModule());
+        combo.setIdModule(module.getIdModule());
         combo.setIndexCombo(comboRequest.getIndexCombo());
         combo.setName(comboRequest.getName());
         combo.setStatus(comboRequest.getStatus());
@@ -101,8 +114,22 @@ public class ComboService {
      * @param pageable Parámetros de paginación.
      * @return Page de ComboResponse con los combos encontrados.
      */
-    public Page<ComboResponse> findByNameContaining(String name, Pageable pageable) {
-        return comboRepository.findByNameContaining(name, pageable)
+    public Page<ComboResponse> findByNameContaining(String uuidModule, String name, Pageable pageable) {
+        Module module = findModuleByUuid(uuidModule);
+        return comboRepository.findByIdModuleNameContaining(module.getIdModule(),name, pageable)
                 .map(ComboMapper.INSTANCE::toResponse);
+    }
+
+
+    /**
+     * Método para buscar todos los combos de un módulo específico.
+     * 
+     * @param uuidModule UUID del módulo.
+     * @return
+     */
+    private Module findModuleByUuid(String uuidModule) {
+        return moduleRepository.findByUuid(uuidModule)
+                .orElseThrow(() -> new ResourceHttpStatusException("Módulo no encontrado", HttpStatus.NOT_FOUND));
+                
     }
 }

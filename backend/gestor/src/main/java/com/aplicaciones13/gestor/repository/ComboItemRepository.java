@@ -20,17 +20,17 @@ import com.aplicaciones13.gestor.model.ComboItem;
 public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
     
     /**
-     * Método para buscar por nombre (like) y que sea pageable.
+     * Método para buscar por índice o etiqueta (like) y que sea pageable.
      * 
-     * @param name nombre a buscar
+     * @param searchTerm término a buscar en index_combo_item o label
      * @param pageable configuración de paginación
      * @return página de ítems de combo
      */
     @Query(value = 
-                "SELECT * FROM GS_002_01.combo_item ci WHERE (?1 IS NULL OR upper(ci.name) LIKE CONCAT('%', upper(?1), '%'))",
-            countQuery = "SELECT COUNT(*) FROM GS_002_01.combo_item ci WHERE (?1 IS NULL OR upper(ci.name) LIKE CONCAT('%', upper(?1), '%'))",
+                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))",
+            countQuery = "SELECT COUNT(*) FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))",
             nativeQuery = true)    
-    Page<ComboItem> findByNameContaining(String name, Pageable pageable);
+    Page<ComboItem> findByIndexOrLabelContaining(String searchTerm, Pageable pageable);
 
     /**
      * Método para buscar una entidad de ComboItem por UUID.
@@ -38,7 +38,16 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
      * @param uuid identificador único
      * @return optional con el ítem de combo encontrado
      */
-    @Query(value = "SELECT * FROM GS_002_01.combo_item WHERE uuid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM combo_item WHERE uuid = ?1", nativeQuery = true)
     Optional<ComboItem> findByUuid(String uuid);
 
+    /**
+     * Método para buscar ítems de combo por ID de combo.
+     * 
+     * @param idCombo ID del combo
+     * @param pageable configuración de paginación
+     * @return página de ítems de combo
+     */
+    @Query(value = "SELECT * FROM combo_item WHERE id_combo = ?1 ORDER BY orden ASC", nativeQuery = true)
+    Page<ComboItem> findByIdCombo(Long idCombo, Pageable pageable);
 }

@@ -35,8 +35,29 @@ public class ComboItem extends UuidUserDateApp {
     @JoinColumn(name = "id_combo")
     private Combo combo;
 
-    @Column(length = 128, nullable = false)
-    private String name;
+    @Column(name = "index_combo_item", length = 128, nullable = false)
+    private String indexComboItem;
+
+    @Column(name = "code_number", nullable = false)
+    private Integer codeNumber = 0;
+
+    @Column(name = "code_text", length = 8, nullable = false)
+    private String codeText;
+
+    @Column(length = 64, nullable = false)
+    private String label;
+
+    @Column(length = 256, nullable = false)
+    private String description;
+
+    @Column(length = 128)
+    private String icon = "TransparencyGridIcon";
+
+    @Column(length = 64, nullable = false)
+    private String color = "none";
+
+    @Column(nullable = false)
+    private Integer orden = 0;
 
     @Column(length = 8, nullable = false)
     private String status;

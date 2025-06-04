@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
+  AreaField,
   BandPresentation,
   Direction,
   FooterFormAction,
@@ -25,11 +26,10 @@ import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { listaFormModule } from "./Structures/Presentations";
-import { createIRowDataUserDefinedCodeHeader } from "./Details/UserDefinedCodeHeader/Structures/Types";
-import { QueryUserDefinedCodeHeader } from "./Details/UserDefinedCodeHeader/QueryUserDefinedCodeHeader";
-import { FormEditUserDefinedCodeHeader } from "./Details/UserDefinedCodeHeader/FormEditUserDefinedCodeHeader";
-import { PreviewUser } from "../User/PreviewUser";
 import { Box, Tabs, Text } from "@radix-ui/themes";
+import { QueryCombo } from "./Details/Combo/QueryCombo";
+import { FormEditCombo } from "./Details/Combo/FormEditCombo";
+import { createIRowDataCombo } from "./Details/Combo/Structures/Types";
 
 /**
  * Formulario de edición de Modules del sistema.
@@ -150,7 +150,7 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
               register={register("name")}
               messageError={errors.name?.message}
             />
-            <InputField
+            <AreaField
               title={t("modules.GS-MD-001.fields.context.title")}
               columns={BandPresentation.column_1}
               placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
@@ -184,28 +184,29 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
       />
 
       {status == StatusEdit.edit && (
-        <Tabs.Root defaultValue="menus">
+        <Tabs.Root defaultValue="cdu">
           <Tabs.List>
             <Tabs.Trigger value="menus">Menus</Tabs.Trigger>
-            <Tabs.Trigger value="cdu">{t("modules.GS-CD-001.title")}</Tabs.Trigger>
+            <Tabs.Trigger value="cdu">
+              {t("modules.GS-CB-001.title")}
+            </Tabs.Trigger>
             <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
             <Tabs.Trigger value="parameters">Parametros</Tabs.Trigger>
           </Tabs.List>
 
-          <Box pt="3">           
+          <Box pt="3">
             <Tabs.Content value="menus">
               <Text size="2">Work Menus</Text>
-            </Tabs.Content>          
+            </Tabs.Content>
             <Tabs.Content value="cdu">
               <PageCrud
-                tranlation={Menus.USER_DEFINED_CODE_HEADER}
-                createIRowDataCustom={createIRowDataUserDefinedCodeHeader}
-                QueryPanel={QueryUserDefinedCodeHeader}
-                PreviewPanel={PreviewUser}
-                FormPanel={FormEditUserDefinedCodeHeader}
+                tranlation={Menus.COMBO}
+                createIRowDataCustom={createIRowDataCombo}
+                QueryPanel={QueryCombo}
+                FormPanel={FormEditCombo}
                 initialRow={{ uuidModule: row.uuid }}
               />
-            </Tabs.Content>           
+            </Tabs.Content>
             <Tabs.Content value="roles">
               <Text size="2">Work Roles</Text>
             </Tabs.Content>

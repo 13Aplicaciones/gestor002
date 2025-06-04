@@ -13,8 +13,11 @@ import java.util.Map;
 @RequestMapping("/api/sessions")
 public class SessionController {
 
-    @Autowired
-    private SessionManagementService sessionService;
+    private final SessionManagementService sessionService;
+
+    public SessionController(SessionManagementService sessionService) {
+        this.sessionService = sessionService;
+    }
     
     @PostMapping("/logout/all")
     public ResponseEntity<Void> logoutAllUsers() {

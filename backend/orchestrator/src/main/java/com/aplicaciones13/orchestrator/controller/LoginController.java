@@ -28,9 +28,17 @@ import com.aplicaciones13.orchestrator.services.KeycloakService;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
 
+    /**
+     * Constructor del controlador LoginController.
+     * 
+     * @param keycloakService Servicio para interactuar con Keycloak
+     */
+    public LoginController(KeycloakService keycloakService) {
+        this.keycloakService = keycloakService;
+    }
+    
     /**
      * Metodo para obtener un token de acceso a partir de un refreshToken
      * 

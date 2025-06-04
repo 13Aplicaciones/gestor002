@@ -48,7 +48,7 @@
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
         "indexModule": {
-          "title": "Indice",
+          "title": "Índice",
           "placeholder": "GS-MD-001"
         },
         "context": {
@@ -247,61 +247,50 @@
       }
     },
 
-    "GS-CD-001": {
+    "GS-CB-001": {
       "icon": "ListBulletIcon",
-      "title": "Cód. Definidos Usuario (CDU)",
-      "add": "Crear nuevo CDU Encabezado",
-      "description": "Códigos definidos por los usuarios del sistema",
-      "path": "cduHeader",
+      "title": "Combos",
+      "add": "Crear nuevo Combo",
+      "description": "Combos del sistema",
+      "path": "combo",
       "panel": {
-        "find": "Listar de Códigos Definidos por el Usuario",
-        "see": "Vista previa Códigos Definidos por el Usuario",
-        "edit": "Editar Código Definido por el Usuario",
-        "create": "Crear Código Definido por el Usuario"
+        "find": "Listar de combos por el Usuario",
+        "see": "Vista previa de Combos por el Usuario",
+        "edit": "Editar Combo por el Usuario",
+        "create": "Crear Combo por el Usuario"
       },
       "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
         "uuidModule": {
           "title": "UUID Módulo",
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
-
-        "codeText": {
-          "title": "Indice",
-          "placeholder": "AD_CD_01"
-        },
-
-        "codeNumber": {
-          "title": "Cód. Numérico",
-          "placeholder": "0"
-        },
-
-        "group": {
-          "title": "Grupo",
-          "placeholder": "001"
+        "indexCombo": {
+          "title": "Índice",
+          "placeholder": "Ejemplo: 1"
         },
         "name": {
           "title": "Nombre",
-          "placeholder": "Nombre CDU"
-        },
-        "description": {
-          "title": "Descripción",
-          "placeholder": "Descripción"
+          "placeholder": "Nombre Combo"
         },
         "status": {
           "title": "Estado",
-          "placeholder": "Estado del usuario"
+          "placeholder": "Estado del combo"
         },
         "userDate": {
           "title": "Fecha",
-          "placeholder": "Fecha del error"
+          "placeholder": "Fecha del combo"
         },
         "user": {
           "title": "Usuario",
-          "placeholder": "Usuario que generó el error"
+          "placeholder": "Usuario que generó el combo"
         },
         "userApp": {
           "title": "Aplicación",
-          "placeholder": "Aplicación que generó el error"
+          "placeholder": "Aplicación que generó el combo "
         },
         "acciones": {
           "title": "Acciones",
@@ -378,7 +367,7 @@
           "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
         },
         "indexError": {
-          "title": "Indice",
+          "title": "Índice",
           "placeholder": "ERROR-000"
         },
         "message": {

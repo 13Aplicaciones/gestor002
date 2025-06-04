@@ -14,12 +14,23 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private KeycloakService keycloakService;
     
-    @Autowired
-    private KeycloakConfig keycloakConfig;
+    private final KeycloakService keycloakService;
     
+    private final KeycloakConfig keycloakConfig;
+    
+    /**
+     * Constructor del servicio de usuarios.
+     * 
+     * @param keycloakService Servicio para interactuar con Keycloak
+     * @param keycloakConfig Configuración de Keycloak
+     * 
+     */
+    public UserService(KeycloakService keycloakService, KeycloakConfig keycloakConfig) {
+        this.keycloakService = keycloakService;
+        this.keycloakConfig = keycloakConfig;
+    }
+
     /**
      * Obtiene la lista de usuarios
      */

@@ -23,11 +23,20 @@ import jakarta.transaction.Transactional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private ConfigPermissionRepository configPermissionRepository;
+    private final ConfigPermissionRepository configPermissionRepository;
+
+    /**
+     * Constructor del servicio UserService.
+     * 
+     * @param userRepository Repositorio de usuarios
+     * @param configPermissionRepository Repositorio de permisos de configuración
+     */
+    public UserService(UserRepository userRepository, ConfigPermissionRepository configPermissionRepository) {
+        this.userRepository = userRepository;
+        this.configPermissionRepository = configPermissionRepository;
+    }
 
     @Transactional
     @Cacheable(value = "structureConfig", key = "#nick")

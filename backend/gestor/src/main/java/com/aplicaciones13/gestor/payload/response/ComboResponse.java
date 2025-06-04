@@ -20,11 +20,11 @@ public class ComboResponse extends UserDateAppResponse {
     @Schema(description = "UUID del registro", example = "550e8400-e29b-41d4-a716-446655440000")
     private String uuid;
 
-    @Schema(description = "ID del módulo asociado", example = "1")
-    private Long idModule;
+    @Schema(description = "UUID del módulo asociado", example = "550e8400-e29b-41d4-a716-446655440000")
+    private String uuidModule;
 
     @Schema(description = "Índice del combo", example = "0")
-    private Integer indexCombo;
+    private String indexCombo;
 
     @Schema(description = "Nombre del combo", example = "Combo de Ejemplo")
     private String name;

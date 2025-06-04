@@ -14,8 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class ParameterService {
 
-    @Autowired
-    private ParameterRepository parameterRepository;
+    private final ParameterRepository parameterRepository;
+
+    /**
+     * Constructor del servicio de parámetros.
+     * 
+     * @param parameterRepository Repositorio de parámetros
+     * 
+     */
+    public ParameterService(ParameterRepository parameterRepository) {
+        this.parameterRepository = parameterRepository;
+    }
 
     /**
      * Busca los parámetros de un módulo en particular a partir del índice del

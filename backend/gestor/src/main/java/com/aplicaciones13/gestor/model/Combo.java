@@ -36,12 +36,12 @@ public class Combo extends UuidUserDateApp {
     @Column(name = "id_module", nullable = false)
     private Long idModule;
 
-    @Column(name = "index_combo", nullable = false)
-    private Integer indexCombo;
+    @Column(name = "index_combo", nullable = false, length = 64)
+    private String indexCombo;
 
     @Column(length = 128, nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 8)
     private String status;
 }

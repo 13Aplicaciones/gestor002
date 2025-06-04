@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @Repository
 public interface ComboRepository extends JpaRepository<Combo, Long> {
-    
+
     /**
      * Método para buscar un combo por su nombre (like) y que sea pageable.
      * 
@@ -25,11 +25,8 @@ public interface ComboRepository extends JpaRepository<Combo, Long> {
      * @param pageable
      * @return
      */
-    @Query(value = 
-                "SELECT * FROM GS_002_01.combo c WHERE (?1 IS NULL OR upper(c.name) LIKE CONCAT('%', upper(?1), '%'))",
-            countQuery = "SELECT COUNT(*) FROM GS_002_01.combo c WHERE (?1 IS NULL OR upper(c.name) LIKE CONCAT('%', upper(?1), '%'))",
-            nativeQuery = true)    
-    Page<Combo> findByNameContaining(String name, Pageable pageable);
+    @Query(value = "SELECT * FROM GS_002_01.combo c WHERE c.id_module = ?1 AND (?2 IS NULL OR upper(c.name) LIKE CONCAT('%', upper(?2), '%'))", countQuery = "SELECT COUNT(*) FROM GS_002_01.combo c WHERE c.id_module = ?1 AND (?2 IS NULL OR upper(c.name) LIKE CONCAT('%', upper(?2), '%'))", nativeQuery = true)
+    Page<Combo> findByIdModuleNameContaining(Long idModule, String name, Pageable pageable);
 
     /**
      * Método para buscar un combo por UUID.

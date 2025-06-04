@@ -36,14 +36,14 @@ public class ComboItemService {
     }
 
     /**
-     * Método para obtener la búsqueda de combo items por nombre y paginación.
+     * Método para obtener la búsqueda de combo items por índice o etiqueta y paginación.
      * 
-     * @param name nombre a buscar
+     * @param searchTerm término a buscar
      * @param pagingSort configuración de paginación y ordenamiento
      * @return página de combo items
      */
-    public Page<ComboItem> findByName(String name, Pageable pagingSort) {
-        return comboItemRepository.findByNameContaining(name, pagingSort);
+    public Page<ComboItem> findByIndexOrLabel(String searchTerm, Pageable pagingSort) {
+        return comboItemRepository.findByIndexOrLabelContaining(searchTerm, pagingSort);
     }
 
     /**
@@ -85,9 +85,17 @@ public class ComboItemService {
         ComboItem comboItem = comboItemRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
 
-        comboItem.setName(comboItemRequest.getName());
+        comboItem.setIndexComboItem(comboItemRequest.getIndexComboItem());
+        comboItem.setCodeNumber(comboItemRequest.getCodeNumber());
+        comboItem.setCodeText(comboItemRequest.getCodeText());
+        comboItem.setLabel(comboItemRequest.getLabel());
+        comboItem.setDescription(comboItemRequest.getDescription());
+        comboItem.setIcon(comboItemRequest.getIcon());
+        comboItem.setColor(comboItemRequest.getColor());
+        comboItem.setOrden(comboItemRequest.getOrden());
         comboItem.setStatus(comboItemRequest.getStatus());
         comboItem.setUserApp(comboItemRequest.getUserApp());
+        
         comboItem = comboItemRepository.saveAndFlush(comboItem);
         return ComboItemMapper.INSTANCE.toResponse(comboItem);
     }

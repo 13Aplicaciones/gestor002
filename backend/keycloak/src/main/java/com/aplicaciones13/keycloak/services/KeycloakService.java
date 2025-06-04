@@ -24,14 +24,23 @@ import java.util.Collections;
 @Service
 public class KeycloakService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    private KeycloakConfig keycloakConfig;
+    private final KeycloakConfig keycloakConfig;
 
     private String adminToken;
     private long tokenExpiry = 0;
+
+    /**
+     * Constructor del servicio KeycloakService.
+     * 
+     * @param restTemplate
+     * @param keycloakConfig
+     */
+    public KeycloakService(RestTemplate restTemplate, KeycloakConfig keycloakConfig) {
+        this.restTemplate = restTemplate;
+        this.keycloakConfig = keycloakConfig;
+    }
 
     /**
      * Obtiene un token de administrador para autenticarse con la API de Keycloak

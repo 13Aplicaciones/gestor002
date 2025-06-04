@@ -16,52 +16,32 @@ import {
   Direction,
   FooterFormAction,
   IFormProps,
-  InputField
+  InputField,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../../../utils/Constants";
 
-/**
- * Formulario de edición de UserDeFormEditUserDefinedCodeHeaders del sistema.
- */
-const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
+const FormEditCombo = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
 
-  /**
-   * Esquema de validación de formulario
-   */
   const schema = yup.object({
-    indexUserDeFormEditUserDefinedCodeHeader: yup
+    indexCombo: yup
       .string()
-      .required(t("validation.required"))
-      .min(5, t("validation.min", { min: 5 }))
-      .max(128, t("validation.max", { max: 32 })),
+      .max(32, t("validation.maxLength", { max: 32 }))
+      .required(t("validation.required")),
     name: yup
       .string()
-      .required(t("validation.required"))
-      .max(128, t("validation.max", { max: 128 })),
-    context: yup
-      .string()
-      .required(t("validation.required"))
-      .max(128, t("validation.max", { max: 128 })),
-    status: yup
-      .string()
-      .required(t("validation.required"))
-      .max(8, t("validation.max", { max: 8 })),
+      .max(128, t("validation.maxLength", { max: 128 }))
+      .required(t("validation.required")),
+
+    uuidModule: yup.string().required(t("validation.required")),
     userApp: yup.string(),
-    orden: yup
-      .number()
-      .typeError(t("validation.typeNumber"))
-      .min(0, t("validation.min", { min: 0 }))
-      .max(9999, t("validation.max", { max: 9999 })),
+    status: yup.string(),
   });
 
-  /**
-   * Hook para el manejo de formularios
-   */
   const {
     register,
     handleSubmit,
@@ -69,12 +49,11 @@ const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      indexUserDeFormEditUserDefinedCodeHeader: row?.indexUserDeFormEditUserDefinedCodeHeader ?? "",
+      indexCombo: row?.indexCombo ?? "",
       name: row?.name ?? "",
-      context: row?.context ?? "",
-      status: row?.status ?? "A",
+      uuidModule: row?.uuidModule ?? "",
       userApp: row?.userApp ?? "",
-      orden: row?.orden ?? 1,
+      status: row?.status ?? "A",
     },
   });
 
@@ -96,7 +75,7 @@ const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.USER_DEFINED_CODE_HEADER_ENDPOINT}`;
+        const url = `${param.valueText01}${Menus.COMBO_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
         console.error("Error generando API URL:", err);
@@ -122,30 +101,29 @@ const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
       }) => (
         <form onSubmit={handleSubmit(submitData)}>
           <InputField
-            title={t("modules.GS-MD-001.fields.indexUserDeFormEditUserDefinedCodeHeader.title")}
+            title={t("modules.GS-CB-001.fields.uuidModule.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-MD-001.fields.indexUserDeFormEditUserDefinedCodeHeader.placeholder")}
+            placeholder={t("modules.GS-CB-001.fields.uuidModule.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("indexUserDeFormEditUserDefinedCodeHeader")}
-            messageError={errors.indexUserDeFormEditUserDefinedCodeHeader?.message}
+            register={register("uuidModule")}
+            messageError={errors.uuidModule?.message}
           />
           <InputField
-            title={t("modules.GS-MD-001.fields.name.title")}
-            columns={BandPresentation.column_2}
-            placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
+            title={t("modules.GS-CB-001.fields.indexCombo.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-CB-001.fields.indexCombo.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("indexCombo")}
+            messageError={errors.indexCombo?.message}
+          />
+          <InputField
+            title={t("modules.GS-CB-001.fields.name.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-CB-001.fields.name.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("name")}
             messageError={errors.name?.message}
           />
-          <InputField
-            title={t("modules.GS-MD-001.fields.context.title")}
-            columns={BandPresentation.column_1}
-            placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("context")}
-            messageError={errors.context?.message}
-          />
-          
           <FooterFormAction
             loading={loading}
             onBack={onBack}
@@ -158,4 +136,4 @@ const FormEditUserDefinedCodeHeader = ({ status, row, onBack }: IFormProps) => {
   );
 };
 
-export { FormEditUserDefinedCodeHeader };
+export { FormEditCombo };

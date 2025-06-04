@@ -28,6 +28,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+/**
+ * Controlador para la gestión de Combos.
+ * 
+ * Este controlador proporciona endpoints para crear, actualizar, eliminar y
+ * obtener combos.
+ * 
+ * @autor omargo33
+ * @since 2025-06-03
+ */
 @RestController
 @RequestMapping("/api/combo")
 @Tag(name = "Combo", description = "Servicio para CRUD de Combo")
@@ -45,19 +54,20 @@ public class ComboController {
     }
 
     /**
-     * Método para obtener un combo por su UUID.
+     * Actualizar un combo.
      * 
      * @param uuid
+     * @param comboRequest
      * @return
      */
-    @GetMapping("/{uuid}")
-    @Operation(summary = "Obtener ítem de combo por UUID", description = "Obtiene un ítem de combo específico por su UUID")
-    public ResponseEntity<ComboResponse> getComboByUuid(@PathVariable @ValidUUID String uuid) {
-        ComboResponse response = comboService.findByUuid(uuid);
-        if (response == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(response);
+    @PutMapping("/{uuid}")
+    @Operation(summary = "Actualizar combo", description = "Actualiza un combo existente con los datos proporcionados", responses = {
+            @ApiResponse(responseCode = "200", description = "Combo actualizado exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboResponse.class)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del combo a actualizar", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboRequest.class))))
+    public ResponseEntity<ComboResponse> actualizarCombo(
+            @PathVariable String uuid,
+            @Valid @RequestBody ComboRequest comboRequest) {
+        return ResponseEntity.ok(comboService.update(uuid, comboRequest));
     }
 
     /**
@@ -67,22 +77,11 @@ public class ComboController {
      * @return Respuesta con el combo creado.
      */
     @PostMapping
+    @Operation(summary = "Crear combo", description = "Crea un nuevo combo con los datos proporcionados", responses = {
+            @ApiResponse(responseCode = "201", description = "Combo creado exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboResponse.class)))
+    }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del combo a crear", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboRequest.class))))
     public ResponseEntity<ComboResponse> crearCombo(@RequestBody @Valid ComboRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(comboService.create(request));
-    }
-
-    /**
-     * Actualizar un combo.
-     * 
-     * @param uuid
-     * @param comboRequest
-     * @return
-     */
-    @PutMapping("/{uuid}")
-    public ResponseEntity<ComboResponse> actualizarCombo(
-            @PathVariable String uuid,
-            @Valid @RequestBody ComboRequest comboRequest) {
-        return ResponseEntity.ok(comboService.update(uuid, comboRequest));
     }
 
     /**
@@ -115,11 +114,28 @@ public class ComboController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name,desc") String[] sort,
+            @RequestParam(required = true) String uuidModule,
             @RequestParam(required = false) String name) {
-        Page<ComboResponse> pageCombos = comboService.findByNameContaining(name,
+        Page<ComboResponse> pageCombos = comboService.findByNameContaining(uuidModule, name,
                 ControllerTools.generateOrders(page, size, sort));
 
         Map<String, Object> response = ControllerTools.generateFooterPage(pageCombos);
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Método para obtener un combo por su UUID.
+     * 
+     * @param uuid
+     * @return
+     */
+    @GetMapping("/{uuid}")
+    @Operation(summary = "Obtener ítem de combo por UUID", description = "Obtiene un ítem de combo específico por su UUID")
+    public ResponseEntity<ComboResponse> getComboByUuid(@PathVariable @ValidUUID String uuid) {
+        ComboResponse response = comboService.findByUuid(uuid);
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(response);
     }
 }

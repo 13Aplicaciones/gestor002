@@ -34,20 +34,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/structure")
 public class StructureMenuController {
 
-    @Autowired
-    private ParameterService parameterService;
+    private final ParameterService parameterService;
 
-    @Autowired
-    private UserDefinedCodeService userDefinedCodeService;
+    private final UserDefinedCodeService userDefinedCodeService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private StaticsService staticsService;
+    private final StaticsService staticsService;
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
+
+
+    /**
+     * Constructor del controlador StructureMenuController.
+     * 
+     * @param parameterService Servicio para interactuar con los parametros
+     * @param userDefinedCodeService Servicio para interactuar con los UDC
+     * @param userService Servicio para interactuar con los usuarios
+     * @param staticsService Servicio para interactuar con las estadisticas
+     * @param jwtService Servicio para manejar JWT
+     */
+    public StructureMenuController(ParameterService parameterService,
+            UserDefinedCodeService userDefinedCodeService, UserService userService,
+            StaticsService staticsService, JwtService jwtService) {
+        this.parameterService = parameterService;
+        this.userDefinedCodeService = userDefinedCodeService;
+        this.userService = userService;
+        this.staticsService = staticsService;
+        this.jwtService = jwtService;
+    }
 
     /**
      * Metodo para obtener los UDC de un usuario (Oauth2) + Modulos tiene acceso.

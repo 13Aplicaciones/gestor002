@@ -1,7 +1,9 @@
-Promt para generar backend
+## Promt para generar backend
 
-
+```bash
+##
 Crear backend en java sobre la tabla que te describo
+```
 
 ```sql
 
@@ -20,6 +22,18 @@ CONSTRAINT `combo_item_FK` FOREIGN KEY (`id_combo`) REFERENCES `combo` (`id_comb
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ```
-usando como ejemplo o plantilla las siguientes clases e incluir documentacion en base a los comments.
+```bash
 
-Usar Cloud Sonnet. 
+Usando como ejemplo o plantilla las siguientes clases e incluir documentacion en base a los comments. 
+```
+
+>Note
+> Usar Cloud Sonnet 4
+## Promt para generar github
+
+```bash
+## Crear un push de todos los cambios en mi rama de: desarrollo y generar los comentarios
+```
+
+>Note
+>Usar Cloud Sonnet 4

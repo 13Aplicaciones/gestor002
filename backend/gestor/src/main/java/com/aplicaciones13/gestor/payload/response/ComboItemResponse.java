@@ -23,9 +23,30 @@ public class ComboItemResponse extends UserDateAppResponse {
     @Schema(description = "ID del combo al que pertenece", example = "1")
     private Long idCombo;
 
-    @Schema(description = "Nombre del ítem del combo", example = "Opción 1")
-    private String name;
+    @Schema(description = "Nombre del índice del combo item", example = "TIPO_DOCUMENTO")
+    private String indexComboItem;
 
-    @Schema(description = "Estado del ítem: A=Activo, I=Inactivo, X=Eliminado", example = "A")
+    @Schema(description = "Código numérico", example = "1")
+    private Integer codeNumber;
+
+    @Schema(description = "Código de texto", example = "CC")
+    private String codeText;
+
+    @Schema(description = "Etiqueta de presentación", example = "Cédula de Ciudadanía")
+    private String label;
+
+    @Schema(description = "Descripción de la opción", example = "Documento de identificación para ciudadanos colombianos")
+    private String description;
+
+    @Schema(description = "Icono que usa la lista de valor", example = "TransparencyGridIcon")
+    private String icon;
+
+    @Schema(description = "Color de la opción", example = "blue")
+    private String color;
+
+    @Schema(description = "Orden del elemento", example = "1")
+    private Integer orden;
+
+    @Schema(description = "Estado del ítem: A=Activo, I=Inactivo, -=guion medio, X=Eliminado", example = "A")
     private String status;
 }

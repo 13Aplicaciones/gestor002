@@ -25,8 +25,16 @@ public class UserDefinedCodeService {
 
     private static final String MODULE_INDEX_EXCLUDE = "001";
 
-    @Autowired
-    private UserDefinedCodeRepository userDefinedCodeRepository;
+    private final UserDefinedCodeRepository userDefinedCodeRepository;
+
+    /**
+     * Constructor del servicio UserDefinedCodeService.
+     * 
+     * @param userDefinedCodeRepository Repositorio de UserDefinedCode
+     */
+    public UserDefinedCodeService(UserDefinedCodeRepository userDefinedCodeRepository) {
+        this.userDefinedCodeRepository = userDefinedCodeRepository;
+    }
 
     /**
      * Busca los códigos definidos por el usuario de un módulo en particular a partir

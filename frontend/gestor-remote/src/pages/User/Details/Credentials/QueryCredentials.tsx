@@ -1,3 +1,4 @@
+import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
   getParameter,
   IParameter,
@@ -8,19 +9,18 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   GenericQuery,
   IconComponent,
   IPresentationTable,
   IQueryProps,
 } from "ux-ui";
+import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../../../utils/Constants";
 import { QueryFormCredentials } from "./QueryFormCredentials";
 import { tableQueryCredentials } from "./Structures/Presentations";
 import { IRowDataCredential } from "./Structures/Types";
-import { IconButton, Tooltip } from "@radix-ui/themes";
-import { useTranslation } from "react-i18next";
-import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 /**
  * Tabla de información del sistema.
  */
