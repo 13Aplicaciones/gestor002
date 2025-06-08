@@ -179,7 +179,8 @@
   },
   "infoPanelRegistration": {
     "link": "Detalle del Registro",
-    "title": "Información del Registro",
+    "title": "Detalle del Registro (usuario, fecha, aplicación, etc.)",
+    "uuid": "UUID",
     "usuario": "Usuario",
     "usuarioFechaModify": "Modificación",
     "usuarioFecha": "Creación",

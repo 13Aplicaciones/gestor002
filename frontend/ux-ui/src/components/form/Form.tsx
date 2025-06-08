@@ -1,10 +1,3 @@
-import {
-  EyeOpenIcon,
-  LockClosedIcon,
-  Pencil1Icon,
-  PlusIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
 import { Badge, Button, Flex, IconButton, Separator } from "@radix-ui/themes";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +7,7 @@ import {
   Direction,
   StatusEdit,
 } from "../../ConstantsPresentation";
+import { IconComponent } from "../icon/IconDynamic";
 import { alertColor } from "../IconosColoresAlerts";
 import useCalculatePresentation from "../input/Calculations";
 
@@ -88,7 +82,7 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
           size="1"
           variant="soft"
         >
-          <PlusIcon />
+          <IconComponent iconName="PlusIcon" width="14" height="14" />
           {t("stateForm.create")}
         </Badge>
       )}
@@ -99,7 +93,7 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
           size="1"
           variant="soft"
         >
-          <Pencil1Icon />
+          <IconComponent iconName="Pencil1Icon" width="14" height="14" />
           {t("stateForm.edit")}
         </Badge>
       )}
@@ -110,7 +104,7 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
           size="1"
           variant="soft"
         >
-          <LockClosedIcon />
+          <IconComponent iconName="LockClosedIcon" width="14" height="14" />
           {t("stateForm.block")}
         </Badge>
       )}
@@ -121,7 +115,7 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
           size="1"
           variant="soft"
         >
-          <EyeOpenIcon />
+          <IconComponent iconName="EyeOpenIcon" width="14" height="14" />
           {t("stateForm.see")}
         </Badge>
       )}
@@ -166,7 +160,7 @@ const FooterFormAction = ({
         onClick={showPopUpDelete}
         disabled={formStatus === StatusEdit.create}
       >
-        <TrashIcon />
+        <IconComponent iconName="TrashIcon" width="16" height="16" />
       </IconButton>
     </FooterForm>
   );

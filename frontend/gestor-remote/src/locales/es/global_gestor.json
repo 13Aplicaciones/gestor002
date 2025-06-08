@@ -37,7 +37,7 @@
       "description": "Módulos del Sistema",
       "path": "Module",
       "panel": {
-        "find": "Buscar Módulos de Sistema",
+        "find": "Módulos de Sistema",
         "see": "Vista previa del Módulo",
         "edit": "Editar Módulo",
         "create": "Crear Módulo"

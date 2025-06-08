@@ -1,8 +1,3 @@
-import "./styles.css";
-import { alertColor, alertColorBackground } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantsPresentation";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { IconButton } from "@radix-ui/themes";
 import {
   Root,
   ToastAction,
@@ -11,8 +6,13 @@ import {
   ToastTitle,
   ToastViewport,
 } from "@radix-ui/react-toast";
+import { IconButton } from "@radix-ui/themes";
+import { ReactNode, useEffect, useState } from "react";
+import { Alerts } from "../../ConstantsPresentation";
+import { IconComponent } from "../icon/IconDynamic";
+import { alertColor, alertColorBackground } from "../IconosColoresAlerts";
+import "./styles.css";
 import { ToastContext } from "./ToastContext";
-import { useEffect, useState, ReactNode } from "react";
 
 /**
  * Proveedor de contexto para un componente de Toast
@@ -69,21 +69,27 @@ export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
             borderColor: alertColor({ alert: alert }),
           }}
         >
-           <ToastTitle className="ToastTitle">
-            <span style={{ color: "black" }} dangerouslySetInnerHTML={{ __html: title }} />
-            </ToastTitle>
+          <ToastTitle className="ToastTitle">
+            <span
+              style={{ color: "black" }}
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
+          </ToastTitle>
           <ToastDescription asChild className="ToastDescription">
-            <span style={{ color: "black" }} dangerouslySetInnerHTML={{ __html: description }} />
+            <span
+              style={{ color: "black" }}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           </ToastDescription>
           <ToastAction asChild altText="Close Toast">
             <IconButton
+              variant="ghost"
               size="2"
               radius="full"
-              variant="ghost"
               onClick={() => setOpen(false)}
               style={{ color: "var(--black-10)" }}
             >
-              <Cross2Icon width="2vh" height="2vh" />
+              <IconComponent iconName="Cross2Icon" width="16" height="16" />
             </IconButton>
           </ToastAction>
         </Root>

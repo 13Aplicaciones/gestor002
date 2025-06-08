@@ -7,22 +7,16 @@ import {
   SegmentedControl,
   Text,
 } from "@radix-ui/themes";
-import {
-  AvatarIcon,
-  EnvelopeOpenIcon,
-  ExitIcon,
-  HamburgerMenuIcon,
-} from "@radix-ui/react-icons";
-import { getIconComponent } from "ux-ui";
+import { Tooltip } from "@radix-ui/themes/components/tooltip";
 import {
   getSelectModule,
   getStructure,
   setSelectModule,
 } from "orchestrator_remote/service/Structure";
-import { Tooltip } from "@radix-ui/themes/components/tooltip";
-import { useAuth } from "react-oidc-context";
 import { Key, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "react-oidc-context";
+import { IconComponent } from "ux-ui";
 
 /**
  * Interfaz para manejar los modulos, menus y usuario
@@ -80,7 +74,11 @@ const MenuApp = ({
         >
           <Flex align="center" gap="2">
             <Tooltip content={dataModule[key].name}>
-              {getIconComponent("TransparencyGridIcon", "24", "24")}
+              <IconComponent
+                iconName="TransparencyGridIcon"
+                width="24"
+                height="24"
+              />
             </Tooltip>
           </Flex>
         </SegmentedControl.Item>
@@ -122,7 +120,11 @@ const MenuModule = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <IconButton size="3" variant="ghost">
-            <HamburgerMenuIcon width="24" height="24" />
+            <IconComponent
+              iconName="HamburgerMenuIcon"
+              width="24"
+              height="24"
+            />
           </IconButton>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
@@ -131,7 +133,7 @@ const MenuModule = ({
               key={menu.indexMenu} // Asignar una clave única basada en menu.index
               onClick={() => console.log("holaaa", menu.taskFlow)}
             >
-              {getIconComponent(menu.icon, "18", "18")}
+              <IconComponent iconName={menu.icon} width="18" height="18" />
               {menu.name}
             </DropdownMenu.Item>
           ))}
@@ -190,16 +192,18 @@ const MenuUser = () => {
           <DropdownMenu.Item
             onClick={() => console.log("mi final token pasado")}
           >
-            <AvatarIcon height="18" width="18" />
+            <IconComponent iconName="AvatarIcon" width="18" height="18" />
+    
+
             {t("frame.header.profile")}
           </DropdownMenu.Item>
           <DropdownMenu.Item>
-            <EnvelopeOpenIcon height="18" width="18" />
+            <IconComponent iconName="EnvelopeOpenIcon" height="18" width="18" />
             {t("frame.header.feedback")}
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
           <DropdownMenu.Item color="red" onClick={() => auth.signoutRedirect()}>
-            <ExitIcon height="18" width="18" />
+            <IconComponent iconName="ExitIcon" height="18" width="18" />
             {t("frame.header.logout")}
           </DropdownMenu.Item>
         </DropdownMenu.Content>

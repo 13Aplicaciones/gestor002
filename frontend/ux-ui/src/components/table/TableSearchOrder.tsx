@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from "@radix-ui/react-icons";
 import { Flex, IconButton, Text } from "@radix-ui/themes";
 import { fetchData, MethodREST, TypeBody } from "api-fetch";
 import { useEffect, useState } from "react";
@@ -24,6 +18,7 @@ import { InputSubmit } from "../input/Input";
 import { useToastContext } from "../toast/useToastContext";
 import { MenuTable } from "./MenuTable";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
+import { IconComponent } from "../icon/IconDynamic";
 
 // Extiende la interfaz Window para permitir __tableSearchOrderIntervalId
 declare global {
@@ -308,7 +303,11 @@ const TableSearchOrder = ({
                 paginationPresentation(parametersQuery);
               }}
             >
-              <DoubleArrowLeftIcon width="14" height="14" />
+              <IconComponent
+                iconName="DoubleArrowLeftIcon"
+                width="14"
+                height="14"
+              />
             </IconButton>
             <IconButton
               variant="outline"
@@ -317,7 +316,11 @@ const TableSearchOrder = ({
                 paginationPresentation(parametersQuery);
               }}
             >
-              <ChevronLeftIcon width="14" height="14" />
+              <IconComponent
+                iconName="ChevronLeftIcon"
+                width="14"
+                height="14"
+              />
             </IconButton>
             <form onSubmit={handleSubmitPagina(consultPage)}>
               <InputSubmit
@@ -336,7 +339,11 @@ const TableSearchOrder = ({
                 paginationPresentation(parametersQuery);
               }}
             >
-              <ChevronRightIcon width="14" height="14" />
+              <IconComponent
+                iconName="ChevronRightIcon"
+                width="14"
+                height="14"
+              />
             </IconButton>
             <IconButton
               variant="outline"
@@ -345,7 +352,11 @@ const TableSearchOrder = ({
                 paginationPresentation(parametersQuery);
               }}
             >
-              <DoubleArrowRightIcon width="14" height="14" />
+              <IconComponent
+                iconName="DoubleArrowRightIcon"
+                width="14"
+                height="14"
+              />
             </IconButton>
           </Flex>
         )}
@@ -397,7 +408,8 @@ const TableSearchOrder = ({
       <MenuTable
         loading={loading}
         handlePaginationPresentation={handlePaginationPresentation}
-        menuTableRefresh={menuTableRefresh}>
+        menuTableRefresh={menuTableRefresh}
+      >
         {childrenMenu}
       </MenuTable>
     </Flex>

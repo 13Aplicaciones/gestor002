@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex } from "@radix-ui/themes";
-import {
-  GearIcon,
-  LineHeightIcon,
-  MagnifyingGlassIcon,
-} from "@radix-ui/react-icons";
+import { IconComponent } from "../components/icon/IconDynamic";
 import {
   IPresentationTable,
   TableConfigurable,
@@ -149,21 +145,25 @@ const miTablaDemo = () => {
               variant="ghost"
               onClick={() => console.log("nombre " + row.nombre)}
             >
-              <MagnifyingGlassIcon width="16" height="16" />
+              <IconComponent
+                iconName="MagnifyingGlassIcon"
+                width="16"
+                height="16"
+              />
             </Button>
             <Button
               size="1"
               variant="ghost"
               onClick={() => console.log("uuid " + row.uuid)}
             >
-              <GearIcon width="16" height="16" />
+              <IconComponent iconName="GearIcon" width="16" height="16" />
             </Button>
             <Button
               size="1"
               variant="ghost"
               onClick={() => console.log("row " + JSON.stringify(row))}
             >
-              <LineHeightIcon width="16" height="16" />
+              <IconComponent iconName="LineHeightIcon" width="16" height="16" />
             </Button>
           </Flex>
         ),

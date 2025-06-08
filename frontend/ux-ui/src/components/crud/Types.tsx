@@ -12,9 +12,9 @@ interface IQueryProps {
 }
 
 /**
- * Interfaz para el Preview.
+ * Interfaz para el Work.
  */
-interface IPreviewProps {
+interface IWorkProps {
     row: any;
     onBack: () => void;
 }
@@ -29,4 +29,4 @@ interface IFormProps {
     initialRow?: any;
 }
 
-export type { IQueryProps, IFormProps, IPreviewProps };
+export type { IQueryProps, IFormProps, IWorkProps };

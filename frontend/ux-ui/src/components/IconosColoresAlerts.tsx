@@ -1,5 +1,5 @@
 import { Alerts } from "../ConstantsPresentation";
-import { CheckCircledIcon, CrossCircledIcon, ExclamationTriangleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { IconComponent } from "./icon/IconDynamic";
 
 /**
  * Componete para presentar los iconos y colores adecudados.
@@ -28,18 +28,25 @@ const alertIcon = ({ alert }: { alert: Alerts }) => {
  * @returns 
  */
 const alertIconSize = ({ alert, size }: { alert: Alerts, size: string }) => {
+    let iconName= "";
+    
     switch (alert) {
         case Alerts.info:
-            return <InfoCircledIcon height={size} width={size} />;
+            iconName = "InfoCircledIcon";
+            break;
         case Alerts.warning:
-            return <ExclamationTriangleIcon height={size} width={size} />;
+            iconName = "ExclamationTriangleIcon";
+            break;
         case Alerts.error:
-            return <CrossCircledIcon height={size} width={size} />;
+            iconName = "CrossCircledIcon";
+            break;
         case Alerts.success:
-            return <CheckCircledIcon height={size} width={size} />;
-        default:
-            return <InfoCircledIcon height={size} width={size} />;
+            iconName = "CheckCircledIcon";
+            break;
+        default:iconName= "InfoCircledIcon";
     }
+
+    return <IconComponent iconName={iconName} width={size} height={size} />;
 };
 
 /**

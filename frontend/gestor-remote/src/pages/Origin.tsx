@@ -3,19 +3,19 @@ import { useTranslation } from "react-i18next";
 import { IconComponent, PageCrud } from "ux-ui";
 import { Menus } from "../utils/Constants";
 import { FormEditError } from "./Error/FormEditError";
-import { PreviewError } from "./Error/PreviewError";
+import { WorkError } from "./Error/WorkError";
 import { QueryError } from "./Error/QueryError";
 import { createIRowDataError } from "./Error/Structures/Types";
 import { FormEditInformation } from "./Information/FormEditInformation";
-import { PreviewInformation } from "./Information/PreviewInformation";
+import { WorkInformation } from "./Information/WorkInformation";
 import { QueryInformation } from "./Information/QueryInformation";
 import { createIRowDataInformation } from "./Information/Structures/Types";
 import { FormEditModule } from "./Module/FormEditModule";
-import { PreviewModule } from "./Module/PreviewModule";
+import { WorkModule } from "./Module/WorkModule";
 import { QueryModule } from "./Module/QueryModule";
 import { createIRowDataModule } from "./Module/Structures/Types";
 import { FormEditUser } from "./User/FormEditUser";
-import { PreviewUser } from "./User/PreviewUser";
+import { WorkUser } from "./User/WorkUser";
 import { QueryUser } from "./User/QueryUser";
 import { createIRowDataUser } from "./User/Structures/Types";
 
@@ -79,7 +79,7 @@ const Origin = ({ name }: { name: string }) => {
             tranlation={Menus.ERROR}
             createIRowDataCustom={createIRowDataError}
             QueryPanel={QueryError}
-            PreviewPanel={PreviewError}
+            WorkPanel={WorkError}
             FormPanel={FormEditError}
           />
         );
@@ -89,7 +89,7 @@ const Origin = ({ name }: { name: string }) => {
             tranlation={Menus.INFORMATION}
             createIRowDataCustom={createIRowDataInformation}
             QueryPanel={QueryInformation}
-            PreviewPanel={PreviewInformation}
+            WorkPanel={WorkInformation}
             FormPanel={FormEditInformation}
           />
         );
@@ -99,7 +99,7 @@ const Origin = ({ name }: { name: string }) => {
             tranlation={Menus.MODULE}
             createIRowDataCustom={createIRowDataModule}
             QueryPanel={QueryModule}
-            PreviewPanel={PreviewModule}
+            WorkPanel={WorkModule}
             FormPanel={FormEditModule}
           />
         );
@@ -109,7 +109,7 @@ const Origin = ({ name }: { name: string }) => {
             tranlation={Menus.USER}
             createIRowDataCustom={createIRowDataUser}
             QueryPanel={QueryUser}
-            PreviewPanel={PreviewUser}
+            WorkPanel={WorkUser}
             FormPanel={FormEditUser}
           />
         );

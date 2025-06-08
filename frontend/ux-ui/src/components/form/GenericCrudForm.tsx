@@ -255,8 +255,8 @@ function GenericCrudForm<T>({
         alert={Alerts.error}
       />
       <Flex direction="row" align="start" gapX="4" >
-        <FormState statusEdit={formStatus} />
         <InformationPanelRegistration row={row} />        
+        <FormState statusEdit={formStatus} />
       </Flex>
 
       {renderForm({

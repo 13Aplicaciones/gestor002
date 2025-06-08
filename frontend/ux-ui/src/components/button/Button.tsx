@@ -1,6 +1,6 @@
-import { ArrowLeftIcon, PlusIcon } from "@radix-ui/react-icons";
 import { IconButton, Tooltip } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
+import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Componete que representa los botones personalizados.
@@ -39,7 +39,7 @@ const ButtonCreateRecordFloating = ({
             size="4"
             radius="full"
           >
-            <PlusIcon />
+            <IconComponent iconName="PlusIcon" width="16" height="16" />
           </IconButton>
         </Tooltip>
       </div>
@@ -48,7 +48,7 @@ const ButtonCreateRecordFloating = ({
     <div style={{ position: "fixed", bottom: "2vh", right: "2vh" }}>
       <Tooltip content={message}>
         <IconButton onClick={onClick} variant="solid" size="4" radius="full">
-          <PlusIcon />
+          <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
       </Tooltip>
     </div>
@@ -69,7 +69,7 @@ const ButtonBackFloating = ({ onClick }: { onClick?: () => void }) => {
     <div style={{ position: "fixed", bottom: "2vh", left: "2vh" }}>
       <Tooltip content={t("actions.back")}>
         <IconButton onClick={onClick} variant="solid" size="4" radius="full">
-          <ArrowLeftIcon />
+          <IconComponent iconName="ArrowLeftIcon" width="16" height="16" />
         </IconButton>
       </Tooltip>
     </div>

@@ -36,7 +36,7 @@ interface IPresentationDataList {
   banding: boolean;
   headers: boolean;
   skeletonWidth: string;
-  items: Array<{
+  items?: Array<{
     format: TextFormat;
     justification: JustificationText;
     name: string;
@@ -103,7 +103,7 @@ const DataListConfigurable = ({
             : "vertical"
         }
       >
-        {presentation.items.map((item: any, index: number) => (
+        {presentation.items?.map((item: any, index: number) => (
           <DataList.Item
             align="start"
             key={item.name ?? index}

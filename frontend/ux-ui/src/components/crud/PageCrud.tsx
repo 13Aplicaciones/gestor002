@@ -4,19 +4,19 @@ import { ComponentType, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StatusEdit } from "../../ConstantsPresentation";
 import { ToastContextProvider } from "../toast/ToastContextProvider";
-import { IFormProps, IPreviewProps, IQueryProps } from "./Types";
+import { IFormProps, IWorkProps, IQueryProps } from "./Types";
 
 /**
  * Página Crud para manejar operaciones de creación, edición, visualización y consulta de datos.
  * 
  * Este componente es genérico y facila para un header o detail, y para este ultimo caso se usa atributos iniciales en el row en initialRow.
- * Se sugiere no usar el PreviewPanel en casos de detail para simpliricar la implementación.
+ * Se sugiere no usar el WorkPanel en casos de detail para simpliricar la implementación.
  *
  * @param tranlation - Traducción del módulo.
  * @param createIRowDataCustom - Función para crear una fila personalizada.
  * @param QueryPanel - Componente de consulta.
  * @param FormPanel - Componente de edición de formulario.
- * @param PreviewPanel - Componente de vista previa para usar en procesamientos puntuales como una impresion o exportación de datos etc.
+ * @param WorkPanel - Componente de vista previa para usar en procesamientos puntuales como una impresion o exportación de datos etc.
  * @param initialRow - Fila inicial se usa en caso de detail y se necesita atributos iniciales en el row.
  *
  * @returns Componente de página CRUD.
@@ -27,14 +27,14 @@ const PageCrud = ({
   createIRowDataCustom,
   QueryPanel,
   FormPanel,
-  PreviewPanel,
+  WorkPanel,
   initialRow,
 }: {
   tranlation: string;
   createIRowDataCustom: () => any;
   QueryPanel: ComponentType<IQueryProps>;
   FormPanel: ComponentType<IFormProps>;
-  PreviewPanel?: ComponentType<IPreviewProps>;
+  WorkPanel?: ComponentType<IWorkProps>;
   initialRow?: any;
 }) => {
   // Crear un componente interno único para cada instanceId
@@ -80,7 +80,7 @@ const PageCrud = ({
        * Funcion para volver a la vista previa.
        *
        */
-      const onBackPreview = () => {
+      const onBackWork = () => {
         setStatus(StatusEdit.find);
       };
 
@@ -102,8 +102,8 @@ const PageCrud = ({
               />
             )}
 
-            {status == StatusEdit.see && PreviewPanel && (
-              <PreviewPanel row={rowSelecionado} onBack={onBackPreview} />
+            {status == StatusEdit.see && WorkPanel && (
+              <WorkPanel row={rowSelecionado} onBack={onBackWork} />
             )}
 
             {(status == StatusEdit.create || status == StatusEdit.edit) && (
@@ -126,7 +126,7 @@ const PageCrud = ({
     createIRowDataCustom,
     QueryPanel,
     FormPanel,
-    PreviewPanel,
+    WorkPanel,
     initialRow,
   ]);
 

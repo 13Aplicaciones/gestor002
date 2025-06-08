@@ -67,9 +67,9 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
     // Configurar acción de edición
     if (tableFormat.items[4]) {
       tableFormat.items[4].component = (row: IRowDataError) => (
-        <IconButton
-          size="1"
+        <IconButton          
           variant="ghost"
+          size="1"
           onClick={() => {
             if (onEditRow) {
               onEditRow(row);

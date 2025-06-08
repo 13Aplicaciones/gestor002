@@ -19,17 +19,11 @@ import {
   IFormProps,
   InputField,
   InputSelect,
-  PageCrud,
-  StatusEdit,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { listaFormModule } from "./Structures/Presentations";
-import { Box, Tabs, Text } from "@radix-ui/themes";
-import { QueryCombo } from "./Details/Combo/QueryCombo";
-import { FormEditCombo } from "./Details/Combo/FormEditCombo";
-import { createIRowDataCombo } from "./Details/Combo/Structures/Types";
 
 /**
  * Formulario de edición de Modules del sistema.
@@ -116,107 +110,69 @@ const FormEditModule = ({ status, row, onBack }: IFormProps) => {
   }, [row]);
 
   return (
-    <>
-      <GenericCrudForm
-        status={status}
-        row={row}
-        indexName="uuid"
-        onBack={onBack}
-        apiUrl={apiUrl}
-        token={token}
-        getToken={refreshToken}
-        renderForm={({
-          formStatus,
-          loading,
-          handleSubmit: submitData,
-          showPopUpDelete,
-        }) => (
-          <form onSubmit={handleSubmit(submitData)}>
-            <InputField
-              title={t("modules.GS-MD-001.fields.indexModule.title")}
-              columns={BandPresentation.column_3}
-              placeholder={t(
-                "modules.GS-MD-001.fields.indexModule.placeholder"
-              )}
-              directionLabel={Direction.horizontal}
-              register={register("indexModule")}
-              messageError={errors.indexModule?.message}
-            />
-            <InputField
-              title={t("modules.GS-MD-001.fields.name.title")}
-              columns={BandPresentation.column_2}
-              placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
-              directionLabel={Direction.horizontal}
-              register={register("name")}
-              messageError={errors.name?.message}
-            />
-            <AreaField
-              title={t("modules.GS-MD-001.fields.context.title")}
-              columns={BandPresentation.column_1}
-              placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
-              directionLabel={Direction.horizontal}
-              register={register("context")}
-              messageError={errors.context?.message}
-            />
-            <Controller
-              name="status"
-              control={control}
-              render={({ field }) => (
-                <InputSelect
-                  title={t("modules.GS-MD-001.fields.status.title")}
-                  placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
-                  messageError={errors.status?.message}
-                  columns={BandPresentation.column_6}
-                  directionLabel={Direction.horizontal}
-                  items={listaFormModule()}
-                  {...field}
-                />
-              )}
-            />
-            <FooterFormAction
-              loading={loading}
-              onBack={onBack}
-              showPopUpDelete={showPopUpDelete}
-              formStatus={formStatus}
-            />
-          </form>
-        )}
-      />
-
-      {status == StatusEdit.edit && (
-        <Tabs.Root defaultValue="cdu">
-          <Tabs.List>
-            <Tabs.Trigger value="menus">Menus</Tabs.Trigger>
-            <Tabs.Trigger value="cdu">
-              {t("modules.GS-CB-001.title")}
-            </Tabs.Trigger>
-            <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
-            <Tabs.Trigger value="parameters">Parametros</Tabs.Trigger>
-          </Tabs.List>
-
-          <Box pt="3">
-            <Tabs.Content value="menus">
-              <Text size="2">Work Menus</Text>
-            </Tabs.Content>
-            <Tabs.Content value="cdu">
-              <PageCrud
-                tranlation={Menus.COMBO}
-                createIRowDataCustom={createIRowDataCombo}
-                QueryPanel={QueryCombo}
-                FormPanel={FormEditCombo}
-                initialRow={{ uuidModule: row.uuid }}
+    <GenericCrudForm
+      status={status}
+      row={row}
+      indexName="uuid"
+      onBack={onBack}
+      apiUrl={apiUrl}
+      token={token}
+      getToken={refreshToken}
+      renderForm={({
+        formStatus,
+        loading,
+        handleSubmit: submitData,
+        showPopUpDelete,
+      }) => (
+        <form onSubmit={handleSubmit(submitData)}>
+          <InputField
+            title={t("modules.GS-MD-001.fields.indexModule.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-MD-001.fields.indexModule.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("indexModule")}
+            messageError={errors.indexModule?.message}
+          />
+          <InputField
+            title={t("modules.GS-MD-001.fields.name.title")}
+            columns={BandPresentation.column_2}
+            placeholder={t("modules.GS-MD-001.fields.name.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("name")}
+            messageError={errors.name?.message}
+          />
+          <AreaField
+            title={t("modules.GS-MD-001.fields.context.title")}
+            columns={BandPresentation.column_1}
+            placeholder={t("modules.GS-MD-001.fields.context.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("context")}
+            messageError={errors.context?.message}
+          />
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <InputSelect
+                title={t("modules.GS-MD-001.fields.status.title")}
+                placeholder={t("modules.GS-MD-001.fields.status.placeholder")}
+                messageError={errors.status?.message}
+                columns={BandPresentation.column_6}
+                directionLabel={Direction.horizontal}
+                items={listaFormModule()}
+                {...field}
               />
-            </Tabs.Content>
-            <Tabs.Content value="roles">
-              <Text size="2">Work Roles</Text>
-            </Tabs.Content>
-            <Tabs.Content value="parameters">
-              <Text size="2">Work Parameters</Text>
-            </Tabs.Content>
-          </Box>
-        </Tabs.Root>
+            )}
+          />
+          <FooterFormAction
+            loading={loading}
+            onBack={onBack}
+            showPopUpDelete={showPopUpDelete}
+            formStatus={formStatus}
+          />
+        </form>
       )}
-    </>
+    />
   );
 };
 

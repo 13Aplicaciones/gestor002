@@ -40,7 +40,6 @@ const BannerInformation = ({
   if (message === "" || message === undefined) {
     return null;
   }
-
   return (
     <Container py={{ xs: "1", sm: "1", md: "2", lg: "3", xl: "4" }}>
       <Callout.Root
@@ -92,21 +91,24 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
           <Heading size="2">{t("infoPanelRegistration.title")}</Heading>
           <Separator orientation="horizontal" size="4" />
           <DataList.Root>
-            {row.userApp && (
+            {row.uuid && (
               <DataList.Item>
                 <DataList.Label>
-                  {t("infoPanelRegistration.usuarioPrograma")}
+                  {t("infoPanelRegistration.uuid")}
                 </DataList.Label>
-                <DataList.Value>{row.userApp}</DataList.Value>
+                <DataList.Value>{row.uuid}</DataList.Value>
               </DataList.Item>
             )}
-            {row.userDate && (
+
+            {row.user && (
               <DataList.Item>
                 <DataList.Label>
-                  {t("infoPanelRegistration.usuarioFecha")}
+                  {t("infoPanelRegistration.usuario")}
                 </DataList.Label>
                 <DataList.Value>
-                  {formatDateMask(row.userDate, FormatMaskISO.dateHour)}
+                  <Badge variant="outline" radius="full" size="2">
+                    {row.user}
+                  </Badge>
                 </DataList.Value>
               </DataList.Item>
             )}
@@ -120,16 +122,22 @@ const InformationPanelRegistration = ({ row }: { row: any }) => {
                 </DataList.Value>
               </DataList.Item>
             )}
-            {row.user && (
+            {row.userDate && (
               <DataList.Item>
                 <DataList.Label>
-                  {t("infoPanelRegistration.usuario")}
+                  {t("infoPanelRegistration.usuarioFecha")}
                 </DataList.Label>
                 <DataList.Value>
-                  <Badge color="crimson" variant="soft" radius="full">
-                    {row.user}
-                  </Badge>
+                  {formatDateMask(row.userDate, FormatMaskISO.dateHour)}
                 </DataList.Value>
+              </DataList.Item>
+            )}
+            {row.userApp && (
+              <DataList.Item>
+                <DataList.Label>
+                  {t("infoPanelRegistration.usuarioPrograma")}
+                </DataList.Label>
+                <DataList.Value>{row.userApp}</DataList.Value>
               </DataList.Item>
             )}
           </DataList.Root>

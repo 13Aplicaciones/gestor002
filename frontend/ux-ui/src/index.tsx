@@ -43,6 +43,8 @@ export {
   CardGridSkeleton,
   ValueDescriptionCard,
 } from "./components/grid/Card";
+
+export { BoxTheme } from "./components/panel/Box";
 export { IconComponent } from "./components/icon/IconDynamic";
 export {
   ButtonCreateRecordFloating,
@@ -61,14 +63,18 @@ export {
 export type { IPresentationInputSelect } from "./components/input/Input";
 
 // Exportar elementos de la libreria para formularios
-export { FormState, FooterFormAction,  FooterForm } from "./components/form/Form.tsx";
-export { GenericCrudForm } from "./components/form/GenericCrudForm";
-export { GenericPreview } from "./components/form/GenericPreview";
+export {
+  FormState,
+  FooterFormAction,
+  FooterForm,
+} from "./components/form/Form.tsx";
+export { GenericCrudForm } from "./components/form/GenericCrudForm.tsx";
+export { GenericWork } from "./components/form/GenericWork";
 export { GenericQuery } from "./components/form/GenericQuery";
 
 export { GenericQueryForm } from "./components/form/GenericQueryForm";
-export type { GenericCrudFormProps } from "./components/form/GenericCrudForm";
-export type { GenericPreviewProps } from "./components/form/GenericPreview";
+export type { GenericCrudFormProps } from "./components/form/GenericCrudForm.tsx";
+export type { GenericWorkProps } from "./components/form/GenericWork";
 export type { GenericQueryFormProps } from "./components/form/GenericQueryForm";
 export type { GenericQueryProps } from "./components/form/GenericQuery";
 
@@ -81,7 +87,7 @@ export type { IParametersQuery } from "./components/table/TableSearchOrder";
 export type {
   IQueryProps,
   IFormProps,
-  IPreviewProps,
+  IWorkProps,
 } from "./components/crud/Types";
 export type { IPresentationDataList } from "./components/dataList/DataList";
 

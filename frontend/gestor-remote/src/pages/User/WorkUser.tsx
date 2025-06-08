@@ -2,19 +2,32 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { GenericPreview } from "ux-ui";
+import { GenericWork } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import { dataViewPresentation } from "./Structures/Presentations";
-import { createIRowDataError, IRowDataError } from "./Structures/Types";
+import { createIRowDataUser, IRowDataUser } from "./Structures/Types";
 
 /**
- * Función para tener una vista previa de los errores del sistema.
+ * Componente para la gestión de usuarios en el sistema.
+ *
+ * @param { onBack, row } - Propiedades del componente
+ * @returns
  */
-const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError }) => {
-  const [apiUrl, setApiUrl] = useState("");
-  const [token, setToken] = useState<string | undefined>(undefined);
+const WorkUser = ({
+  onBack,
+  row,
+}: {
+  onBack: () => void;
+  row?: IRowDataUser;
+}) => {
+  const [token, setToken] = useState<string>();
+  const [apiUrl, setApiUrl] = useState<string>();
 
   /**
    * Inicializar token y parámetros de URL
@@ -25,6 +38,10 @@ const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError
       .catch(console.error);
   }, []);
 
+  /**
+   * Generar la URL de la API para el usuario seleccionado
+   * @param {IRowDataUser} row - Datos del usuario seleccionado
+   */
   useEffect(() => {
     if (!row) {
       setApiUrl("");
@@ -34,7 +51,7 @@ const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.ERROR_ENDPOINT}/${row.uuid}`;
+        const url = `${param.valueText01}${Menus.USER_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
         console.error("Error generando API URL:", err);
@@ -48,13 +65,14 @@ const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError
       {!apiUrl || !token ? (
         <></>
       ) : (
-        <GenericPreview<IRowDataError>
+        <GenericWork<IRowDataUser>
           apiUrl={apiUrl}
-          createEmptyData={createIRowDataError}
+          createEmptyData={createIRowDataUser}
           getPresentationData={dataViewPresentation}
           token={token}
+          row={row}
           getToken={refreshToken}
-          entityName="Error"
+          entityName="User"
           onBack={() => onBack()}
         />
       )}
@@ -62,4 +80,4 @@ const PreviewError = ({ onBack, row }: { onBack: () => void; row?: IRowDataError
   );
 };
 
-export { PreviewError };
+export { WorkUser };

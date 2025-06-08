@@ -1,9 +1,9 @@
 import {
   GearIcon,
-  MagnifyingGlassIcon,
-  MixerHorizontalIcon,
+  MagnifyingGlassIcon
 } from "@radix-ui/react-icons";
 import { Box, Flex, IconButton, Tabs, Text } from "@radix-ui/themes";
+import { IconComponent } from "../components/icon/IconDynamic";
 import PopoverDemo from "../components/popover/Popover";
 
 /**
@@ -12,7 +12,6 @@ import PopoverDemo from "../components/popover/Popover";
  * @returns
  */
 const miTablaApiDemo = () => {
-  
   const panelAvanzdo = () => {
     return (
       <Tabs.Root defaultValue="account">
@@ -60,7 +59,11 @@ const miTablaApiDemo = () => {
         <PopoverDemo
           childrenTigger={
             <IconButton variant="outline" size="3">
-              <MixerHorizontalIcon width="16" height="16" />
+              <IconComponent
+                iconName="MixerHorizontalIcon"
+                width="16"
+                height="16"
+              />
             </IconButton>
           }
           childrenContent={

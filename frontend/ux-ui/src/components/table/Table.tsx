@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { blackA, whiteA } from "@radix-ui/colors";
 import {
-  CaretDownIcon,
-  CaretSortIcon,
-  CaretUpIcon,
-} from "@radix-ui/react-icons";
-import {
   DropdownMenu,
   Flex,
   IconButton,
@@ -26,6 +21,7 @@ import {
 import { formatFromTextFormat } from "../../utils/FormatMask";
 import { BannerInformation } from "../callout/Information";
 import { IParametersQuery } from "./TableSearchOrder";
+import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Componente de tabla paginada.
@@ -76,7 +72,7 @@ interface IPresentationCellSelect {
  * Funcion para justify el contenido de la celda en base a la presentation.
  *
  * @param justification Justificacion del texto.
- * 
+ *
  * @returns
  */
 const justify = (justification: JustificationText) => {
@@ -142,16 +138,19 @@ const Cell = ({
   );
 };
 
-
 /**
  * Asignar el valor de la celda en base a la presentation.
- * 
- * @param value 
- * @param textFormat 
- * @param cellSelect 
- * @returns 
+ *
+ * @param value
+ * @param textFormat
+ * @param cellSelect
+ * @returns
  */
-const valueOfList = (value: string, textFormat: TextFormat, cellSelect: any) => {
+const valueOfList = (
+  value: string,
+  textFormat: TextFormat,
+  cellSelect: any
+) => {
   let textFomatter = value;
   if (cellSelect) {
     try {
@@ -172,33 +171,31 @@ const valueOfList = (value: string, textFormat: TextFormat, cellSelect: any) => 
   }
 
   return textFomatter;
-}
+};
 
 /**
  * Funcion para formatear el texto de la celda.
- * 
- * @param param0 
- * @returns 
+ *
+ * @param param0
+ * @returns
  */
-const CellFormatter = (
-  {
-    value,
-    textFormat,
-    justification,
-    row,
-    cellSelect,
-    onAction,
-    component
-  }: {
-    value: string;
-    textFormat: TextFormat;
-    justification: JustificationText;
-    row: any;
-    cellSelect?: any;
-    onAction?: { onAction: (row: any) => void };
-    component?: (row: any, children: ReactNode) => ReactNode;
-  }
-) => {
+const CellFormatter = ({
+  value,
+  textFormat,
+  justification,
+  row,
+  cellSelect,
+  onAction,
+  component,
+}: {
+  value: string;
+  textFormat: TextFormat;
+  justification: JustificationText;
+  row: any;
+  cellSelect?: any;
+  onAction?: { onAction: (row: any) => void };
+  component?: (row: any, children: ReactNode) => ReactNode;
+}) => {
   const textFomatter = valueOfList(value, textFormat, cellSelect);
 
   return (
@@ -211,13 +208,13 @@ const CellFormatter = (
           truncate
           underline="hover"
           weight="medium"
-        >{textFomatter}</Link>
-      )) ||
-        <Text truncate>{textFomatter}</Text>
-      }
+        >
+          {textFomatter}
+        </Link>
+      )) || <Text truncate>{textFomatter}</Text>}
     </Flex>
-  )
-}
+  );
+};
 
 /**
  * Funcion para mostrar el <Title>.
@@ -255,17 +252,27 @@ const Title = ({
     } else {
       console.warn(
         "onOrderChange -> No Setup (name: " +
-        name +
-        " direction: " +
-        direction +
-        ")"
+          name +
+          " direction: " +
+          direction +
+          ")"
       );
     }
   };
 
+  /**
+   * Efecto para actualizar el sort visible.
+   */
   useEffect(() => {
     setSortVisible(sort);
   }, [sort]);
+
+  const iconName =
+    sortVisible === SortColumn.asc
+      ? "CaretUpIcon"
+      : sortVisible === SortColumn.desc
+      ? "CaretDownIcon"
+      : "CaretSortIcon";
 
   return (
     <Flex>
@@ -274,49 +281,47 @@ const Title = ({
           {text}
         </Text>
       )) || (
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-              <IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
-                {sortVisible === SortColumn.asc && <CaretUpIcon />}
-                {sortVisible === SortColumn.desc && <CaretDownIcon />}
-                {sortVisible === SortColumn.neutral && <CaretSortIcon />}
-                <Text size="2" weight="regular">
-                  {text}
-                </Text>
-              </IconButton>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content>
-              <DropdownMenu.Item
-                disabled={sortVisible === SortColumn.asc}
-                onClick={() => {
-                  handleChange(name, SortColumn.asc, onOrderChange);
-                }}
-              >
-                <CaretUpIcon />
-                {t("tabla.orderAsc")}
-              </DropdownMenu.Item>
-              <DropdownMenu.Item
-                disabled={sortVisible === SortColumn.desc}
-                onClick={() => {
-                  handleChange(name, SortColumn.desc, onOrderChange);
-                }}
-              >
-                <CaretDownIcon />
-                {t("tabla.orderDesc")}
-              </DropdownMenu.Item>
-              <DropdownMenu.Separator />
-              <DropdownMenu.Item
-                disabled={sortVisible === SortColumn.neutral}
-                onClick={() => {
-                  handleChange(name, SortColumn.neutral, onOrderChange);
-                }}
-              >
-                <CaretSortIcon />
-                {t("tabla.unordered")}
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        )}
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
+              <IconComponent iconName={iconName} width="16" height="16" />
+              <Text size="2" weight="regular">
+                {text}
+              </Text>
+            </IconButton>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.asc}
+              onClick={() => {
+                handleChange(name, SortColumn.asc, onOrderChange);
+              }}
+            >
+              <IconComponent iconName="CaretUpIcon" width="16" height="16" />
+              {t("tabla.orderAsc")}
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.desc}
+              onClick={() => {
+                handleChange(name, SortColumn.desc, onOrderChange);
+              }}
+            >
+              <IconComponent iconName="CaretDownIcon" width="16" height="16" />
+              {t("tabla.orderDesc")}
+            </DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item
+              disabled={sortVisible === SortColumn.neutral}
+              onClick={() => {
+                handleChange(name, SortColumn.neutral, onOrderChange);
+              }}
+            >
+              <IconComponent iconName="CaretSortIcon" width="16" height="16" />
+              {t("tabla.unordered")}
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      )}
     </Flex>
   );
 };
@@ -324,11 +329,13 @@ const Title = ({
 /*
  * Tabla configurable con presentation de columns y datos.
  *
- * @param presentation Json para la presentation de la tabla.
- * @param data Json con los datos a mostrar en la tabla.
- * @param isHeader si se muestra el header de la tabla.
- * @param isLineNumber si se muestra el numero de linea (Agrea un 5vw) para esta columna.
- * @param isBand si se muestra la banda de colores en las filas.
+ * @param presentationTable Presentacion de la tabla.
+ * @param data Datos de la tabla.
+ * @param isHeader Indica si se muestra el header de la tabla.
+ * @param isLineNumber Indica si se muestra el numero de linea.
+ * @param isBand Indica si se muestra el banding de la tabla.
+ * @param presentationSorts Orden de las columnas.
+ * @param onOrderChange Funcion para cambiar el orden de las columnas.
  *
  * @returns
  */
@@ -351,8 +358,8 @@ const TableConfigurable = ({
     onOrderChange: (title: string, direction: SortColumn) => void;
   };
 }) => {
-
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
   const theme = useThemeContext();
@@ -415,7 +422,11 @@ const TableConfigurable = ({
                 key={rowIndex}
                 style={{
                   backgroundColor:
-                    isBand && rowIndex % 2 !== 0 ? theme.appearance === 'light' ? blackA.blackA1 : whiteA.whiteA1 : "none",
+                    isBand && rowIndex % 2 !== 0
+                      ? theme.appearance === "light"
+                        ? blackA.blackA1
+                        : whiteA.whiteA1
+                      : "none",
                 }}
               >
                 {isLineNumber && (
@@ -481,4 +492,3 @@ const TableSkeleton = ({ column }: { column: number }) => {
 
 export { TableConfigurable, TableSkeleton };
 export type { IPresentationTable };
-

@@ -5,6 +5,7 @@ import {
   Direction,
   GenericQueryForm,
   InputField,
+  InputHidden,
   IParametersQuery,
 } from "ux-ui";
 import * as yup from "yup";
@@ -38,6 +39,7 @@ const QueryFormCombo = ({
   return (
     <GenericQueryForm<ComboQueryFormValues>
       disableSubmit={false}
+      buttonsDetails={false}
       validationSchema={schema}
       defaultValues={{
         uuidModule: initialRow?.uuidModule ?? "",
@@ -46,13 +48,8 @@ const QueryFormCombo = ({
       onFind={onFind}
       renderFields={({ register, formState }) => (
         <>
-          <InputField
-            title={t("modules.GS-CB-001.fields.uuidModule.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-CB-001.fields.uuidModule.placeholder")}
-            directionLabel={Direction.horizontal}
+          <InputHidden
             register={register("uuidModule")}
-            messageError={formState.errors.uuidModule?.message}
           />
           <InputField
             title={t("modules.GS-CB-001.fields.name.title")}

@@ -9,9 +9,9 @@ import i18next from "./i18n";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Theme
-      accentColor="cyan"
-      grayColor="auto"
-      scaling="100%"
+      accentColor="lime"
+      grayColor="mauve"
+      scaling="90%"
       radius="full"
       panelBackground="solid"
       appearance="dark"

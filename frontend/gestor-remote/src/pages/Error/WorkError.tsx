@@ -2,19 +2,29 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { GenericPreview } from "ux-ui";
+import { GenericWork } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
 import { dataViewPresentation } from "./Structures/Presentations";
-import {
-  createIRowDataInformation,
-  IRowDataInformation,
-} from "./Structures/Types";
+import { createIRowDataError, IRowDataError } from "./Structures/Types";
 
-const PreviewInformation = ({onBack, row }: { onBack: () => void; row?: IRowDataInformation }) => {
-  const [token, setToken] = useState<string>();
-  const [apiUrl, setApiUrl] = useState<string>("");
+/**
+ * Función para tener una vista previa de los errores del sistema.
+ */
+const WorkError = ({
+  onBack,
+  row,
+}: {
+  onBack: () => void;
+  row?: IRowDataError;
+}) => {
+  const [apiUrl, setApiUrl] = useState("");
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   /**
    * Inicializar token y parámetros de URL
@@ -34,7 +44,7 @@ const PreviewInformation = ({onBack, row }: { onBack: () => void; row?: IRowData
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.INFORMATION_ENDPOINT}/${row.uuid}`;
+        const url = `${param.valueText01}${Menus.ERROR_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
         console.error("Error generando API URL:", err);
@@ -48,18 +58,19 @@ const PreviewInformation = ({onBack, row }: { onBack: () => void; row?: IRowData
       {!apiUrl || !token ? (
         <></>
       ) : (
-        <GenericPreview<IRowDataInformation>
+        <GenericWork<IRowDataError>
           apiUrl={apiUrl}
-          createEmptyData={createIRowDataInformation}
+          createEmptyData={createIRowDataError}
           getPresentationData={dataViewPresentation}
           token={token}
+          row={row}
           getToken={refreshToken}
-          entityName="Information"
-          onBack={onBack}
+          entityName="Error"
+          onBack={() => onBack()}
         />
       )}
     </>
   );
 };
 
-export { PreviewInformation };
+export { WorkError };

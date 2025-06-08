@@ -25,9 +25,10 @@ import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
 import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
-import { PreviewUser } from "./PreviewUser";
+
 import { FormEditCredentials } from "./Details/Credentials/FormEditCredentials";
 import { Box, Tabs } from "@radix-ui/themes";
+import { WorkUser } from "./WorkUser";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -170,7 +171,7 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
                 tranlation={Menus.CREDENTIALS}
                 createIRowDataCustom={createIRowDataCredential}
                 QueryPanel={QueryCredentials}
-                PreviewPanel={PreviewUser}
+                WorkPanel={WorkUser}
                 FormPanel={FormEditCredentials}
                 initialRow={{ uuidUser: row.uuid }}
               />

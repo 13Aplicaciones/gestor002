@@ -1,6 +1,6 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
 import { IconButton, Popover } from "@radix-ui/themes";
 import { ReactNode } from "react";
+import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Componente para mostrar un Popover.
@@ -27,7 +27,7 @@ const PopoverEmbeber = ({ childrenTigger, childrenContent} :
 				<div style={{ position: 'fixed', top: '2vh', right: '2vh' }}>
 					<Popover.Close>
 						<IconButton size="2" radius="full" variant="soft">
-							<Cross1Icon style={{ cursor: "pointer" }} width="16" height="16" />
+							<IconComponent iconName="Cross1Icon" width="16" height="16" />
 						</IconButton>
 					</Popover.Close>
 				</div>

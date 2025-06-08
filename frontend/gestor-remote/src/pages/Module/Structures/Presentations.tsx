@@ -128,12 +128,6 @@ const dataViewPresentation = (): IPresentationDataList => {
     skeletonWidth: "90vw",
     items: [
       {
-        name: "uuid",
-        title: t("modules.GS-MD-001.fields.uuid.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
         name: "indexModule",
         title: t("modules.GS-MD-001.fields.indexModule.title"),
         justification: JustificationText.start,
@@ -154,24 +148,6 @@ const dataViewPresentation = (): IPresentationDataList => {
       {
         name: "status",
         title: t("modules.GS-MD-001.fields.status.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "user",
-        title: t("modules.GS-MD-001.fields.user.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
-        name: "userDate",
-        title: t("modules.GS-MD-001.fields.userDate.title"),
-        justification: JustificationText.start,
-        format: TextFormat.dateSocialNetworkDinamic,
-      },
-      {
-        name: "userApp",
-        title: t("modules.GS-MD-001.fields.userApp.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
       },
@@ -200,4 +176,9 @@ const listaFormModule = (): IPresentationInputSelect => {
   };
 };
 
-export { dataViewPresentation, listaFormModule, listaQueryModule, tableQueryModule };
+export {
+  dataViewPresentation,
+  listaFormModule,
+  listaQueryModule,
+  tableQueryModule,
+};

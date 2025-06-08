@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  EnterIcon,
-  EyeClosedIcon,
-  EyeOpenIcon,
-  MagnifyingGlassIcon,
-} from "@radix-ui/react-icons";
-import {
   Flex,
   Select,
   Slot,
@@ -45,7 +39,7 @@ import { MessageField } from "./Menssages";
  * @returns
  */
 const InputHidden = ({ register }: { register?: any }) => {
-  return <input type="hidden" style={{ display: 'none' }} {...register} />;
+  return <input type="hidden" style={{ display: "none" }} {...register} />;
 };
 
 /**
@@ -235,11 +229,11 @@ const InputSecretField = ({
         >
           <Slot />
           <Slot onClick={onClick}>
-            {visible ? (
-              <EyeOpenIcon style={{ cursor: "pointer" }} />
-            ) : (
-              <EyeClosedIcon style={{ cursor: "pointer" }} />
-            )}
+            <IconComponent
+              iconName={visible ? "EyeOpenIcon" : "EyeClosedIcon"}
+              width="16"
+              height="16"
+            />
           </Slot>
         </TextField.Root>
         <MessageField message={messageError} />
@@ -352,10 +346,14 @@ const InputSearchDynamic = ({
         {...register}
       >
         <TextField.Slot side="right" onClick={onClick}>
-          <EnterIcon style={{ cursor: "pointer" }} />
+          <IconComponent iconName="EnterIcon" width="16" height="16" />
         </TextField.Slot>
         <TextField.Slot side="left">
-          <MagnifyingGlassIcon />
+          <IconComponent
+            iconName="MagnifyingGlassIcon"
+            width="16"
+            height="16"
+          />
         </TextField.Slot>
       </TextField.Root>
       <MessageField message={messageError} />
@@ -419,7 +417,7 @@ const InputSubmit = ({
         {...register}
       >
         <TextField.Slot onClick={onClick}>
-          <EnterIcon style={{ cursor: "pointer" }} />
+          <IconComponent iconName="EnterIcon" width="16" height="16" />
         </TextField.Slot>
       </TextField.Root>
       <MessageField message={messageError} alert={Alerts.error} />
@@ -541,13 +539,11 @@ const InputSelect = ({
 };
 
 export {
-  AreaField,
-  InputHidden,
-  InputField,
-  InputFieldDate,
-  InputSearchDynamic,
+  AreaField, InputField,
+  InputFieldDate, InputHidden, InputSearchDynamic,
   InputSecretField,
   InputSelect,
-  InputSubmit,
+  InputSubmit
 };
 export type { IPresentationInputSelect };
+

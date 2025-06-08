@@ -1,12 +1,10 @@
-import { alertColor, mapStatusToAlert } from "../IconosColoresAlerts";
-import { Alerts } from "../../ConstantsPresentation";
-import { Badge, Box, Card, Flex, Heading, Link, Text, Skeleton } from "@radix-ui/themes";
-import { blackA, whiteA } from "@radix-ui/colors"
-import { IconComponent } from "../icon/IconDynamic";
+import { blackA, whiteA } from "@radix-ui/colors";
+import { Badge, Box, Card, Flex, Heading, Link, Skeleton, Text, useThemeContext } from "@radix-ui/themes";
 import { MouseEventHandler } from "react";
-import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
-import { useThemeContext } from "@radix-ui/themes";
+import { Alerts } from "../../ConstantsPresentation";
+import { IconComponent } from "../icon/IconDynamic";
+import { alertColor, mapStatusToAlert } from "../IconosColoresAlerts";
 
 /**
  * DataItemBadge type.
@@ -144,7 +142,7 @@ const CardGrid = (
                 <Link size="2" underline="auto" weight="medium" >
                     <Flex align="center" gap="1">
                         {t("actions.edit")}
-                        <Pencil1Icon height="16" width="16" />
+                        <IconComponent iconName="Pencil1Icon" width="16" height="16" />
                     </Flex>
                 </Link>
             </Flex>
@@ -195,3 +193,4 @@ const CardGridSkeleton = () => {
 
 export { BadgeCard, CardGrid, CardGridSkeleton, ValueDescriptionCard };
 export type { DataItemBadge };
+
