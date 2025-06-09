@@ -98,7 +98,7 @@ function GenericCrudForm<T>({
   getToken,
   prepareData,
   renderForm,
-}: GenericCrudFormProps<T>) {
+}: Readonly<GenericCrudFormProps<T>>) {
   const [dialogRefresh, setDialogRefresh] = useState(false);
   const [dialogStatus, setDialogStatus] = useState(false);
   const [formStatus, setFormStatus] = useState<StatusEdit>(
@@ -231,11 +231,17 @@ function GenericCrudForm<T>({
     setDialogRefresh((prev) => !prev);
   }, [dialogStatus]);
 
+  /**
+   * Función para manejar la eliminación del registro
+   */
   const handleOnDelete = () => {
     setFormStatus(StatusEdit.edit);
     actuate(null);
   };
 
+  /**
+   * Función para manejar la cancelación de la eliminación del registro
+   */
   const handleOnCancelDelete = () => {
     setFormStatus(StatusEdit.edit);
     setDialogStatus(false);
@@ -271,3 +277,4 @@ function GenericCrudForm<T>({
 
 export { GenericCrudForm };
 export type { GenericCrudFormProps };
+

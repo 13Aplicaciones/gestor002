@@ -65,6 +65,9 @@ const DataListConfigurable = ({
 
   const theme = useThemeContext();
 
+  /**
+   * Hook para inicializar la presentación del datalist
+   */
   useEffect(() => {
     setPresentation(presentationDataList);
   }, [presentationDataList]);

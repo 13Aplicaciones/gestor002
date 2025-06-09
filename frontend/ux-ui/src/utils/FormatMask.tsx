@@ -102,7 +102,7 @@ const formatFromTextFormat = (format: TextFormat, value: any): string => {
   try {
     switch (format) {
       case TextFormat.none:
-        return response || "- - - -";
+        return response ?? "- - - -";
       case TextFormat.decimal2:
         return response.toFixed(2);
       case TextFormat.date:
@@ -124,6 +124,12 @@ const formatFromTextFormat = (format: TextFormat, value: any): string => {
         return formatDateSocialNetworkDinamic(response);
       case TextFormat.action:
         return response;
+      case TextFormat.paragraph2:
+        return response.split("\n").slice(0, 2).join("\n");
+      case TextFormat.paragraph4:
+        return response.split("\n").slice(0, 4).join("\n");
+      case TextFormat.paragraph6:
+        return response.split("\n").slice(0, 6).join("\n"); 
       //TODO: Agregar mas formats de text.
       default:
         return response;

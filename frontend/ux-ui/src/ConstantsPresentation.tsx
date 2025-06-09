@@ -50,6 +50,9 @@ const enum TextFormat {
   decimal2 = "##.##", // Formato de decimal con dos decimales
   hour = "hour", // Formato de hora
   none = "none", // Sin formato
+  paragraph2 = "paragraph2", // Formato de párrafo dos lineas
+  paragraph4 = "paragraph4", // Formato de párrafo cuatro lineas
+  paragraph6 = "paragraph6", // Formato de párrafo seis lineas
   //TODO: Agregar mas formats de texto.
 }
 

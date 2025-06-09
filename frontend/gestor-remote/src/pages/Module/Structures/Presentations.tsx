@@ -143,7 +143,7 @@ const dataViewPresentation = (): IPresentationDataList => {
         name: "context",
         title: t("modules.GS-MD-001.fields.context.title"),
         justification: JustificationText.start,
-        format: TextFormat.none,
+        format: TextFormat.paragraph2,
       },
       {
         name: "status",

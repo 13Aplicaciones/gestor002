@@ -33,7 +33,7 @@ return {
         name: "description",
         title: t("modules.GS-ER-001.fields.description.title"),
         justification: JustificationText.start,
-        format: TextFormat.none,
+        format: TextFormat.paragraph2,
         width: "34vw",
       },
       {
