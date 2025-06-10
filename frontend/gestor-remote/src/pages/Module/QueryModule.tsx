@@ -97,7 +97,6 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       QueryForm={QueryFormModule}
       getTablePresentation={tableQueryModule}
       initialParameters={{
-        size: "10",
         indexModule: "",
         name: "",
         status: "",

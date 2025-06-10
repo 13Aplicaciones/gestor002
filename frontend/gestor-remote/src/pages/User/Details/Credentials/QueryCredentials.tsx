@@ -96,7 +96,6 @@ const QueryCredentials = ({
       QueryForm={QueryFormCredentials}
       getTablePresentation={tableQueryCredentials}
       initialParameters={{
-        size: "10",
         name: "",
         uuidUser: initialRow?.uuid ?? "",
       }}

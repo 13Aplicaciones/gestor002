@@ -116,8 +116,12 @@ public class ComboService {
      */
     public Page<ComboResponse> findByNameContaining(String uuidModule, String name, Pageable pageable) {
         Module module = findModuleByUuid(uuidModule);
-        return comboRepository.findByIdModuleNameContaining(module.getIdModule(),name, pageable)
-                .map(ComboMapper.INSTANCE::toResponse);
+        return comboRepository.findByIdModuleNameContaining(module.getIdModule(), name, pageable)
+                .map(combo -> {
+                    ComboResponse response = ComboMapper.INSTANCE.toResponse(combo);
+                    response.setUuidModule(module.getUuid());
+                    return response;
+                });
     }
 
 

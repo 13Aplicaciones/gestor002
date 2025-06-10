@@ -17,12 +17,13 @@ import {
   FooterFormAction,
   IFormProps,
   InputField,
+  InputHidden,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../../../utils/Constants";
 
-const FormEditCombo = ({ status, row, onBack }: IFormProps) => {
+const FormEditCombo = ({ status, row, onBack, initialRow }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -51,7 +52,7 @@ const FormEditCombo = ({ status, row, onBack }: IFormProps) => {
     defaultValues: {
       indexCombo: row?.indexCombo ?? "",
       name: row?.name ?? "",
-      uuidModule: row?.uuidModule ?? "",
+      uuidModule: initialRow?.uuidModule ?? "",
       userApp: row?.userApp ?? "",
       status: row?.status ?? "A",
     },
@@ -100,13 +101,8 @@ const FormEditCombo = ({ status, row, onBack }: IFormProps) => {
         showPopUpDelete,
       }) => (
         <form onSubmit={handleSubmit(submitData)}>
-          <InputField
-            title={t("modules.GS-CB-001.fields.uuidModule.title")}
-            columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-CB-001.fields.uuidModule.placeholder")}
-            directionLabel={Direction.horizontal}
+          <InputHidden
             register={register("uuidModule")}
-            messageError={errors.uuidModule?.message}
           />
           <InputField
             title={t("modules.GS-CB-001.fields.indexCombo.title")}

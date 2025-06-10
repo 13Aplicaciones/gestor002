@@ -42,6 +42,9 @@ const WorkModule = ({
       .catch(console.error);
   }, []);
 
+  /**
+   * Generar la URL de la API para el módulo seleccionado.
+   */
   useEffect(() => {
     if (!row) {
       setApiUrl("");

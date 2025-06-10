@@ -39,6 +39,7 @@ interface IPresentationTable {
   headers: boolean;
   numberLinea: boolean;
   skeletonWidth: string;
+  rowCount?: number;
   items: Array<{
     format: TextFormat;
     justification: JustificationText;
@@ -151,26 +152,21 @@ const valueOfList = (
   textFormat: TextFormat,
   cellSelect: any
 ) => {
-  let textFomatter = value;
   if (cellSelect) {
     try {
       const selectedItem = cellSelect.find((item: any) => {
         return item.codeText === value;
       });
       if (selectedItem) {
-        textFomatter = selectedItem.name;
-      } else {
-        textFomatter = "<No Definido>";
+        return selectedItem.name;
       }
+      return "<No Definido>";
     } catch (error) {
-      textFomatter = "<No Encontrado>";
       console.error("Error al filtrar el valor:", error);
+      return "<No Encontrado>";
     }
-  } else {
-    textFomatter = formatFromTextFormat(textFormat, value);
   }
-
-  return textFomatter;
+  return formatFromTextFormat(textFormat, value);
 };
 
 /**
@@ -267,12 +263,12 @@ const Title = ({
     setSortVisible(sort);
   }, [sort]);
 
-  const iconName =
-    sortVisible === SortColumn.asc
-      ? "CaretUpIcon"
-      : sortVisible === SortColumn.desc
-      ? "CaretDownIcon"
-      : "CaretSortIcon";
+  let iconName = "CaretSortIcon";
+  if (sortVisible === SortColumn.asc) {
+    iconName = "CaretUpIcon";
+  } else if (sortVisible === SortColumn.desc) {
+    iconName = "CaretDownIcon";
+  }
 
   return (
     <Flex>
@@ -358,8 +354,7 @@ const TableConfigurable = ({
     onOrderChange: (title: string, direction: SortColumn) => void;
   };
 }) => {
-  const [presentation, setPresentation] =
-    useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
   const theme = useThemeContext();
@@ -406,6 +401,13 @@ const TableConfigurable = ({
     setSorts(presentationSorts || {});
   }, [presentationTable, presentationSorts]);
 
+  const getRowBackgroundColor = (rowIndex: number) => {
+    if (isBand && rowIndex % 2 !== 0) {
+      return theme.appearance === "light" ? blackA.blackA1 : whiteA.whiteA1;
+    }
+    return "none";
+  };
+
   return (
     <>
       {!data || data.length === 0 ? (
@@ -421,12 +423,7 @@ const TableConfigurable = ({
               <Table.Row
                 key={rowIndex}
                 style={{
-                  backgroundColor:
-                    isBand && rowIndex % 2 !== 0
-                      ? theme.appearance === "light"
-                        ? blackA.blackA1
-                        : whiteA.whiteA1
-                      : "none",
+                  backgroundColor: getRowBackgroundColor(rowIndex),
                 }}
               >
                 {isLineNumber && (

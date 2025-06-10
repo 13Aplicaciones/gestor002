@@ -1,20 +1,20 @@
 import { IconButton, Tooltip } from "@radix-ui/themes";
 import {
-    getParameter,
-    IParameter,
+  getParameter,
+  IParameter,
 } from "orchestrator_remote/service/Parameter";
 import {
-    getToken,
-    ITokenRoot,
-    refreshToken,
+  getToken,
+  ITokenRoot,
+  refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-    GenericQuery,
-    IconComponent,
-    IPresentationTable,
-    IQueryProps,
+  GenericQuery,
+  IconComponent,
+  IPresentationTable,
+  IQueryProps,
 } from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../../../utils/Constants";
@@ -90,7 +90,6 @@ const QueryCombo = ({
       QueryForm={QueryFormCombo}
       getTablePresentation={tableQueryCombo}
       initialParameters={{
-        size: "10",
         name: "",
         uuidModule: initialRow?.uuid ?? "",
       }}

@@ -16,6 +16,7 @@ const tableQueryCombo = async (): Promise<IPresentationTable> => {
     banding: true,
     headers: true,
     numberLinea: false,
+    rowCount: 5,
     skeletonWidth: "60vw",
     items: [
       {
@@ -24,6 +25,8 @@ const tableQueryCombo = async (): Promise<IPresentationTable> => {
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "14vw",
+        order: SortColumn.asc,
+        orderNameColumn: "index_combo",
       },
       {
         name: "name",
@@ -45,7 +48,7 @@ const tableQueryCombo = async (): Promise<IPresentationTable> => {
         justification: JustificationText.start,
         format: TextFormat.dateSocialNetworkDinamic,
         width: "15vw",
-        order: SortColumn.desc,
+        order: SortColumn.neutral,
         orderNameColumn: "user_date",
       },
       {

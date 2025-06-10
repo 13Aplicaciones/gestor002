@@ -21,7 +21,10 @@ import { IParametersQuery, TableSearchOrder } from "../table/TableSearchOrder";
  */
 interface GenericQueryProps<T> extends IQueryProps {
   /** Componente del formulario de búsqueda */
-  QueryForm: React.ComponentType<{ onFind: (data: IParametersQuery) => void , initialRow?: any}>;
+  QueryForm: React.ComponentType<{
+    onFind: (data: IParametersQuery) => void;
+    initialRow?: any;
+  }>;
 
   /** Endpoint para la API (ej: "/modules", "/errors") */
   apiUrl: string;
@@ -81,7 +84,7 @@ function GenericQuery<T>({
   QueryForm,
   apiUrl,
   getTablePresentation,
-  initialParameters = { size: "10" },
+  initialParameters,
   configureTableActions,
   token,
   getToken,
@@ -91,13 +94,14 @@ function GenericQuery<T>({
   onSeeRow,
   initialRow,
 }: GenericQueryProps<T>) {
+  const [presentacionTabla, setPresentacionTabla] =
+    useState<IPresentationTable>({} as IPresentationTable);
+  
   const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
     ...initialParameters,
     ...(initialRow ?? {}),
   });
-  const [presentacionTabla, setPresentacionTabla] =
-    useState<IPresentationTable>({} as IPresentationTable);
-
+  
   /**
    * Inicializar configuración de tabla
    */
@@ -106,6 +110,12 @@ function GenericQuery<T>({
       try {
         // Obtener la configuración base de la tabla
         const tableFormat = await getTablePresentation();
+
+        setParametersQuery((prevParameters) => ({
+          ...prevParameters,
+          size: tableFormat.rowCount || 10, // Establecer un tamaño de fila por defecto si no se especifica
+          ...initialRow,
+        }));
 
         // Si hay una función para configurar acciones específicas, usarla
         if (configureTableActions) {
@@ -168,4 +178,3 @@ function GenericQuery<T>({
 
 export { GenericQuery };
 export type { GenericQueryProps };
-

@@ -103,7 +103,6 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       QueryForm={QueryFormError}
       getTablePresentation={tableQueryModule}
       initialParameters={{
-        size: "10",
         indexError: "",
         message: "",
       }}

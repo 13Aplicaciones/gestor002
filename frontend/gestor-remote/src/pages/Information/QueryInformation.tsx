@@ -96,7 +96,6 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       QueryForm={QueryFormInformation}
       getTablePresentation={tableQueryInformation}
       initialParameters={{
-        size: "10",
         name: "",
       }}
       configureTableActions={configureInformationTableActions}

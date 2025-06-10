@@ -17,6 +17,7 @@ const tableQueryInformation=() :IPresentationTable => {
     banding: true,
     headers: true,
     numberLinea: false,
+    
     skeletonWidth: "90vw",
     items: [
       {

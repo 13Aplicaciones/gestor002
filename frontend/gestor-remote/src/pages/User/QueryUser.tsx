@@ -96,7 +96,6 @@ const QueryUser = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       QueryForm={QueryFormUser}
       getTablePresentation={tableQueryUser}
       initialParameters={{
-        size: "10",
         name: "",
       }}
       configureTableActions={configureUserTableActions}
