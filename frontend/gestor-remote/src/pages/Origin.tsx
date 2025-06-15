@@ -18,6 +18,10 @@ import { FormEditUser } from "./User/FormEditUser";
 import { WorkUser } from "./User/WorkUser";
 import { QueryUser } from "./User/QueryUser";
 import { createIRowDataUser } from "./User/Structures/Types";
+import { createIRowDataComboItem } from "./ComboItem/Structures/Types";
+import { QueryComboItem } from "./ComboItem/QueryComboItem";
+import { WorkComboItem } from "./ComboItem/WorkComboItem";
+import { FormEditComboItem } from "./ComboItem/FormComboItem";
 
 /**
  * Funcion para mostrar el titulo de la aplicacion.
@@ -111,6 +115,16 @@ const Origin = ({ name }: { name: string }) => {
             QueryPanel={QueryUser}
             WorkPanel={WorkUser}
             FormPanel={FormEditUser}
+          />
+        );
+      case Menus.COMBO_ITEM:
+        return (
+          <PageCrud
+            tranlation={Menus.COMBO_ITEM}
+            createIRowDataCustom={createIRowDataComboItem}
+            QueryPanel={QueryComboItem}
+            WorkPanel={WorkComboItem}
+            FormPanel={FormEditComboItem}
           />
         );
       default:

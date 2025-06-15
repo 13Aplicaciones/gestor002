@@ -20,6 +20,13 @@ import org.springframework.data.domain.Pageable;
 public class ControllerTools {
 
     /**
+     * Constructor privado para evitar instanciación.
+     */
+    private ControllerTools() {
+        super();
+    }
+
+    /**
      * Metodo para generar la paginacion de una lista.
      * 
      * @param <T>
@@ -45,8 +52,8 @@ public class ControllerTools {
         List<Sort.Order> orders = new ArrayList<>();
         if (sort[0].contains(",")) {
             for (String sortOrder : sort) {
-                String[] _sort = sortOrder.split(",");
-                orders.add(new Sort.Order(Sort.Direction.fromString(_sort[1]), _sort[0]));
+                String[] sortArray = sortOrder.split(",");
+                orders.add(new Sort.Order(Sort.Direction.fromString(sortArray[1]), sortArray[0]));
             }
         } else {
             orders.add(new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]));

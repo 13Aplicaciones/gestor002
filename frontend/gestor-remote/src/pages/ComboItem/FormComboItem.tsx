@@ -26,7 +26,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 /**
  * Formulario de edición de errores del sistema.
  */
-const FormEditInformation = ({ status, row, onBack }: IFormProps) => {
+const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -84,7 +84,7 @@ const FormEditInformation = ({ status, row, onBack }: IFormProps) => {
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.INFORMATION_ENDPOINT}`;
+        const url = `${param.valueText01}${Menus.COMBO_ITEM_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
         console.error("Error generando API URL:", err);
@@ -110,27 +110,27 @@ const FormEditInformation = ({ status, row, onBack }: IFormProps) => {
       }) => (
         <form onSubmit={handleSubmit(submitData)}>
           <InputField
-            title={t("modules.GS-IN-001.fields.name.title")}
+            title={t("modules.GS-CB-IT-001.fields.name.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-IN-001.fields.name.placeholder")}
+            placeholder={t("modules.GS-CB-IT-001.fields.name.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("name")}
             messageError={errors.name?.message}
           />
           <AreaField
-            title={t("modules.GS-IN-001.fields.value01.title")}
+            title={t("modules.GS-CB-IT-001.fields.value01.title")}
             columns={BandPresentation.column_2}
             rows={3}
-            placeholder={t("modules.GS-IN-001.fields.value01.placeholder")}
+            placeholder={t("modules.GS-CB-IT-001.fields.value01.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("value01")}
             messageError={errors.value01?.message}
           />
           <AreaField
-            title={t("modules.GS-IN-001.fields.value02.title")}
+            title={t("modules.GS-CB-IT-001.fields.value02.title")}
             columns={BandPresentation.column_2}
             rows={3}
-            placeholder={t("modules.GS-IN-001.fields.value02.placeholder")}
+            placeholder={t("modules.GS-CB-IT-001.fields.value02.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("value02")}
             messageError={errors.value02?.message}
@@ -147,4 +147,4 @@ const FormEditInformation = ({ status, row, onBack }: IFormProps) => {
   );
 };
 
-export { FormEditInformation };
+export { FormEditComboItem };

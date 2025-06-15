@@ -22,9 +22,7 @@ public interface ComboItemMapper {
     @Mapping(target = "userDate", ignore = true)
     @Mapping(target = "uuid", ignore = true)
     @Mapping(target = "user", ignore = true)
-    @Mapping(target = "combo.idCombo", source = "idCombo")
     ComboItem toEntity(ComboItemRequest request);
-    
-    @Mapping(target = "idCombo", source = "combo.idCombo")
+
     ComboItemResponse toResponse(ComboItem comboItem);
 }

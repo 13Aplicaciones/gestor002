@@ -30,4 +30,8 @@ export const Menus: { [key: string]: string } = {
     // menu combo
     COMBO_ENDPOINT: "/combo",
     COMBO: "GS-CB-001",
+
+    // menu combo_item
+    COMBO_ITEM_ENDPOINT: "/combo-item",
+    COMBO_ITEM: "GS-CB-IT-001",
 };

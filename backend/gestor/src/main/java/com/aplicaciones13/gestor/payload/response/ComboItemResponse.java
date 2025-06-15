@@ -1,13 +1,15 @@
 package com.aplicaciones13.gestor.payload.response;
 
 import com.aplicaciones13.base.payload.common.UserDateAppResponse;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Clase que representa el payload de respuesta para las operaciones relacionadas con la entidad ComboItem.
+ * Clase que representa el payload de respuesta para las operaciones
+ * relacionadas con la entidad ComboItem.
  * 
  * @author omargo33
  * @since 2025-06-01
@@ -15,13 +17,29 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "DTO para la respuesta de la entidad ComboItem")
+@JsonPropertyOrder({
+        "uuid",
+        "indexComboItem",
+        "uuidCombo",
+        "label",
+        "description",
+        "codeNumber",
+        "codeText",
+        "icon",
+        "color",
+        "orden",
+        "status",
+        "user",
+        "userDate",
+        "userApp"
+})
 public class ComboItemResponse extends UserDateAppResponse {
 
     @Schema(description = "UUID del registro", example = "550e8400-e29b-41d4-a716-446655440000")
     private String uuid;
 
     @Schema(description = "ID del combo al que pertenece", example = "1")
-    private Long idCombo;
+    private String uuidCombo;
 
     @Schema(description = "Nombre del índice del combo item", example = "TIPO_DOCUMENTO")
     private String indexComboItem;

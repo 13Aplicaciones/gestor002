@@ -26,7 +26,7 @@ const createIRowDataCombo = (): IRowDataCombo => {
     uuidModule: "",
     indexCombo: "",
     name: "",
-    status: "E",
+    status: "A", // Default status is "A" (Active)
   };
 };
 

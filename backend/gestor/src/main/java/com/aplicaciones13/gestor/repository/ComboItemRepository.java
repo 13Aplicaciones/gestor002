@@ -22,15 +22,46 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
     /**
      * Método para buscar por índice o etiqueta (like) y que sea pageable.
      * 
-     * @param searchTerm término a buscar en index_combo_item o label
+     * @param indexComboItem índice del ítem de combo
+     * @param label etiqueta del ítem de combo
+     * @param descripcion descripción del ítem de combo
+     * 
+     * @return página de ítems de combo
+     */
+    @Query(value = 
+                "SELECT * FROM combo_item ci WHERE " +
+                "(?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') and " + 
+                "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%') and " +
+                "(?3 IS NULL OR upper(ci.descripcion) LIKE CONCAT('%', upper(?3), '%'))))",
+            countQuery = 
+                "SELECT COUNT(*) FROM combo_item ci WHERE "+
+                "(?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') and " + 
+                "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%') and " +
+                "(?3 IS NULL OR upper(ci.descripcion) LIKE CONCAT('%', upper(?3), '%'))))",
+                nativeQuery = true)    
+    Page<ComboItem> findByIndexOrLabelOrDescripcionContaining(String indexComboItem, String label, String descripcion, Pageable pageable);
+
+
+    /**
+     * Método para buscar ítems de combo para un LOV (List of Values) por término de búsqueda.
+     * 
+     * @param searchTerm término a buscar en label o description
      * @param pageable configuración de paginación
      * @return página de ítems de combo
      */
     @Query(value = 
-                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))",
-            countQuery = "SELECT COUNT(*) FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))",
+                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))" +
+                " UNION ALL " +
+                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))",
+            countQuery =                 
+                "SELECT COUNT(*) FROM (" +
+                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))" +
+                " UNION ALL " +
+                "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))" +
+                ") AS combined",
             nativeQuery = true)    
-    Page<ComboItem> findByIndexOrLabelContaining(String searchTerm, Pageable pageable);
+    Page<ComboItem> findForLov(String searchTerm, Pageable pageable);
+
 
     /**
      * Método para buscar una entidad de ComboItem por UUID.

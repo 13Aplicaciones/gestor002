@@ -1,6 +1,7 @@
 package com.aplicaciones13.gestor.payload.request;
 
 import com.aplicaciones13.base.payload.common.AppRequest;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -19,16 +20,23 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "DTO para la solicitud de creación o actualización de ítem de combo")
+@JsonPropertyOrder({
+        "indexComboItem",
+        "uuidCombo",
+        "label",
+        "description",
+        "codeNumber",
+        "codeText",
+        "icon",
+        "color",
+        "orden",
+        "status"
+})
 public class ComboItemRequest extends AppRequest {
 
     @NotNull
-    @Schema(description = "ID del combo al que pertenece", example = "1")
-    private Long idCombo;
-
-    @NotNull
-    @Size(max = 128)
-    @Schema(description = "Nombre del uuid module", example = "f357141f-7501-4f9f-9b14-a52a312046cf")
-    private String uuidModule;
+    @Schema(description = "UUID de combo al que pertenecen", example = "1")
+    private String uuidCombo;
 
     @NotNull
     @Size(max = 128)

@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.base.controller.ControllerTools;
+import com.aplicaciones13.base.payload.common.LovResponse;
 import com.aplicaciones13.base.validations.ValidUUID;
-import com.aplicaciones13.gestor.model.ComboItem;
 import com.aplicaciones13.gestor.payload.request.ComboItemRequest;
 import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.services.ComboItemService;
+import com.aplicaciones13.gestor.services.LovService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,14 +42,16 @@ import jakarta.validation.Valid;
 public class ComboItemController {
 
     private final ComboItemService comboItemService;
+    private final LovService lovService;
 
     /**
      * Constructor de ComboItemController.
      * 
      * @param comboItemService
      */
-    public ComboItemController(ComboItemService comboItemService) {
+    public ComboItemController(ComboItemService comboItemService, LovService lovService) {
         this.comboItemService = comboItemService;
+        this.lovService = lovService;
     }
 
     /**
@@ -97,7 +100,10 @@ public class ComboItemController {
      * @param page número de página
      * @param size tamaño de página
      * @param sort configuración de ordenamiento
-     * @param searchTerm filtro por índice o etiqueta
+     * @param indexComboItem índice del ítem de combo a buscar
+     * @param label etiqueta del ítem de combo a buscar
+     * @param descripcion descripción del ítem de combo a buscar
+     * 
      * @return respuesta paginada con los ítems de combo
      */
     @GetMapping("/paginated")
@@ -111,8 +117,38 @@ public class ComboItemController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "orden,asc") String[] sort,
+            @RequestParam(required = true) String indexComboItem,
+            @RequestParam(required = false) String label,
+            @RequestParam(required = false) String descripcion) {
+        Page<ComboItemResponse> pageComboItem = comboItemService.findByIndexOrLabelOrDescription(indexComboItem, label, descripcion, ControllerTools.generateOrders(page, size, sort));
+
+        Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);
+        return ResponseEntity.ok(response);
+    }
+
+
+    /**
+     * Método para obtener un LOV (List of Values) de ítems de combo paginado.
+     * 
+     * @param page
+     * @param size
+     * @param sort
+     * @param searchTerm
+     * @return
+     */
+    @GetMapping("/lov")
+    @Operation(summary = "Obtiene LOV paginado", 
+               description = "Recibe los parámetros de paginación y filtrado", 
+               responses = {
+                   @ApiResponse(responseCode = "200", description = "Items de busqueda LOV recuperados exitosamente", 
+                               content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
+               })    
+    public ResponseEntity<Map<String, Object>> getComboItemLov(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "label,asc") String[] sort,
             @RequestParam(required = false) String searchTerm) {
-        Page<ComboItem> pageComboItem = comboItemService.findByIndexOrLabel(searchTerm,
+        Page<LovResponse> pageComboItem = lovService.findLovComboItem(searchTerm,
                 ControllerTools.generateOrders(page, size, sort));
 
         Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);

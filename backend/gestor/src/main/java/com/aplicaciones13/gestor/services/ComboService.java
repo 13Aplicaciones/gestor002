@@ -64,7 +64,7 @@ public class ComboService {
     @InvokeUser
     public ComboResponse create(ComboRequest comboRequest) {
         Module module = findModuleByUuid(comboRequest.getUuidModule());
-        
+
         Combo combo = ComboMapper.INSTANCE.toEntity(comboRequest);
         combo.setIdModule(module.getIdModule());
         combo = comboRepository.saveAndFlush(combo);
@@ -77,7 +77,7 @@ public class ComboService {
     /**
      * Método para actualizar un combo existente.
      * 
-     * @param uuid UUID del combo a actualizar.
+     * @param uuid         UUID del combo a actualizar.
      * @param comboRequest Datos actualizados del combo.
      * @return ComboResponse con los datos del combo actualizado.
      */
@@ -85,7 +85,6 @@ public class ComboService {
     public ComboResponse update(String uuid, ComboRequest comboRequest) {
         Combo combo = comboRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("Combo no encontrado", HttpStatus.NOT_FOUND));
-
 
         Module module = findModuleByUuid(comboRequest.getUuidModule());
         combo.setIdModule(module.getIdModule());
@@ -103,9 +102,7 @@ public class ComboService {
      * @param uuid UUID del combo a eliminar.
      */
     public void delete(String uuid) {
-        Combo combo = comboRepository.findByUuid(uuid)
-                .orElseThrow(() -> new ResourceHttpStatusException("Combo no encontrado", HttpStatus.NOT_FOUND));
-        comboRepository.delete(combo);
+        comboRepository.deleteByUuid(uuid);
     }
 
     /**
@@ -124,7 +121,6 @@ public class ComboService {
                 });
     }
 
-
     /**
      * Método para buscar todos los combos de un módulo específico.
      * 
@@ -134,6 +130,6 @@ public class ComboService {
     private Module findModuleByUuid(String uuidModule) {
         return moduleRepository.findByUuid(uuidModule)
                 .orElseThrow(() -> new ResourceHttpStatusException("Módulo no encontrado", HttpStatus.NOT_FOUND));
-                
+
     }
 }

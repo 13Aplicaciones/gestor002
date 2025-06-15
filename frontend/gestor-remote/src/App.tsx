@@ -75,6 +75,8 @@ const App = () => {
           Information
         </Button>
         <Button onClick={() => heandleToken(Menus.ERROR)}>Error</Button>
+
+        <Button onClick={() => heandleToken(Menus.COMBO_ITEM)}>Combo Item</Button>
       </Flex>
     </>
   );

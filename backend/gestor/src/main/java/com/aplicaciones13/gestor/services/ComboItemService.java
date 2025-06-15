@@ -38,12 +38,15 @@ public class ComboItemService {
     /**
      * Método para obtener la búsqueda de combo items por índice o etiqueta y paginación.
      * 
-     * @param searchTerm término a buscar
+     * @param indexComboItem índice del combo item
+     * @param label etiqueta del combo item
+     * @param descripcion descripción del combo item
      * @param pagingSort configuración de paginación y ordenamiento
      * @return página de combo items
      */
-    public Page<ComboItem> findByIndexOrLabel(String searchTerm, Pageable pagingSort) {
-        return comboItemRepository.findByIndexOrLabelContaining(searchTerm, pagingSort);
+    public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String indexComboItem, String label, String descripcion, Pageable pagingSort) {
+        return comboItemRepository.findByIndexOrLabelOrDescripcionContaining(indexComboItem, label, descripcion, pagingSort)
+                .map(ComboItemMapper.INSTANCE::toResponse);
     }
 
     /**

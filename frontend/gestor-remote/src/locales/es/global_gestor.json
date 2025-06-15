@@ -207,7 +207,6 @@
         }
       }
     },
-
     "GS-UD-001": {
       "icon": "ListBulletIcon",
       "title": "Credenciales de Usuario",
@@ -236,7 +235,6 @@
           "title": "Descripción",
           "placeholder": "Descripción"
         },
-
         "userDate": {
           "title": "Fecha",
           "placeholder": "Fecha del error"
@@ -256,7 +254,6 @@
         }
       }
     },
-
     "GS-CB-001": {
       "icon": "ListBulletIcon",
       "title": "Combos",
@@ -310,6 +307,73 @@
       }
     },
 
+    "GS-CB-IT-001": {
+      "icon": "ListBulletIcon",
+      "title": "Detalle de Combos",
+      "description": "Detalle de los Combos del sistema",
+      "path": "combo-item",
+      "panel": {
+        "find": "Listar de Detalle de Combos por el Usuario",
+        "see": "Vista previa de Detalle de Combos por el Usuario",
+        "edit": "Editar Detalle de Combos por el Usuario",
+        "create": "Crear Detalle de Combos por el Usuario"
+      },
+      "fields": {
+        "indexComboItem": {
+          "title": "Index Combo Item",
+          "placeholder": "Ejemplo: Item-001"
+        },
+        "uuidCombo": {
+          "title": "UUID Combo",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "label": {
+          "title": "Etiqueta del Detalle",
+          "placeholder": "Activo"
+        },
+        "description": {
+          "title": "Descripción",
+          "placeholder": "Descripción del detalle del combo"
+        },
+        "codeNumber": {
+          "title": "Cód. Número",
+          "placeholder": "Ejemplo: 1"
+        },
+        "codeText": {
+          "title": "Cód. Texto",
+          "placeholder": "Ejemplo: A"
+        },
+        "icon": {
+          "title": "Nombre del Icono",
+          "placeholder": "Ejemplo: TransparencyGridIcon"
+        },
+        "color": {
+          "title": "Color",
+          "placeholder": "Ejemplo: blue"
+        },
+
+        "orden": {
+          "title": "Orden",
+          "placeholder": "Ejemplo: 1"
+        },
+
+        "status": {
+          "title": "Estado",
+          "placeholder": "Estado del detalle del combo: A"
+        },
+
+        "userDate": {
+          "title": "Fecha",
+          "placeholder": "Fecha del detalle del combo"
+        },
+
+        "acciones": {
+          "title": "Acciones",
+          "placeholder": "",
+          "abrev": "Acci."
+        }
+      }
+    },
     "GS-CD-002": {
       "icon": "ListBulletIcon",
       "title": "Detalle de Credenciales de Usuario",
@@ -338,7 +402,6 @@
           "title": "Descripción",
           "placeholder": "Descripción"
         },
-
         "userDate": {
           "title": "Fecha",
           "placeholder": "Fecha del error"
@@ -358,7 +421,6 @@
         }
       }
     },
-
     "GS-ER-001": {
       "icon": "Cross1Icon",
       "title": "Errores",
