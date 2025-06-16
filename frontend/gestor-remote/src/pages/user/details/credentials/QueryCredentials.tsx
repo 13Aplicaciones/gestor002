@@ -18,11 +18,13 @@ import {
 } from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../../../utils/Constants";
-import { QueryFormCombo } from "./QueryFormCombo";
-import { tableQueryCombo } from "./Structures/Presentations";
-import { IRowDataCombo } from "./Structures/Types";
-
-const QueryCombo = ({
+import { QueryFormCredentials } from "./QueryFormCredentials";
+import { tableQueryCredentials } from "./structures/Presentations";
+import { IRowDataCredential } from "./structures/Types";
+/**
+ * Tabla de información del sistema.
+ */
+const QueryCredentials = ({
   onEditRow,
   onSeeRow,
   onCreateRow,
@@ -41,19 +43,23 @@ const QueryCombo = ({
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.COMBO_ENDPOINT + "/paginated");
+      setApiUrl(
+        parameter.valueText01 + Menus.CREDENTIALS_ENDPOINT + "/paginated"
+      );
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Configurar las acciones específicas para la tabla de combos
+   * Configurar las acciones específicas para la tabla de información
    */
-  const configureComboTableActions = (tableFormat: IPresentationTable) => {
+  const configureCredentialsTableActions = (
+    tableFormat: IPresentationTable,
+  ) => {
     // Configurar acción de edición
-    if (tableFormat.items[4]) {
-      tableFormat.items[4].component = (row: IRowDataCombo) => (
+    if (tableFormat.items[3]) {
+      tableFormat.items[3].component = (row: IRowDataCredential) => (
         <IconButton
           size="1"
           variant="ghost"
@@ -77,7 +83,7 @@ const QueryCombo = ({
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules." + Menus.COMBO + ".add")} side="left">
+      <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
         <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -86,14 +92,14 @@ const QueryCombo = ({
   };
 
   return (
-    <GenericQuery<IRowDataCombo>
-      QueryForm={QueryFormCombo}
-      getTablePresentation={tableQueryCombo}
+    <GenericQuery<IRowDataCredential>
+      QueryForm={QueryFormCredentials}
+      getTablePresentation={tableQueryCredentials}
       initialParameters={{
         name: "",
-        uuidModule: initialRow?.uuid ?? "",
+        uuidUser: initialRow?.uuid ?? "",
       }}
-      configureTableActions={configureComboTableActions}
+      configureTableActions={configureCredentialsTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
@@ -107,4 +113,4 @@ const QueryCombo = ({
   );
 };
 
-export { QueryCombo };
+export { QueryCredentials };

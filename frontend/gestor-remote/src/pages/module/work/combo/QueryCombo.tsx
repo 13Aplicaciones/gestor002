@@ -3,24 +3,35 @@ import {
   getParameter,
   IParameter,
 } from "orchestrator_remote/service/Parameter";
-import { getToken, ITokenRoot, refreshToken } from "orchestrator_remote/service/Tokens";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { GenericQuery, IconComponent, IPresentationTable, IQueryProps } from "ux-ui";
+import {
+  GenericQuery,
+  IconComponent,
+  IPresentationTable,
+  IQueryProps,
+} from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
-import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormInformation } from "./QueryFormInformation";
-import { tableQueryInformation } from "./Structures/Presentations";
-import { IRowDataInformation } from "./Structures/Types";
+import { Menus, MODULE } from "../../../../utils/Constants";
+import { QueryFormCombo } from "./QueryFormCombo";
+import { tableQueryCombo } from "./structures/Presentations";
+import { IRowDataCombo } from "./structures/Types";
 
-/**
- * Tabla de información del sistema.
- */
-const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryCombo = ({
+  onEditRow,
+  onSeeRow,
+  onCreateRow,
+  initialRow,
+}: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
-  
+
   /**
    * Inicializar token y parámetros de URL
    */
@@ -30,36 +41,19 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(
-        parameter.valueText01 + Menus.INFORMATION_ENDPOINT + "/paginated"
-      );
+      setApiUrl(parameter.valueText01 + Menus.COMBO_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Configurar las acciones específicas para la tabla de información
+   * Configurar las acciones específicas para la tabla de combos
    */
-  const configureInformationTableActions = (
-    tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataInformation) => void,
-    onSeeRow?: (row: IRowDataInformation) => void
-  ) => {
-    // Configurar acción para ver detalle
-    if (tableFormat.items[1]) {
-      tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataInformation) => {
-          if (onSeeRow) {
-            onSeeRow(row);
-          }
-        },
-      };
-    }
-
+  const configureComboTableActions = (tableFormat: IPresentationTable) => {
     // Configurar acción de edición
-    if (tableFormat.items[3]) {
-      tableFormat.items[3].component = (row: IRowDataInformation) => (
+    if (tableFormat.items[4]) {
+      tableFormat.items[4].component = (row: IRowDataCombo) => (
         <IconButton
           size="1"
           variant="ghost"
@@ -77,14 +71,14 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
     return tableFormat;
   };
 
- /**
+  /**
    * Configurar el menú de la tabla de errores
-   * 
+   *
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules."+Menus.INFORMATION+".add")} side="left">
-        <IconButton  variant="soft" onClick={onCreateRow}>
+      <Tooltip content={t("modules." + Menus.COMBO + ".add")} side="left">
+        <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
       </Tooltip>
@@ -92,24 +86,25 @@ const QueryInformation = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => 
   };
 
   return (
-    <GenericQuery<IRowDataInformation>
-      QueryForm={QueryFormInformation}
-      getTablePresentation={tableQueryInformation}
+    <GenericQuery<IRowDataCombo>
+      QueryForm={QueryFormCombo}
+      getTablePresentation={tableQueryCombo}
       initialParameters={{
         name: "",
+        uuidModule: initialRow?.uuid ?? "",
       }}
-      configureTableActions={configureInformationTableActions}
+      configureTableActions={configureComboTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
       childrenMenu={<MenuTable />}
-
       getToken={refreshToken}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
       onCreateRow={onCreateRow}
+      initialRow={initialRow}
     />
   );
 };
 
-export { QueryInformation };
+export { QueryCombo };

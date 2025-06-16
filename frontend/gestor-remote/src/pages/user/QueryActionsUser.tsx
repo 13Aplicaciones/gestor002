@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts, IconComponent, useToastContext } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
-import { IRowDataUser } from "./Structures/Types";
+import { IRowDataUser } from "./structures/Types";
 
 /**
  * QueryMeny de la tabla de Modulos.

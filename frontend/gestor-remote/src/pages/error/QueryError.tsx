@@ -10,19 +10,22 @@ import {
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { IconComponent, IPresentationTable } from "ux-ui";
-import { IQueryProps } from "ux-ui/src/components/crud/Types";
-import { GenericQuery } from "ux-ui/src/components/form/GenericQuery";
+import {
+  GenericQuery,
+  IconComponent,
+  IPresentationTable,
+  IQueryProps,
+} from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormModule } from "./QueryFormModule";
-import { tableQueryModule } from "./Structures/Presentations";
-import { IRowDataModule } from "./Structures/Types";
+import { QueryFormError } from "./QueryFormError";
+import { tableQueryModule } from "./structures/Presentations";
+import { IRowDataError } from "./structures/Types";
 
 /**
- * Tabla de Modules del sistema.
+ * Tabla de errores del sistema.
  */
-const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
@@ -36,24 +39,24 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.MODULE_ENDPOINT + "/paginated");
+      setApiUrl(parameter.valueText01 + Menus.ERROR_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Configurar las acciones específicas para la tabla de Modules
+   * Configurar las acciones específicas para la tabla de errores
    */
-  const configureModuleTableActions = async (
+  const configureErrorTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataModule) => void,
-    onSeeRow?: (row: IRowDataModule) => void
+    onEditRow?: (row: IRowDataError) => void,
+    onSeeRow?: (row: IRowDataError) => void
   ) => {
     // Configurar acción para ver detalle
     if (tableFormat.items[1]) {
       tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataModule) => {
+        onAction: (row: IRowDataError) => {
           if (onSeeRow) {
             onSeeRow(row);
           }
@@ -61,11 +64,12 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       };
     }
 
-    if (tableFormat.items[5]) {
-      tableFormat.items[5].component = (row: IRowDataModule) => (
-        <IconButton
-          size="1"
+    // Configurar acción de edición
+    if (tableFormat.items[4]) {
+      tableFormat.items[4].component = (row: IRowDataError) => (
+        <IconButton          
           variant="ghost"
+          size="1"
           onClick={() => {
             if (onEditRow) {
               onEditRow(row);
@@ -76,15 +80,17 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
         </IconButton>
       );
     }
+
     return tableFormat;
   };
+
   /**
    * Configurar el menú de la tabla de errores
    *
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules." + Menus.MODULE + ".add")} side="left">
+      <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
         <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -93,15 +99,14 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   };
 
   return (
-    <GenericQuery<IRowDataModule>
-      QueryForm={QueryFormModule}
+    <GenericQuery<IRowDataError>
+      QueryForm={QueryFormError}
       getTablePresentation={tableQueryModule}
       initialParameters={{
-        indexModule: "",
-        name: "",
-        status: "",
+        indexError: "",
+        message: "",
       }}
-      configureTableActions={configureModuleTableActions}
+      configureTableActions={configureErrorTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
@@ -114,4 +119,4 @@ const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   );
 };
 
-export { QueryModule };
+export { QueryError };

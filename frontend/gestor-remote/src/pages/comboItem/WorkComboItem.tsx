@@ -10,18 +10,18 @@ import {
 import { useEffect, useState } from "react";
 import { GenericWork } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
-import { dataViewPresentation } from "./Structures/Presentations";
-import { createIRowDataError, IRowDataError } from "./Structures/Types";
+import { dataViewPresentation } from "../comboItem/structures/Presentations";
+import { createIRowDataComboItem, IRowDataComboItem } from "../comboItem/structures/Types";
 
 /**
- * Función para tener una vista previa de los errores del sistema.
+ * Función para tener una vista previa de los ComboItemes del sistema.
  */
-const WorkError = ({
+const WorkComboItem = ({
   onBack,
   row,
 }: {
   onBack: () => void;
-  row?: IRowDataError;
+  row?: IRowDataComboItem;
 }) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
@@ -44,10 +44,10 @@ const WorkError = ({
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.ERROR_ENDPOINT}/${row.uuid}`;
+        const url = `${param.valueText01}${Menus.COMBO_ITEM_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("ComboItem generando API URL:", err);
         setApiUrl("");
       }
     })();
@@ -58,14 +58,14 @@ const WorkError = ({
       {!apiUrl || !token ? (
         <></>
       ) : (
-        <GenericWork<IRowDataError>
+        <GenericWork<IRowDataComboItem>
           apiUrl={apiUrl}
-          createEmptyData={createIRowDataError}
+          createEmptyData={createIRowDataComboItem}
           getPresentationData={dataViewPresentation}
           token={token}
           row={row}
           getToken={refreshToken}
-          entityName="Error"
+          entityName="ComboItem"
           onBack={() => onBack()}
         />
       )}
@@ -73,4 +73,4 @@ const WorkError = ({
   );
 };
 
-export { WorkError };
+export { WorkComboItem };

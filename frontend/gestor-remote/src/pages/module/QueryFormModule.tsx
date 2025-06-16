@@ -11,7 +11,7 @@ import {
   GenericQueryForm
 } from "ux-ui";
 import * as yup from "yup";
-import { listaQueryModule } from "./Structures/Presentations";
+import { listaQueryModule } from "./structures/Presentations";
 
 interface ModuleQueryFormValues {
   indexModule: string;

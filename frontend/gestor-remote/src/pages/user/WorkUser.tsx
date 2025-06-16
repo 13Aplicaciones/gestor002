@@ -10,21 +10,24 @@ import {
 import { useEffect, useState } from "react";
 import { GenericWork } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
-import { dataViewPresentation } from "./Structures/Presentations";
-import { createIRowDataComboItem, IRowDataComboItem } from "./Structures/Types";
+import { dataViewPresentation } from "./structures/Presentations";
+import { createIRowDataUser, IRowDataUser } from "./structures/Types";
 
 /**
- * Función para tener una vista previa de los ComboItemes del sistema.
+ * Componente para la gestión de usuarios en el sistema.
+ *
+ * @param { onBack, row } - Propiedades del componente
+ * @returns
  */
-const WorkComboItem = ({
+const WorkUser = ({
   onBack,
   row,
 }: {
   onBack: () => void;
-  row?: IRowDataComboItem;
+  row?: IRowDataUser;
 }) => {
-  const [apiUrl, setApiUrl] = useState("");
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const [token, setToken] = useState<string>();
+  const [apiUrl, setApiUrl] = useState<string>();
 
   /**
    * Inicializar token y parámetros de URL
@@ -35,6 +38,10 @@ const WorkComboItem = ({
       .catch(console.error);
   }, []);
 
+  /**
+   * Generar la URL de la API para el usuario seleccionado
+   * @param {IRowDataUser} row - Datos del usuario seleccionado
+   */
   useEffect(() => {
     if (!row) {
       setApiUrl("");
@@ -44,10 +51,10 @@ const WorkComboItem = ({
     (async () => {
       try {
         const param: IParameter = await getParameter(MODULE, "200");
-        const url = `${param.valueText01}${Menus.COMBO_ITEM_ENDPOINT}/${row.uuid}`;
+        const url = `${param.valueText01}${Menus.USER_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("ComboItem generando API URL:", err);
+        console.error("Error generando API URL:", err);
         setApiUrl("");
       }
     })();
@@ -58,14 +65,14 @@ const WorkComboItem = ({
       {!apiUrl || !token ? (
         <></>
       ) : (
-        <GenericWork<IRowDataComboItem>
+        <GenericWork<IRowDataUser>
           apiUrl={apiUrl}
-          createEmptyData={createIRowDataComboItem}
+          createEmptyData={createIRowDataUser}
           getPresentationData={dataViewPresentation}
           token={token}
           row={row}
           getToken={refreshToken}
-          entityName="ComboItem"
+          entityName="User"
           onBack={() => onBack()}
         />
       )}
@@ -73,4 +80,4 @@ const WorkComboItem = ({
   );
 };
 
-export { WorkComboItem };
+export { WorkUser };

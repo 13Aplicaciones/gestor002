@@ -10,22 +10,19 @@ import {
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  GenericQuery,
-  IconComponent,
-  IPresentationTable,
-  IQueryProps,
-} from "ux-ui";
+import { IconComponent, IPresentationTable } from "ux-ui";
+import { IQueryProps } from "ux-ui/src/components/crud/Types";
+import { GenericQuery } from "ux-ui/src/components/form/GenericQuery";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormComboItem } from "./QueryFormComboItem";
-import { tableQueryModule } from "./Structures/Presentations";
-import { IRowDataComboItem } from "./Structures/Types";
+import { QueryFormModule } from "./QueryFormModule";
+import { tableQueryModule } from "./structures/Presentations";
+import { IRowDataModule } from "./structures/Types";
 
 /**
- * Tabla de ComboItemes del sistema.
+ * Tabla de Modules del sistema.
  */
-const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryModule = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
@@ -39,24 +36,24 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/paginated");
+      setApiUrl(parameter.valueText01 + Menus.MODULE_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Configurar las acciones específicas para la tabla de ComboItemes
+   * Configurar las acciones específicas para la tabla de Modules
    */
-  const configureComboItemTableActions = (
+  const configureModuleTableActions = async (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataComboItem) => void,
-    onSeeRow?: (row: IRowDataComboItem) => void
+    onEditRow?: (row: IRowDataModule) => void,
+    onSeeRow?: (row: IRowDataModule) => void
   ) => {
     // Configurar acción para ver detalle
     if (tableFormat.items[1]) {
       tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataComboItem) => {
+        onAction: (row: IRowDataModule) => {
           if (onSeeRow) {
             onSeeRow(row);
           }
@@ -64,12 +61,11 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       };
     }
 
-    // Configurar acción de edición
-    if (tableFormat.items[4]) {
-      tableFormat.items[4].component = (row: IRowDataComboItem) => (
-        <IconButton          
-          variant="ghost"
+    if (tableFormat.items[5]) {
+      tableFormat.items[5].component = (row: IRowDataModule) => (
+        <IconButton
           size="1"
+          variant="ghost"
           onClick={() => {
             if (onEditRow) {
               onEditRow(row);
@@ -80,17 +76,15 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
         </IconButton>
       );
     }
-
     return tableFormat;
   };
-
   /**
-   * Configurar el menú de la tabla de ComboItemes
+   * Configurar el menú de la tabla de errores
    *
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules." + Menus.ComboItem + ".add")} side="left">
+      <Tooltip content={t("modules." + Menus.MODULE + ".add")} side="left">
         <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -99,14 +93,15 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   };
 
   return (
-    <GenericQuery<IRowDataComboItem>
-      QueryForm={QueryFormComboItem}
+    <GenericQuery<IRowDataModule>
+      QueryForm={QueryFormModule}
       getTablePresentation={tableQueryModule}
       initialParameters={{
-        indexComboItem: "",
-        message: "",
+        indexModule: "",
+        name: "",
+        status: "",
       }}
-      configureTableActions={configureComboItemTableActions}
+      configureTableActions={configureModuleTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
@@ -119,4 +114,4 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   );
 };
 
-export { QueryComboItem };
+export { QueryModule };

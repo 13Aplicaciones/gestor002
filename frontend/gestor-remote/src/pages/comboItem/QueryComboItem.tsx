@@ -18,14 +18,14 @@ import {
 } from "ux-ui";
 import { MenuTableRefresh } from "ux-ui/src/ConstantsPresentation";
 import { Menus, MODULE } from "../../utils/Constants";
-import { QueryFormError } from "./QueryFormError";
-import { tableQueryModule } from "./Structures/Presentations";
-import { IRowDataError } from "./Structures/Types";
+import { tableQueryModule } from "../comboItem/structures/Presentations";
+import { IRowDataComboItem } from "../comboItem/structures/Types";
+import { QueryFormComboItem } from "./QueryFormComboItem";
 
 /**
- * Tabla de errores del sistema.
+ * Tabla de ComboItemes del sistema.
  */
-const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
+const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
@@ -39,24 +39,24 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.ERROR_ENDPOINT + "/paginated");
+      setApiUrl(parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/paginated");
     };
 
     initializeStructure();
   }, []);
 
   /**
-   * Configurar las acciones específicas para la tabla de errores
+   * Configurar las acciones específicas para la tabla de ComboItemes
    */
-  const configureErrorTableActions = (
+  const configureComboItemTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataError) => void,
-    onSeeRow?: (row: IRowDataError) => void
+    onEditRow?: (row: IRowDataComboItem) => void,
+    onSeeRow?: (row: IRowDataComboItem) => void
   ) => {
     // Configurar acción para ver detalle
     if (tableFormat.items[1]) {
       tableFormat.items[1].onAction = {
-        onAction: (row: IRowDataError) => {
+        onAction: (row: IRowDataComboItem) => {
           if (onSeeRow) {
             onSeeRow(row);
           }
@@ -66,7 +66,7 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
 
     // Configurar acción de edición
     if (tableFormat.items[4]) {
-      tableFormat.items[4].component = (row: IRowDataError) => (
+      tableFormat.items[4].component = (row: IRowDataComboItem) => (
         <IconButton          
           variant="ghost"
           size="1"
@@ -85,12 +85,12 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   };
 
   /**
-   * Configurar el menú de la tabla de errores
+   * Configurar el menú de la tabla de ComboItemes
    *
    */
   const MenuTable = () => {
     return (
-      <Tooltip content={t("modules." + Menus.ERROR + ".add")} side="left">
+      <Tooltip content={t("modules." + Menus.ComboItem + ".add")} side="left">
         <IconButton variant="soft" onClick={onCreateRow}>
           <IconComponent iconName="PlusIcon" width="16" height="16" />
         </IconButton>
@@ -99,14 +99,14 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   };
 
   return (
-    <GenericQuery<IRowDataError>
-      QueryForm={QueryFormError}
+    <GenericQuery<IRowDataComboItem>
+      QueryForm={QueryFormComboItem}
       getTablePresentation={tableQueryModule}
       initialParameters={{
-        indexError: "",
+        indexComboItem: "",
         message: "",
       }}
-      configureTableActions={configureErrorTableActions}
+      configureTableActions={configureComboItemTableActions}
       apiUrl={apiUrl}
       token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
@@ -119,4 +119,4 @@ const QueryError = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   );
 };
 
-export { QueryError };
+export { QueryComboItem };

@@ -12,12 +12,12 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GenericWork, PageCrud } from "ux-ui";
 import { Menus, MODULE } from "../../utils/Constants";
-import { dataViewPresentation } from "./Structures/Presentations";
-import { createIRowDataModule, IRowDataModule } from "./Structures/Types";
-import { FormEditCombo } from "./Work/Combo/FormEditCombo";
-import { QueryCombo } from "./Work/Combo/QueryCombo";
-import { createIRowDataCombo } from "./Work/Combo/Structures/Types";
-import { ChangeStatus } from "./Work/Procesos/Panels";
+import { dataViewPresentation } from "./structures/Presentations";
+import { createIRowDataModule, IRowDataModule } from "./structures/Types";
+import { FormEditCombo } from "./work/combo/FormEditCombo";
+import { QueryCombo } from "./work/combo/QueryCombo";
+import { createIRowDataCombo } from "./work/combo/structures/Types";
+import { ChangeStatus } from "./work/procesos/Panels";
 
 /**
  * Función para tener una vista previa de los Modules del sistema.

@@ -23,7 +23,7 @@ import {
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { listaFormModule } from "./Structures/Presentations";
+import { listaFormModule } from "./structures/Presentations";
 
 /**
  * Formulario de edición de Modules del sistema.

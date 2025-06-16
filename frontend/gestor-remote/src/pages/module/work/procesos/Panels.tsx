@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts, BannerInformation, BoxTheme, useToastContext } from "ux-ui";
 import { Menus, MODULE } from "../../../../utils/Constants";
-import { IRowDataModule } from "../../Structures/Types";
+import { IRowDataModule } from "../../structures/Types";
 
 /**
  * Componente para cambiar el estado de un módulo.

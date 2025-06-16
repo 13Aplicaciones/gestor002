@@ -10,7 +10,7 @@ import {
   IParametersQuery,
 } from "ux-ui";
 import * as yup from "yup";
-import { listQueryUser } from "./Structures/Presentations";
+import { listQueryUser } from "./structures/Presentations";
 
 interface UserQueryFormValues {
   nick: string;

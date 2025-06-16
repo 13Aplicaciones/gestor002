@@ -23,10 +23,10 @@ import {
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
-import { QueryCredentials } from "./Details/Credentials/QueryCredentials";
-import { createIRowDataCredential } from "./Details/Credentials/Structures/Types";
+import { QueryCredentials } from "./details/credentials/QueryCredentials";
+import { createIRowDataCredential } from "./details/credentials/structures/Types";
 
-import { FormEditCredentials } from "./Details/Credentials/FormEditCredentials";
+import { FormEditCredentials } from "./details/credentials/FormEditCredentials";
 import { Box, Tabs } from "@radix-ui/themes";
 import { WorkUser } from "./WorkUser";
 
