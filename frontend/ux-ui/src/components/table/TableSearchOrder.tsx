@@ -68,6 +68,8 @@ const getSorts = (presentationTable: IPresentationTable) => {
  * @param presentationTable
  * @param token
  * @param getToken
+ * @param menuTableRefresh
+ * @param childrenMenu
  * @returns
  */
 const TableSearchOrder = ({
@@ -183,7 +185,7 @@ const TableSearchOrder = ({
         }
       })
       .catch((error) => {
-        console.error("Error: " + error);
+        console.error("runApi -> Error:", error);
       });
   };
 
@@ -417,5 +419,4 @@ const TableSearchOrder = ({
 };
 
 export { TableSearchOrder };
-
 export type { IParametersQuery };

@@ -40,6 +40,47 @@
     "refresh": {
       "label": "Actualizar"
     }
+  },
+  "lov": {
+    "title": "Lista de Valores",
+    "label": "Nombre",
+    "labelPlaceholder": "Nombre del Registro a buscar",
+    "alternative": "Alternativo",
+    "alternativePlaceholder": "Alternativo del Registro a buscar",
+    "fields": {
+      "index": {
+        "title": "Índice",
+        "abbreviation": "Ind"
+      },
+      "label": {
+        "title": "Nombre",
+        "abbreviation": "Nom"
+      },
+      "labelAlternative": {
+        "title": "Nombre Alternativo",
+        "abbreviation": "NomAlt"
+      },
+      "description": {
+        "title": "Descripción",
+        "abbreviation": "Desc"
+      },
+      "value": {
+        "title": "Valor",
+        "abbreviation": "Val"
+      },
+      "doubleValue": {
+        "title": "Valor",
+        "abbreviation": "Val"
+      },
+      "status": {
+        "title": "Estado",
+        "abbreviation": "Est"
+      },
+      "orden": {
+        "title": "Orden",
+        "abbreviation": "Ord"
+      }
+    }
   },  
 
   "httpStatus": {

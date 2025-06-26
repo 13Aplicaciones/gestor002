@@ -93,7 +93,7 @@ function GenericQuery<T>({
   onEditRow,
   onSeeRow,
   initialRow,
-}: GenericQueryProps<T>) {
+}: Readonly<GenericQueryProps<T>>) {
   const [presentacionTabla, setPresentacionTabla] =
     useState<IPresentationTable>({} as IPresentationTable);
   
@@ -113,7 +113,7 @@ function GenericQuery<T>({
 
         setParametersQuery((prevParameters) => ({
           ...prevParameters,
-          size: tableFormat.rowCount || 10, // Establecer un tamaño de fila por defecto si no se especifica
+          size: tableFormat.rowCount ?? 10, // Establecer un tamaño de fila por defecto si no se especifica
           ...initialRow,
         }));
 
@@ -134,7 +134,7 @@ function GenericQuery<T>({
     };
 
     initializeTable();
-  }, [getTablePresentation, configureTableActions, onEditRow, onSeeRow]);
+  }, [getTablePresentation, configureTableActions, onEditRow, onSeeRow, initialRow]);
 
   /**
    * Manejar la búsqueda y actualizar los parámetros

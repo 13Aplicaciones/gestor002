@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Flex,
+  IconButton,
   Select,
   Slot,
   Text,
@@ -25,34 +26,29 @@ import { MessageField } from "./Menssages";
  * @author @omargo33
  * @version 1.0
  */
-
 /**
- * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register
- *
- * @param title Titulo del field
- * @param placeHolder Placeholder del field
- * @param messageError Mensaje de error
- * @param columns Columnas de la presentación
- * @param directionLabel Dirección de la presentación
- * @param register Registro del field para el formulario (yup)
- *
- * @returns
+ * Componente para crear un campo de entrada oculto.
+ * 
+ * @param register Registro del campo para el formulario (yup)
+ * @returns 
  */
 const InputHidden = ({ register }: { register?: any }) => {
   return <input type="hidden" style={{ display: "none" }} {...register} />;
 };
 
+
 /**
- * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register
- *
- * @param title Titulo del field
- * @param placeHolder Placeholder del field
+ * Componente para crear un campo de entrada de texto.
+ * 
+ * @param title Título del campo
+ * @param placeholder Placeholder del campo
  * @param messageError Mensaje de error
  * @param columns Columnas de la presentación
  * @param directionLabel Dirección de la presentación
- * @param register Registro del field para el formulario (yup)
- *
- * @returns
+ * @param register Registro del campo para el formulario (yup)
+ * @param children Componentes hijos
+ * 
+ * @returns 
  */
 const InputField = ({
   title,
@@ -249,6 +245,7 @@ const InputSecretField = ({
  * @param placeHolder Placeholder del field
  * @param messageError Mensaje de error
  * @param columns Columnas de la presentación
+ * @param rows Filas del area de texto
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
  *
@@ -365,7 +362,8 @@ const InputSearchDynamic = ({
 /**
  * Metodo para crear un field de texto simple.
  *
- * @param plasholder Placeholder del field
+ * @param type Tipo del field (por defecto "text")
+ * @param placeholder Placeholder del field
  * @param columna Columnas de la presentación
  * @param messageError Mensaje de error
  * @param onClick Evento de click
@@ -447,6 +445,20 @@ interface IPresentationInputSelect {
   }>;
 }
 
+/**
+ * Componente para crear un campo de selección.
+ *
+ * @param title Título del campo
+ * @param placeholder Placeholder del campo
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param items Elementos del campo de selección
+ * @param value Valor seleccionado
+ * @param onChange Función para manejar el cambio de valor
+ * 
+ * @returns
+ */
 const InputSelect = ({
   title,
   placeholder,
@@ -538,12 +550,91 @@ const InputSelect = ({
   );
 };
 
+/**
+ * Se crea un componente de tipo función que recibe las propiedades title, placeHolder, messageError, register
+ * Y hace busquedas LOV (List of Values)
+ *
+ * @param title Titulo del field
+ * @param placeHolder Placeholder del field
+ * @param messageError Mensaje de error
+ * @param columns Columnas de la presentación
+ * @param directionLabel Dirección de la presentación
+ * @param register Registro del field para el formulario (yup)
+ *
+ * @returns
+ */
+const InputFieldLov = ({
+  title,
+  placeholder,
+  messageError,
+  columns,
+  directionLabel,
+  register,
+  onFind,
+}: {
+  title?: string;
+  placeholder?: string;
+  messageError?: string;
+  columns?: BandPresentation;
+  directionLabel: Direction | Direction.horizontal;
+  children?: ReactNode;
+  register?: any;
+  onFind: () => void;
+}) => {
+  const presentation = useCalculatePresentation(
+    directionLabel,
+    columns,
+    "60vw"
+  );
+
+  return (
+    <Flex
+      direction={presentation.direction}
+      gap="3"
+      style={{ alignItems: presentation.align }}
+    >
+      <Flex
+        width="calc(150px * var(--scaling))"
+        style={{ justifyContent: presentation.justify }}
+      >
+        <Text size="2" as="div" weight="bold" truncate trim="normal">
+          {title}
+        </Text>
+      </Flex>
+      <Flex direction={"column"}>
+        <Flex direction={"row"} gap="2" width={presentation.width}>
+          <TextField.Root
+            type="text"
+            size="2"
+            disabled={true}
+            style={{ marginBottom: "1vh", width: "100%" }}
+            placeholder={placeholder}
+            {...register}
+          />
+
+          <IconButton variant="surface" size="2" form="none" onClick={onFind}>
+            <IconComponent
+              iconName="MagnifyingGlassIcon"
+              width="16"
+              height="16"
+            />
+          </IconButton>
+        </Flex>
+        <MessageField message={messageError} />
+      </Flex>
+    </Flex>
+  );
+};
+
 export {
-  AreaField, InputField,
-  InputFieldDate, InputHidden, InputSearchDynamic,
+  AreaField,
+  InputField,
+  InputFieldDate,
+  InputFieldLov,
+  InputHidden,
+  InputSearchDynamic,
   InputSecretField,
   InputSelect,
-  InputSubmit
+  InputSubmit,
 };
 export type { IPresentationInputSelect };
-

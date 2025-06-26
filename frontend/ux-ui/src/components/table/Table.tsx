@@ -33,6 +33,14 @@ import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Interfaz para la presentacion de la tabla.
+ *
+ * @param banding Indica si se muestra el banding de la tabla.
+ * @param headers Indica si se muestra el header de la tabla.
+ * @param numberLinea Indica si se muestra el numero de linea.
+ * @param skeletonWidth Ancho del esqueleto de la tabla.
+ * @param rowCount Numero de filas de la tabla.
+ * @param items Lista de items de la tabla, cada uno con su formato, justificacion, nombre, titulo, ancho y opcionalmente orden, nombre de columna de orden, seleccion de celda y accion.
+ *
  */
 interface IPresentationTable {
   banding: boolean;
@@ -56,6 +64,9 @@ interface IPresentationTable {
 
 /**
  * Interfaz para la presentacion de la tabla.
+ *
+ * @param items Lista de items de la tabla, cada uno con su grupo, texto de codigo, numero de codigo, nombre, descripcion, orden y estado.
+ *
  */
 interface IPresentationCellSelect {
   items: Array<{
@@ -92,6 +103,7 @@ const justify = (justification: JustificationText) => {
  * @param row Fila de la tabla.
  * @param textFormat Formato del texto.
  * @param value Valor de la celda.
+ * @param cellSelect Seleccion de la celda, si es que aplica.
  * @param width Ancho de la celda.
  * @param onAction Funcion para la accion de la celda.
  * @param component Componente a mostrar en la celda.
@@ -172,7 +184,14 @@ const valueOfList = (
 /**
  * Funcion para formatear el texto de la celda.
  *
- * @param param0
+ * @param value Valor de la celda.
+ * @param textFormat Formato del texto.
+ * @param justification Justificacion del texto.
+ * @param row Fila de la tabla.
+ * @param cellSelect Seleccion de la celda, si es que aplica.
+ * @param onAction Funcion para la accion de la celda.
+ * @param component Componente a mostrar en la celda.
+ * 
  * @returns
  */
 const CellFormatter = ({
@@ -215,8 +234,10 @@ const CellFormatter = ({
 /**
  * Funcion para mostrar el <Title>.
  *
+ * @param name Nombre de la columna.
  * @param text Text a mostrar.
- * @param index Indice de la columna.
+ * @param sort Orden de la columna.
+ * @param onOrderChange Funcion para cambiar el orden de la columna.
  *
  * @returns
  */
@@ -354,7 +375,8 @@ const TableConfigurable = ({
     onOrderChange: (title: string, direction: SortColumn) => void;
   };
 }) => {
-  const [presentation, setPresentation] = useState<IPresentationTable>(presentationTable);
+  const [presentation, setPresentation] =
+    useState<IPresentationTable>(presentationTable);
   const [sorts, setSorts] = useState<IParametersQuery>({} as IParametersQuery);
   const [t] = useTranslation("global_ux");
   const theme = useThemeContext();
@@ -457,7 +479,7 @@ const TableConfigurable = ({
 /**
  * Muestra un esqueleto de la tabla paginada.
  *
- * @param columns Numero de columns.
+ * @param column Numero de columns.
  *
  * @returns
  */

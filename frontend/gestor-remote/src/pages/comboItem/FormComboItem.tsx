@@ -25,6 +25,8 @@ import { Menus, MODULE } from "../../utils/Constants";
 
 /**
  * Formulario de edición de errores del sistema.
+ * 
+ * @param {IFormProps} props - Propiedades del formulario.
  */
 const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
   const [t] = useTranslation("global_gestor");
@@ -75,6 +77,9 @@ const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
       .catch(console.error);
   }, []);
 
+  /**
+   * Genera la URL de la API para el CRUD de Combo Items.
+   */
   useEffect(() => {
     if (!row) {
       setApiUrl("");
@@ -87,7 +92,7 @@ const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
         const url = `${param.valueText01}${Menus.COMBO_ITEM_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("FormEditComboItem -> Error:", err);
         setApiUrl("");
       }
     })();
@@ -95,13 +100,13 @@ const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
 
   return (
     <GenericCrudForm
-      status={status}
-      row={row}
+      apiUrl={apiUrl}
+      getToken={refreshToken}
       indexName="uuid"
       onBack={onBack}
-      apiUrl={apiUrl}
+      row={row}
+      status={status}
       token={token}
-      getToken={refreshToken}
       renderForm={({
         formStatus,
         loading,
@@ -110,36 +115,36 @@ const FormEditComboItem = ({ status, row, onBack }: IFormProps) => {
       }) => (
         <form onSubmit={handleSubmit(submitData)}>
           <InputField
-            title={t("modules.GS-CB-IT-001.fields.name.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-CB-IT-001.fields.name.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("name")}
             messageError={errors.name?.message}
+            placeholder={t("modules.GS-CB-IT-001.fields.name.placeholder")}
+            register={register("name")}
+            title={t("modules.GS-CB-IT-001.fields.name.title")}
           />
           <AreaField
-            title={t("modules.GS-CB-IT-001.fields.value01.title")}
             columns={BandPresentation.column_2}
-            rows={3}
-            placeholder={t("modules.GS-CB-IT-001.fields.value01.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("value01")}
             messageError={errors.value01?.message}
+            placeholder={t("modules.GS-CB-IT-001.fields.value01.placeholder")}
+            register={register("value01")}
+            rows={3}
+            title={t("modules.GS-CB-IT-001.fields.value01.title")}
           />
           <AreaField
-            title={t("modules.GS-CB-IT-001.fields.value02.title")}
             columns={BandPresentation.column_2}
-            rows={3}
-            placeholder={t("modules.GS-CB-IT-001.fields.value02.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("value02")}
             messageError={errors.value02?.message}
+            placeholder={t("modules.GS-CB-IT-001.fields.value02.placeholder")}
+            register={register("value02")}
+            rows={3}
+            title={t("modules.GS-CB-IT-001.fields.value02.title")}
           />
           <FooterFormAction
+            formStatus={formStatus}
             loading={loading}
             onBack={onBack}
             showPopUpDelete={showPopUpDelete}
-            formStatus={formStatus}
           />
         </form>
       )}

@@ -6,6 +6,7 @@ import { ReactNode } from "react";
  * Componente BoxShadow que proporciona un contenedor con sombra y bordes redondeados que se adapta al tema actual.
  *
  * @param children - Elementos hijos que se mostrarán dentro del BoxShadow
+ * @param look - Estilo visual del contenedor, puede ser "shadowLine", "shadow", "line" o "none".
  * @returns
  */
 const BoxTheme = ({

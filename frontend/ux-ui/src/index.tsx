@@ -54,13 +54,20 @@ export {
   AreaField,
   InputHidden,
   InputField,
+  InputFieldLov,
   InputSelect,
   InputFieldDate,
   InputSearchDynamic,
   InputSecretField,
   InputSubmit,
 } from "./components/input/Input";
+
+export {QueryLov} from "./components/input/lov/QueryLov";
+
 export type { IPresentationInputSelect } from "./components/input/Input";
+
+
+export { PopUpLov } from "./components/input/lov/PopUpLov";
 
 // Exportar elementos de la libreria para formularios
 export {

@@ -1,9 +1,10 @@
-import { Button, Dialog, Flex, Separator } from "@radix-ui/themes";
+import { Button, Dialog, Flex, IconButton, Separator } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alerts } from "../../ConstantsPresentation";
 import "../../i18n";
 import { alertColor, alertIconSize } from "../IconosColoresAlerts";
+import { IconComponent } from "../icon/IconDynamic";
 
 /**
  * Funciones de presentation de Dialogos.
@@ -71,7 +72,7 @@ const footDialogue = ({
  * @param cancel Indica si se muestra el botón de cancelar
  * @param children Contenido del dialogo
  * @param buttons Botones adicionales o unicos
- *
+ * @param onClose Función que se ejecuta al cerrar el dialogo
  */
 const DialogForm = ({
   status,
@@ -80,6 +81,7 @@ const DialogForm = ({
   cancel = true,
   children,
   buttons,
+  onClose,
 }: {
   status: boolean;
   title?: string;
@@ -87,6 +89,7 @@ const DialogForm = ({
   cancel?: boolean;
   children?: ReactNode;
   buttons?: ReactNode;
+  onClose?: () => void;
 }) => {
   const [t] = useTranslation("global_ux");
   const [open, setOpen] = useState(status);
@@ -112,17 +115,32 @@ const DialogForm = ({
       >
         {title && (
           <Dialog.Title>
-        <span dangerouslySetInnerHTML={{ __html: title }} />
+            <Flex direction="row" justify="between" align="start">
+              <span dangerouslySetInnerHTML={{ __html: title }} />
+
+              {!cancel && (
+                <IconButton
+                  variant="ghost"
+                  size="1"
+                  onClick={() => {
+                    setOpen(!open);
+                    onClose?.();
+                  }}
+                >
+                  <IconComponent iconName="Cross2Icon" width="16" height="16" />
+                </IconButton>
+              )}
+            </Flex>
           </Dialog.Title>
         )}
         {description && (
           <Dialog.Description>
-        <span dangerouslySetInnerHTML={{ __html: description }} />
+            <span dangerouslySetInnerHTML={{ __html: description }} />
           </Dialog.Description>
         )}
         {children}
         {footDialogue({
-          closeDialogue: () => setOpen(!open),
+          closeDialogue: () => { setOpen(!open); onClose?.(); },
           textAction: t("actions.cancel"),
           cancel: cancel,
           buttons: buttons,
@@ -169,15 +187,15 @@ const DialogAlerts = ({
       <Dialog.Content maxWidth="500px">
         {title && (
           <Dialog.Title>
-        <Flex gap="2" style={{ color: alertColor({ alert }) }}>
-          {alertIconSize({ alert: alert, size: "24" })}
-          <span dangerouslySetInnerHTML={{ __html: title }} />
-        </Flex>
+            <Flex gap="2" style={{ color: alertColor({ alert }) }}>
+              {alertIconSize({ alert: alert, size: "24" })}
+              <span dangerouslySetInnerHTML={{ __html: title }} />
+            </Flex>
           </Dialog.Title>
         )}
         {description && (
           <Dialog.Description>
-        <span dangerouslySetInnerHTML={{ __html: description }} />
+            <span dangerouslySetInnerHTML={{ __html: description }} />
           </Dialog.Description>
         )}
         {children}
@@ -193,4 +211,3 @@ const DialogAlerts = ({
 };
 
 export { DialogAlerts, DialogForm };
-

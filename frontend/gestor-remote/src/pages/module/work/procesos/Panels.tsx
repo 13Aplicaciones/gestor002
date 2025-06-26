@@ -162,7 +162,7 @@ const ChangeStatus = ({ row }: { row?: IRowDataModule }) => {
           </Flex>
         ) : (
           <Flex direction="row" gap="3" align="center">
-            <Button variant="solid" onClick={() => handleChangeStatus("A")}>
+            <Button loading={loading} variant="solid" onClick={() => handleChangeStatus("A")}>
               {t("modules.GS-MD-001.work.status.active")}
             </Button>
             <Text>{t("modules.GS-MD-001.work.status.activeDescription")}</Text>

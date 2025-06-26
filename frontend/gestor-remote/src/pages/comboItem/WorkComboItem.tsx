@@ -46,8 +46,8 @@ const WorkComboItem = ({
         const param: IParameter = await getParameter(MODULE, "200");
         const url = `${param.valueText01}${Menus.COMBO_ITEM_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
-      } catch (err) {
-        console.error("ComboItem generando API URL:", err);
+      } catch (error) {
+        console.error("WorkComboItem -> Error:", error);  
         setApiUrl("");
       }
     })();
