@@ -11,17 +11,28 @@ const enum Alerts {
 }
 
 /**
+ * Enumeración para el tamaño de los diálogos.
+ */
+const enum DialogSize {
+  small = 0.45, // Tamaño pequeño
+  medium = 0.50, // Tamaño mediano
+  large = 0.60, // Tamaño grande
+  full = 0.80, // Tamaño completo
+}
+
+/**
  * Enumeración para la presentación de las bandas
  *
  * @returns
  */
 const enum BandPresentation {
-  column_1 = 1 / 2,
-  column_2 = 1 / 3,
-  column_3 = 1 / 4,
-  column_4 = 1 / 5,
-  column_5 = 1 / 6,
-  column_6 = 1 / 7,
+  column_0 = 0.75,     // 3/4
+  column_1 = 0.5,      // 1/2
+  column_2 = 0.33333,  // 1/3
+  column_3 = 0.25,     // 1/4
+  column_4 = 0.2,      // 1/5
+  column_5 = 0.16667,  // 1/6
+  column_6 = 0.14286,  // 1/7
 }
 
 /**
@@ -53,7 +64,6 @@ const enum TextFormat {
   paragraph2 = "paragraph2", // Formato de párrafo dos lineas
   paragraph4 = "paragraph4", // Formato de párrafo cuatro lineas
   paragraph6 = "paragraph6", // Formato de párrafo seis lineas
-  //TODO: Agregar mas formats de texto.
 }
 
 /**
@@ -67,6 +77,11 @@ const enum JustificationText {
   end = "end", // Fin
 }
 
+/**
+ * Enumeración para la presentación de las tablas.
+ *
+ * @returns
+ */
 const enum MenuTableRefresh {
   refresh = "refresh",
   refreshTimmer = "refreshTimmer",
@@ -99,6 +114,11 @@ const enum StatusEdit {
   detail = "detail", // Ver un registro en detalle
 }
 
+/**
+ * Enumeración para los formatos de fecha y hora en ISO 8601.
+ * 
+ * @returns
+ */
 const enum FormatMaskISO {
   dateHourZone = "yyyy-MM-dd HH:mm:ssXXX", // Formato de fecha y hora con zona horaria
   dateHourZoneMiliseconds = "yyyy-MM-dd HH:mm:ss.SSSXXX", // Formato de fecha y hora con zona horaria y milisegundos
@@ -110,6 +130,7 @@ const enum FormatMaskISO {
 
 export {
   Alerts,
+  DialogSize,
   BandPresentation,
   Direction,
   FormatMaskISO,

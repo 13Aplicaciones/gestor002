@@ -37,11 +37,9 @@ const generateRequestBody = (methodRest: MethodREST, typeBody: TypeBody, bodyPar
             .join('&');
          break;
       case TypeBody.FORM_DATA:
-         //TODO: Implementar
          bodyTemp = "data";
          break;
       case TypeBody.MULTIPART:
-         //TODO: Implementar
          bodyTemp = "multipart/form-data";
          break;
       default:

@@ -4,6 +4,7 @@ import { ComponentType, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DialogForm } from "../../dialog/DialogState";
 import { ToastContextProvider } from "../../toast/ToastContextProvider";
+import { DialogSize } from "../../../ConstantsPresentation";
 
 /**
  * Interfaz para el Query Lov.
@@ -14,6 +15,11 @@ interface IQueryLovProps {
   onCreateRow: () => void;
   onEditRow: (row: any) => void;
   onSeeRow: (row: any) => void;
+  presentations: {
+    valueInteger: boolean;
+    valueDecimal: boolean;
+    labelAlternative: boolean;
+  };
   token: string | undefined;
   initialRow?: any;
 }
@@ -40,6 +46,11 @@ interface PageLovInnerProps {
   token: string | undefined;
   onSelectRow: (row: any) => void;
   onCancel: () => void;
+  presentations: {
+    valueInteger: boolean;
+    valueDecimal: boolean;
+    labelAlternative: boolean;
+  };
   initialRow?: any;
   visible?: boolean;
 }
@@ -67,6 +78,11 @@ const PageLovInnerComponent = ({
   onSelectRow,
   QueryLovPanel,
   token,
+  presentations = {
+    valueInteger: false,
+    valueDecimal: false,
+    labelAlternative: false,
+  },
   visible = true,
 }: PageLovInnerProps) => {
   const [setRowSelecionado] = useState<any>(createIRowDataCustom());
@@ -77,7 +93,7 @@ const PageLovInnerComponent = ({
    * @param row
    */
   const onEditarRow = (row: any) => {
-    setRowSelecionado(row);
+    //setRowSelecionado(row);
     onSelectRow(row);
   };
 
@@ -87,7 +103,7 @@ const PageLovInnerComponent = ({
    * @param row
    */
   const onSeeRow = (row: any) => {
-    setRowSelecionado(row);
+    //setRowSelecionado(row);
     onSelectRow(row);
   };
 
@@ -106,6 +122,7 @@ const PageLovInnerComponent = ({
       status={visible}
       title={t("lov.title")}
       cancel={false}
+      size={DialogSize.full}
       onClose={() => {
         onCancel();
       }}
@@ -120,6 +137,7 @@ const PageLovInnerComponent = ({
             onEditRow={onEditarRow}
             onSeeRow={onSeeRow}
             token={token}
+            presentations={presentations}
           />
         </Flex>
       </ToastContextProvider>
@@ -143,6 +161,11 @@ const PopUpLov = ({
   QueryLovPanel,
   token,
   visible = true,
+  presentations = {
+    valueInteger: false,
+    valueDecimal: false,
+    labelAlternative: false,
+  },
 }: PageLovInnerProps) => {
   return (
     <PageLovInnerComponent
@@ -155,6 +178,7 @@ const PopUpLov = ({
       QueryLovPanel={QueryLovPanel}
       token={token}
       visible={visible}
+      presentations={presentations}
     />
   );
 };

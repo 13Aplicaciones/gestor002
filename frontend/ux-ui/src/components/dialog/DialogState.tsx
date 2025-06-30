@@ -1,7 +1,7 @@
 import { Button, Dialog, Flex, IconButton, Separator } from "@radix-ui/themes";
 import { ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alerts } from "../../ConstantsPresentation";
+import { Alerts, DialogSize } from "../../ConstantsPresentation";
 import "../../i18n";
 import { alertColor, alertIconSize } from "../IconosColoresAlerts";
 import { IconComponent } from "../icon/IconDynamic";
@@ -81,6 +81,7 @@ const DialogForm = ({
   cancel = true,
   children,
   buttons,
+  size = DialogSize.medium,
   onClose,
 }: {
   status: boolean;
@@ -89,6 +90,7 @@ const DialogForm = ({
   cancel?: boolean;
   children?: ReactNode;
   buttons?: ReactNode;
+  size?: DialogSize,
   onClose?: () => void;
 }) => {
   const [t] = useTranslation("global_ux");
@@ -102,7 +104,6 @@ const DialogForm = ({
   return (
     <Dialog.Root open={open}>
       <Dialog.Content
-        // maxWidth="500px"
         align="center"
         style={{
           position: "fixed",
@@ -110,7 +111,7 @@ const DialogForm = ({
           left: "50%",
           transform: "translateX(-50%)", // Adjusted to center both horizontally and vertically
           width: "100%", // Ensures responsiveness
-          maxWidth: "500px", // Limits the width to 500px
+          maxWidth: `calc(100vw * ${size})`, // Limits the width to 500px
         }}
       >
         {title && (
@@ -120,14 +121,14 @@ const DialogForm = ({
 
               {!cancel && (
                 <IconButton
-                  variant="ghost"
+                  variant="solid"
                   size="1"
                   onClick={() => {
                     setOpen(!open);
                     onClose?.();
                   }}
                 >
-                  <IconComponent iconName="Cross2Icon" width="16" height="16" />
+                  <IconComponent iconName="Cross1Icon" width="18" height="18" />
                 </IconButton>
               )}
             </Flex>

@@ -51,16 +51,20 @@ const useCalculatePresentation = (
   if (directionLabel === Direction.vertical) {
     iPresentation.align = "start";
     iPresentation.justify = "start";
+    iPresentation.direction = Direction.vertical;
   } else {
     iPresentation.align = isPortrait ? "start" : "center";
     iPresentation.justify = isPortrait ? "start" : "end";
+    
   }
 
   const columnValue = columns ?? BandPresentation.column_1;
   const calculatedWidth = `calc(100vw * ${columnValue})`;
   iPresentation.width = isPortrait ? width : calculatedWidth;
+  iPresentation.direction = isPortrait ? Direction.vertical : directionLabel;
 
   return iPresentation;
 };
 
 export default useCalculatePresentation;
+export type { IPresentation };

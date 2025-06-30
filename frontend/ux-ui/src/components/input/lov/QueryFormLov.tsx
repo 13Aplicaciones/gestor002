@@ -18,8 +18,14 @@ interface LovQueryFormValues {
  */
 const QueryFormLov = ({
   onFind,
+  presentations = {
+    labelAlternative: false,
+  },
 }: {
   onFind: (data: IParametersQuery) => void;
+  presentations?: {
+    labelAlternative?: boolean;
+  };
 }) => {
   const [t] = useTranslation("global_ux");
 
@@ -38,24 +44,29 @@ const QueryFormLov = ({
         labelAlternative: "",
       }}
       onFind={onFind}
+      buttonsDetails={false}
       renderFields={({ register, formState }) => (
         <>
           <InputField
             title={t("lov.label")}
-            columns={BandPresentation.column_3}
+            columns={BandPresentation.column_5}
             placeholder={t("lov.labelPlaceholder")}
             directionLabel={Direction.horizontal}
             register={register("label")}
             messageError={formState.errors.label?.message}
+            labelVisible={false}
           />
-          <InputField
-            title={t("lov.alternative")}
-            columns={BandPresentation.column_3}
-            placeholder={t("lov.alternativePlaceholder")}
-            directionLabel={Direction.horizontal}
-            register={register("labelAlternative")}
-            messageError={formState.errors.labelAlternative?.message}
-          />
+          {presentations.labelAlternative && (
+            <InputField
+              title={t("lov.alternative")}
+              columns={BandPresentation.column_5}
+              placeholder={t("lov.alternativePlaceholder")}
+              directionLabel={Direction.horizontal}
+              register={register("labelAlternative")}
+              messageError={formState.errors.labelAlternative?.message}
+              labelVisible={false}
+            />
+          )}
         </>
       )}
     />

@@ -191,7 +191,7 @@ const valueOfList = (
  * @param cellSelect Seleccion de la celda, si es que aplica.
  * @param onAction Funcion para la accion de la celda.
  * @param component Componente a mostrar en la celda.
- * 
+ *
  * @returns
  */
 const CellFormatter = ({

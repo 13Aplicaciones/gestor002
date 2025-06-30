@@ -44,9 +44,9 @@
   "lov": {
     "title": "Lista de Valores",
     "label": "Nombre",
-    "labelPlaceholder": "Nombre del Registro a buscar",
-    "alternative": "Alternativo",
-    "alternativePlaceholder": "Alternativo del Registro a buscar",
+    "labelPlaceholder": "Registro a buscar",
+    "alternative": "Nombre Alternativo",
+    "alternativePlaceholder": "2do Registro a buscar",
     "fields": {
       "index": {
         "title": "Índice",
@@ -57,7 +57,7 @@
         "abbreviation": "Nom"
       },
       "labelAlternative": {
-        "title": "Nombre Alternativo",
+        "title": "Alternativo",
         "abbreviation": "NomAlt"
       },
       "description": {

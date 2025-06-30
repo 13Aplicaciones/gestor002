@@ -7,6 +7,7 @@ import {
   Text,
   TextArea,
   TextField,
+  Tooltip,
 } from "@radix-ui/themes";
 import { MouseEventHandler, ReactNode, useState } from "react";
 import {
@@ -16,7 +17,7 @@ import {
   JustificationText,
 } from "../../ConstantsPresentation";
 import { IconComponent } from "../icon/IconDynamic";
-import useCalculatePresentation from "./Calculations";
+import useCalculatePresentation, { IPresentation } from "./Calculations";
 import { MessageField } from "./Menssages";
 
 /**
@@ -28,18 +29,17 @@ import { MessageField } from "./Menssages";
  */
 /**
  * Componente para crear un campo de entrada oculto.
- * 
+ *
  * @param register Registro del campo para el formulario (yup)
- * @returns 
+ * @returns
  */
 const InputHidden = ({ register }: { register?: any }) => {
   return <input type="hidden" style={{ display: "none" }} {...register} />;
 };
 
-
 /**
  * Componente para crear un campo de entrada de texto.
- * 
+ *
  * @param title Título del campo
  * @param placeholder Placeholder del campo
  * @param messageError Mensaje de error
@@ -47,24 +47,27 @@ const InputHidden = ({ register }: { register?: any }) => {
  * @param directionLabel Dirección de la presentación
  * @param register Registro del campo para el formulario (yup)
  * @param children Componentes hijos
- * 
- * @returns 
+ * @param labelVisible Indica si el label es visible o no
+ *
+ * @returns
  */
 const InputField = ({
-  title,
-  placeholder,
-  messageError,
-  columns,
   directionLabel,
+  columns,
+  messageError,
+  placeholder,
   register,
+  title,
+  labelVisible = true,
 }: {
-  title?: string;
-  placeholder?: string;
-  messageError?: string;
-  columns?: BandPresentation;
   directionLabel: Direction | Direction.horizontal;
   children?: ReactNode;
+  columns?: BandPresentation;
+  messageError?: string;
+  placeholder?: string;
   register?: any;
+  title?: string;
+  labelVisible?: boolean;
 }) => {
   const presentation = useCalculatePresentation(
     directionLabel,
@@ -78,14 +81,11 @@ const InputField = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
       <Flex direction={"column"}>
         <TextField.Root
           type="text"
@@ -109,6 +109,7 @@ const InputField = ({
  * @param columns Columnas de la presentación
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
+ * @param labelVisible Indica si el label es visible o no
  *
  * @returns
  */
@@ -119,6 +120,7 @@ const InputFieldDate = ({
   columns,
   directionLabel,
   register,
+  labelVisible = true,
 }: {
   title?: string;
   placeholder?: string;
@@ -127,6 +129,7 @@ const InputFieldDate = ({
   directionLabel: Direction | Direction.horizontal;
   children?: ReactNode;
   register?: any;
+  labelVisible?: boolean;
 }) => {
   const presentation = useCalculatePresentation(
     directionLabel,
@@ -140,14 +143,11 @@ const InputFieldDate = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
       <Flex direction={"column"}>
         <TextField.Root
           type="date"
@@ -182,6 +182,7 @@ const InputSecretField = ({
   columns,
   directionLabel,
   register,
+  labelVisible = true,
 }: {
   title?: string;
   placeholder?: string;
@@ -190,6 +191,7 @@ const InputSecretField = ({
   directionLabel: Direction | Direction.horizontal;
   children?: ReactNode;
   register?: any;
+  labelVisible?: boolean;
 }) => {
   const [visible, setVisible] = useState(false);
   const presentation = useCalculatePresentation(
@@ -207,14 +209,12 @@ const InputSecretField = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
+
       <Flex direction={"column"}>
         <TextField.Root
           type={visible ? "text" : "password"}
@@ -259,6 +259,7 @@ const AreaField = ({
   rows = 2,
   directionLabel,
   register,
+  labelVisible = true,
 }: {
   title?: string;
   placeholder?: string;
@@ -267,6 +268,7 @@ const AreaField = ({
   rows?: number;
   directionLabel: Direction | Direction.horizontal;
   register?: any;
+  labelVisible?: boolean;
 }) => {
   const presentation = useCalculatePresentation(
     directionLabel,
@@ -280,14 +282,11 @@ const AreaField = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
       <Flex direction={"column"}>
         <TextArea
           style={{ marginBottom: "1vh", width: presentation.width }}
@@ -456,7 +455,7 @@ interface IPresentationInputSelect {
  * @param items Elementos del campo de selección
  * @param value Valor seleccionado
  * @param onChange Función para manejar el cambio de valor
- * 
+ *
  * @returns
  */
 const InputSelect = ({
@@ -467,6 +466,7 @@ const InputSelect = ({
   directionLabel,
   items,
   value,
+  labelVisible,
   onChange,
 }: {
   title?: string;
@@ -476,6 +476,7 @@ const InputSelect = ({
   directionLabel?: Direction | Direction.horizontal;
   items: IPresentationInputSelect;
   value: any;
+  labelVisible?: boolean;
   onChange?: (newValue: any) => void;
 }) => {
   const presentation = useCalculatePresentation(
@@ -502,14 +503,11 @@ const InputSelect = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
       <Flex
         direction={"column"}
         style={{ marginBottom: "1vh", width: presentation.width }}
@@ -561,6 +559,7 @@ const InputSelect = ({
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
  *
+ *
  * @returns
  */
 const InputFieldLov = ({
@@ -570,6 +569,7 @@ const InputFieldLov = ({
   columns,
   directionLabel,
   register,
+  labelVisible = true,
   onFind,
 }: {
   title?: string;
@@ -579,6 +579,7 @@ const InputFieldLov = ({
   directionLabel: Direction | Direction.horizontal;
   children?: ReactNode;
   register?: any;
+  labelVisible?: boolean;
   onFind: () => void;
 }) => {
   const presentation = useCalculatePresentation(
@@ -593,14 +594,11 @@ const InputFieldLov = ({
       gap="3"
       style={{ alignItems: presentation.align }}
     >
-      <Flex
-        width="calc(150px * var(--scaling))"
-        style={{ justifyContent: presentation.justify }}
-      >
-        <Text size="2" as="div" weight="bold" truncate trim="normal">
-          {title}
-        </Text>
-      </Flex>
+      <Label
+        title={title}
+        labelVisible={labelVisible}
+        presentation={presentation}
+      />
       <Flex direction={"column"}>
         <Flex direction={"row"} gap="2" width={presentation.width}>
           <TextField.Root
@@ -614,7 +612,7 @@ const InputFieldLov = ({
 
           <IconButton variant="surface" size="2" form="none" onClick={onFind}>
             <IconComponent
-              iconName="MagnifyingGlassIcon"
+              iconName="ListBulletIcon"
               width="16"
               height="16"
             />
@@ -622,6 +620,47 @@ const InputFieldLov = ({
         </Flex>
         <MessageField message={messageError} />
       </Flex>
+    </Flex>
+  );
+};
+
+/**
+ * Componente para mostrar una etiqueta (label) con un título.
+ *
+ * @param title Título de la etiqueta
+ * @param labelVisible Indica si la etiqueta es visible o no
+ * @param presentation Presentación del label, que incluye alineación y justificación
+ * @returns
+ */
+const Label = ({
+  title,
+  labelVisible = true,
+  presentation,
+}: {
+  title?: string;
+  labelVisible?: boolean;
+  presentation: IPresentation;
+}) => {
+  if (!title || !labelVisible) {
+    return null;
+  }
+
+  return (
+    <Flex
+      width="calc(150px * var(--scaling))"
+      style={{ justifyContent: presentation.justify }}
+    >
+      {title.length > 20 ? (
+        <Tooltip content={title} side="bottom">
+          <Text size="2" as="div" weight="bold" truncate trim="normal">
+            {title}
+          </Text>
+        </Tooltip>
+      ) : (
+        <Text size="2" as="div" weight="bold" trim="normal">
+          {title}
+        </Text>
+      )}
     </Flex>
   );
 };

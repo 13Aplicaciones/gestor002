@@ -1,7 +1,5 @@
-import { IconButton } from "@radix-ui/themes";
 import { MenuTableRefresh } from "../../../ConstantsPresentation";
 import { GenericQuery } from "../../form/GenericQuery";
-import { IconComponent } from "../../icon/IconDynamic";
 import { IPresentationTable } from "../../table/Table";
 import { IQueryLovProps } from "./PopUpLov";
 import { QueryFormLov } from "./QueryFormLov";
@@ -27,58 +25,98 @@ const QueryLov = ({
   getToken,
   token,
   apiUrlLov,
+  presentations = {
+    valueInteger: false,
+    valueDecimal: false,
+    labelAlternative: false,
+  },
 }: IQueryLovProps) => {
+
   /**
    * Configurar las acciones específicas para la tabla de ComboItemes
    */
   const configureLovTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataLov) => void,
     onSeeRow?: (row: IRowDataLov) => void
   ) => {
-    // Configurar acción para ver detalle
-    if (tableFormat.items[1]) {
-      tableFormat.items[1].onAction = {
+    if (tableFormat.items[0]) {
+      tableFormat.items[0].onAction = {
         onAction: (row: IRowDataLov) => {
           if (onSeeRow) {
+            console.log("onSeeRow", row);
             onSeeRow(row);
           }
         },
       };
     }
 
-    // Configurar acción de edición
-    if (tableFormat.items[4]) {
-      tableFormat.items[4].component = (row: IRowDataLov) => (
-        <IconButton
-          variant="ghost"
-          size="1"
-          onClick={() => {
-            if (onEditRow) {
-              onEditRow(row);
-            }
-          }}
-        >
-          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
-        </IconButton>
-      );
-    }
-
     return tableFormat;
   };
+
+  /**
+   * Filtrar la presentación de la tabla de Lov según las opciones seleccionadas.
+   * 
+   * @returns 
+   */
+  const filterTableQueryLov = () => {
+    let modifiedTableQueryLov: IPresentationTable = tableQueryLov();
+
+    if (!presentations.valueInteger && modifiedTableQueryLov.items) {
+      modifiedTableQueryLov = {
+        ...modifiedTableQueryLov,
+        items: modifiedTableQueryLov.items.filter(
+          (item) => item.name !== "value"
+        ),
+      };
+    }
+
+    if (!presentations.valueDecimal && modifiedTableQueryLov.items) {
+      modifiedTableQueryLov = {
+        ...modifiedTableQueryLov,
+        items: modifiedTableQueryLov.items.filter(
+          (item) => item.name !== "doubleValue"
+        ),
+      };
+    }
+
+    if (!presentations.labelAlternative && modifiedTableQueryLov.items) {
+      modifiedTableQueryLov = {
+        ...modifiedTableQueryLov,
+        items: modifiedTableQueryLov.items.filter(
+          (item) => item.name !== "labelAlternative"
+        ),
+      };
+    }
+
+    return modifiedTableQueryLov;
+  };
+
+
+  const jkjk = () => {
+
+
+    return (
+
+      <QueryFormLov
+        onFind={onSeeRow}
+        presentations={presentations}
+      />
+    );
+
+  }
 
   return (
     <GenericQuery<IRowDataLov>
       apiUrl={apiUrlLov}
       configureTableActions={configureLovTableActions}
-      getTablePresentation={tableQueryLov}
+      getTablePresentation={filterTableQueryLov}
       getToken={getToken}
       initialParameters={{}}
-      menuTableRefresh={MenuTableRefresh.refresh}
+      menuTableRefresh={MenuTableRefresh.none}
       onCreateRow={onCreateRow}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
-      QueryForm={QueryFormLov}
+      QueryForm={jkjk}
       token={token}
     />
   );

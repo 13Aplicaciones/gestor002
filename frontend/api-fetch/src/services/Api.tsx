@@ -65,7 +65,7 @@ export const fetchData = async ({
   typeBody: TypeBody;
   bodyParameter?: any;
   token?: string;
-  getToken?: (() => Promise<string>) | undefined;
+  getToken?: (() => Promise<string>);
 }) => {
   if (!token) {
     return await fetchDataConfigurated({
@@ -146,7 +146,7 @@ const fetchDataConfigurated = async ({
       iFetchData.status = responseFetch.status;
     } else {
       const contentType = responseFetch.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
+      if (contentType?.includes("application/json")) {
         iFetchData.responseErrorJSON = await responseFetch.json();
       } else {
         iFetchData.responseErrorText = await responseFetch.text();

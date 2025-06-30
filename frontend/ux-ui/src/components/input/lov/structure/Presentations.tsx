@@ -1,4 +1,8 @@
-import { JustificationText, TextFormat } from "../../../../ConstantsPresentation";
+import {
+  JustificationText,
+  TextFormat,
+} from "../../../../ConstantsPresentation";
+import i18n from "../../../../i18n";
 import { IPresentationTable } from "../../../table/Table";
 
 /**
@@ -7,60 +11,48 @@ import { IPresentationTable } from "../../../table/Table";
  * @returns
  */
 const tableQueryLov = (): IPresentationTable => {
+  const t = (key: string) => i18n.t(key, { ns: "global_ux" });
+
   return {
     banding: true,
     headers: true,
-    numberLinea: false,
+    numberLinea: true,
     skeletonWidth: "90vw",
+    rowCount: 8,
     items: [
       {
-        name: "index",
-        title: "index",
-        
-        justification: JustificationText.start,
-        format: TextFormat.none,
-        width: "20vw",
-      },
-      {
         name: "label",
-        title: "label",
+        title: t("lov.fields.label.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
-        width: "20vw",
+        width: "15vw",
       },
       {
         name: "labelAlternative",
-        title: "labelAlternative",
+        title: t("lov.fields.labelAlternative.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
         width: "20vw",
       },
       {
         name: "description",
-        title: "description",
+        title: t("lov.fields.description.title"),
         justification: JustificationText.start,
         format: TextFormat.none,
-        width: "20vw",
+        width: "40vw",
       },
       {
         name: "value",
-        title: "value",
+        title: t("lov.fields.value.title"),
         justification: JustificationText.end,
         format: TextFormat.none,
         width: "10vw",
       },
       {
         name: "doubleValue",
-        title: "doubleValue",
+        title: t("lov.fields.doubleValue.title"),
         justification: JustificationText.end,
         format: TextFormat.decimal2,
-        width: "10vw",
-      },
-      {
-        name: "status",
-        title: "status",
-        justification: JustificationText.center,
-        format: TextFormat.none,
         width: "10vw",
       },
     ],

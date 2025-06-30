@@ -22,7 +22,6 @@ import {
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 
-
 interface ComboItemQueryFormValues {
   indexComboItem: string;
   label: string;
@@ -40,6 +39,13 @@ const QueryFormComboItem = ({
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [verLOV, setVerLOV] = useState<boolean>(false);
+  const [selectedValues, setSelectedValues] =
+    useState<ComboItemQueryFormValues>({
+      indexComboItem: "",
+      label: "",
+    });
+
+  const [count, setCount] = useState<number>(0);
 
   /**
    * Inicializar token y parámetros de URL
@@ -50,9 +56,7 @@ const QueryFormComboItem = ({
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(
-        parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/paginated"
-      );
+      setApiUrl(parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/lov");
     };
 
     initializeStructure();
@@ -66,7 +70,6 @@ const QueryFormComboItem = ({
   const handleOnFind = () => {
     const status = verLOV;
     setVerLOV(!status);
-    return   status + " " + new Date().toISOString();
   };
 
   return (
@@ -86,24 +89,31 @@ const QueryFormComboItem = ({
           console.log("Fila seleccionada:", row);
           setVerLOV(false);
         }}
+        presentations={{
+          valueInteger: false,
+          valueDecimal: false,
+          labelAlternative: true,
+        }}
         onCancel={() => {
           console.log("Consulta cancelada");
           setVerLOV(false);
+          setCount(count + 1);
+          const temp = selectedValues;
+          setSelectedValues({
+            indexComboItem: "hola" + (count + 1),
+            label: temp.label,
+          });
         }}
       />
       <GenericQueryForm<ComboItemQueryFormValues>
+        key={`${selectedValues.indexComboItem}-${selectedValues.label}`}
         validationSchema={schema}
-        defaultValues={{
-          indexComboItem: "",
-          label: "",
-        }}
+        defaultValues={selectedValues}
         onFind={onFind}
-        renderFields={({ register, formState, setValue }) => (
+        renderFields={({ register, formState }) => (
           <>
             <InputFieldLov
-              onFind={() => {
-                setValue("indexComboItem", handleOnFind());
-              }}
+              onFind={() => handleOnFind()}
               title={t("modules.GS-CB-IT-001.fields.indexComboItem.title")}
               columns={BandPresentation.column_3}
               placeholder={t(
