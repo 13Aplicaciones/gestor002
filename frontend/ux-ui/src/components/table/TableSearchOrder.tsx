@@ -20,13 +20,6 @@ import { MenuTable } from "./MenuTable";
 import { IPresentationTable, TableConfigurable, TableSkeleton } from "./Table";
 import { IconComponent } from "../icon/IconDynamic";
 
-// Extiende la interfaz Window para permitir __tableSearchOrderIntervalId
-declare global {
-  interface Window {
-    __tableSearchOrderIntervalId?: ReturnType<typeof setInterval>;
-  }
-}
-
 /**
  * Componete para crear un field de busqueda.
  *
@@ -34,6 +27,13 @@ declare global {
  * @since 2021-09-20
  *
  */
+
+// Extiende la interfaz Window para permitir __tableSearchOrderIntervalId
+declare global {
+  interface Window {
+    __tableSearchOrderIntervalId?: ReturnType<typeof setInterval>;
+  }
+}
 
 /**
  * Interfaz para los parametros de la API.
@@ -121,7 +121,6 @@ const TableSearchOrder = ({
 
   /**
    * Funcion para ejecutar la api.
-   *
    */
   const runApi = async (parametersUrl: IParametersQuery) => {
     if (
@@ -196,6 +195,7 @@ const TableSearchOrder = ({
    */
   const createSorts = () => {
     let i = 1;
+
     /**
      * Funcion para crear un texto con un numero dado por la variable number.
      *
@@ -250,7 +250,6 @@ const TableSearchOrder = ({
   /**
    * Hook para el formulario y usa register, handleSubmit y reset.
    */
-
   const schemaPagina = getSchemaPage(totalPages);
 
   /**
@@ -276,6 +275,8 @@ const TableSearchOrder = ({
 
   /**
    * Metodo para el orderamiento, y; paginacion de botones inicio, atras, siguiente y fin.
+   *
+   * @param parametersUrl - Parametros de la URL para la consulta.
    */
   const paginationPresentation = (parametersUrl: IParametersQuery) => {
     setLoading(true);
@@ -408,8 +409,8 @@ const TableSearchOrder = ({
         )}
       </Flex>
       <MenuTable
-        loading={loading}
         handlePaginationPresentation={handlePaginationPresentation}
+        loading={loading}
         menuTableRefresh={menuTableRefresh}
       >
         {childrenMenu}

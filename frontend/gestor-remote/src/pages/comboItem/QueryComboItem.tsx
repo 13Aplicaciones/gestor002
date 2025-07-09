@@ -39,7 +39,9 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/paginated");
+      setApiUrl(
+        parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/paginated"
+      );
     };
 
     initializeStructure();
@@ -67,7 +69,7 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
     // Configurar acción de edición
     if (tableFormat.items[4]) {
       tableFormat.items[4].component = (row: IRowDataComboItem) => (
-        <IconButton          
+        <IconButton
           variant="ghost"
           size="1"
           onClick={() => {
@@ -100,21 +102,21 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
 
   return (
     <GenericQuery<IRowDataComboItem>
-      QueryForm={QueryFormComboItem}
+      apiUrl={apiUrl}
+      childrenMenu={<MenuTable />}
+      configureTableActions={configureComboItemTableActions}
       getTablePresentation={tableQueryModule}
+      getToken={refreshToken}
       initialParameters={{
         indexComboItem: "",
         message: "",
       }}
-      configureTableActions={configureComboItemTableActions}
-      apiUrl={apiUrl}
-      token={token}
       menuTableRefresh={MenuTableRefresh.refresh}
-      childrenMenu={<MenuTable />}
-      getToken={refreshToken}
+      onCreateRow={onCreateRow}
       onEditRow={onEditRow}
       onSeeRow={onSeeRow}
-      onCreateRow={onCreateRow}
+      QueryForm={QueryFormComboItem}
+      token={token}
     />
   );
 };

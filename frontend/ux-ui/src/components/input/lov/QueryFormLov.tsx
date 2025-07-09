@@ -29,6 +29,10 @@ const QueryFormLov = ({
 }) => {
   const [t] = useTranslation("global_ux");
 
+  /**
+   * Esquema de validación para el formulario de consulta de ComboItemes.
+   * Utiliza Yup para definir las reglas de validación.
+   */
   const schema = yup.object({
     label: yup.string().max(128, t("validation.max", { max: 128 })),
     labelAlternative: yup

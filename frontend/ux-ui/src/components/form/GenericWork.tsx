@@ -39,6 +39,7 @@ interface GenericWorkProps<T> {
   /** Función que se llama al volver atrás */
   onBack: () => void;
 
+  /** Fila de datos a previsualizar */
   row: any;
 
   /** Función para obtener el token de autenticación (opcional) */
@@ -46,7 +47,6 @@ interface GenericWorkProps<T> {
 
   /** Función para obtener el token de autenticación (opcional) */
   getToken?: () => Promise<string>;
-
   
   /** Nombre personalizado para los mensajes de error (opcional) */
   entityName?: string;
@@ -59,8 +59,9 @@ interface GenericWorkProps<T> {
  * @param createEmptyData Función para crear un objeto vacío del tipo de datos
  * @param token Token de autenticación (opcional)
  * @param getToken Función para obtener el token de autenticación (opcional)
+ * @param getPresentationData Función para obtener la presentación de datos 
  * @param onBack Función que se llama al volver atrás
- * @param getPresentationData Función para obtener la presentación de datos
+ * @param row Fila de datos a previsualizar
  * @param entityName Nombre personalizado para los mensajes de error (opcional)
  *
  * @returns

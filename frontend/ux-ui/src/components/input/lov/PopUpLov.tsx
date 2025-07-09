@@ -12,8 +12,8 @@ import { DialogSize } from "../../../ConstantsPresentation";
 interface IQueryLovProps {
   apiUrlLov: string;
   getToken: () => Promise<any>;
-  onCreateRow: () => void;
-  onEditRow: (row: any) => void;
+  onCreateRow?: () => void;
+  onEditRow?: (row: any) => void;
   onSeeRow: (row: any) => void;
   presentations: {
     valueInteger: boolean;
@@ -44,7 +44,7 @@ interface PageLovInnerProps {
   getToken: () => Promise<any>;
   QueryLovPanel: ComponentType<IQueryLovProps>;
   token: string | undefined;
-  onSelectRow: (row: any) => void;
+  onSeeRow: (row: any) => void;
   onCancel: () => void;
   presentations: {
     valueInteger: boolean;
@@ -75,7 +75,7 @@ const PageLovInnerComponent = ({
   getToken,
   initialRow,
   onCancel,
-  onSelectRow,
+  onSeeRow,
   QueryLovPanel,
   token,
   presentations = {
@@ -86,26 +86,7 @@ const PageLovInnerComponent = ({
   visible = true,
 }: PageLovInnerProps) => {
   const [setRowSelecionado] = useState<any>(createIRowDataCustom());
-
-  /**
-   * Funcion para editar una fila.
-   *
-   * @param row
-   */
-  const onEditarRow = (row: any) => {
-    //setRowSelecionado(row);
-    onSelectRow(row);
-  };
-
-  /**
-   * Funcion para ver una fila.
-   *
-   * @param row
-   */
-  const onSeeRow = (row: any) => {
-    //setRowSelecionado(row);
-    onSelectRow(row);
-  };
+  const [t] = useTranslation("global_ux");
 
   /**
    * Funcion para crear una fila.
@@ -115,7 +96,14 @@ const PageLovInnerComponent = ({
     setRowSelecionado(createIRowDataCustom());
   };
 
-  const [t] = useTranslation("global_ux");
+  /**
+   * Maneja la selección de una fila y cierra el diálogo
+   */
+  const handleRowSelection = (row: any) => {
+    console.log("Fila seleccionada en PopUpLov:", row);
+    onSeeRow(row);
+    onCancel(); // Cierra el diálogo después de seleccionar
+  };
 
   return (
     <DialogForm
@@ -134,8 +122,7 @@ const PageLovInnerComponent = ({
             getToken={getToken}
             initialRow={initialRow}
             onCreateRow={onCreateRow}
-            onEditRow={onEditarRow}
-            onSeeRow={onSeeRow}
+            onSeeRow={handleRowSelection}
             token={token}
             presentations={presentations}
           />
@@ -157,7 +144,7 @@ const PopUpLov = ({
   getToken,
   initialRow,
   onCancel,
-  onSelectRow,
+  onSeeRow,
   QueryLovPanel,
   token,
   visible = true,
@@ -174,7 +161,7 @@ const PopUpLov = ({
       getToken={getToken}
       initialRow={initialRow}
       onCancel={onCancel}
-      onSelectRow={onSelectRow}
+      onSeeRow={onSeeRow}
       QueryLovPanel={QueryLovPanel}
       token={token}
       visible={visible}

@@ -45,6 +45,7 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
   /** Deshabilitar la presentacion para la busqueda automatica */
   disableSubmit?: boolean;
 
+  /** Indica si se deben mostrar los botones de detalles */
   buttonsDetails?: boolean;
 }
 
@@ -55,6 +56,8 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
  * @param defaultValues Valores iniciales del formulario
  * @param onFind Función que se llama cuando se realiza la búsqueda
  * @param renderFields Función para renderizar los campos del formulario
+ * @param disableSubmit Deshabilita la presentación para la búsqueda automática
+ * @param buttonsDetails Indica si se deben mostrar los botones de detalles
  *
  * @returns
  */
@@ -71,37 +74,53 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   /**
    * Hook para el manejo de formularios.
    */
-  const form = useForm<TFormValues>({
+  const workForm = useForm<TFormValues>({
     resolver: yupResolver(validationSchema),
     defaultValues: defaultValues as DefaultValues<TFormValues>,
   });
 
   /**
    * Función para enviar el formulario.
+   * 
+   * @param data Datos del formulario a enviar
    */
-  const submitForm = (data: IParametersQuery) => {
+  const submitForm = (data: TFormValues) => {
+
+    console.log("submitForm!! cambio!!", data);
+
     if (onFind) {
-      onFind(data);
+      onFind(data as IParametersQuery);
     }
   };
 
   /**
    * Función para limpiar el formulario y los datos de la consulta.
    */
-  const resetForm = () => {
+  const resetForm = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    console.log("resetForm!! cambio!!");
     if (onFind) {
       onFind({});
     }
-    form.reset();
+    workForm.reset();
   };
 
+  /**
+   * Hook para detectar cambios en el tamaño de la pantalla.
+   * Utiliza una consulta de medios para determinar si la orientación es vertical.
+   */
   const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
 
-  return disableSubmit ? null : (
-    <form onSubmit={form.handleSubmit(submitForm)}>
+  // No renderizar nada si está deshabilitado
+  if (disableSubmit) {
+    return null;
+  }
+
+  return (
+    <form onSubmit={workForm.handleSubmit(submitForm)}  noValidate>
       {buttonsDetails ? (
         <>
-          {renderFields(form)}
+          {renderFields(workForm)}
           <FooterForm
             directionLabel={Direction.horizontal}
             columns={BandPresentation.column_2}
@@ -114,7 +133,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
         </>
       ) : (
         <Flex direction={isPortrait ? "column" : "row"} gap="2">
-          {renderFields(form)}
+          {renderFields(workForm)}
           <Flex gap="2">
             <IconButton type="submit">
               <IconComponent

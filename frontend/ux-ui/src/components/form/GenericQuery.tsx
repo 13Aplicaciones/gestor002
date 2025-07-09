@@ -72,11 +72,12 @@ interface GenericQueryProps<T> extends IQueryProps {
  * @param initialParameters Parámetros iniciales para la consulta
  * @param configureTableActions Función para configurar acciones específicas en la tabla
  * @param token Token de autenticación (opcional)
+ * @param getToken Función para obtener el token de autenticación (opcional)
  * @param menuTableRefresh Función para manejar refresh de menu
  * @param childrenMenu Función para manejar la acción del menu
- * @param getToken Función para obtener el token de autenticación (opcional)
  * @param onEditRow Función para manejar la edición de una fila
  * @param onSeeRow Función para manejar la visualización de una fila
+ * @param initialRow Fila inicial con datos para el formulario (opcional, usado en caso de detail)
  *
  * @returns
  */
@@ -96,12 +97,12 @@ function GenericQuery<T>({
 }: Readonly<GenericQueryProps<T>>) {
   const [presentacionTabla, setPresentacionTabla] =
     useState<IPresentationTable>({} as IPresentationTable);
-  
+
   const [parametersQuery, setParametersQuery] = useState<IParametersQuery>({
     ...initialParameters,
     ...(initialRow ?? {}),
   });
-  
+
   /**
    * Inicializar configuración de tabla
    */
@@ -134,7 +135,13 @@ function GenericQuery<T>({
     };
 
     initializeTable();
-  }, [getTablePresentation, configureTableActions, onEditRow, onSeeRow, initialRow]);
+  }, [
+    getTablePresentation,
+    configureTableActions,
+    onEditRow,
+    onSeeRow,
+    initialRow,
+  ]);
 
   /**
    * Manejar la búsqueda y actualizar los parámetros
@@ -163,12 +170,12 @@ function GenericQuery<T>({
           <QueryForm onFind={handleFormFind} initialRow={initialRow} />
           <TableSearchOrder
             apiUrl={apiUrl}
+            childrenMenu={childrenMenu}
+            getToken={getToken}
+            menuTableRefresh={menuTableRefresh}
             parametersToConsult={parametersQuery}
             presentationTable={presentacionTabla}
-            menuTableRefresh={menuTableRefresh}
-            childrenMenu={childrenMenu}
             token={token}
-            getToken={getToken}
           />
         </>
       )}

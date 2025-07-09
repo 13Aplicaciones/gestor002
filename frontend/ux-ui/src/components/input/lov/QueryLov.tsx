@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuTableRefresh } from "../../../ConstantsPresentation";
 import { GenericQuery } from "../../form/GenericQuery";
 import { IPresentationTable } from "../../table/Table";
@@ -9,19 +10,16 @@ import { IRowDataLov } from "./structure/Types";
 /**
  * Componente QueryLov para manejar la consulta de ComboItemes.
  *
- * @param onEditRow - Callback para editar una fila.
  * @param onSeeRow - Callback para ver los detalles de una fila.
- * @param onCreateRow - Callback para crear una nueva fila.
  * @param getToken - Función para obtener el token de autenticación.
  * @param token - Token de autenticación.
  * @param apiUrlLov - URL de la API para consultar los datos de Lov.
+ * @param presentations - Configuración de presentaciones para la tabla.
  *
  * @returns
  */
 const QueryLov = ({
-  onEditRow,
   onSeeRow,
-  onCreateRow,
   getToken,
   token,
   apiUrlLov,
@@ -31,20 +29,22 @@ const QueryLov = ({
     labelAlternative: false,
   },
 }: IQueryLovProps) => {
-
   /**
    * Configurar las acciones específicas para la tabla de ComboItemes
    */
   const configureLovTableActions = (
     tableFormat: IPresentationTable,
-    onSeeRow?: (row: IRowDataLov) => void
+    onEditRow?: (row: IRowDataLov) => void,
+    onSeeRowCallback?: (row: IRowDataLov) => void
   ) => {
-    if (tableFormat.items[0]) {
+   if (tableFormat.items[0]) {
       tableFormat.items[0].onAction = {
         onAction: (row: IRowDataLov) => {
-          if (onSeeRow) {
-            console.log("onSeeRow", row);
-            onSeeRow(row);
+          console.log("onAction ejecutado en QueryLov:", row);
+          // Usar el callback que viene de GenericQuery (que es el onSeeRow del PopUpLov)
+          if (onSeeRowCallback) {
+            console.log("Ejecutando onSeeRowCallback:", row);
+            onSeeRowCallback(row);
           }
         },
       };
@@ -55,8 +55,8 @@ const QueryLov = ({
 
   /**
    * Filtrar la presentación de la tabla de Lov según las opciones seleccionadas.
-   * 
-   * @returns 
+   *
+   * @returns
    */
   const filterTableQueryLov = () => {
     let modifiedTableQueryLov: IPresentationTable = tableQueryLov();
@@ -91,19 +91,14 @@ const QueryLov = ({
     return modifiedTableQueryLov;
   };
 
+  const handleFind = (data: any) => {
+    // Esta función maneja los parámetros de búsqueda
+    console.log("Parámetros de búsqueda:", data);
+  };
 
-  const jkjk = () => {
-
-
-    return (
-
-      <QueryFormLov
-        onFind={onSeeRow}
-        presentations={presentations}
-      />
-    );
-
-  }
+  const QueryFormComponent = () => {
+    return <QueryFormLov onFind={handleFind} presentations={presentations} />;
+  };
 
   return (
     <GenericQuery<IRowDataLov>
@@ -113,10 +108,8 @@ const QueryLov = ({
       getToken={getToken}
       initialParameters={{}}
       menuTableRefresh={MenuTableRefresh.none}
-      onCreateRow={onCreateRow}
-      onEditRow={onEditRow}
       onSeeRow={onSeeRow}
-      QueryForm={jkjk}
+      QueryForm={QueryFormComponent}
       token={token}
     />
   );

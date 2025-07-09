@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getParameter,
   IParameter,
@@ -45,8 +46,6 @@ const QueryFormComboItem = ({
       label: "",
     });
 
-  const [count, setCount] = useState<number>(0);
-
   /**
    * Inicializar token y parámetros de URL
    */
@@ -67,16 +66,40 @@ const QueryFormComboItem = ({
     label: yup.string().max(1024, t("validation.max", { max: 1024 })),
   });
 
+  /**
+   * Maneja el evento de búsqueda del LOV.
+   */
   const handleOnFind = () => {
     const status = verLOV;
     setVerLOV(!status);
   };
 
+ /**
+   * Maneja la selección de una fila del LOV
+   */
+  const handleLovSelection = (row: any) => {
+    console.log("Fila seleccionada del LOV:", row);
+    setSelectedValues({
+      indexComboItem: row.index ?? row.indexComboItem ?? "",
+      label: row.label ?? "",
+    });
+    setVerLOV(false); // Cierra el LOV
+  };
+
+  /**
+   * Maneja la cancelación del LOV
+   */
+  const handleLovCancel = () => {
+    console.log("LOV cancelado");
+    setVerLOV(false);
+  };
+
+
   return (
     <>
       <PopUpLov
         createIRowDataCustom={() => ({
-          indexComboItem: "",
+          indexComboItem: "hola!! ",
           label: "",
         })}
         QueryLovPanel={QueryLov}
@@ -85,25 +108,13 @@ const QueryFormComboItem = ({
         apiUrlLov={apiUrl}
         token={token}
         visible={verLOV}
-        onSelectRow={(row) => {
-          console.log("Fila seleccionada:", row);
-          setVerLOV(false);
-        }}
+        onSeeRow={handleLovSelection}
         presentations={{
           valueInteger: false,
           valueDecimal: false,
           labelAlternative: true,
         }}
-        onCancel={() => {
-          console.log("Consulta cancelada");
-          setVerLOV(false);
-          setCount(count + 1);
-          const temp = selectedValues;
-          setSelectedValues({
-            indexComboItem: "hola" + (count + 1),
-            label: temp.label,
-          });
-        }}
+        onCancel={ handleLovCancel}
       />
       <GenericQueryForm<ComboItemQueryFormValues>
         key={`${selectedValues.indexComboItem}-${selectedValues.label}`}
