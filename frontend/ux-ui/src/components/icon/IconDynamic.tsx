@@ -17,7 +17,7 @@ const getIconComponent = (iconName: string, width: string, height: string) => {
       <RadixIcons.TransparencyGridIcon width={width} height={height} />
     );
   } catch (error) {
-    console.error("getIconComponent -> error: ", error);
+    console.error("getIconComponent -> Error: ", error);
     return <RadixIcons.TransparencyGridIcon width={width} height={height} />;
   }
 };

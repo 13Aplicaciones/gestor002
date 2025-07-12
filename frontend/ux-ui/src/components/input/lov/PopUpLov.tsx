@@ -100,7 +100,6 @@ const PageLovInnerComponent = ({
    * Maneja la selección de una fila y cierra el diálogo
    */
   const handleRowSelection = (row: any) => {
-    console.log("Fila seleccionada en PopUpLov:", row);
     onSeeRow(row);
     onCancel(); // Cierra el diálogo después de seleccionar
   };

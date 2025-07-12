@@ -97,7 +97,6 @@ const DialogForm = ({
   const [open, setOpen] = useState(status);
 
   useEffect(() => {
-    console.log("DialogForm", status);
     setOpen(status);
   }, [status]);
 

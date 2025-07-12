@@ -16,16 +16,51 @@ interface LovQueryFormValues {
 /**
  * Formulario de consulta de ComboItemes del sistema.
  */
-const QueryFormLov = ({
+const QueryFormSimpleLov = ({
   onFind,
-  presentations = {
-    labelAlternative: false,
-  },
 }: {
   onFind: (data: IParametersQuery) => void;
-  presentations?: {
-    labelAlternative?: boolean;
-  };
+}) => {
+  const [t] = useTranslation("global_ux");
+
+  /**
+   * Esquema de validación para el formulario de consulta de ComboItemes.
+   * Utiliza Yup para definir las reglas de validación.
+   */
+  const schema = yup.object({
+    label: yup.string().max(128, t("validation.max", { max: 128 })),
+  });
+
+  return (
+    <GenericQueryForm<LovQueryFormValues>
+      validationSchema={schema}
+      defaultValues={{
+        label: "",
+      }}
+      onFind={onFind}
+      buttonsDetails={false}
+      renderFields={({ register, formState }) => (
+        <InputField
+          title={t("lov.label")}
+          columns={BandPresentation.column_5}
+          placeholder={t("lov.labelPlaceholder")}
+          directionLabel={Direction.horizontal}
+          register={register("label")}
+          messageError={formState.errors.label?.message}
+          labelVisible={false}
+        />
+      )}
+    />
+  );
+};
+
+/**
+ * Formulario de consulta de ComboItemes del sistema.
+ */
+const QueryFormFullLov = ({
+  onFind,
+}: {
+  onFind: (data: IParametersQuery) => void;
 }) => {
   const [t] = useTranslation("global_ux");
 
@@ -60,21 +95,19 @@ const QueryFormLov = ({
             messageError={formState.errors.label?.message}
             labelVisible={false}
           />
-          {presentations.labelAlternative && (
-            <InputField
-              title={t("lov.alternative")}
-              columns={BandPresentation.column_5}
-              placeholder={t("lov.alternativePlaceholder")}
-              directionLabel={Direction.horizontal}
-              register={register("labelAlternative")}
-              messageError={formState.errors.labelAlternative?.message}
-              labelVisible={false}
-            />
-          )}
+          <InputField
+            title={t("lov.alternative")}
+            columns={BandPresentation.column_5}
+            placeholder={t("lov.alternativePlaceholder")}
+            directionLabel={Direction.horizontal}
+            register={register("labelAlternative")}
+            messageError={formState.errors.labelAlternative?.message}
+            labelVisible={false}
+          />
         </>
       )}
     />
   );
 };
 
-export { QueryFormLov };
+export { QueryFormSimpleLov, QueryFormFullLov };

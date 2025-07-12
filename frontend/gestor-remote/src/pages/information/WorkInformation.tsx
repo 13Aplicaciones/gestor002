@@ -37,7 +37,7 @@ const WorkInformation = ({onBack, row }: { onBack: () => void; row?: IRowDataInf
         const url = `${param.valueText01}${Menus.INFORMATION_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("Error generando API URL -> Error:", err);
         setApiUrl("");
       }
     })();

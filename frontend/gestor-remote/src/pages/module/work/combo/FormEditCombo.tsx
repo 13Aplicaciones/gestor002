@@ -79,7 +79,7 @@ const FormEditCombo = ({ status, row, onBack, initialRow }: IFormProps) => {
         const url = `${param.valueText01}${Menus.COMBO_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("Error generando API URL -> Error:", err);
         setApiUrl("");
       }
     })();

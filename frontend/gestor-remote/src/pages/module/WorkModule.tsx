@@ -57,7 +57,7 @@ const WorkModule = ({
         const url = `${param.valueText01}${Menus.MODULE_ENDPOINT}/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("Error generando API URL -> Error:", err);
         setApiUrl("");
       }
     })();

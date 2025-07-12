@@ -62,7 +62,7 @@ const QueryActionsUser = ({
         const url = `${param.valueText01}${Menus.USER_ENDPOINT}/status/${row.uuid}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("Error generando API URL -> Error:", err);
         setApiUrl("");
       }
     })();

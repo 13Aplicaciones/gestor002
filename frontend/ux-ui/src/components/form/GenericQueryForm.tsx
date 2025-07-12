@@ -81,13 +81,10 @@ function GenericQueryForm<TFormValues extends FieldValues>({
 
   /**
    * Función para enviar el formulario.
-   * 
+   *
    * @param data Datos del formulario a enviar
    */
   const submitForm = (data: TFormValues) => {
-
-    console.log("submitForm!! cambio!!", data);
-
     if (onFind) {
       onFind(data as IParametersQuery);
     }
@@ -98,7 +95,6 @@ function GenericQueryForm<TFormValues extends FieldValues>({
    */
   const resetForm = (e?: React.MouseEvent) => {
     e?.preventDefault();
-    console.log("resetForm!! cambio!!");
     if (onFind) {
       onFind({});
     }
@@ -117,7 +113,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   }
 
   return (
-    <form onSubmit={workForm.handleSubmit(submitForm)}  noValidate>
+    <form onSubmit={workForm.handleSubmit(submitForm)} noValidate>
       {buttonsDetails ? (
         <>
           {renderFields(workForm)}

@@ -100,7 +100,7 @@ const FormEditUser = ({ status, row, onBack }: IFormProps) => {
         const url = `${param.valueText01}${Menus.USER_ENDPOINT}`;
         setApiUrl(url);
       } catch (err) {
-        console.error("Error generando API URL:", err);
+        console.error("Error generando API URL -> Error:", err);
         setApiUrl("");
       }
     })();

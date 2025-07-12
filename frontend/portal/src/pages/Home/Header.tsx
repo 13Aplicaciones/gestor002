@@ -193,7 +193,6 @@ const MenuUser = () => {
             onClick={() => console.log("mi final token pasado")}
           >
             <IconComponent iconName="AvatarIcon" width="18" height="18" />
-    
 
             {t("frame.header.profile")}
           </DropdownMenu.Item>

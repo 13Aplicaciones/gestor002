@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuTableRefresh } from "../../../ConstantsPresentation";
 import { GenericQuery } from "../../form/GenericQuery";
 import { IPresentationTable } from "../../table/Table";
 import { IQueryLovProps } from "./PopUpLov";
-import { QueryFormLov } from "./QueryFormLov";
+import { QueryFormSimpleLov, QueryFormFullLov } from "./QueryFormLov";
 import { tableQueryLov } from "./structure/Presentations";
 import { IRowDataLov } from "./structure/Types";
 
@@ -34,18 +33,11 @@ const QueryLov = ({
    */
   const configureLovTableActions = (
     tableFormat: IPresentationTable,
-    onEditRow?: (row: IRowDataLov) => void,
-    onSeeRowCallback?: (row: IRowDataLov) => void
   ) => {
    if (tableFormat.items[0]) {
       tableFormat.items[0].onAction = {
         onAction: (row: IRowDataLov) => {
-          console.log("onAction ejecutado en QueryLov:", row);
-          // Usar el callback que viene de GenericQuery (que es el onSeeRow del PopUpLov)
-          if (onSeeRowCallback) {
-            console.log("Ejecutando onSeeRowCallback:", row);
-            onSeeRowCallback(row);
-          }
+            onSeeRow(row);
         },
       };
     }
@@ -91,15 +83,6 @@ const QueryLov = ({
     return modifiedTableQueryLov;
   };
 
-  const handleFind = (data: any) => {
-    // Esta función maneja los parámetros de búsqueda
-    console.log("Parámetros de búsqueda:", data);
-  };
-
-  const QueryFormComponent = () => {
-    return <QueryFormLov onFind={handleFind} presentations={presentations} />;
-  };
-
   return (
     <GenericQuery<IRowDataLov>
       apiUrl={apiUrlLov}
@@ -109,7 +92,11 @@ const QueryLov = ({
       initialParameters={{}}
       menuTableRefresh={MenuTableRefresh.none}
       onSeeRow={onSeeRow}
-      QueryForm={QueryFormComponent}
+      QueryForm={
+        presentations.labelAlternative
+          ? QueryFormFullLov
+          : QueryFormSimpleLov
+      }
       token={token}
     />
   );

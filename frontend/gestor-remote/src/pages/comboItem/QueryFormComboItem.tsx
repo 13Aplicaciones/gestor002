@@ -78,7 +78,6 @@ const QueryFormComboItem = ({
    * Maneja la selección de una fila del LOV
    */
   const handleLovSelection = (row: any) => {
-    console.log("Fila seleccionada del LOV:", row);
     setSelectedValues({
       indexComboItem: row.index ?? row.indexComboItem ?? "",
       label: row.label ?? "",
@@ -90,10 +89,8 @@ const QueryFormComboItem = ({
    * Maneja la cancelación del LOV
    */
   const handleLovCancel = () => {
-    console.log("LOV cancelado");
     setVerLOV(false);
   };
-
 
   return (
     <>

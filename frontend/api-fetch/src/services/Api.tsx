@@ -161,7 +161,7 @@ const fetchDataConfigurated = async ({
     iFetchData.status = 500;
     iFetchData.error = e instanceof Error ? e.message : String(e);
     console.error(
-      "fetchDataConfigurated -> error: ",
+      "fetchDataConfigurated -> Error: ",
       e,
       JSON.stringify(iFetchData)
     );

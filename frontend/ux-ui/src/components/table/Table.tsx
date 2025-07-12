@@ -174,7 +174,7 @@ const valueOfList = (
       }
       return "<No Definido>";
     } catch (error) {
-      console.error("Error al filtrar el valor:", error);
+      console.error("valueOfList -> Error:", error);
       return "<No Encontrado>";
     }
   }

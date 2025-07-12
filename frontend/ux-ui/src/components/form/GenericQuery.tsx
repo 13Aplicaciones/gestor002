@@ -130,7 +130,7 @@ function GenericQuery<T>({
           setPresentacionTabla(tableFormat);
         }
       } catch (error) {
-        console.error("Error initializing table:", error);
+        console.error("Error initializing table -> Error:", error);
       }
     };
 
