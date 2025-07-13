@@ -13,8 +13,9 @@ import { FormatMaskISO, TextFormat } from "../ConstantsPresentation";
  *
  * Function to format a date string to a mask
  *
- * @param dateString
- * @param mask
+ * @param dateString Fecha a ser convertida a formato de máscara
+ * @param mask Mask to format the date string
+ * 
  * @returns
  */
 const formatDateMask = (dateString: string, mask: FormatMaskISO): string => {
@@ -34,7 +35,7 @@ const formatDateMask = (dateString: string, mask: FormatMaskISO): string => {
 /**
  * Function to format a date string to a social network format
  *
- * @param dateString
+ * @param dateString Fecha a ser convertida a formato de red social
  * @returns
  */
 const formatDateSocialNetwork = (dateString: string): string => {
@@ -53,7 +54,7 @@ const formatDateSocialNetwork = (dateString: string): string => {
 /**
  * Function to format a date string to a social network format
  *
- * @param dateString
+ * @param dateString Fecha a ser convertida a formato de red social
  * @returns
  */
 const formatDateSocialNetworkDinamic = (dateString: string): string => {
@@ -72,7 +73,7 @@ const formatDateSocialNetworkDinamic = (dateString: string): string => {
 /**
  * Function to format a date string to a serious format
  *
- * @param dateString
+ * @param dateString Fecha a ser convertida a formato serio
  * @returns
  */
 const formatDateSerius = (dateString: string): string => {
@@ -91,9 +92,8 @@ const formatDateSerius = (dateString: string): string => {
 /**
    * Funcion para format el contenido de la celda en base a la presentation.
    *
-   * @param row Fila de la tabla.
-   * @param valor Valor de la celda.
-   * @param index Indice de la celda.
+   * @param format Formato de texto a aplicar
+   * @param value Valor a formatear
    *
    * @returns
    */

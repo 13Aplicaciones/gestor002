@@ -15,6 +15,10 @@ interface LovQueryFormValues {
 
 /**
  * Formulario de consulta de ComboItemes del sistema.
+ * 
+ * @param onFind Función que se ejecuta al buscar los ComboItemes.
+ * 
+ * @returns Componente de formulario de consulta de ComboItemes.
  */
 const QueryFormSimpleLov = ({
   onFind,
@@ -56,6 +60,10 @@ const QueryFormSimpleLov = ({
 
 /**
  * Formulario de consulta de ComboItemes del sistema.
+ * 
+ * @param onFind Función que se ejecuta al buscar los ComboItemes.
+ * 
+ * @returns Componente de formulario de consulta de ComboItemes con campos adicionales.
  */
 const QueryFormFullLov = ({
   onFind,

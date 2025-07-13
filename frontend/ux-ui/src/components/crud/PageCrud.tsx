@@ -150,7 +150,4 @@ const PageCrud = ({
   );
 };
 
-
-
-
 export { PageCrud };

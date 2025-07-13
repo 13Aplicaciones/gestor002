@@ -48,7 +48,7 @@
   ],
   "dependencies": {
     "api-fetch": "file:../api-fetch",
-    "yup": "^1.6.1",
-    "react-hook-form": "^7.54.2"
+    "react-hook-form": "^7.60.0",
+    "yup": "^1.6.1"
   }
 }

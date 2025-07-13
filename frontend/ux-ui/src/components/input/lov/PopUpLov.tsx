@@ -34,6 +34,7 @@ interface IQueryLovProps {
  * @param token - Token de autenticación.
  * @param onSelectRow - Callback para manejar la selección de una fila.
  * @param onCancel - Callback para manejar la cancelación de la operación.
+ * @param presentations - Presentaciones de los datos, incluyendo si se deben mostrar valores enteros, decimales y etiquetas alternativas.
  * @param initialRow - Fila inicial para el panel de consulta.
  * @param visible - Indica si el panel está visible.
  *
@@ -66,6 +67,7 @@ interface PageLovInnerProps {
  * @param onSelectRow - Callback para manejar la selección de una fila.
  * @param QueryLovPanel - Componente para el panel de consulta Lov.
  * @param token - Token de autenticación.
+ * @param presentations - Presentaciones de los datos, incluyendo si se deben mostrar valores enteros, decimales y etiquetas alternativas.
  * @param visible - Indica si el panel está visible.
  * @returns
  */

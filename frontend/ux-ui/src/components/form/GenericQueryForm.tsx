@@ -93,8 +93,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   /**
    * Función para limpiar el formulario y los datos de la consulta.
    */
-  const resetForm = (e?: React.MouseEvent) => {
-    e?.preventDefault();
+  const resetForm = () => {
     if (onFind) {
       onFind({});
     }

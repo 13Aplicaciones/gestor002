@@ -29,6 +29,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Controlador REST para la gestión de ítems de combo.
@@ -36,6 +37,7 @@ import jakarta.validation.Valid;
  * @author omargo33
  * @since 2025-06-01
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/combo-item")
 @Tag(name = "Combo Item", description = "Servicio para CRUD de ítems de combo")
@@ -57,7 +59,7 @@ public class ComboItemController {
     /**
      * Actualizar un ítem de combo.
      * 
-     * @param uuid identificador único del ítem de combo
+     * @param uuid             identificador único del ítem de combo
      * @param comboItemRequest nuevos datos del ítem de combo
      * @return respuesta con el ítem de combo actualizado
      */
@@ -97,35 +99,39 @@ public class ComboItemController {
     /**
      * Método para obtener todos los ítems de combo de manera paginada.
      * 
-     * @param page número de página
-     * @param size tamaño de página
-     * @param sort configuración de ordenamiento
+     * @param page           número de página
+     * @param size           tamaño de página
+     * @param sort           configuración de ordenamiento
      * @param indexComboItem índice del ítem de combo a buscar
-     * @param label etiqueta del ítem de combo a buscar
-     * @param descripcion descripción del ítem de combo a buscar
+     * @param label          etiqueta del ítem de combo a buscar
+     * @param description    descripción del ítem de combo a buscar
      * 
      * @return respuesta paginada con los ítems de combo
      */
     @GetMapping("/paginated")
-    @Operation(summary = "Obtiene la lista de ítems de combo paginados", 
-               description = "Recibe los parámetros de paginación y filtrado", 
-               responses = {
-                   @ApiResponse(responseCode = "200", description = "Ítems de combo recuperados exitosamente", 
-                               content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
-               })
+    @Operation(summary = "Obtiene la lista de ítems de combo paginados", description = "Recibe los parámetros de paginación y filtrado", responses = {
+            @ApiResponse(responseCode = "200", description = "Ítems de combo recuperados exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
+    })
     public ResponseEntity<Map<String, Object>> getAllComboItemWithPaginado(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "orden,asc") String[] sort,
-            @RequestParam(required = true) String indexComboItem,
+            @RequestParam(required = false) String indexComboItem,
             @RequestParam(required = false) String label,
-            @RequestParam(required = false) String descripcion) {
-        Page<ComboItemResponse> pageComboItem = comboItemService.findByIndexOrLabelOrDescription(indexComboItem, label, descripcion, ControllerTools.generateOrders(page, size, sort));
+            @RequestParam(required = false) String description) {
+        log.info(
+                "getAllComboItemWithPaginado - page: {}, size: {}, sort: {}, indexComboItem: {}, label: {}, description: {}",
+                page, size, String.join(",", sort), indexComboItem, label, description);
+
+        Page<ComboItemResponse> pageComboItem = comboItemService.findByIndexOrLabelOrDescription(
+                indexComboItem,
+                label,
+                description,
+                ControllerTools.generateOrders(page, size, sort));
 
         Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);
         return ResponseEntity.ok(response);
     }
-
 
     /**
      * Método para obtener un LOV (List of Values) de ítems de combo paginado.
@@ -137,18 +143,16 @@ public class ComboItemController {
      * @return
      */
     @GetMapping("/lov")
-    @Operation(summary = "Obtiene LOV paginado", 
-               description = "Recibe los parámetros de paginación y filtrado", 
-               responses = {
-                   @ApiResponse(responseCode = "200", description = "Items de busqueda LOV recuperados exitosamente", 
-                               content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
-               })    
+    @Operation(summary = "Obtiene LOV paginado", description = "Recibe los parámetros de paginación y filtrado", responses = {
+            @ApiResponse(responseCode = "200", description = "Items de busqueda LOV recuperados exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
+    })
     public ResponseEntity<Map<String, Object>> getComboItemLov(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "label,asc") String[] sort,
-            @RequestParam(required = false) String searchTerm) {
-        Page<LovResponse> pageComboItem = lovService.findLovComboItem(searchTerm,
+            @RequestParam(required = false) String label,
+            @RequestParam(required = false) String labelAlternative) {
+        Page<LovResponse> pageComboItem = lovService.findLovComboItem(label, labelAlternative,
                 ControllerTools.generateOrders(page, size, sort));
 
         Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);

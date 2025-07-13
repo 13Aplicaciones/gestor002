@@ -31,12 +31,13 @@ public class LovService {
     /**
      * Busca ítems de combo para un LOV (List of Values) por término de búsqueda.
      * 
-     * @param searchTerm término a buscar en label o description
+     * @param label término a buscar en label
+     * @param labelAlternative término alternativo a buscar en label_alternative
      * @param pageable   configuración de paginación
      * @return página de ítems de combo
      */
-    public Page<LovResponse> findLovComboItem(String searchTerm, Pageable pageable) {
-        return lovRepository.findForLovComboItem(searchTerm, pageable)
+    public Page<LovResponse> findLovComboItem(String label, String labelAlternative, Pageable pageable) {
+        return lovRepository.findForLovComboItem(label, labelAlternative, pageable)
                 .map(LovMapper.INSTANCE::toResponse);
     }
 

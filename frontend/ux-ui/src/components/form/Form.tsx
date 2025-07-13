@@ -126,7 +126,11 @@ const FormState = ({ statusEdit }: { statusEdit: StatusEdit }) => {
 /**
  * Funcion para mostrar los botones de acción en el pie de los formularios.
  *
- * @param param0
+ * @param loading Indica si se está cargando la acción
+ * @param onBack Función a ejecutar al hacer clic en el botón de volver
+ * @param showPopUpDelete Función a ejecutar al hacer clic en el botón de eliminar
+ * @param formStatus Estado del formulario
+ * 
  * @returns
  */
 const FooterFormAction = ({

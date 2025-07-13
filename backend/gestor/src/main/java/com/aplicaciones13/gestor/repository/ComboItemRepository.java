@@ -32,14 +32,14 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
                 "SELECT * FROM combo_item ci WHERE " +
                 "(?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') and " + 
                 "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%') and " +
-                "(?3 IS NULL OR upper(ci.descripcion) LIKE CONCAT('%', upper(?3), '%'))))",
+                "(?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))))",
             countQuery = 
                 "SELECT COUNT(*) FROM combo_item ci WHERE "+
                 "(?1 IS NULL OR upper(ci.index_combo_item) LIKE CONCAT('%', upper(?1), '%') and " + 
                 "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%') and " +
-                "(?3 IS NULL OR upper(ci.descripcion) LIKE CONCAT('%', upper(?3), '%'))))",
+                "(?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))))",
                 nativeQuery = true)    
-    Page<ComboItem> findByIndexOrLabelOrDescripcionContaining(String indexComboItem, String label, String descripcion, Pageable pageable);
+    Page<ComboItem> findByIndexOrLabelOrDescriptionContaining(String indexComboItem, String label, String description, Pageable pageable);
 
 
     /**

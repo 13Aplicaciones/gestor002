@@ -63,13 +63,14 @@ const getSorts = (presentationTable: IPresentationTable) => {
 /**
  * Componente para crear un field de busqueda.
  *
- * @param apiUrl
- * @param parametersToConsult
- * @param presentationTable
- * @param token
- * @param getToken
- * @param menuTableRefresh
- * @param childrenMenu
+ * @param apiUrl URL de la API a consultar.
+ * @param parametersToConsult Parámetros para la consulta de la API.
+ * @param presentationTable Presentación de la tabla.
+ * @param token Token de autenticación (opcional).
+ * @param getToken Función para obtener el token (opcional).
+ * @param menuTableRefresh Tipo de refresco del menú de la tabla (opcional).
+ * @param childrenMenu Elementos secundarios que se mostrarán en el menú de la tabla (opcional).
+ * 
  * @returns
  */
 const TableSearchOrder = ({

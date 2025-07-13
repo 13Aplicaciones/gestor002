@@ -172,6 +172,7 @@ const InputFieldDate = ({
  * @param columns Columnas de la presentación
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
+ * @param labelVisible Indica si el label es visible o no
  *
  * @returns
  */
@@ -248,6 +249,7 @@ const InputSecretField = ({
  * @param rows Filas del area de texto
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
+ * @param labelVisible Indica si el label es visible o no
  *
  * @returns
  */
@@ -454,6 +456,7 @@ interface IPresentationInputSelect {
  * @param directionLabel Dirección de la presentación
  * @param items Elementos del campo de selección
  * @param value Valor seleccionado
+ * @param labelVisible Indica si la etiqueta es visible o no
  * @param onChange Función para manejar el cambio de valor
  *
  * @returns
@@ -558,7 +561,9 @@ const InputSelect = ({
  * @param columns Columnas de la presentación
  * @param directionLabel Dirección de la presentación
  * @param register Registro del field para el formulario (yup)
- *
+ * @param registerDescription Registro del campo de descripción para el formulario (yup)
+ * @param labelVisible Indica si el label es visible o no
+ * @param onFind Función que se ejecuta al hacer clic en el botón de búsqueda
  *
  * @returns
  */
@@ -569,7 +574,9 @@ const InputFieldLov = ({
   columns,
   directionLabel,
   register,
+  registerDescription,
   labelVisible = true,
+  test = false,
   onFind,
 }: {
   title?: string;
@@ -579,7 +586,9 @@ const InputFieldLov = ({
   directionLabel: Direction | Direction.horizontal;
   children?: ReactNode;
   register?: any;
+  registerDescription?: any;
   labelVisible?: boolean;
+  test?: boolean;
   onFind: () => void;
 }) => {
   const presentation = useCalculatePresentation(
@@ -601,21 +610,28 @@ const InputFieldLov = ({
       />
       <Flex direction={"column"}>
         <Flex direction={"row"} gap="2" width={presentation.width}>
+          {(test && (
+            <input type="hidden" style={{ display: "none" }} {...register} />
+          )) || (
+            <TextField.Root
+              type="text"
+              size="2"
+              style={{ marginBottom: "1vh", width: "100%" }}
+              placeholder={placeholder}
+              {...register}
+            />
+          )}
+
           <TextField.Root
             type="text"
             size="2"
-            disabled={true}
             style={{ marginBottom: "1vh", width: "100%" }}
             placeholder={placeholder}
-            {...register}
+            {...registerDescription}
           />
 
           <IconButton variant="surface" size="2" form="none" onClick={onFind}>
-            <IconComponent
-              iconName="ListBulletIcon"
-              width="16"
-              height="16"
-            />
+            <IconComponent iconName="ListBulletIcon" width="16" height="16" />
           </IconButton>
         </Flex>
         <MessageField message={messageError} />

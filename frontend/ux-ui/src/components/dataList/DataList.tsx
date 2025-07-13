@@ -23,6 +23,7 @@ import useCalculatePresentation from "../input/Calculations";
  *
  * @param banding Banding del datalist.
  * @param headers Headers del datalist.
+ * @param skeletonWidth Ancho del esqueleto.
  * @param items Items a mostrar en el datalist.
  * @param items.format Formato del texto.
  * @param items.justification Justificacion del texto.

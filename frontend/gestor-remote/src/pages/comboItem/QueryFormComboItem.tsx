@@ -25,6 +25,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 
 interface ComboItemQueryFormValues {
   indexComboItem: string;
+  indexComboItemDescription?: string;
   label: string;
 }
 
@@ -40,11 +41,6 @@ const QueryFormComboItem = ({
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [verLOV, setVerLOV] = useState<boolean>(false);
-  const [selectedValues, setSelectedValues] =
-    useState<ComboItemQueryFormValues>({
-      indexComboItem: "",
-      label: "",
-    });
 
   /**
    * Inicializar token y parámetros de URL
@@ -62,7 +58,8 @@ const QueryFormComboItem = ({
   }, []);
 
   const schema = yup.object({
-    indexComboItem: yup.string().max(128, t("validation.max", { max: 128 })),
+    indexComboItem: yup.string().required(t("validation.required")),
+    indexComboItemDescription: yup.string(),
     label: yup.string().max(1024, t("validation.max", { max: 1024 })),
   });
 
@@ -74,15 +71,17 @@ const QueryFormComboItem = ({
     setVerLOV(!status);
   };
 
- /**
+  /**
    * Maneja la selección de una fila del LOV
    */
   const handleLovSelection = (row: any) => {
-    setSelectedValues({
-      indexComboItem: row.index ?? row.indexComboItem ?? "",
-      label: row.label ?? "",
-    });
-    setVerLOV(false); // Cierra el LOV
+    console.log("handleLovSelection", row);
+    // Aquí puedes manejar la selección de la fila del LOV
+    // indexComboItem: row.index ?? "",
+    // indexComboItemDescription: row.label ?? "",
+    // label: "",
+
+    setVerLOV(false);
   };
 
   /**
@@ -96,7 +95,8 @@ const QueryFormComboItem = ({
     <>
       <PopUpLov
         createIRowDataCustom={() => ({
-          indexComboItem: "hola!! ",
+          indexComboItem: "",
+          indexComboItemDescription: "",
           label: "",
         })}
         QueryLovPanel={QueryLov}
@@ -111,12 +111,15 @@ const QueryFormComboItem = ({
           valueDecimal: false,
           labelAlternative: true,
         }}
-        onCancel={ handleLovCancel}
+        onCancel={handleLovCancel}
       />
       <GenericQueryForm<ComboItemQueryFormValues>
-        key={`${selectedValues.indexComboItem}-${selectedValues.label}`}
         validationSchema={schema}
-        defaultValues={selectedValues}
+        defaultValues={{
+          indexComboItem: "",
+          indexComboItemDescription: "",
+          label: "",
+        }}
         onFind={onFind}
         renderFields={({ register, formState }) => (
           <>
@@ -129,6 +132,7 @@ const QueryFormComboItem = ({
               )}
               directionLabel={Direction.horizontal}
               register={register("indexComboItem")}
+              registerDescription={register("indexComboItemDescription")}
               messageError={formState.errors.indexComboItem?.message}
             />
 

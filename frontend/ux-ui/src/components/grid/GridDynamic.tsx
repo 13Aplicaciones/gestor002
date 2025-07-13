@@ -16,7 +16,7 @@ import { ReactNode } from "react";
  * Tamaño de pantalla: xs, sm, md, lg, xl
  * Y al color de fondo y borde
  *  
- * @children Componentes hijos
+ * @param children Componentes hijos
  * @props Propiedades del componente
  * 
  * @returns

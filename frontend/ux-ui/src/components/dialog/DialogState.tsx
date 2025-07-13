@@ -66,12 +66,13 @@ const footDialogue = ({
 /**
  * Dialogo para formularios
  *
- * @param id Identificador del dialogo
+ * @param status Estado del dialogo
  * @param title Titulo del dialogo
  * @param description Descripción del dialogo
  * @param cancel Indica si se muestra el botón de cancelar
  * @param children Contenido del dialogo
  * @param buttons Botones adicionales o unicos
+ * @param size Tamaño del dialogo, por defecto es DialogSize.medium
  * @param onClose Función que se ejecuta al cerrar el dialogo
  */
 const DialogForm = ({
@@ -153,7 +154,7 @@ const DialogForm = ({
 /**
  * Dialogo para alerts
  *
- * @param id Identificador del dialogo
+ * @param status Estado del dialogo
  * @param title Titulo del dialogo
  * @param description Descripción del dialogo
  * @param cancel Indica si se muestra el botón de cancelar

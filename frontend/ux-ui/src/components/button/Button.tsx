@@ -13,7 +13,7 @@ import { IconComponent } from "../icon/IconDynamic";
 /**
  * Botón para crear un registro flotante
  *
- * @param toolTip Mensaje que se muestra al pasar el mouse sobre el botón
+ * @param onClick Función que se ejecuta al hacer click en el botón
  * @param disabled Indica si el botón está deshabilitado
  *
  * @returns
