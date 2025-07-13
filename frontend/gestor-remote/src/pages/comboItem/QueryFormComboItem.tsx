@@ -23,6 +23,9 @@ import {
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 
+/**
+ * Interfaz para los valores del formulario de consulta de ComboItemes.
+ */
 interface ComboItemQueryFormValues {
   indexComboItem: string;
   indexComboItemDescription?: string;
@@ -37,8 +40,10 @@ const QueryFormComboItem = ({
 }: {
   onFind: (data: IParametersQuery) => void;
 }) => {
-  const [t] = useTranslation("global_gestor");
   const [apiUrl, setApiUrl] = useState("");
+  const [formApi, setFormApi] = useState<any>(null);
+  const [lovSelected, setLovSelected] = useState<any>(null);
+  const [t] = useTranslation("global_gestor");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [verLOV, setVerLOV] = useState<boolean>(false);
 
@@ -57,6 +62,21 @@ const QueryFormComboItem = ({
     initializeStructure();
   }, []);
 
+  /**
+   * Efecto para manejar la selección del LOV y actualizar el formulario.
+   */
+  useEffect(() => {
+    if (lovSelected && formApi) {
+      formApi.setValue("indexComboItem", lovSelected.index ?? "");
+      formApi.setValue("indexComboItemDescription", lovSelected.label ?? "");
+      formApi.setValue("label", "");
+      setLovSelected(null); // Limpia para evitar loops
+    }
+  }, [lovSelected, formApi]);
+
+  /**
+   * Esquema de validación para el formulario de consulta de ComboItemes.
+   */
   const schema = yup.object({
     indexComboItem: yup.string().required(t("validation.required")),
     indexComboItemDescription: yup.string(),
@@ -75,12 +95,7 @@ const QueryFormComboItem = ({
    * Maneja la selección de una fila del LOV
    */
   const handleLovSelection = (row: any) => {
-    console.log("handleLovSelection", row);
-    // Aquí puedes manejar la selección de la fila del LOV
-    // indexComboItem: row.index ?? "",
-    // indexComboItemDescription: row.label ?? "",
-    // label: "",
-
+    setLovSelected(row);
     setVerLOV(false);
   };
 
@@ -121,6 +136,7 @@ const QueryFormComboItem = ({
           label: "",
         }}
         onFind={onFind}
+        getFormApi={setFormApi}
         renderFields={({ register, formState }) => (
           <>
             <InputFieldLov
@@ -135,7 +151,6 @@ const QueryFormComboItem = ({
               registerDescription={register("indexComboItemDescription")}
               messageError={formState.errors.indexComboItem?.message}
             />
-
             <InputField
               title={t("modules.GS-CB-IT-001.fields.label.title")}
               columns={BandPresentation.column_3}

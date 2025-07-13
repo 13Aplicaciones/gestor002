@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Flex, IconButton } from "@radix-ui/themes";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import {
   DeepPartial,
   DefaultValues,
@@ -47,6 +47,14 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
 
   /** Indica si se deben mostrar los botones de detalles */
   buttonsDetails?: boolean;
+
+  /**
+   * Función para exponer el objeto workForm al padre.
+   * 
+   * @param api 
+   * @returns 
+   */
+  getFormApi?: (api: UseFormReturn<TFormValues>) => void;
 }
 
 /**
@@ -58,6 +66,7 @@ interface GenericQueryFormProps<TFormValues extends FieldValues> {
  * @param renderFields Función para renderizar los campos del formulario
  * @param disableSubmit Deshabilita la presentación para la búsqueda automática
  * @param buttonsDetails Indica si se deben mostrar los botones de detalles
+ * @param getFormApi Función para exponer el objeto workForm al padre
  *
  * @returns
  */
@@ -68,6 +77,7 @@ function GenericQueryForm<TFormValues extends FieldValues>({
   renderFields,
   disableSubmit,
   buttonsDetails = true,
+  getFormApi,
 }: Readonly<GenericQueryFormProps<TFormValues>>) {
   const [t] = useTranslation("global_gestor");
 
@@ -78,6 +88,15 @@ function GenericQueryForm<TFormValues extends FieldValues>({
     resolver: yupResolver(validationSchema),
     defaultValues: defaultValues as DefaultValues<TFormValues>,
   });
+
+  /**
+   * Expone el objeto workForm al padre para uso de atributos programaticamente
+   */
+  useEffect(() => {
+    if (getFormApi) {
+      getFormApi(workForm);
+    }
+  }, [getFormApi, workForm]);
 
   /**
    * Función para enviar el formulario.

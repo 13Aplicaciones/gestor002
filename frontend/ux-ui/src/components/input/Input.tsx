@@ -610,12 +610,13 @@ const InputFieldLov = ({
       />
       <Flex direction={"column"}>
         <Flex direction={"row"} gap="2" width={presentation.width}>
-          {(test && (
+          {(!test && (
             <input type="hidden" style={{ display: "none" }} {...register} />
           )) || (
             <TextField.Root
               type="text"
               size="2"
+              readOnly={true}
               style={{ marginBottom: "1vh", width: "100%" }}
               placeholder={placeholder}
               {...register}
@@ -625,6 +626,7 @@ const InputFieldLov = ({
           <TextField.Root
             type="text"
             size="2"
+            readOnly={true}
             style={{ marginBottom: "1vh", width: "100%" }}
             placeholder={placeholder}
             {...registerDescription}
