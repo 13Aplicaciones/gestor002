@@ -9,10 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
 import com.aplicaciones13.gestor.mapping.ComboItemMapper;
+import com.aplicaciones13.gestor.model.Combo;
 import com.aplicaciones13.gestor.model.ComboItem;
 import com.aplicaciones13.gestor.payload.request.ComboItemRequest;
 import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.repository.ComboItemRepository;
+import com.aplicaciones13.gestor.repository.ComboRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase para el servicio de la entidad ComboItem.
@@ -20,32 +24,43 @@ import com.aplicaciones13.gestor.repository.ComboItemRepository;
  * @author omargo33
  * @since 2025-06-01
  */
+@Slf4j
 @Service
 @Transactional
 public class ComboItemService {
 
     private final ComboItemRepository comboItemRepository;
 
+    private final ComboRepository comboRepository;
+
     /**
      * Constructor del servicio ComboItemService.
      * 
      * @param comboItemRepository
      */
-    public ComboItemService(ComboItemRepository comboItemRepository) {
+    public ComboItemService(ComboItemRepository comboItemRepository, ComboRepository comboRepository) {
         this.comboItemRepository = comboItemRepository;
+        this.comboRepository = comboRepository;
     }
 
     /**
-     * Método para obtener la búsqueda de combo items por índice o etiqueta y paginación.
+     * Método para obtener la búsqueda de combo items por índice o etiqueta y
+     * paginación.
      * 
      * @param indexComboItem índice del combo item
-     * @param label etiqueta del combo item
-     * @param description descripción del combo item
-     * @param pagingSort configuración de paginación y ordenamiento
+     * @param label          etiqueta del combo item
+     * @param description    descripción del combo item
+     * @param pagingSort     configuración de paginación y ordenamiento
      * @return página de combo items
      */
-    public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String indexComboItem, String label, String description, Pageable pagingSort) {
-        return comboItemRepository.findByIndexOrLabelOrDescriptionContaining(indexComboItem, label, description, pagingSort)
+    public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String uuidComboItem, String label,
+            String description, Pageable pagingSort) {
+
+        Combo combo = comboRepository.findByUuid(uuidComboItem).orElse(new Combo());
+        log.info("combo {}", combo);
+        return comboItemRepository
+                .findByIndexOrLabelOrDescriptionContaining(combo.getIdCombo(), label, description,
+                        pagingSort)
                 .map(ComboItemMapper.INSTANCE::toResponse);
     }
 
@@ -78,7 +93,7 @@ public class ComboItemService {
     /**
      * Método para actualizar un combo item existente.
      * 
-     * @param uuid identificador único del combo item
+     * @param uuid             identificador único del combo item
      * @param comboItemRequest nuevos datos del combo item
      * @return respuesta con el combo item actualizado
      * @throws ResourceHttpStatusException si no se encuentra el combo item
@@ -98,7 +113,7 @@ public class ComboItemService {
         comboItem.setOrden(comboItemRequest.getOrden());
         comboItem.setStatus(comboItemRequest.getStatus());
         comboItem.setUserApp(comboItemRequest.getUserApp());
-        
+
         comboItem = comboItemRepository.saveAndFlush(comboItem);
         return ComboItemMapper.INSTANCE.toResponse(comboItem);
     }
