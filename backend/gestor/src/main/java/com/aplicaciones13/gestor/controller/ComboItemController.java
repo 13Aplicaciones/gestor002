@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aplicaciones13.base.controller.ControllerTools;
 import com.aplicaciones13.base.payload.common.LovResponse;
 import com.aplicaciones13.base.validations.ValidUUID;
+import com.aplicaciones13.gestor.payload.request.ComboItemPatchStatusRequest;
 import com.aplicaciones13.gestor.payload.request.ComboItemRequest;
+import com.aplicaciones13.gestor.payload.request.ComboRequest;
 import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.services.ComboItemService;
 import com.aplicaciones13.gestor.services.LovService;
@@ -69,6 +72,22 @@ public class ComboItemController {
             @PathVariable @ValidUUID String uuid,
             @Valid @RequestBody ComboItemRequest comboItemRequest) {
         return ResponseEntity.ok(comboItemService.update(uuid, comboItemRequest));
+    }
+
+
+    /**
+     * Actualizar el estado de un ítem de combo.
+     * 
+     * @param uuid
+     * @param comboItemPatchStatusRequest
+     * @return
+     */
+    @PatchMapping("/status/{uuid}")
+    @Operation(summary = "Actualizar estado de ítem de combo", description = "Actualiza el estado de un ítem de combo existente")
+    public ResponseEntity<ComboItemResponse> patchCombo(
+            @PathVariable @ValidUUID String uuid,
+            @RequestBody @Valid ComboItemPatchStatusRequest comboItemPatchStatusRequest) {
+        return ResponseEntity.ok(comboItemService.updateStatus(uuid, comboItemPatchStatusRequest));
     }
 
     /**

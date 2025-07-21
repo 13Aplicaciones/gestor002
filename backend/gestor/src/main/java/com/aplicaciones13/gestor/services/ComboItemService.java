@@ -1,5 +1,8 @@
 package com.aplicaciones13.gestor.services;
 
+import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -8,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aplicaciones13.base.anotacion.InvokeUser;
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
+import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.gestor.mapping.ComboItemMapper;
 import com.aplicaciones13.gestor.model.Combo;
 import com.aplicaciones13.gestor.model.ComboItem;
+import com.aplicaciones13.gestor.payload.request.ComboItemPatchStatusRequest;
 import com.aplicaciones13.gestor.payload.request.ComboItemRequest;
 import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.repository.ComboItemRepository;
@@ -29,18 +34,20 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class ComboItemService {
 
-    private final ComboItemRepository comboItemRepository;
-
+    private final ComboItemRepository comboItemSearchRepository;
     private final ComboRepository comboRepository;
+    private final JwtService jwtService;
 
     /**
      * Constructor del servicio ComboItemService.
      * 
-     * @param comboItemRepository
+     * @param comboItemSearchRepository
      */
-    public ComboItemService(ComboItemRepository comboItemRepository, ComboRepository comboRepository) {
-        this.comboItemRepository = comboItemRepository;
+    public ComboItemService(ComboItemRepository comboItemSearchRepository, ComboRepository comboRepository,
+            JwtService jwtService) {
+        this.comboItemSearchRepository = comboItemSearchRepository;
         this.comboRepository = comboRepository;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -55,12 +62,11 @@ public class ComboItemService {
      */
     public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String uuidComboItem, String label,
             String description, Pageable pagingSort) {
+        Combo combo = comboRepository.findByUuid(uuidComboItem)
+                .orElse(new Combo());
 
-        Combo combo = comboRepository.findByUuid(uuidComboItem).orElse(new Combo());
-        log.info("combo {}", combo);
-        return comboItemRepository
-                .findByIndexOrLabelOrDescriptionContaining(combo.getIdCombo(), label, description,
-                        pagingSort)
+        return comboItemSearchRepository
+                .findByIndexOrLabelOrDescriptionContaining(combo.getIdCombo(), label, description, pagingSort)
                 .map(ComboItemMapper.INSTANCE::toResponse);
     }
 
@@ -72,50 +78,139 @@ public class ComboItemService {
      * @throws ResourceHttpStatusException si no se encuentra el combo item
      */
     public ComboItemResponse findByUuid(String uuid) {
-        return comboItemRepository.findByUuid(uuid)
+        return comboItemSearchRepository.findByUuid(uuid)
                 .map(ComboItemMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
     }
 
     /**
+     * Método para actualizar el estado de un combo item.
+     * 
+     * @param uuid
+     * @param comboItemSearchPatchStatusRequest
+     * @return
+     */
+    @InvokeUser
+    public ComboItemResponse updateStatus(String uuid, ComboItemPatchStatusRequest comboItemSearchPatchStatusRequest) {
+        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
+
+        comboItemSearch.setStatus(comboItemSearchPatchStatusRequest.getUserApp());
+        comboItemSearch.setStatus(comboItemSearchPatchStatusRequest.getStatus());
+        comboItemSearch.setUser(jwtService.getUsername());
+
+        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
+    }
+
+    /**
+     * Método para cambiar el orden de un combo item dentro de su combo.
+     * 
+     * Busca el combo item por su UUID
+     * Busca todos los combo items del mismo combo
+     * 
+     * Selecciona el combo item actual y su posición
+     * 
+     * Realiza la acción solicitada:
+     * - FIRST: Mover al inicio de la lista
+     * - UP: Mover hacia arriba un item
+     * - DOWN: Mover hacia abajo un item
+     * - LAST: Mover al final de la lista
+     * 
+     * Borra el item de su posición original
+     * 
+     * Actualiza el orden de los combo items restantes
+     * 
+     * @param uuid    identificador único del combo item
+     * @param acction acción a realizar (FIRST: Mover Top, UP: Mover Arriba, DOWN:
+     *                Mover Abajo, LAST: Mover Final)
+     */
+    public void changeOrder(String uuid, String acction) {
+        int selectedPosition = 0;
+
+        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
+
+        LinkedList<ComboItem> listComboItems = new LinkedList<>(comboItemSearchRepository
+                .findByIdCombo(comboItemSearch.getCombo().getIdCombo())
+                .orElseThrow(() -> new ResourceHttpStatusException("ComboItems not found", HttpStatus.NOT_FOUND)));
+
+        selectedPosition = listComboItems.indexOf(listComboItems.stream()
+                .filter(item -> item.getUuid().equals(uuid))
+                .findFirst()
+                .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND)));
+
+        switch (acction) {
+            case "FIRST": // Mover Top
+                comboItemSearch = listComboItems.remove(selectedPosition);
+                listComboItems.addFirst(comboItemSearch);
+                break;
+            case "UP": // Mover hacia arriba un item
+                if (selectedPosition > 0) {
+                    comboItemSearch = listComboItems.remove(selectedPosition);
+                    listComboItems.add(selectedPosition - 1, comboItemSearch);
+                }
+                break;
+            case "DOWN": // Mover hacia abajo un item
+                if (selectedPosition < listComboItems.size() - 1) {
+                    comboItemSearch = listComboItems.remove(selectedPosition);
+                    listComboItems.add(selectedPosition + 1, comboItemSearch);
+                }
+                break;
+            case "LAST": // Mover al final
+                comboItemSearch = listComboItems.remove(selectedPosition);
+                listComboItems.addLast(comboItemSearch);
+                break;
+            default:
+                break;
+        }
+
+        AtomicInteger counter = new AtomicInteger(1);
+        listComboItems.forEach(item -> {
+            item.setOrden(counter.getAndIncrement());
+            comboItemSearchRepository.saveAndFlush(item);
+        });
+    }
+
+    /**
      * Método para crear un nuevo combo item.
      * 
-     * @param comboItemRequest datos del combo item a crear
+     * @param comboItemSearchRequest datos del combo item a crear
      * @return respuesta con el combo item creado
      */
     @InvokeUser
-    public ComboItemResponse create(ComboItemRequest comboItemRequest) {
-        ComboItem comboItem = ComboItemMapper.INSTANCE.toEntity(comboItemRequest);
-        comboItem = comboItemRepository.saveAndFlush(comboItem);
-        return ComboItemMapper.INSTANCE.toResponse(comboItem);
+    public ComboItemResponse create(ComboItemRequest comboItemSearchRequest) {
+        ComboItem comboItemSearch = ComboItemMapper.INSTANCE.toEntity(comboItemSearchRequest);
+        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
     }
 
     /**
      * Método para actualizar un combo item existente.
      * 
-     * @param uuid             identificador único del combo item
-     * @param comboItemRequest nuevos datos del combo item
+     * @param uuid                   identificador único del combo item
+     * @param comboItemSearchRequest nuevos datos del combo item
      * @return respuesta con el combo item actualizado
      * @throws ResourceHttpStatusException si no se encuentra el combo item
      */
     @InvokeUser
-    public ComboItemResponse update(String uuid, ComboItemRequest comboItemRequest) {
-        ComboItem comboItem = comboItemRepository.findByUuid(uuid)
+    public ComboItemResponse update(String uuid, ComboItemRequest comboItemSearchRequest) {
+        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
 
-        comboItem.setIndexComboItem(comboItemRequest.getIndexComboItem());
-        comboItem.setCodeNumber(comboItemRequest.getCodeNumber());
-        comboItem.setCodeText(comboItemRequest.getCodeText());
-        comboItem.setLabel(comboItemRequest.getLabel());
-        comboItem.setDescription(comboItemRequest.getDescription());
-        comboItem.setIcon(comboItemRequest.getIcon());
-        comboItem.setColor(comboItemRequest.getColor());
-        comboItem.setOrden(comboItemRequest.getOrden());
-        comboItem.setStatus(comboItemRequest.getStatus());
-        comboItem.setUserApp(comboItemRequest.getUserApp());
+        comboItemSearch.setIndexComboItem(comboItemSearchRequest.getIndexComboItem());
+        comboItemSearch.setCodeNumber(comboItemSearchRequest.getCodeNumber());
+        comboItemSearch.setCodeText(comboItemSearchRequest.getCodeText());
+        comboItemSearch.setLabel(comboItemSearchRequest.getLabel());
+        comboItemSearch.setDescription(comboItemSearchRequest.getDescription());
+        comboItemSearch.setIcon(comboItemSearchRequest.getIcon());
+        comboItemSearch.setColor(comboItemSearchRequest.getColor());
+        comboItemSearch.setOrden(comboItemSearchRequest.getOrden());
+        comboItemSearch.setStatus(comboItemSearchRequest.getStatus());
+        comboItemSearch.setUserApp(comboItemSearchRequest.getUserApp());
 
-        comboItem = comboItemRepository.saveAndFlush(comboItem);
-        return ComboItemMapper.INSTANCE.toResponse(comboItem);
+        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
     }
 
     /**
@@ -125,8 +220,8 @@ public class ComboItemService {
      * @throws ResourceHttpStatusException si no se encuentra el combo item
      */
     public void delete(String uuid) {
-        ComboItem comboItem = comboItemRepository.findByUuid(uuid)
+        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
-        comboItemRepository.delete(comboItem);
+        comboItemSearchRepository.delete(comboItemSearch);
     }
 }

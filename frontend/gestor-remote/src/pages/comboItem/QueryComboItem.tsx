@@ -21,6 +21,7 @@ import { Menus, MODULE } from "../../utils/Constants";
 import { tableQueryModule } from "../comboItem/structures/Presentations";
 import { IRowDataComboItem } from "../comboItem/structures/Types";
 import { QueryFormComboItem } from "./QueryFormComboItem";
+import QueryActionsComboItem from "./QueryActionsComboItem";
 
 /**
  * Tabla de ComboItemes del sistema.
@@ -29,6 +30,8 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
   const [apiUrl, setApiUrl] = useState("");
   const [token, setToken] = useState<string | undefined>(undefined);
   const [t] = useTranslation("global_gestor");
+  const [refreshKey, setRefreshKey] = useState(0);
+
 
   /**
    * Inicializar token y parámetros de URL
@@ -67,19 +70,17 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
     }
 
     // Configurar acción de edición
-    if (tableFormat.items[4]) {
-      tableFormat.items[4].component = (row: IRowDataComboItem) => (
-        <IconButton
-          variant="ghost"
-          size="1"
-          onClick={() => {
+    if (tableFormat.items[7]) {
+      tableFormat.items[7].component = (row: IRowDataComboItem) => (
+        <QueryActionsComboItem
+          row={row}
+          onEditRow={(row: IRowDataComboItem) => {
             if (onEditRow) {
               onEditRow(row);
             }
           }}
-        >
-          <IconComponent iconName="DotsVerticalIcon" width="16" height="16" />
-        </IconButton>
+          onRefresh={() => setRefreshKey(prev => prev + 1)}
+        />
       );
     }
 
@@ -110,6 +111,7 @@ const QueryComboItem = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
       initialParameters={{
         indexComboItem: "",
         message: "",
+        refreshKey: refreshKey,
       }}
       menuTableRefresh={MenuTableRefresh.refresh}
       onCreateRow={onCreateRow}

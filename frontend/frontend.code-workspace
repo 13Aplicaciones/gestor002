@@ -15,7 +15,7 @@
       "ux-ui": false,
       "**/node_modules": true,
       "**/dist": true,
-      ".vscode": true,
+      ".vscode": false,
     },
     "workbench.colorCustomizations": {
       "activityBar.activeBackground": "#1f6fd0",

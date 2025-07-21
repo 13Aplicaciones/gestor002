@@ -30,11 +30,11 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/users/process")
 @Tag(name = "Users Operaciones", description = "Operaciones relacionadas con users")
-public class UserOperacionesController {
+public class UserProcessController {
 
     private final TokenService tokenService;
 
-    public UserOperacionesController( TokenService tokenService) {
+    public UserProcessController( TokenService tokenService) {
         this.tokenService = tokenService;
     }
 

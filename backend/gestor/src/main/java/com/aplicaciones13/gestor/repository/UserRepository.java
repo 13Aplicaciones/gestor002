@@ -32,18 +32,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param pageable
      * @return
      */
-     
-    @Query(value = "SELECT * FROM GS_002_01.user u WHERE u.status != 'X' and (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%', upper(?1),  '%')) AND (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3), '%')) AND (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))",
-        countQuery = "SELECT count(*) FROM GS_002_01.user u WHERE u.status != 'X' and (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%',  upper(?1) , '%')) AND (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3) , '%')) AND (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))",
-        nativeQuery = true)
+    @Query(value = """
+            SELECT * FROM GS_002_01.user u WHERE u.status != 'X' and
+            (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%', upper(?1),  '%')) AND
+            (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND
+            (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3), '%')) AND
+            (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))""", countQuery = """
+            SELECT count(*) FROM GS_002_01.user u WHERE u.status != 'X' and
+            (?1 IS NULL OR upper(u.nick) LIKE CONCAT('%',  upper(?1) , '%')) AND
+            (?2 IS NULL OR upper(u.name) LIKE CONCAT('%', upper(?2) , '%')) AND
+            (?3 IS NULL OR upper(u.last_name) LIKE CONCAT('%', upper(?3) , '%')) AND
+            (?4 IS NULL OR upper(u.status) LIKE CONCAT('%', upper(?4) , '%'))""", nativeQuery = true)
     Page<User> paginated(
             String nick,
             String name,
             String lastName,
             String status,
             Pageable pageable);
-
-
 
     /**
      * Método para buscar un user por su UUID y status sea diferente de X

@@ -15,22 +15,30 @@ import java.util.Optional;
 public interface ModuleRepository extends JpaRepository<Module, Long> {
 
     /**
-     * Metodo para buscar un module por su indexModule, name y status sea diferente de
+     * Metodo para buscar un module por su indexModule, name y status sea diferente
+     * de
      * X y este paginado
      * 
      * @param uuid
      * @return
      */
-    @Query(value = 
-                "SELECT * FROM GS_002_01.module m WHERE m.status != 'X' and (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%')) ",
-        countQuery = "SELECT count(*) FROM GS_002_01.module m WHERE m.status != 'X' and (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%'))",
-        nativeQuery = true
-    )
+    @Query(value = """
+            SELECT * FROM GS_002_01.module m WHERE
+            m.status != 'X' and
+            (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND
+            (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND
+            (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%')) """
+            , countQuery = """
+                    SELECT count(*) FROM GS_002_01.module m WHERE
+                    m.status != 'X' and
+                    (?1 IS NULL OR UPPER(m.index_module) LIKE CONCAT('%', UPPER(?1), '%')) AND
+                    (?2 IS NULL OR UPPER(m.name) LIKE CONCAT('%', UPPER(?2), '%')) AND
+                    (?3 IS NULL OR UPPER(m.status) LIKE CONCAT('%', UPPER(?3), '%'))""", nativeQuery = true)
     Page<Module> paginado(String indexModule, String name, String status, Pageable pageable);
 
-
     /**
-     * Método para buscar un module de lista de modules diferente de X y orderados por indexModule y por name
+     * Método para buscar un module de lista de modules diferente de X y orderados
+     * por indexModule y por name
      * 
      * @param uuid
      * @return

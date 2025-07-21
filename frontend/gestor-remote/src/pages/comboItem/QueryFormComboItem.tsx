@@ -78,7 +78,7 @@ const QueryFormComboItem = ({
    * Esquema de validación para el formulario de consulta de ComboItemes.
    */
   const schema = yup.object({
-    indexComboItem: yup.string().required(t("validation.required")),
+    indexComboItem: yup.string(),
     indexComboItemDescription: yup.string(),
     label: yup.string().max(1024, t("validation.max", { max: 1024 })),
   });

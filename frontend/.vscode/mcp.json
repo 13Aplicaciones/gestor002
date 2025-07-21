@@ -1,0 +1,11 @@
+{
+    "servers": {
+        "cleancode": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "mcp-clean-code"
+            ]
+        }
+    }
+}

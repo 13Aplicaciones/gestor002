@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Repository
 public interface InformationRepository extends JpaRepository<Information, Long> {
-    
+
     /**
      * Método para buscar una name(like) y que sea pageable.
      * 
@@ -26,10 +26,13 @@ public interface InformationRepository extends JpaRepository<Information, Long> 
      * @param pageable
      * @return
      */
-    @Query( value = 
-                "SELECT * FROM GS_002_01.information i WHERE (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))",
-            countQuery = "SELECT COUNT(*) FROM GS_002_01.information i WHERE (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))",
-            nativeQuery = true)    
+    @Query(value = """
+            SELECT * FROM GS_002_01.information i WHERE
+            (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))
+            """, countQuery = """
+            SELECT COUNT(*) FROM GS_002_01.information i WHERE
+            (?1 IS NULL OR upper(i.name) LIKE CONCAT('%', upper(?1), '%'))
+            """, nativeQuery = true)
     Page<Information> findByNameContaining(String name, Pageable pageable);
 
     /**

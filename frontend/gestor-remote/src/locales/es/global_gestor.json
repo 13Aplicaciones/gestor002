@@ -17,7 +17,11 @@
     "active": "Activar",
     "saveSatisfactory": "Guardado ({{status}})",
     "saveSatisfactoryDescription": "El registro se guardó satisfactoriamente",
-    "errorFetch": "Error en la petición {{error}}"
+    "errorFetch": "Error en la petición {{error}}",
+    "moverInicio": "Mover al inicio",
+    "moverFinal": "Mover al final",
+    "moverArriba": "Mover arriba",
+    "moverAbajo": "Mover abajo"
   },
   "validation": {
     "email": "Correo electrónico no válido",
@@ -319,22 +323,21 @@
         "create": "Crear Detalle de Combos por el Usuario"
       },
       "fields": {
+        
         "indexComboItem": {
-          "title": "Index Combo Item",
-          "placeholder": "Ejemplo: Item-001"
+          "title": "Index Item",
+          "placeholder": "Ejemplo: IT-001-01"
         },
-        "uuidCombo": {
-          "title": "UUID Combo",
-          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
-        },
+
         "label": {
-          "title": "Etiqueta del Detalle",
-          "placeholder": "Activo"
+          "title": "Etiqueta",
+          "placeholder": "Ejemplo: Activo"
         },
         "description": {
           "title": "Descripción",
           "placeholder": "Descripción del detalle del combo"
         },
+
         "codeNumber": {
           "title": "Cód. Número",
           "placeholder": "Ejemplo: 1"
@@ -343,6 +346,12 @@
           "title": "Cód. Texto",
           "placeholder": "Ejemplo: A"
         },
+
+        "order": {
+          "title": "Orden",
+          "placeholder": "Ejemplo: 1"
+        },
+
         "icon": {
           "title": "Nombre del Icono",
           "placeholder": "Ejemplo: TransparencyGridIcon"
@@ -367,6 +376,9 @@
           "placeholder": "Fecha del detalle del combo"
         },
 
+
+
+        
         "acciones": {
           "title": "Acciones",
           "placeholder": "",

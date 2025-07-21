@@ -124,7 +124,6 @@ public class UserService {
      */
     @InvokeUser
     public UserResponse updateStatus(String uuid, UserPatchStatusRequest userPatchStatusRequest) {
-
         User user = userRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("user no encontrado", HttpStatus.NOT_FOUND));
 

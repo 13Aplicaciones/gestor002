@@ -1,5 +1,6 @@
 package com.aplicaciones13.gestor.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -28,15 +29,19 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
      * 
      * @return página de ítems de combo
      */
-    @Query(value = "SELECT * FROM combo_item ci WHERE " +
-        "ci.id_combo = COALESCE(?1, 0) and " +
-        "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%')) and " +
-        "(?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))", countQuery = "SELECT COUNT(*) FROM combo_item ci WHERE " +
-            "ci.id_combo = COALESCE(?1, 0) and " +
-            "(?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%')) and " +
-            "(?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))", nativeQuery = true)
+    @Query(value = """
+            SELECT * FROM combo_item ci WHERE
+                ci.id_combo = COALESCE(?1, 0) and
+                (?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%')) and
+                (?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))
+                """, countQuery = """
+            SELECT COUNT(*) FROM combo_item ci WHERE
+                ci.id_combo = COALESCE(?1, 0) and
+                (?2 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?2), '%')) and
+                (?3 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?3), '%'))
+                """, nativeQuery = true)
     Page<ComboItem> findByIndexOrLabelOrDescriptionContaining(Long idCombo, String label, String description,
-        Pageable pageable);
+            Pageable pageable);
 
     /**
      * Método para buscar ítems de combo para un LOV (List of Values) por término de
@@ -46,17 +51,17 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
      * @param pageable   configuración de paginación
      * @return página de ítems de combo
      */
-    @Query(value = "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))"
-            +
-            " UNION ALL " +
-            "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))", countQuery = "SELECT COUNT(*) FROM ("
-                    +
-                    "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))"
-                    +
-                    " UNION ALL " +
-                    "SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))"
-                    +
-                    ") AS combined", nativeQuery = true)
+    @Query(value = """
+                SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))
+                UNION ALL
+                SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))
+            """, countQuery = """
+            SELECT COUNT(*) FROM (
+                SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.label) LIKE CONCAT('%', upper(?1), '%'))
+                UNION ALL
+                SELECT * FROM combo_item ci WHERE (?1 IS NULL OR upper(ci.description) LIKE CONCAT('%', upper(?1), '%'))
+            ) AS combined
+            """, nativeQuery = true)
     Page<ComboItem> findForLov(String searchTerm, Pageable pageable);
 
     /**
@@ -77,4 +82,13 @@ public interface ComboItemRepository extends JpaRepository<ComboItem, Long> {
      */
     @Query(value = "SELECT * FROM combo_item WHERE id_combo = ?1 ORDER BY orden ASC", nativeQuery = true)
     Page<ComboItem> findByIdCombo(Long idCombo, Pageable pageable);
+
+
+
+    /**
+     * Metodo para buscar todos los items del mismo id_codigo ordnados por orden
+     */
+    @Query(value = "SELECT * FROM combo_item WHERE id_combo = ?1 ORDER BY orden ASC", nativeQuery = true)
+    Optional<List<ComboItem>> findByIdCombo(Long idCombo);
+
 }
