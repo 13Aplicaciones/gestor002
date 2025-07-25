@@ -38,9 +38,6 @@ public class ModuleResponse implements Serializable {
     @Schema(description = "Listado de parametros asociados al módulo")
     private List<ParameterResponse> parameters;
 
-    @Schema(description = "Listado de user defined code asociados al módulo")
-    private List<UserDefinedCodeResponse> userDefinedCodes;
-
     @Schema(description = "Listado de menús asociados al módulo")
     private List<MenuResponse> menus;
 }

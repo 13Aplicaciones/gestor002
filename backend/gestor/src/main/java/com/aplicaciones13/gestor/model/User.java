@@ -56,6 +56,7 @@ public class User extends UuidUserDateApp {
     private Date incomeDate;
 
     @PrePersist
+    @Override
     protected void onCreate() {
         super.onCreate();
         status = "C";

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.aplicaciones13.orchestrator.mapping.MenuMapper;
 import com.aplicaciones13.orchestrator.mapping.ModuleMapper;
 import com.aplicaciones13.orchestrator.mapping.UserMapper;
-import com.aplicaciones13.orchestrator.model.ConfigPermission;
+import com.aplicaciones13.orchestrator.model.VConfigPermission;
 import com.aplicaciones13.orchestrator.model.User;
 import com.aplicaciones13.orchestrator.payload.response.MenuResponse;
 import com.aplicaciones13.orchestrator.payload.response.ModuleResponse;
@@ -43,7 +43,7 @@ public class UserService {
     public UserResponse findByNick(String nick) {
         User user = userRepository.findByNick(nick);
         UserResponse userResponse = UserMapper.INSTANCE.toResponse(user);
-        List<ConfigPermission> permissions = configPermissionRepository.findAllPermissionsByNick(user.getIdUser());
+        List<VConfigPermission> permissions = configPermissionRepository.findAllPermissionsByNick(user.getIdUser());
         String module = "module";
         ModuleResponse moduleResponse = new ModuleResponse();
         
@@ -51,7 +51,7 @@ public class UserService {
         permissions = acumularPermisos(permissions);
         userResponse.setModules(new ArrayList<>());
         
-        for (ConfigPermission permission : permissions) {
+        for (VConfigPermission permission : permissions) {
             MenuResponse menuResponse = MenuMapper.INSTANCE.toResponse(permission);
             if (!module.equals(permission.getModuleName())) {
                 moduleResponse = ModuleMapper.INSTANCE.toResponse(permission);
@@ -70,12 +70,12 @@ public class UserService {
      * @param permissions
      * @return
      */
-    private List<ConfigPermission> acumularPermisos(List<ConfigPermission> permissions) {
+    private List<VConfigPermission> acumularPermisos(List<VConfigPermission> permissions) {
         int index = -1;
         long idMenu = 0;
-        List<ConfigPermission> acumulado = new ArrayList<>();
+        List<VConfigPermission> acumulado = new ArrayList<>();
 
-        for (ConfigPermission permission : permissions) {
+        for (VConfigPermission permission : permissions) {
             if (idMenu != permission.getIdMenu()) {
                 acumulado.add(permission);
                 idMenu = permission.getIdMenu();

@@ -2,7 +2,7 @@ package com.aplicaciones13.orchestrator.mapping;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import com.aplicaciones13.orchestrator.model.Static;
+import com.aplicaciones13.orchestrator.model.VStatic;
 import com.aplicaciones13.orchestrator.payload.response.StaticResponse;
 
 
@@ -16,5 +16,5 @@ import com.aplicaciones13.orchestrator.payload.response.StaticResponse;
 public interface StaticMapper {
     StaticMapper INSTANCE = Mappers.getMapper(StaticMapper.class);
     
-    StaticResponse toResponse(Static staticTemp);
+    StaticResponse toResponse(VStatic staticTemp);
 }

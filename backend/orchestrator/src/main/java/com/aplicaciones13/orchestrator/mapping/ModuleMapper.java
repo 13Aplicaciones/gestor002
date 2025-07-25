@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.orchestrator.model.ConfigPermission;
+import com.aplicaciones13.orchestrator.model.VConfigPermission;
 import com.aplicaciones13.orchestrator.payload.response.ModuleResponse;
 
 /**
@@ -23,5 +23,5 @@ public interface ModuleMapper {
     @Mapping(target = "indexModule", source = "moduleIndex")
     @Mapping(target = "context", source = "moduleContext")
     @Mapping(target = "status", source = "moduleStatus")
-    ModuleResponse toResponse(ConfigPermission configPermission);
+    ModuleResponse toResponse(VConfigPermission configPermission);
 }

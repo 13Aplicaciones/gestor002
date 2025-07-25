@@ -21,7 +21,6 @@ import com.aplicaciones13.base.payload.common.LovResponse;
 import com.aplicaciones13.base.validations.ValidUUID;
 import com.aplicaciones13.gestor.payload.request.ComboItemPatchStatusRequest;
 import com.aplicaciones13.gestor.payload.request.ComboItemRequest;
-import com.aplicaciones13.gestor.payload.request.ComboRequest;
 import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.services.ComboItemService;
 import com.aplicaciones13.gestor.services.LovService;

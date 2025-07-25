@@ -5,11 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.orchestrator.payload.response.ParameterResponse;
 import com.aplicaciones13.orchestrator.payload.response.StaticResponse;
-import com.aplicaciones13.orchestrator.payload.response.UserDefinedCodeGroupResponse;
 import com.aplicaciones13.orchestrator.payload.response.UserResponse;
 import com.aplicaciones13.orchestrator.services.ParameterService;
 import com.aplicaciones13.orchestrator.services.StaticsService;
-import com.aplicaciones13.orchestrator.services.UserDefinedCodeService;
 import com.aplicaciones13.orchestrator.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +34,6 @@ public class StructureMenuController {
 
     private final ParameterService parameterService;
 
-    private final UserDefinedCodeService userDefinedCodeService;
-
     private final UserService userService;
 
     private final StaticsService staticsService;
@@ -55,10 +51,9 @@ public class StructureMenuController {
      * @param jwtService Servicio para manejar JWT
      */
     public StructureMenuController(ParameterService parameterService,
-            UserDefinedCodeService userDefinedCodeService, UserService userService,
+            UserService userService,
             StaticsService staticsService, JwtService jwtService) {
         this.parameterService = parameterService;
-        this.userDefinedCodeService = userDefinedCodeService;
         this.userService = userService;
         this.staticsService = staticsService;
         this.jwtService = jwtService;
@@ -72,17 +67,6 @@ public class StructureMenuController {
     @GetMapping("/parameter/module={module}")
     public ResponseEntity<List<ParameterResponse>> getParameters(@PathVariable String module) {
         List<ParameterResponse> response = parameterService.findParametersByModule_IndexModule(module);
-        return ResponseEntity.ok(response);
-    }
-
-    /**
-     * Metodo para obtener los UDC Modulos.
-     * 
-     * @return
-     */
-    @GetMapping("/udc/module={indexModule}")
-    public ResponseEntity<List<UserDefinedCodeGroupResponse>> getUdc(@PathVariable String indexModule) {
-        List<UserDefinedCodeGroupResponse> response = userDefinedCodeService.find(indexModule);
         return ResponseEntity.ok(response);
     }
 

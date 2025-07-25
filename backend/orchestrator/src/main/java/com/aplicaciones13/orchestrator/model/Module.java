@@ -51,9 +51,6 @@ public class Module extends UuidUserDateApp {
     @OneToMany(mappedBy = "module")
     private List<Parameter> parameters;
 
-    @OneToMany(mappedBy = "module")
-    private List<UserDefinedCode> userDefinedCodes;
-
     @PrePersist
     protected void onCreate() {
         super.onCreate();

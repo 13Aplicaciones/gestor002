@@ -11,9 +11,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Immutable
-@Table(name = "view_config_permission")
+@Table(name = "v_config_permission")
 @Data
-public class ConfigPermission {
+public class VConfigPermission {
 
     @Id
     @Column(name = "row_num")

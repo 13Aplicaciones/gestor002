@@ -1,6 +1,6 @@
 package com.aplicaciones13.orchestrator.repository;
 
-import com.aplicaciones13.orchestrator.model.ConfigPermission;
+import com.aplicaciones13.orchestrator.model.VConfigPermission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,8 +17,8 @@ import java.util.List;
  * 
  */
 @Repository
-public interface ConfigPermissionRepository extends JpaRepository<ConfigPermission, Long> {
-        
+public interface ConfigPermissionRepository extends JpaRepository<VConfigPermission, Long> {
+
     /**
      * Método que permite buscar todos los permisos de un usuario por su id.
      * 
@@ -41,5 +41,5 @@ public interface ConfigPermissionRepository extends JpaRepository<ConfigPermissi
             + "AND m.id_module = mo.id_module "
             + "order by mo.orden, m.orden" 
             , nativeQuery = true)
-    List<ConfigPermission> findAllPermissionsByNick(long idUser);
+    List<VConfigPermission> findAllPermissionsByNick(long idUser);
 }

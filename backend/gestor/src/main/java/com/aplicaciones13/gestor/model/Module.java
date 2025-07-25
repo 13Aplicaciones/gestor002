@@ -46,6 +46,7 @@ public class Module extends UuidUserDateApp {
     private Long orden;
 
     @PrePersist
+    @Override
     protected void onCreate() {
         super.onCreate();
         status = "C";

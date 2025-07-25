@@ -12,9 +12,9 @@ import lombok.Getter;
 
 @Entity
 @Immutable
-@Table(name = "view_menu")
+@Table(name = "v_static")
 @Getter
-public class Static {
+public class VStatic {
 
     //GS-MD-001
     @Id

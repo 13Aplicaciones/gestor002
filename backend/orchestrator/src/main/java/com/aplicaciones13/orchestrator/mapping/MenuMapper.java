@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.aplicaciones13.orchestrator.model.ConfigPermission;
+import com.aplicaciones13.orchestrator.model.VConfigPermission;
 import com.aplicaciones13.orchestrator.payload.response.MenuResponse;
 
 /**
@@ -27,5 +27,5 @@ public interface MenuMapper {
     @Mapping(target = "update", source = "update")
     @Mapping(target = "delete", source = "delete")
     @Mapping(target = "audit", source = "audit")
-    MenuResponse toResponse(ConfigPermission configPermission);
+    MenuResponse toResponse(VConfigPermission configPermission);
 }

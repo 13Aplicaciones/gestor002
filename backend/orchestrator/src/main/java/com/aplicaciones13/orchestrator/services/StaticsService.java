@@ -2,7 +2,7 @@ package com.aplicaciones13.orchestrator.services;
 
 import com.aplicaciones13.orchestrator.mapping.StaticMapper;
 import com.aplicaciones13.orchestrator.model.Menu;
-import com.aplicaciones13.orchestrator.model.Static;
+import com.aplicaciones13.orchestrator.model.VStatic;
 import com.aplicaciones13.orchestrator.payload.response.StaticResponse;
 
 import jakarta.persistence.EntityManager;
@@ -63,8 +63,8 @@ public class StaticsService {
             return new ArrayList<StaticResponse>();
         }
 
-        Query query = entityManager.createNativeQuery(menu.get().getStatisticsQuery(), Static.class);
-        List<Static> responseStatic = query.getResultList();
+        Query query = entityManager.createNativeQuery(menu.get().getStatisticsQuery(), VStatic.class);
+        List<VStatic> responseStatic = query.getResultList();
 
         return responseStatic.stream()
                 .map(StaticMapper.INSTANCE::toResponse)

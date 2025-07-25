@@ -1,5 +1,11 @@
 {
     "servers": {
+        "maven-deps-server": {
+            "command": "npx",
+            "args": [
+                "mcp-maven-deps"
+            ]
+        },
         "cleancode": {
             "command": "npx",
             "args": [
