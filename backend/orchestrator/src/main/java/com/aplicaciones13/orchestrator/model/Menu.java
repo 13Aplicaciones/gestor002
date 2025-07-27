@@ -1,14 +1,18 @@
 package com.aplicaciones13.orchestrator.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.hibernate.annotations.Immutable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
@@ -28,4 +32,10 @@ public class Menu implements Serializable {
     
     @Column(name="statistics_query", length = 128, nullable = false)
     private String statisticsQuery;
+
+    /* 
+    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_menu", referencedColumnName = "id_menu")
+    private List<Combo> combos;
+    */
 }

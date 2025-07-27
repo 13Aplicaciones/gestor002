@@ -1,15 +1,14 @@
 package com.aplicaciones13.keycloak.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.aplicaciones13.keycloak.config.KeycloakConfig;
 import com.aplicaciones13.keycloak.model.Credential;
 import com.aplicaciones13.keycloak.model.User;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class UserService {

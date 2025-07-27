@@ -21,31 +21,28 @@ import com.aplicaciones13.gestor.payload.response.ComboItemResponse;
 import com.aplicaciones13.gestor.repository.ComboItemRepository;
 import com.aplicaciones13.gestor.repository.ComboRepository;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Clase para el servicio de la entidad ComboItem.
  * 
  * @author omargo33
  * @since 2025-06-01
  */
-@Slf4j
 @Service
 @Transactional
 public class ComboItemService {
 
-    private final ComboItemRepository comboItemSearchRepository;
+    private final ComboItemRepository comboItemRepository;
     private final ComboRepository comboRepository;
     private final JwtService jwtService;
 
     /**
      * Constructor del servicio ComboItemService.
      * 
-     * @param comboItemSearchRepository
+     * @param comboItemRepository
      */
-    public ComboItemService(ComboItemRepository comboItemSearchRepository, ComboRepository comboRepository,
+    public ComboItemService(ComboItemRepository comboItemRepository, ComboRepository comboRepository,
             JwtService jwtService) {
-        this.comboItemSearchRepository = comboItemSearchRepository;
+        this.comboItemRepository = comboItemRepository;
         this.comboRepository = comboRepository;
         this.jwtService = jwtService;
     }
@@ -65,7 +62,7 @@ public class ComboItemService {
         Combo combo = comboRepository.findByUuid(uuidComboItem)
                 .orElse(new Combo());
 
-        return comboItemSearchRepository
+        return comboItemRepository
                 .findByIndexOrLabelOrDescriptionContaining(combo.getIdCombo(), label, description, pagingSort)
                 .map(ComboItemMapper.INSTANCE::toResponse);
     }
@@ -78,7 +75,7 @@ public class ComboItemService {
      * @throws ResourceHttpStatusException si no se encuentra el combo item
      */
     public ComboItemResponse findByUuid(String uuid) {
-        return comboItemSearchRepository.findByUuid(uuid)
+        return comboItemRepository.findByUuid(uuid)
                 .map(ComboItemMapper.INSTANCE::toResponse)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
     }
@@ -86,20 +83,20 @@ public class ComboItemService {
     /**
      * Método para actualizar el estado de un combo item.
      * 
-     * @param uuid
-     * @param comboItemSearchPatchStatusRequest
-     * @return
+     * @param uuid                              identificador único del combo item
+     * @param comboItemSearchPatchStatusRequest solicitud con el nuevo estado y
+     *                                          usuario de la aplicación
+     * @return respuesta con el combo item actualizado
      */
     @InvokeUser
     public ComboItemResponse updateStatus(String uuid, ComboItemPatchStatusRequest comboItemSearchPatchStatusRequest) {
-        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+        ComboItem comboItemSearch = comboItemRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
 
-        comboItemSearch.setStatus(comboItemSearchPatchStatusRequest.getUserApp());
         comboItemSearch.setStatus(comboItemSearchPatchStatusRequest.getStatus());
         comboItemSearch.setUser(jwtService.getUsername());
 
-        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        comboItemSearch = comboItemRepository.saveAndFlush(comboItemSearch);
         return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
     }
 
@@ -126,40 +123,38 @@ public class ComboItemService {
      *                Mover Abajo, LAST: Mover Final)
      */
     public void changeOrder(String uuid, String acction) {
-        int selectedPosition = 0;
-
-        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+        ComboItem comboItemPivot = comboItemRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
 
-        LinkedList<ComboItem> listComboItems = new LinkedList<>(comboItemSearchRepository
-                .findByIdCombo(comboItemSearch.getCombo().getIdCombo())
+        LinkedList<ComboItem> listComboItems = new LinkedList<>(comboItemRepository
+                .findByIdCombo(comboItemPivot.getIdCombo())
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItems not found", HttpStatus.NOT_FOUND)));
 
-        selectedPosition = listComboItems.indexOf(listComboItems.stream()
+        int selectedPosition = listComboItems.indexOf(listComboItems.stream()
                 .filter(item -> item.getUuid().equals(uuid))
                 .findFirst()
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND)));
 
         switch (acction) {
             case "FIRST": // Mover Top
-                comboItemSearch = listComboItems.remove(selectedPosition);
-                listComboItems.addFirst(comboItemSearch);
+                comboItemPivot = listComboItems.remove(selectedPosition);
+                listComboItems.addFirst(comboItemPivot);
                 break;
             case "UP": // Mover hacia arriba un item
                 if (selectedPosition > 0) {
-                    comboItemSearch = listComboItems.remove(selectedPosition);
-                    listComboItems.add(selectedPosition - 1, comboItemSearch);
+                    comboItemPivot = listComboItems.remove(selectedPosition);
+                    listComboItems.add(selectedPosition - 1, comboItemPivot);
                 }
                 break;
             case "DOWN": // Mover hacia abajo un item
                 if (selectedPosition < listComboItems.size() - 1) {
-                    comboItemSearch = listComboItems.remove(selectedPosition);
-                    listComboItems.add(selectedPosition + 1, comboItemSearch);
+                    comboItemPivot = listComboItems.remove(selectedPosition);
+                    listComboItems.add(selectedPosition + 1, comboItemPivot);
                 }
                 break;
             case "LAST": // Mover al final
-                comboItemSearch = listComboItems.remove(selectedPosition);
-                listComboItems.addLast(comboItemSearch);
+                comboItemPivot = listComboItems.remove(selectedPosition);
+                listComboItems.addLast(comboItemPivot);
                 break;
             default:
                 break;
@@ -168,7 +163,7 @@ public class ComboItemService {
         AtomicInteger counter = new AtomicInteger(1);
         listComboItems.forEach(item -> {
             item.setOrden(counter.getAndIncrement());
-            comboItemSearchRepository.saveAndFlush(item);
+            comboItemRepository.saveAndFlush(item);
         });
     }
 
@@ -181,7 +176,7 @@ public class ComboItemService {
     @InvokeUser
     public ComboItemResponse create(ComboItemRequest comboItemSearchRequest) {
         ComboItem comboItemSearch = ComboItemMapper.INSTANCE.toEntity(comboItemSearchRequest);
-        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        comboItemSearch = comboItemRepository.saveAndFlush(comboItemSearch);
         return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
     }
 
@@ -195,7 +190,7 @@ public class ComboItemService {
      */
     @InvokeUser
     public ComboItemResponse update(String uuid, ComboItemRequest comboItemSearchRequest) {
-        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+        ComboItem comboItemSearch = comboItemRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
 
         comboItemSearch.setIndexComboItem(comboItemSearchRequest.getIndexComboItem());
@@ -209,7 +204,7 @@ public class ComboItemService {
         comboItemSearch.setStatus(comboItemSearchRequest.getStatus());
         comboItemSearch.setUserApp(comboItemSearchRequest.getUserApp());
 
-        comboItemSearch = comboItemSearchRepository.saveAndFlush(comboItemSearch);
+        comboItemSearch = comboItemRepository.saveAndFlush(comboItemSearch);
         return ComboItemMapper.INSTANCE.toResponse(comboItemSearch);
     }
 
@@ -220,8 +215,8 @@ public class ComboItemService {
      * @throws ResourceHttpStatusException si no se encuentra el combo item
      */
     public void delete(String uuid) {
-        ComboItem comboItemSearch = comboItemSearchRepository.findByUuid(uuid)
+        ComboItem comboItemSearch = comboItemRepository.findByUuid(uuid)
                 .orElseThrow(() -> new ResourceHttpStatusException("ComboItem not found", HttpStatus.NOT_FOUND));
-        comboItemSearchRepository.delete(comboItemSearch);
+        comboItemRepository.delete(comboItemSearch);
     }
 }

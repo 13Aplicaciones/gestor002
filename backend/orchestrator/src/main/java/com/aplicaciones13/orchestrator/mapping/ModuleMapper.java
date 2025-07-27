@@ -23,5 +23,6 @@ public interface ModuleMapper {
     @Mapping(target = "indexModule", source = "moduleIndex")
     @Mapping(target = "context", source = "moduleContext")
     @Mapping(target = "status", source = "moduleStatus")
+    @Mapping(target = "idModule", source = "moduleIdModule")
     ModuleResponse toResponse(VConfigPermission configPermission);
 }

@@ -1,5 +1,6 @@
 package com.aplicaciones13.orchestrator.payload.response;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -19,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ModuleResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Hidden
+    private Long idModule;
 
     @Schema(description = "UUID del registro para busquedas", example = "550e8400-e29b-41d4-a716-446655440000")
     private String uuid;
@@ -40,4 +44,7 @@ public class ModuleResponse implements Serializable {
 
     @Schema(description = "Listado de menús asociados al módulo")
     private List<MenuResponse> menus;
+
+    @Schema(description = "Listado de combos asociados al módulo")
+    private List<ComboResponse> combos;
 }

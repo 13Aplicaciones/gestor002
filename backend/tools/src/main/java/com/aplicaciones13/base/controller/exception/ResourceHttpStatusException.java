@@ -17,8 +17,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceHttpStatusException extends RuntimeException {
-    
-    private HttpStatusCode httpStatusCode;
+
+    private final HttpStatusCode httpStatusCode;
 
     /**
      * Constructor de la clase.
@@ -27,7 +27,6 @@ public class ResourceHttpStatusException extends RuntimeException {
      */
     public ResourceHttpStatusException(String message, HttpStatusCode httpStatusCode) {
         super(message);
-        setHttpStatusCode(httpStatusCode);
+        this.httpStatusCode = httpStatusCode;
     }
 }
-
