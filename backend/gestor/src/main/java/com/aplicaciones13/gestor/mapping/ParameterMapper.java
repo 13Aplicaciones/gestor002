@@ -8,6 +8,12 @@ import com.aplicaciones13.gestor.model.Parameter;
 import com.aplicaciones13.gestor.payload.request.ParameterRequest;
 import com.aplicaciones13.gestor.payload.response.ParameterResponse;
 
+/**
+ * Mapper para la entidad Parameter.
+ * 
+ * @author omargo33
+ * @since 2025-01-10
+ */
 @Mapper
 public interface ParameterMapper {
     ParameterMapper INSTANCE = Mappers.getMapper(ParameterMapper.class);

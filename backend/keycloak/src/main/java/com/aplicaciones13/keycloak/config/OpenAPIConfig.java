@@ -15,7 +15,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 @Configuration
 public class OpenAPIConfig {
 
-    //TODO agregar bearer
     /**
      * Configura el OpenAPI 3.0, con la información del proyecto y el esquema de
      * seguridad.

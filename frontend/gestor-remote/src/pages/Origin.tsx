@@ -14,10 +14,6 @@ import { FormEditModule } from "./module/FormEditModule";
 import { WorkModule } from "./module/WorkModule";
 import { QueryModule } from "./module/QueryModule";
 import { createIRowDataModule } from "./module/structures/Types";
-import { FormEditUser } from "./user/FormEditUser";
-import { WorkUser } from "./user/WorkUser";
-import { QueryUser } from "./user/QueryUser";
-import { createIRowDataUser } from "./user/structures/Types";
 import { createIRowDataComboItem } from "./comboItem/structures/Types";
 import { FormEditComboItem } from "./comboItem/FormComboItem";
 import { QueryComboItem } from "./comboItem/QueryComboItem";
@@ -105,16 +101,6 @@ const Origin = ({ name }: { name: string }) => {
             QueryPanel={QueryModule}
             WorkPanel={WorkModule}
             FormPanel={FormEditModule}
-          />
-        );
-      case Menus.USER:
-        return (
-          <PageCrud
-            tranlation={Menus.USER}
-            createIRowDataCustom={createIRowDataUser}
-            QueryPanel={QueryUser}
-            WorkPanel={WorkUser}
-            FormPanel={FormEditUser}
           />
         );
       case Menus.COMBO_ITEM:

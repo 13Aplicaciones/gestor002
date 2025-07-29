@@ -8,6 +8,12 @@ import com.aplicaciones13.gestor.model.Combo;
 import com.aplicaciones13.gestor.payload.request.ComboRequest;
 import com.aplicaciones13.gestor.payload.response.ComboResponse;
 
+/**
+ * Mapper para la entidad Combo.
+ * 
+ * @author omargo33
+ * @since 2025-06-01
+ */
 @Mapper
 public interface ComboMapper {
     ComboMapper INSTANCE = Mappers.getMapper(ComboMapper.class);

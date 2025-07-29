@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.orchestrator.payload.response.ParameterResponse;
 import com.aplicaciones13.orchestrator.payload.response.StaticResponse;
-import com.aplicaciones13.orchestrator.payload.response.UserResponse;
-
 import com.aplicaciones13.orchestrator.services.ParameterService;
 import com.aplicaciones13.orchestrator.services.StaticsService;
-import com.aplicaciones13.orchestrator.services.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,8 +36,6 @@ public class StructureMenuController {
 
     private final ParameterService parameterService;
 
-    private final UserService userService;
-
     private final StaticsService staticsService;
 
     private final JwtService jwtService;
@@ -57,10 +52,9 @@ public class StructureMenuController {
     public StructureMenuController(
             JwtService jwtService,
             StaticsService staticsService,
-            UserService userService,
+            //UserService userService,
             ParameterService parameterService) {
         this.parameterService = parameterService;
-        this.userService = userService;
         this.staticsService = staticsService;
         this.jwtService = jwtService;
     }
@@ -87,6 +81,7 @@ public class StructureMenuController {
      * 
      * @return
      */
+    /* 
     @GetMapping("/modules")
     @Operation(summary = "Obtener modulos por usuario", description = "Este endpoint permite obtener los modulos a los que un usuario tiene acceso", responses = {
             @ApiResponse(responseCode = "200", description = "Contenedor de la respuesta de los modulos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))) })
@@ -94,7 +89,7 @@ public class StructureMenuController {
         String nick = jwtService.getUsername();
         UserResponse response = userService.findByNick(nick);
         return ResponseEntity.ok(response);
-    }
+    }*/
 
     /**
      * Metodo para obtener las estadisticas de los menus.

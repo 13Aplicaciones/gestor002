@@ -1,18 +1,26 @@
 {
   "folders": [
     {
-      "path": "."
+      "path": "api-fetch"
+    },
+    {
+      "path": "frontend-oauth2"
+    },
+    {
+      "path": "gestor-remote"
+    },
+    {
+      "path": "orchestrator-remote"
+    },
+    {
+      "path": "portal"
+    },
+    {
+      "path": "ux-ui"
     }
   ],
   "settings": {
     "files.exclude": {
-      "api-fetch": false,
-      "demo-remote": true,
-      "frontend-oauth2": true,
-      "gestor-remote": false,
-      "orchestrator-remote": false,
-      "portal": false,
-      "ux-ui": false,
       "**/node_modules": true,
       "**/dist": true,
       ".vscode": false,

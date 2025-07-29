@@ -9,6 +9,12 @@ import com.aplicaciones13.gestor.payload.request.ModuleRequest;
 import com.aplicaciones13.gestor.payload.response.ModuleListaResponse;
 import com.aplicaciones13.gestor.payload.response.ModuleResponse;
 
+/**
+ * Mapper para la entidad Module.
+ * 
+ * @author omargo33
+ * @since 2025-01-10
+ */
 @Mapper
 public interface ModuleMapper {
     ModuleMapper INSTANCE = Mappers.getMapper(ModuleMapper.class);

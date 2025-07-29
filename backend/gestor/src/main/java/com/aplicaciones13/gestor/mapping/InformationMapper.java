@@ -8,6 +8,12 @@ import com.aplicaciones13.gestor.model.Information;
 import com.aplicaciones13.gestor.payload.request.InformationRequest;
 import com.aplicaciones13.gestor.payload.response.InformationResponse;
 
+/**
+ * Mapper para la entidad Information.
+ * 
+ * @author omargo33
+ * @since 2025-01-10
+ */
 @Mapper
 public interface InformationMapper {
     InformationMapper INSTANCE = Mappers.getMapper(InformationMapper.class);

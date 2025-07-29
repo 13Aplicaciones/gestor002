@@ -18,11 +18,7 @@ export const Menus: { [key: string]: string } = {
     // menu modules
     MODULE_ENDPOINT: "/modules",
     MODULE: "GS-MD-001",
-    
-    // menu user
-    USER_ENDPOINT: "/users",
-    USER: "GS-US-001",
-
+  
     // menu user credentials
     CREDENTIALS_ENDPOINT: "/token",
     CREDENTIALS: "GS-UC-001",
