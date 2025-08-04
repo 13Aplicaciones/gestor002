@@ -323,7 +323,6 @@
         "create": "Crear Detalle de Combos por el Usuario"
       },
       "fields": {
-        
         "indexComboItem": {
           "title": "Index Item",
           "placeholder": "Ejemplo: IT-001-01"
@@ -376,9 +375,6 @@
           "placeholder": "Fecha del detalle del combo"
         },
 
-
-
-        
         "acciones": {
           "title": "Acciones",
           "placeholder": "",

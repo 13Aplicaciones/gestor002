@@ -10,10 +10,10 @@
 			"path": "keycloak"
 		},
 		{
-			"path": "orchestrator"
+			"path": "tools"
 		},
 		{
-			"path": "tools"
+			"path": "orchestrator"
 		}
 	],
 	"settings": {

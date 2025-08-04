@@ -16,9 +16,9 @@ import com.aplicaciones13.gestor.payload.response.ParameterResponse;
 import com.aplicaciones13.gestor.services.ParameterService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
-@Valid
+@Validated
 @RestController
 @RequestMapping("/api/parameters")
 @Tag(name = "Parameters", description = "Servicio para CRUD de Parameters")
@@ -43,7 +43,7 @@ public class ParameterController {
     }
 
     @PostMapping
-    public ResponseEntity<ParameterResponse> crearParameter(@RequestBody @Valid ParameterRequest request) {
+    public ResponseEntity<ParameterResponse> crearParameter(@RequestBody @Validated ParameterRequest request) {
         ParameterResponse response = parameterService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -51,7 +51,7 @@ public class ParameterController {
     @PutMapping("/{index}")
     public ResponseEntity<ParameterResponse> actualizarParameter(
             @PathVariable String index,
-            @RequestBody @Valid ParameterRequest request) {
+            @RequestBody @Validated ParameterRequest request) {
         ParameterResponse response = parameterService.update(index, request);
         return ResponseEntity.ok(response);
     }

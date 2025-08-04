@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 @RestController
 @RequestMapping("/api/information")
@@ -67,7 +67,7 @@ public class InformationController {
      * @return Respuesta con la information creada.
      */
     @PostMapping
-    public ResponseEntity<InformationResponse> crearInformation(@RequestBody @Valid InformationRequest request) {
+    public ResponseEntity<InformationResponse> crearInformation(@RequestBody @Validated InformationRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(informationService.create(request));
     }
 
@@ -81,7 +81,7 @@ public class InformationController {
     @PutMapping("/{uuid}")
     public ResponseEntity<InformationResponse> actualizarInformation(
             @PathVariable String uuid,
-            @Valid @RequestBody InformationRequest informationrRequest) {
+            @Validated @RequestBody InformationRequest informationrRequest) {
         return ResponseEntity.ok(informationService.update(uuid, informationrRequest));
     }
 

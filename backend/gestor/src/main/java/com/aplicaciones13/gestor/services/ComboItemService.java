@@ -57,9 +57,9 @@ public class ComboItemService {
      * @param pagingSort     configuración de paginación y ordenamiento
      * @return página de combo items
      */
-    public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String uuidComboItem, String label,
+    public Page<ComboItemResponse> findByIndexOrLabelOrDescription(String uuidCombo, String label,
             String description, Pageable pagingSort) {
-        Combo combo = comboRepository.findByUuid(uuidComboItem)
+        Combo combo = comboRepository.findByUuid(uuidCombo)
                 .orElse(new Combo());
 
         return comboItemRepository

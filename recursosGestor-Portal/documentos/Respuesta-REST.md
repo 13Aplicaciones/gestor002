@@ -33,7 +33,7 @@
 - **PUT:** Se usa 200 OK para actualizaciones exitosas y 404 Not Found si el recurso no existe.
 - **DELETE:** Se utiliza 204 No Content para indicar que el recurso se ha eliminado correctamente.
 - **POST:** Se utiliza 201 Created para indicar que se ha creado un nuevo recurso y 200 OK si se actualiza un recurso existente.
-
+- **PATCH**, Se usa 200 OK para actualizacion exitosa y 404 Not Found si el recurso no existe.
 ### Consideraciones Adicionales
 
 - **Semántica de los métodos:** Es importante respetar la semántica de cada método HTTP. Por ejemplo, un PUT debe actualizar un recurso completamente, mientras que un PATCH puede realizar actualizaciones parciales.

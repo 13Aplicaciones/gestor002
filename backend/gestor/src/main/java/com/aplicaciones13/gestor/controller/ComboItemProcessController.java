@@ -12,7 +12,7 @@ import com.aplicaciones13.gestor.services.ComboItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Clase controladora para las operaciones de user.
@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
  * @autor omargo33
  * @since 2025-01-12
  */
-@Valid
+@Validated
 @RestController
 @RequestMapping("/api/combo-item/process")
 @Tag(name = "Combo Item Operaciones", description = "Operaciones relacionadas con combo items")

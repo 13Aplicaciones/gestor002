@@ -87,7 +87,6 @@ const WorkModule = ({
               <Tabs.Trigger value="cdu">
                 {t("modules.GS-CB-001.title")}
               </Tabs.Trigger>
-              <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
               <Tabs.Trigger value="parameters">Parametros</Tabs.Trigger>
             </Tabs.List>
 
@@ -106,9 +105,6 @@ const WorkModule = ({
                   FormPanel={FormEditCombo}
                   initialRow={{ uuidModule: row?.uuid }}
                 />
-              </Tabs.Content>
-              <Tabs.Content value="roles">
-                <Text size="2">Work Roles</Text>
               </Tabs.Content>
               <Tabs.Content value="parameters">
                 <Text size="2">Work Parameters</Text>

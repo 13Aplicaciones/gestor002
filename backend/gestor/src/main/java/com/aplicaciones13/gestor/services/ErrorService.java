@@ -122,7 +122,6 @@ public class ErrorService {
     public ErrorResponse create(ErrorRequest errorRequest) {        
         validateUniqueIndexError(errorRequest.getIndexError());
         Error error = ErrorMapper.INSTANCE.toEntity(errorRequest);
-        //error.setUser(errorRequest.getUserHidden());
         error.setUser(jwtService.getUsername());    
         error = errorRepository.saveAndFlush(error);
         return ErrorMapper.INSTANCE.toResponse(error);

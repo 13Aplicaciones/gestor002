@@ -1,12 +1,14 @@
 package com.aplicaciones13.gestor.model;
 
-import com.aplicaciones13.base.model.common.UserDateApp;
+import com.aplicaciones13.base.model.common.UuidUserDateApp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -25,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "menu")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Menu extends UserDateApp {
+public class Menu extends UuidUserDateApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,8 +52,12 @@ public class Menu extends UserDateApp {
     @Column(length = 8, nullable = false)
     private String status; // Status del menú (ej. A=activo, I=inactivo)
 
-    @Column
-    private Long order; // Order de visualización del menú
+    @Column(name = "orden")
+    private Long order; 
+
+    @ManyToOne
+    @JoinColumn(name = "id_module", insertable = false, updatable = false)
+    private Module module; // Relación con el módulo al que pertenece el menú
 
     @PrePersist
     public void prePersist() {

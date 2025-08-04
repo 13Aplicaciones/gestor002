@@ -22,6 +22,7 @@ public interface ComboMapper {
     @Mapping(target = "userDate", ignore = true)
     @Mapping(target = "uuid", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "idModule", ignore = true)
     Combo toEntity(ComboRequest request);
     
     ComboResponse toResponse(Combo combo);

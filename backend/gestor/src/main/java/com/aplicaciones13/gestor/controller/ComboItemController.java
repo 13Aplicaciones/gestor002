@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -69,7 +69,7 @@ public class ComboItemController {
     @Operation(summary = "Actualizar ítem de combo", description = "Actualiza un ítem de combo existente")
     public ResponseEntity<ComboItemResponse> actualizarComboItem(
             @PathVariable @ValidUUID String uuid,
-            @Valid @RequestBody ComboItemRequest comboItemRequest) {
+            @Validated @RequestBody ComboItemRequest comboItemRequest) {
         return ResponseEntity.ok(comboItemService.update(uuid, comboItemRequest));
     }
 
@@ -85,7 +85,7 @@ public class ComboItemController {
     @Operation(summary = "Actualizar estado de ítem de combo", description = "Actualiza el estado de un ítem de combo existente")
     public ResponseEntity<ComboItemResponse> patchCombo(
             @PathVariable @ValidUUID String uuid,
-            @RequestBody @Valid ComboItemPatchStatusRequest comboItemPatchStatusRequest) {
+            @RequestBody @Validated ComboItemPatchStatusRequest comboItemPatchStatusRequest) {
         return ResponseEntity.ok(comboItemService.updateStatus(uuid, comboItemPatchStatusRequest));
     }
 
@@ -97,7 +97,7 @@ public class ComboItemController {
      */
     @PostMapping
     @Operation(summary = "Crear ítem de combo", description = "Crea un nuevo ítem de combo")
-    public ResponseEntity<ComboItemResponse> crearComboItem(@RequestBody @Valid ComboItemRequest request) {
+    public ResponseEntity<ComboItemResponse> crearComboItem(@RequestBody @Validated ComboItemRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(comboItemService.create(request));
     }
 

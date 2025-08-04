@@ -17,11 +17,11 @@ import com.aplicaciones13.base.payload.common.UserDateAppResponse;
 @Schema(description = "DTO para la respuesta de la entidad Menu")
 public class MenuResponse extends UserDateAppResponse {
 
-    @Schema(description = "Identificador único del menú", example = "1")
-    private Long idMenu;
+    @Schema(description = "UUID del registro para búsquedas", example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
+    private String uuid;
 
-    @Schema(description = "Identificador del módulo al que pertenece el menú", example = "2")
-    private Long idModule;
+    @Schema(description = "UUID del módulo al que pertenece el menú", example = "550e8400-e29b-41d4-a716-446655440000")
+    private String uuidModule;
 
     @Schema(description = "Type de menú", example = "principal")
     private String type;

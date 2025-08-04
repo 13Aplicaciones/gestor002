@@ -16,13 +16,13 @@ import com.aplicaciones13.orchestrator.payload.response.MenuResponse;
 @Mapper
 public interface MenuMapper {
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);
-    
+
     @Mapping(target = "indexMenu", source = "menuIndex")
     @Mapping(target = "name", source = "menuName")
     @Mapping(target = "type", source = "menuType")
     @Mapping(target = "taskFlow", source = "menuTaskFlow")
     @Mapping(target = "status", source = "menuStatus")
-    @Mapping(target = "order", source = "menuOrden") 
+    @Mapping(target = "order", source = "menuOrden")
     @Mapping(target = "create", source = "create")
     @Mapping(target = "update", source = "update")
     @Mapping(target = "delete", source = "delete")

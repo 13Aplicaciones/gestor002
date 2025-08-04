@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 /**
  * Controlador para el CRUD de Modules
@@ -37,7 +37,7 @@ import jakarta.validation.Valid;
  * @author omargo33
  * @since 2025-01-25
  */
-@Valid
+@Validated
 @RestController
 @RequestMapping("/api/modules")
 @Tag(name = "Modules", description = "Servicio para CRUD de Modules")
@@ -82,7 +82,7 @@ public class ModuleController {
             @ApiResponse(responseCode = "200", description = "Module", content = @Content(schema = @Schema(implementation = ModuleResponse.class))),
     })
     @PostMapping
-    public ResponseEntity<ModuleResponse> crearModule(@RequestBody @Valid ModuleRequest request) {
+    public ResponseEntity<ModuleResponse> crearModule(@RequestBody @Validated ModuleRequest request) {
         ModuleResponse response = moduleService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -102,7 +102,7 @@ public class ModuleController {
     @PutMapping("/{uuid}")
     public ResponseEntity<ModuleResponse> actualizarModule(
             @PathVariable String uuid,
-            @RequestBody @Valid ModuleRequest request) {
+            @RequestBody @Validated ModuleRequest request) {
         return ResponseEntity.ok(moduleService.update(uuid, request));
     }
 

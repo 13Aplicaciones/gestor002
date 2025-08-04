@@ -1,6 +1,7 @@
 package com.aplicaciones13.gestor.payload.request;
 
 import com.aplicaciones13.base.payload.common.AppRequest;
+import com.aplicaciones13.base.validations.ValidUUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -20,15 +21,13 @@ import lombok.EqualsAndHashCode;
 public class MenuRequest extends AppRequest {
 
     @NotNull
-    @Schema(description = "Id del menú", example = "1")
-    private Long idMenu;
-
-    @Schema(description = "Id del módulo al que pertenece el menú", example = "2")
-    private Long idModule;
+    @ValidUUID
+    @Schema(description = "UUID del módulo al que pertenece el menú", example = "0ca1c748-e1de-11ef-a71a-70a8d3365682")
+    private String uuidModule;
 
     @NotNull
-    @Size(max = 32)
-    @Schema(description = "Type del menú", example = "principal")
+    @Size(max = 8)
+    @Schema(description = "Type del menú", example = "P")
     private String type;
 
     @NotNull
@@ -46,7 +45,7 @@ public class MenuRequest extends AppRequest {
     private String taskFlow;
 
     @NotNull
-    @Schema(description = "Status del menú (activo/inactivo)", example = "activo")
+    @Schema(description = "Status del menú (activo/inactivo)", example = "A")
     private String status;
 
     @Schema(description = "Order de visualización del menú", example = "1")

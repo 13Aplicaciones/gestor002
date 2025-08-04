@@ -25,6 +25,7 @@ import com.aplicaciones13.base.model.exception.ForeignKeyException;
 import com.aplicaciones13.base.tools.Conversions;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -81,54 +82,75 @@ public class ControllerGeneric {
             ForeignKeyException.class,
             HandlerMethodValidationException.class,
             HttpMessageNotReadableException.class,
-            MethodArgumentNotValidException.class
+            MethodArgumentNotValidException.class,
+            ConstraintViolationException.class
     })
     public ResponseEntity<Map<String, String>> handleExceptions(Object ex) {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                     .getRequest();
-            errors.put("details", "uri=" + ((HttpServletRequest) request).getRequestURI());
+            errors.put("details", "uri=" + request.getRequestURI());
         } catch (Exception e) {
             log.warn("No se localiza el  URI: {}", e);
         }
         errors.put("timestamp", Conversions.dateToStringFormat(new Date(), Conversions.ISO_8601_LARGA));
 
-        if (ex instanceof MethodArgumentNotValidException) {
+        if (ex instanceof MethodArgumentNotValidException exPivot) {
             return ResponseEntity.badRequest().body(
-                    validationMethodArgumentExceptions((MethodArgumentNotValidException) ex));
+                    validationMethodArgumentExceptions(exPivot));
         }
 
-        if (ex instanceof ForeignKeyException) {
-            return ResponseEntity.badRequest().body(foreignKeyExceptions((ForeignKeyException) ex));
+        if (ex instanceof ForeignKeyException exPivot) {
+            return ResponseEntity.badRequest().body(foreignKeyExceptions(exPivot));
         }
 
         if (ex instanceof EmptyResultDataAccessException) {
             return ResponseEntity.badRequest().body(emptyResultDataAccessException());
         }
 
-        if (ex instanceof HttpMessageNotReadableException) {
+        if (ex instanceof HttpMessageNotReadableException exPivot) {
             return ResponseEntity.badRequest()
-                    .body(httpMessageNotReadableException((HttpMessageNotReadableException) ex));
+                    .body(httpMessageNotReadableException(exPivot));
         }
 
-        if (ex instanceof DataIntegrityViolationException) {
+        if (ex instanceof DataIntegrityViolationException exPivot) {
             return ResponseEntity.badRequest()
-                    .body(sqlIntegrityConstraintViolationException((DataIntegrityViolationException) ex));
+                    .body(sqlIntegrityConstraintViolationException(exPivot));
         }
 
-        if (ex instanceof HandlerMethodValidationException) {
-            // Validacion de metodos de payload request
-            if (ex instanceof MethodArgumentNotValidException) {
+        if (ex instanceof HandlerMethodValidationException exPivot) {
+            if (ex instanceof MethodArgumentNotValidException exPivot2) {
                 return ResponseEntity.badRequest()
-                        .body(validationMethodArgumentExceptions((MethodArgumentNotValidException) ex));
+                        .body(validationMethodArgumentExceptions(exPivot2));
             }
-            // Validacion de pathVariable
             return ResponseEntity.badRequest()
-                    .body(validationPathVariableArgumentExceptions((HandlerMethodValidationException) ex));
+                    .body(validationPathVariableArgumentExceptions(exPivot));
+        }
+
+        if (ex instanceof ConstraintViolationException exPivot) {
+            return ResponseEntity.badRequest()
+                    .body(validationConstraintViolationException(exPivot));
         }
 
         errors.put(getControllerMapping(), "E-GS00100-2");
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    /**
+     * Metodo para informar errores de validacion personalizada de constraints.
+     * 
+     * Valida UUID
+     * 
+     * @param ex
+     * @return
+     */
+    private Map<String, String> validationConstraintViolationException(ConstraintViolationException ex) {
+        ex.getConstraintViolations().forEach(violation -> {
+            String fieldName = violation.getPropertyPath().toString();
+            String errorMessage = violation.getMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
 
     /**
@@ -138,7 +160,7 @@ public class ControllerGeneric {
      * @return
      */
     private Map<String, String> validationPathVariableArgumentExceptions(HandlerMethodValidationException ex) {
-        ((HandlerMethodValidationException) ex).getAllErrors().forEach(error -> {
+        ex.getAllErrors().forEach(error -> {
             String errorMessage = error.getDefaultMessage();
             String fieldName = "";
             try {
@@ -227,9 +249,9 @@ public class ControllerGeneric {
         String message = ex.toString();
         if (message.lastIndexOf("java.util.Date") > 1) {
             errors.put(getControllerMapping(), "E-GS00100-18");
-        } else if (message.toString().toUpperCase().lastIndexOf(" ENUM ") > 1) {
-            int inicio = message.toString().lastIndexOf("[");
-            int fin = message.toString().lastIndexOf("]");
+        } else if (message.toUpperCase().lastIndexOf(" ENUM ") > 1) {
+            int inicio = message.lastIndexOf("[");
+            int fin = message.lastIndexOf("]");
             errors.put(getControllerMapping(), message.substring(inicio + 1, fin));
         } else {
             log.warn("Falta validacion de {} para {}", ex.getClass().getName(), ex.toString());
@@ -257,5 +279,5 @@ public class ControllerGeneric {
         log.warn("La integridad esta comprometida en: {} y {}", message, messageRoot);
         errors.put(getControllerMapping(), message);
         return errors;
-    }    
+    }
 }

@@ -73,25 +73,6 @@ public class StructureMenuController {
     }
 
     /**
-     * Metodo para obtener los menus que un usuario (Oauth2) tiene acceso.
-     * 
-     * Lista<Modulos>
-     * -> lista<Menus>
-     * -> lista<Permisos>
-     * 
-     * @return
-     */
-    /* 
-    @GetMapping("/modules")
-    @Operation(summary = "Obtener modulos por usuario", description = "Este endpoint permite obtener los modulos a los que un usuario tiene acceso", responses = {
-            @ApiResponse(responseCode = "200", description = "Contenedor de la respuesta de los modulos", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))) })
-    public ResponseEntity<UserResponse> getModules() {
-        String nick = jwtService.getUsername();
-        UserResponse response = userService.findByNick(nick);
-        return ResponseEntity.ok(response);
-    }*/
-
-    /**
      * Metodo para obtener las estadisticas de los menus.
      * 
      * @param index

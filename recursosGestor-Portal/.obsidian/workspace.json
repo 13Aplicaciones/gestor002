@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Muleto.md",
+                "file": "documentos/Respuesta-REST.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Muleto"
+              "title": "Respuesta-REST"
             }
           }
         ]
@@ -171,18 +171,18 @@
   },
   "active": "b242c8ffcdfde691",
   "lastOpenFiles": [
+    "documentos/CORS.md",
+    "documentos/ArquitecturaReact.md",
+    "SitosUI-Investigacion.canvas",
     "MuletoBackend.md",
     "Muleto.md",
     "Investigaciones.md",
     "mega Check list.md",
     "SitiosAyuda.canvas",
-    "SitosUI-Investigacion.canvas",
     "idea/arquitectura.md",
     "Excalidraw/Drawing 2025-04-03 11.39.55.excalidraw.md",
     "idea",
-    "documentos/ArquitecturaReact.md",
     "documentos/ejemplo toast.md",
-    "documentos/CORS.md",
     "documentos/Respuesta-REST.md",
     "documentos/Seguridades.pdf"
   ]

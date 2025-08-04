@@ -23,7 +23,7 @@ import com.aplicaciones13.gestor.payload.response.ErrorResponse;
 import com.aplicaciones13.gestor.services.ErrorService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Controlador de errores.
@@ -32,7 +32,7 @@ import jakarta.validation.Valid;
  * @since 2025-01-12
  * 
  */
-@Valid
+@Validated
 @RestController
 @RequestMapping("/api/errors")
 @Tag(name = "Errores", description = "Servicio para CRUD de Errores")
@@ -82,7 +82,7 @@ public class ErrorController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<ErrorResponse> createError(@RequestBody @Valid ErrorRequest errorRequest) {
+    public ResponseEntity<ErrorResponse> createError(@RequestBody @Validated ErrorRequest errorRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(errorService.create(errorRequest));
     }
 
@@ -96,7 +96,7 @@ public class ErrorController {
     @PutMapping("/{uuid}")
     public ResponseEntity<ErrorResponse> updateError(
             @PathVariable @ValidUUID String uuid,
-            @RequestBody @Valid ErrorRequest errorRequest) {
+            @RequestBody @Validated ErrorRequest errorRequest) {
         return ResponseEntity.ok(errorService.update(uuid, errorRequest));
     }
 

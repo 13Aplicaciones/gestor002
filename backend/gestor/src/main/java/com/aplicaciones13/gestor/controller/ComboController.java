@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Controlador para la gestión de Combos.
@@ -66,7 +66,7 @@ public class ComboController {
     }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del combo a actualizar", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboRequest.class))))
     public ResponseEntity<ComboResponse> actualizarCombo(
             @PathVariable String uuid,
-            @Valid @RequestBody ComboRequest comboRequest) {
+            @Validated @RequestBody ComboRequest comboRequest) {
         return ResponseEntity.ok(comboService.update(uuid, comboRequest));
     }
 
@@ -80,7 +80,7 @@ public class ComboController {
     @Operation(summary = "Crear combo", description = "Crea un nuevo combo con los datos proporcionados", responses = {
             @ApiResponse(responseCode = "201", description = "Combo creado exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboResponse.class)))
     }, requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del combo a crear", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = ComboRequest.class))))
-    public ResponseEntity<ComboResponse> crearCombo(@RequestBody @Valid ComboRequest request) {
+    public ResponseEntity<ComboResponse> crearCombo(@RequestBody @Validated ComboRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(comboService.create(request));
     }
 

@@ -69,15 +69,14 @@ const App = () => {
     <>
       <Origin name={name} />
       <Flex direction="row" align={"center"} gap="1" px="1" py="2">
-        <Button onClick={() => heandleToken(Menus.COMBO_ITEM)}>Combo Item</Button>
-
+        <Button onClick={() => heandleToken(Menus.COMBO_ITEM)}>
+          Combo Item
+        </Button>
         <Button onClick={() => heandleToken(Menus.MODULE)}>Module</Button>
-        <Button onClick={() => heandleToken(Menus.USER)}>User</Button>
         <Button onClick={() => heandleToken(Menus.INFORMATION)}>
           Information
         </Button>
         <Button onClick={() => heandleToken(Menus.ERROR)}>Error</Button>
-
       </Flex>
     </>
   );
