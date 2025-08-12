@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Validated
 @RestController
-@RequestMapping("/api/menu/process")
+@RequestMapping("/api/menus/process")
 @Tag(name = "Menus Process Controller", description = "Controller for managing menu processes")
 public class MenuProcessController {
     
@@ -44,7 +44,7 @@ public class MenuProcessController {
      * @return a ResponseEntity indicating the result of the operation
      */
     @GetMapping("/changeOrder/uuid={uuid}&action={action}")
-    @Operation(summary = "Cambio del orden del menu", description = "Cambia el orden de un elemento del menu<br><br>✅ Testado con Postman")
+    @Operation(summary = "Cambio del orden del menu", description = "Cambia el orden de un elemento del menu<br><br>✅ Testado con Postman<br><br>❌ GUI")
     public ResponseEntity<Void> changeOrder(@PathVariable String uuid, @PathVariable String action) {
         menuService.changeOrder(uuid, action);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

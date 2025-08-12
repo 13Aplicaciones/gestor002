@@ -18,6 +18,10 @@ import { createIRowDataComboItem } from "./comboItem/structures/Types";
 import { FormEditComboItem } from "./comboItem/FormComboItem";
 import { QueryComboItem } from "./comboItem/QueryComboItem";
 import { WorkComboItem } from "./comboItem/WorkComboItem";
+import { QueryMenu } from "./menu/QueryMenu";
+import { createIRowDataMenu } from "./menu/structures/Types";
+import { FormEditMenu } from "./menu/FormEditMenu";
+import { WorkMenu } from "./menu/WorkMenu";
 
 /**
  * Funcion para mostrar el titulo de la aplicacion.
@@ -113,6 +117,19 @@ const Origin = ({ name }: { name: string }) => {
             FormPanel={FormEditComboItem}
           />
         );
+
+      case Menus.MENU:
+        return (
+          <PageCrud
+            tranlation={Menus.MENU}
+            createIRowDataCustom={createIRowDataMenu}
+            QueryPanel={QueryMenu}
+            WorkPanel={WorkMenu}
+            FormPanel={FormEditMenu}
+          />
+        );
+
+
       default:
         return <>No definido</>;
     }

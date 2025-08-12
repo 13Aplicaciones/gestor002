@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aplicaciones13.base.controller.ControllerTools;
+import com.aplicaciones13.base.payload.common.LovResponse;
 import com.aplicaciones13.base.validations.ValidUUID;
 import com.aplicaciones13.gestor.payload.request.MenuPatchStatusRequest;
 import com.aplicaciones13.gestor.payload.request.MenuRequest;
 import com.aplicaciones13.gestor.payload.response.MenuResponse;
+import com.aplicaciones13.gestor.services.LovService;
 import com.aplicaciones13.gestor.services.MenuService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,14 +48,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class MenuController {
 
     private final MenuService menuService;
+    private final LovService lovService;
 
     /**
      * Constructor del controlador MenuController.
      * 
      * @param menuService
      */
-    public MenuController(MenuService menuService) {
+    public MenuController(MenuService menuService, LovService lovService) {
         this.menuService = menuService;
+        this.lovService = lovService;
     }
 
     /**
@@ -63,7 +67,7 @@ public class MenuController {
      * @ValidUUID Anotación personalizada para validar que el UUID es válido.
      * @return
      */
-    @Operation(summary = "Obtiene Menu por UUID", description = "Devuelve un menu por UUID <br><br>✅ Testado con Postman")
+    @Operation(summary = "Obtiene Menu por UUID", description = "Devuelve un menu por UUID <br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Menu", content = @Content(schema = @Schema(implementation = MenuResponse.class))),
     })
@@ -79,7 +83,7 @@ public class MenuController {
      * @param index
      * @return
      */
-    @Operation(summary = "Obtiene Menu por indexMenu", description = "Devuelve un menu por indexMenu <br><br>✅ Testado con Postman")
+    @Operation(summary = "Obtiene Menu por indexMenu", description = "Devuelve un menu por indexMenu <br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Menu", content = @Content(schema = @Schema(implementation = MenuResponse.class))),
     })
@@ -100,7 +104,7 @@ public class MenuController {
      * @param sort          Campos por los que ordenar (default "indexMenu,name")
      * @return
      */
-    @Operation(summary = "Obtiene Menus de forma paginada", description = "Devuelve listado de Menus que correspondan a la solicitud<br><br>✅ Testado con Postman")
+    @Operation(summary = "Obtiene Menus de forma paginada", description = "Devuelve listado de Menus que correspondan a la solicitud<br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Menus paginados", content = @Content(schema = @Schema(implementation = MenuResponse[].class))),
     })
@@ -118,12 +122,40 @@ public class MenuController {
     }
 
     /**
+     * Obtiene un LOV (List of Values) de Menus por un UUID de un Módulo de forma paginada.
+     * 
+     * @param page          Número de página (default 0)
+     * @param size          Tamaño de la página (default 10)
+     * @param sort          Campos por los que ordenar (default "label,asc")
+     * @param label         Etiqueta del Menu a buscar (opcional)
+     * @param labelAlternative Etiqueta alternativa del Menu a buscar (opcional)
+     *  
+     * @return
+     */
+    @GetMapping("/lov-module")
+    @Operation(summary = "Obtiene LOV de Menus por Módulo", description = "Devuelve un LOV de Menus por Módulo <br><br>✅ Testado con Postman<br><br>❌ GUI")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "LOV de Menus paginados", content = @Content(schema = @Schema(implementation = LovResponse[].class))),
+    })
+    public ResponseEntity<Map<String, Object>> getLovMenusByModule(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "label,asc") String[] sort,
+            @RequestParam(required = false) String label,
+            @RequestParam(required = false) String labelAlternative) {
+        Page<LovResponse> pageLov = lovService.findLov(LovService.LOV_MODULE, label, labelAlternative,
+                ControllerTools.generateOrders(page, size, sort));
+        
+        return ResponseEntity.ok(ControllerTools.generateFooterPage(pageLov));
+    }
+
+    /**
      * Crear un nuevo Menu.
      * 
      * @param request Solicitud que contiene los datos del Menu a crear.
      * @return
      */
-    @Operation(summary = "Crear un nuevo Menu", description = "Crea un nuevo menu<br><br>✅ Testado con Postman")
+    @Operation(summary = "Crear un nuevo Menu", description = "Crea un nuevo menu<br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Menu creado", content = @Content(schema = @Schema(implementation = MenuResponse.class))),
             @ApiResponse(responseCode = "400", description = "Error de validación", content = @Content(schema = @Schema(implementation = String.class))),
@@ -142,7 +174,7 @@ public class MenuController {
      * @param request Solicitud que contiene el nuevo status del Menu.
      * @return Respuesta que contiene los datos del Menu actualizado.
      */
-    @Operation(summary = "Actualizar el status de un Menu", description = "Actualiza el status de un menu<br><br>✅ Testado con Postman")
+    @Operation(summary = "Actualizar el status de un Menu", description = "Actualiza el status de un menu<br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Menu actualizado", content = @Content(schema = @Schema(implementation = MenuResponse.class))),
             @ApiResponse(responseCode = "400", description = "Error de validación", content = @Content(schema = @Schema(implementation = String.class))),
@@ -162,7 +194,7 @@ public class MenuController {
      * @param request Solicitud que contiene los datos del Menu a actualizar.
      * @return Respuesta que contiene los datos del Menu actualizado.
      */
-    @Operation(summary = "Actualizar un Menu", description = "Actualiza un menu<br><br>✅ Testado con Postman")
+    @Operation(summary = "Actualizar un Menu", description = "Actualiza un menu<br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Menu actualizado", content = @Content(schema = @Schema(implementation = MenuResponse.class))),
             @ApiResponse(responseCode = "400", description = "Error de validación", content = @Content(schema = @Schema(implementation = String.class))),
@@ -181,7 +213,7 @@ public class MenuController {
      * @param uuid UUID del Menu a borrar.
      * @return ResponseEntity con estado 204 No Content si se borra correctamente.
      */
-    @Operation(summary = "Borrar un Menu", description = "Borra un menu<br><br>✅ Testado con Postman")
+    @Operation(summary = "Borrar un Menu", description = "Borra un menu<br><br>✅ Testado con Postman<br><br>❌ GUI")
     @ApiResponses(value = { @ApiResponse(responseCode = "204", description = "Borrar Menu") })
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> deleteMenu(@PathVariable @ValidUUID String uuid) {

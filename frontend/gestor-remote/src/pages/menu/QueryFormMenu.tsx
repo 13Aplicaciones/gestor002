@@ -24,18 +24,18 @@ import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
 
 /**
- * Interfaz para los valores del formulario de consulta de ComboItemes.
+ * Valores del formulario de consulta de menú.
  */
-interface ComboItemQueryFormValues {
-  indexComboItem: string;
-  indexComboItemDescription?: string;
-  label: string;
+interface MenuQueryFormValues {
+  uuidModule: string;
+  uuidModuleDescription?: string;
+  name: string;
 }
 
 /**
- * Formulario de consulta de ComboItemes del sistema.
+ * Formulario de consulta de informaciones del sistema.
  */
-const QueryFormComboItem = ({
+const QueryFormMenu = ({
   onFind,
 }: {
   onFind: (data: IParametersQuery) => void;
@@ -56,7 +56,7 @@ const QueryFormComboItem = ({
       setToken(tokenTemp.access_token);
 
       const parameter: IParameter = await getParameter(MODULE, "200");
-      setApiUrl(parameter.valueText01 + Menus.COMBO_ITEM_ENDPOINT + "/lov-combo");
+      setApiUrl(parameter.valueText01 + Menus.MENU_ENDPOINT + "/lov-module");
     };
 
     initializeStructure();
@@ -67,20 +67,22 @@ const QueryFormComboItem = ({
    */
   useEffect(() => {
     if (lovSelected && formApi) {
-      formApi.setValue("indexComboItem", lovSelected.index ?? "");
-      formApi.setValue("indexComboItemDescription", lovSelected.label ?? "");
+      formApi.setValue("uuidModule", lovSelected.index ?? "");
+      formApi.setValue("uuidModuleDescription", lovSelected.label ?? "");
       formApi.setValue("label", "");
+
+      console.log("Formulario actualizado con LOV seleccionado:", lovSelected);
       setLovSelected(null); // Limpia para evitar loops
     }
   }, [lovSelected, formApi]);
 
   /**
-   * Esquema de validación para el formulario de consulta de ComboItemes.
+   * Esquema de validación para el formulario.
    */
   const schema = yup.object({
-    indexComboItem: yup.string(),
-    indexComboItemDescription: yup.string(),
-    label: yup.string().max(1024, t("validation.max", { max: 1024 })),
+    uuidModule: yup.string(),
+    uuidModuleDescription: yup.string(),
+    name: yup.string().max(128, t("validation.max", { max: 128 })),
   });
 
   /**
@@ -110,12 +112,12 @@ const QueryFormComboItem = ({
     <>
       <PopUpLov
         createIRowDataCustom={() => ({
-          indexComboItem: "",
-          indexComboItemDescription: "",
+          uuidModule: "",
+          uuidModuleDescription: "",
           label: "",
         })}
         QueryLovPanel={QueryLov}
-        initialRow={{ indexComboItem: "", label: "" }}
+        initialRow={{ uuidModule: "", label: "" }}
         getToken={refreshToken}
         apiUrlLov={apiUrl}
         token={token}
@@ -128,12 +130,13 @@ const QueryFormComboItem = ({
         }}
         onCancel={handleLovCancel}
       />
-      <GenericQueryForm<ComboItemQueryFormValues>
+
+      <GenericQueryForm<MenuQueryFormValues>
         validationSchema={schema}
         defaultValues={{
-          indexComboItem: "",
-          indexComboItemDescription: "",
-          label: "",
+          uuidModule: "",
+          uuidModuleDescription: "",
+          name: "",
         }}
         onFind={onFind}
         getFormApi={setFormApi}
@@ -147,17 +150,17 @@ const QueryFormComboItem = ({
                 "modules.GS-CB-IT-001.fields.indexComboItem.placeholder"
               )}
               directionLabel={Direction.horizontal}
-              register={register("indexComboItem")}
-              registerDescription={register("indexComboItemDescription")}
-              messageError={formState.errors.indexComboItem?.message}
+              register={register("uuidModule")}
+              registerDescription={register("uuidModuleDescription")}
+              messageError={formState.errors.uuidModule?.message}
             />
             <InputField
-              title={t("modules.GS-CB-IT-001.fields.label.title")}
+              title={t("modules.GS-IN-001.fields.name.title")}
               columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-CB-IT-001.fields.label.placeholder")}
+              placeholder={t("modules.GS-IN-001.fields.name.placeholder")}
               directionLabel={Direction.horizontal}
-              register={register("label")}
-              messageError={formState.errors.label?.message}
+              register={register("name")}
+              messageError={formState.errors.name?.message}
             />
           </>
         )}
@@ -166,4 +169,4 @@ const QueryFormComboItem = ({
   );
 };
 
-export { QueryFormComboItem };
+export { QueryFormMenu };

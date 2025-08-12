@@ -154,27 +154,27 @@ public class ComboItemController {
     /**
      * Método para obtener un LOV (List of Values) de ítems de combo paginado.
      * 
-     * @param page
-     * @param size
-     * @param sort
-     * @param searchTerm
+     * @param page         número de página
+     * @param size         tamaño de página
+     * @param sort         configuración de ordenamiento
+     * @param label        etiqueta del ítem de combo a buscar
+     * @param labelAlternative etiqueta alternativa del ítem de combo a buscar
+     * 
      * @return
      */
-    @GetMapping("/lov")
     @Operation(summary = "Obtiene LOV paginado", description = "Recibe los parámetros de paginación y filtrado", responses = {
             @ApiResponse(responseCode = "200", description = "Items de busqueda LOV recuperados exitosamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
     })
+    @GetMapping("/lov-combo")
     public ResponseEntity<Map<String, Object>> getComboItemLov(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "label,asc") String[] sort,
             @RequestParam(required = false) String label,
             @RequestParam(required = false) String labelAlternative) {
-        Page<LovResponse> pageComboItem = lovService.findLovComboItem(label, labelAlternative,
+        Page<LovResponse> pageLov = lovService.findLov(LovService.LOV_COMBO_ITEM, label, labelAlternative,
                 ControllerTools.generateOrders(page, size, sort));
-
-        Map<String, Object> response = ControllerTools.generateFooterPage(pageComboItem);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ControllerTools.generateFooterPage(pageLov));
     }
 
     /**

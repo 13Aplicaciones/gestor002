@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aplicaciones13.base.controller.exception.ResourceHttpStatusException;
+import com.aplicaciones13.base.payload.common.LovResponse;
 import com.aplicaciones13.base.services.JwtService;
 import com.aplicaciones13.gestor.mapping.MenuMapper;
 import com.aplicaciones13.gestor.model.Menu;

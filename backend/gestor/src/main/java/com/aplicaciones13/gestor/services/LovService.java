@@ -16,7 +16,10 @@ import com.aplicaciones13.gestor.repository.LovRepository;
  */
 @Service
 public class LovService {
-    
+
+    public static final String LOV_COMBO_ITEM = "comboItem";
+    public static final String LOV_MODULE = "module";
+
     private final LovRepository lovRepository;
 
     /**
@@ -31,15 +34,21 @@ public class LovService {
     /**
      * Busca ítems de combo para un LOV (List of Values) por término de búsqueda.
      * 
-     * @param label término a buscar en label
+     * @param label            término a buscar en label
      * @param labelAlternative término alternativo a buscar en label_alternative
-     * @param pageable   configuración de paginación
+     * @param pageable         configuración de paginación
      * @return página de ítems de combo
      */
-    public Page<LovResponse> findLovComboItem(String label, String labelAlternative, Pageable pageable) {
-        return lovRepository.findForLovComboItem(label, labelAlternative, pageable)
-                .map(LovMapper.INSTANCE::toResponse);
+    public Page<LovResponse> findLov(String lovName, String label, String labelAlternative, Pageable pageable) {
+        switch (lovName) {
+            case LOV_COMBO_ITEM:
+                return lovRepository.findForLovComboItem(label, labelAlternative, pageable)
+                        .map(LovMapper.INSTANCE::toResponse);
+            case LOV_MODULE:
+                return lovRepository.findForLovModule(label, labelAlternative, pageable)
+                        .map(LovMapper.INSTANCE::toResponse);
+            default:
+                throw new IllegalArgumentException("LOV name not recognized: " + lovName);
+        }
     }
-
 }
-

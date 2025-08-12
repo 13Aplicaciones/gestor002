@@ -1,0 +1,73 @@
+import {
+  getParameter,
+  IParameter,
+} from "orchestrator_remote/service/Parameter";
+import {
+  getToken,
+  ITokenRoot,
+  refreshToken,
+} from "orchestrator_remote/service/Tokens";
+import { useEffect, useState } from "react";
+import { GenericWork } from "ux-ui";
+import { Menus, MODULE } from "../../utils/Constants";
+import { dataViewPresentation } from "./structures/Presentations";
+import { createIRowDataMenu, IRowDataMenu } from "./structures/Types";
+
+const WorkMenu = ({
+  onBack,
+  row,
+}: {
+  onBack: () => void;
+  row?: IRowDataMenu;
+}) => {
+  const [token, setToken] = useState<string>();
+  const [apiUrl, setApiUrl] = useState<string>("");
+
+  /**
+   * Inicializar token y parámetros de URL
+   */
+  useEffect(() => {
+    getToken()
+      .then((t: ITokenRoot) => setToken(t.access_token))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!row) {
+      setApiUrl("");
+      return;
+    }
+
+    (async () => {
+      try {
+        const param: IParameter = await getParameter(MODULE, "200");
+        const url = `${param.valueText01}${Menus.MENU_ENDPOINT}/${row.uuid}`;
+        setApiUrl(url);
+      } catch (err) {
+        console.error("Error generando API URL -> Error:", err);
+        setApiUrl("");
+      }
+    })();
+  }, [row]);
+
+  return (
+    <>
+      {!apiUrl || !token ? (
+        <></>
+      ) : (
+        <GenericWork<IRowDataMenu>
+          apiUrl={apiUrl}
+          createEmptyData={createIRowDataMenu}
+          getPresentationData={dataViewPresentation}
+          token={token}
+          row={row}
+          getToken={refreshToken}
+          entityName="Menu"
+          onBack={onBack}
+        />
+      )}
+    </>
+  );
+};
+
+export { WorkMenu };

@@ -73,6 +73,7 @@ const App = () => {
           Combo Item
         </Button>
         <Button onClick={() => heandleToken(Menus.MODULE)}>Module</Button>
+        <Button onClick={() => heandleToken(Menus.MENU)}>Menu</Button>
         <Button onClick={() => heandleToken(Menus.INFORMATION)}>
           Information
         </Button>
