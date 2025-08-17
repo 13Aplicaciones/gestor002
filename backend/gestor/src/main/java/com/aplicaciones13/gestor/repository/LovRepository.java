@@ -59,6 +59,8 @@ public interface LovRepository extends JpaRepository<Lov, String> {
                     ) AS combined
                     """, nativeQuery = true)
     Page<Lov> findForLovComboItem(String label, String labelAlternative, Pageable pageable);
+    
+  
 
     /**
      * Método para buscar módulos para un LOV (List of Values) por término de
@@ -95,4 +97,17 @@ public interface LovRepository extends JpaRepository<Lov, String> {
             """, nativeQuery = true)
 
     Page<Lov> findForLovModule(String label, String labelAlternative, Pageable pageable);
+
+    /**
+     * Metodo para buscar la descripción del modulo para un LOV (List of Values)
+     * 
+     * @param code Codigo generalizado para el modulo que usa el item combo
+     * @return
+     */
+    @Query(value = """
+            select m.index_module
+            from module m
+            where m.uuid = ?1
+            """, nativeQuery = true)
+    String findForLovModuleDescription(String code);
 }

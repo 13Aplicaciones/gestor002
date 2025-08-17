@@ -103,8 +103,82 @@
     "GS-MN-001": {
       "icon": "DropdownMenuIcon",
       "title": "Menús",
+      "add": "Crear nuevo 'Menú'",
       "description": "Menús del sistema",
-      "path": "Menu"
+      "path": "Menu",
+      "panel": {
+        "find": "Buscar Menús",
+        "see": "Vista previa del Menú",
+        "edit": "Editar Menú",
+        "create": "Crear Menú"
+      },
+      "fields": {
+        "uuid": {
+          "title": "UUID",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "uuidModule": {
+          "title": "UUID Módulo",
+          "placeholder": "Ejemplo: 123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name": {
+          "title": "Nombre",
+          "placeholder": "Cliente"
+        },
+
+        "type": {
+          "title": "Tipo",
+          "placeholder": "Tipo de menú"
+        },
+
+        "indexMenu": {
+          "title": "Índice Menu",
+          "placeholder": "Ejemplo GS-MN-001"
+        },
+        "taskFlow": {
+          "title": "Task Flow",
+          "placeholder": "/WEB-INF/rol-task-flow.xml#rol-task-flow"
+        },
+        
+        "status": {
+          "title": "Estado",
+          "placeholder": "Estado del módulo"
+        },
+        "order": {
+          "title": "Orden",
+          "placeholder": "10"
+        },
+
+         "user": {
+          "title": "Usuario",
+          "placeholder": "Usuario que generó el error"
+        },
+        
+        "userDate": {
+          "title": "Fecha",
+          "placeholder": "Fecha del error"
+        },
+       
+        "userApp": {
+          "title": "Aplicación",
+          "placeholder": "Aplicación que generó el error"
+        },
+        "acciones": {
+          "title": "Acciones",
+          "placeholder": "Acciones a realizar",
+          "abrev": "Acci."
+        }
+      },
+      "work": {
+        "status": {
+          "title": "Cambio de estado",
+          "active": "Activar",
+          "activeDescription": "Activa el menú para que los usuarios con los permisos correspondientes puedan acceder a él",
+          "inactive": "Inactivar",
+          "inactiveDescription": "Inactiva el menú para que los usuarios no puedan acceder a él",
+          "description": "Al cambiar el estado del menú, esto afectará a todos los procesos relacionados con él, por lo que se recomienda realizar esta acción con precaución y con conocimiento de las consecuencias que este proceso tiene."
+        }
+      }
     },
     "GS-RL-001": {
       "icon": "Link2Icon",

@@ -1,5 +1,6 @@
 package com.aplicaciones13.gestor.services;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,26 @@ public class LovService {
                         .map(LovMapper.INSTANCE::toResponse);
             default:
                 throw new IllegalArgumentException("LOV name not recognized: " + lovName);
+        }
+    }
+
+    /**
+     * Busca la descripción de un LOV (List of Values) por su nombre y código.
+     * 
+     * @param lovDescriptionName nombre del LOV
+     * @param code               código del LOV
+     * @return descripción del LOV
+     */
+    @Cacheable(value = "lovDescription", key = "#lovDescriptionName + '_' + #code")
+    public String findLovDescription(String lovDescriptionName, String code) {
+        switch (lovDescriptionName) {
+            case LOV_COMBO_ITEM:
+                // TODO: Implementar lógica para buscar descripción de LOV Combo Item
+                return lovRepository.findForLovModuleDescription(code);
+            case LOV_MODULE:
+                return lovRepository.findForLovModuleDescription(code);
+            default:
+                throw new IllegalArgumentException("LOV description name not recognized: " + lovDescriptionName);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.aplicaciones13.gestor.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -96,12 +97,12 @@ public class MenuController {
     /**
      * Obtiene un listado de Menus por un UUID de un Módulo de forma paginada.
      * 
-     * @param uuidModule    UUID del Módulo al que pertenece el Menu
-     * @param indexMenu     Índice único del Menu (opcional)
-     * @param name          Nombre del Menu (opcional)
-     * @param page          Número de página (default 0)
-     * @param size          Tamaño de la página (default 10)
-     * @param sort          Campos por los que ordenar (default "indexMenu,name")
+     * @param uuidModule UUID del Módulo al que pertenece el Menu
+     * @param indexMenu  Índice único del Menu (opcional)
+     * @param name       Nombre del Menu (opcional)
+     * @param page       Número de página (default 0)
+     * @param size       Tamaño de la página (default 10)
+     * @param sort       Campos por los que ordenar (default "indexMenu,name")
      * @return
      */
     @Operation(summary = "Obtiene Menus de forma paginada", description = "Devuelve listado de Menus que correspondan a la solicitud<br><br>✅ Testado con Postman<br><br>❌ GUI")
@@ -110,7 +111,7 @@ public class MenuController {
     })
     @GetMapping("/paginated")
     public Map<String, Object> getPaginatedMenus(
-            @RequestParam(required = true) String uuidModule,
+            @RequestParam(required = false) String uuidModule,
             @RequestParam(required = false) String indexMenu,
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "0") int page,
@@ -122,14 +123,15 @@ public class MenuController {
     }
 
     /**
-     * Obtiene un LOV (List of Values) de Menus por un UUID de un Módulo de forma paginada.
+     * Obtiene un LOV (List of Values) de Menus por un UUID de un Módulo de forma
+     * paginada.
      * 
-     * @param page          Número de página (default 0)
-     * @param size          Tamaño de la página (default 10)
-     * @param sort          Campos por los que ordenar (default "label,asc")
-     * @param label         Etiqueta del Menu a buscar (opcional)
+     * @param page             Número de página (default 0)
+     * @param size             Tamaño de la página (default 10)
+     * @param sort             Campos por los que ordenar (default "label,asc")
+     * @param label            Etiqueta del Menu a buscar (opcional)
      * @param labelAlternative Etiqueta alternativa del Menu a buscar (opcional)
-     *  
+     * 
      * @return
      */
     @GetMapping("/lov-module")
@@ -145,8 +147,25 @@ public class MenuController {
             @RequestParam(required = false) String labelAlternative) {
         Page<LovResponse> pageLov = lovService.findLov(LovService.LOV_MODULE, label, labelAlternative,
                 ControllerTools.generateOrders(page, size, sort));
-        
+
         return ResponseEntity.ok(ControllerTools.generateFooterPage(pageLov));
+    }
+
+    /**
+     * Obtiene la descripción de un LOV de Módulo.
+     * @param code Código del LOV de Módulo.
+     * @return Descripción del LOV de Módulo.
+     */
+    @GetMapping("/lov-module-description")
+    @Operation(summary = "Obtiene descripción de un LOV de Módulo", description = "Devuelve la descripción de un LOV de Módulo <br><br>✅ Testado con Postman<br><br>❌ GUI")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Descripción del LOV de Módulo", content = @Content(schema = @Schema(implementation = Map.class))),
+    })
+    public ResponseEntity<Map<String, String>> getLovModuleDescription(@RequestParam String code) {
+        String description = lovService.findLovDescription(LovService.LOV_MODULE, code);
+        Map<String, String> response = new HashMap<>();
+        response.put("description", description);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -170,7 +189,7 @@ public class MenuController {
     /**
      * Actualizar el status de un Menu.
      * 
-     * @param uuid UUID del Menu a actualizar.
+     * @param uuid    UUID del Menu a actualizar.
      * @param request Solicitud que contiene el nuevo status del Menu.
      * @return Respuesta que contiene los datos del Menu actualizado.
      */
@@ -182,7 +201,7 @@ public class MenuController {
     })
     @PatchMapping("/status/{uuid}")
     public ResponseEntity<MenuResponse> updateMenuStatus(@PathVariable String uuid,
-                                                          @Validated @RequestBody MenuPatchStatusRequest request) {
+            @Validated @RequestBody MenuPatchStatusRequest request) {
         MenuResponse response = menuService.updateStatus(uuid, request);
         return ResponseEntity.ok(response);
     }
@@ -190,7 +209,7 @@ public class MenuController {
     /**
      * Actualizar un Menu por su UUID.
      * 
-     * @param uuid UUID del Menu a actualizar.
+     * @param uuid    UUID del Menu a actualizar.
      * @param request Solicitud que contiene los datos del Menu a actualizar.
      * @return Respuesta que contiene los datos del Menu actualizado.
      */

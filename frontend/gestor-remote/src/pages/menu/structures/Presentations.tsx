@@ -1,6 +1,7 @@
 import { t } from "i18next";
 import {
   IPresentationDataList,
+  IPresentationInputSelect,
   IPresentationTable,
   JustificationText,
   SortColumn,
@@ -104,12 +105,6 @@ const dataViewPresentation = (): IPresentationDataList => {
         format: TextFormat.none,
       },
       {
-        name: "type",
-        title: t("modules.GS-MN-001.fields.type.title"),
-        justification: JustificationText.start,
-        format: TextFormat.none,
-      },
-      {
         name: "indexMenu",
         title: t("modules.GS-MN-001.fields.indexMenu.title"),
         justification: JustificationText.start,
@@ -122,6 +117,12 @@ const dataViewPresentation = (): IPresentationDataList => {
         format: TextFormat.none,
       },
       {
+        name: "type",
+        title: t("modules.GS-MN-001.fields.type.title"),
+        justification: JustificationText.start,
+        format: TextFormat.none,
+      },
+      {
         name: "status",
         title: t("modules.GS-MN-001.fields.status.title"),
         justification: JustificationText.start,
@@ -130,7 +131,7 @@ const dataViewPresentation = (): IPresentationDataList => {
       {
         name: "order",
         title: t("modules.GS-MN-001.fields.order.title"),
-        justification: JustificationText.end,
+        justification: JustificationText.start,
         format: TextFormat.none,
       },
       {
@@ -154,5 +155,41 @@ const dataViewPresentation = (): IPresentationDataList => {
     ],
   };
 };
+/*Tipo de menu, P=principal, S=secundario, U=usuario y S=salir*/
 
-export { tableQueryMenu, dataViewPresentation };
+const listaFormTypeMenu = (): IPresentationInputSelect => {
+  return {
+    items: [
+      {
+        order: 0,
+        justification: JustificationText.end,
+        codeText: "P",
+        name: "Principal",
+        width: "100%",
+      },
+      {
+        order: 1,
+        justification: JustificationText.start,
+        codeText: "S",
+        name: "Secundario",
+        width: "100%",
+      },
+      {
+        order: 2,
+        justification: JustificationText.start,
+        codeText: "U",
+        name: "Usuario",
+        width: "100%",
+      },
+      {
+        order: 3,
+        justification: JustificationText.start,
+        codeText: "E",
+        name: "Salir",
+        width: "100%",
+      }
+    ],
+  };
+};
+
+export { tableQueryMenu, dataViewPresentation, listaFormTypeMenu };

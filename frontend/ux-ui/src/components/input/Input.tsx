@@ -448,6 +448,22 @@ interface IPresentationInputSelect {
 
 /**
  * Componente para crear un campo de selección.
+ * 
+ * Se debe usar dentro del elemento Controler 
+ * 
+ * import { Controller, useForm } from "react-hook-form";
+ * 
+ * ....
+ * 
+ * <Controller
+            name="xxxx"
+            control={control}
+            render={({ field }) => (
+              <InputSelect
+              .....
+              messageError={errors.xxxx?.message}
+              />
+  </Controller>
  *
  * @param title Título del campo
  * @param placeholder Placeholder del campo
@@ -610,27 +626,29 @@ const InputFieldLov = ({
       />
       <Flex direction={"column"}>
         <Flex direction={"row"} gap="2" width={presentation.width}>
-          {(!test && (
-            <input type="hidden" style={{ display: "none" }} {...register} />
-          )) || (
+          <Flex direction={"column"}>
+            {(!test && (
+              <input type="hidden" style={{ display: "none" }} {...register} />
+            )) || (
+              <TextField.Root
+                type="text"
+                size="2"
+                readOnly={true}
+                style={{ marginBottom: "1vh", width: presentation.width }}
+                placeholder={placeholder}
+                {...register}
+              />
+            )}
+
             <TextField.Root
               type="text"
               size="2"
               readOnly={true}
-              style={{ marginBottom: "1vh", width: "100%" }}
+              style={{ marginBottom: "1vh", width: presentation.width }}
               placeholder={placeholder}
-              {...register}
+              {...registerDescription}
             />
-          )}
-
-          <TextField.Root
-            type="text"
-            size="2"
-            readOnly={true}
-            style={{ marginBottom: "1vh", width: "100%" }}
-            placeholder={placeholder}
-            {...registerDescription}
-          />
+          </Flex>
 
           <IconButton variant="surface" size="2" form="none" onClick={onFind}>
             <IconComponent iconName="ListBulletIcon" width="16" height="16" />

@@ -143,6 +143,7 @@ const QueryFormMenu = ({
         renderFields={({ register, formState }) => (
           <>
             <InputFieldLov
+              test={true}
               onFind={() => handleOnFind()}
               title={t("modules.GS-CB-IT-001.fields.indexComboItem.title")}
               columns={BandPresentation.column_3}
@@ -155,9 +156,9 @@ const QueryFormMenu = ({
               messageError={formState.errors.uuidModule?.message}
             />
             <InputField
-              title={t("modules.GS-IN-001.fields.name.title")}
+              title={t("modules.GS-MN-001.fields.name.title")}
               columns={BandPresentation.column_3}
-              placeholder={t("modules.GS-IN-001.fields.name.placeholder")}
+              placeholder={t("modules.GS-MN-001.fields.name.placeholder")}
               directionLabel={Direction.horizontal}
               register={register("name")}
               messageError={formState.errors.name?.message}

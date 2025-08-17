@@ -84,8 +84,7 @@ public class MenuService {
      * @return Paginación de menús
      */
     public Page<MenuResponse> paginada(String uuidModule, String indexMenu, String name, Pageable pageable) {
-        Module module = moduleRepository.findByUuid(uuidModule)
-                .orElseThrow(() -> new ResourceHttpStatusException("Module no encontrado", HttpStatus.NOT_FOUND));
+        Module module = moduleRepository.findByUuid(uuidModule).orElse(new Module());
 
         Page<Menu> listMenus = menuRepository.paginado(module.getIdModule(), indexMenu, name, pageable);
         return listMenus.map(MenuMapper.INSTANCE::toResponse);
@@ -189,8 +188,10 @@ public class MenuService {
     /**
      * Cambia el orden de un menú dentro de su módulo.
      * 
-     * Permite mover un menú a la primera, última, arriba o abajo en la lista de menús
-     * del mismo módulo. Actualiza el orden de todos los menús después de realizar el
+     * Permite mover un menú a la primera, última, arriba o abajo en la lista de
+     * menús
+     * del mismo módulo. Actualiza el orden de todos los menús después de realizar
+     * el
      * cambio.
      * 
      * @param uuid    UUID del menú a cambiar de orden.
@@ -208,7 +209,7 @@ public class MenuService {
                 .filter(menu -> menu.getUuid().equals(uuid))
                 .findFirst()
                 .orElseThrow(() -> new ResourceHttpStatusException("Menu no encontrado", HttpStatus.NOT_FOUND)));
-    
+
         switch (acction) {
             case "FIRST":
                 menuPivot = listMenus.remove(selectedPosition);

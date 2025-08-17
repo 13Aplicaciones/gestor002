@@ -9,7 +9,7 @@ import {
   refreshToken,
 } from "orchestrator_remote/service/Tokens";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   AreaField,
@@ -18,10 +18,12 @@ import {
   FooterFormAction,
   IFormProps,
   InputField,
+  InputSelect,
 } from "ux-ui";
 import { GenericCrudForm } from "ux-ui/src/components/form/GenericCrudForm";
 import * as yup from "yup";
 import { Menus, MODULE } from "../../utils/Constants";
+import { listaFormTypeMenu } from "./structures/Presentations";
 
 /**
  * Formulario de edición de errores del sistema.
@@ -35,17 +37,23 @@ const FormEditMenu = ({ status, row, onBack }: IFormProps) => {
    * Esquema de validación de formulario
    */
   const schema = yup.object({
+    uuidModule: yup.string().required(t("validation.required")),
+    indexMenu: yup
+      .string()
+      .required(t("validation.required"))
+      .min(5, t("validation.min", { min: 5 }))
+      .max(32, t("validation.max", { max: 32 })),
     name: yup
       .string()
       .required(t("validation.required"))
       .min(5, t("validation.min", { min: 5 }))
       .max(128, t("validation.max", { max: 128 })),
-    value01: yup
+    type: yup.string().required(t("validation.required")),
+    taskFlow: yup
       .string()
       .required(t("validation.required"))
       .min(5, t("validation.min", { min: 5 }))
-      .max(128, t("validation.max", { max: 256 })),
-    value02: yup.string().max(256, t("validation.max", { max: 256 })),
+      .max(256, t("validation.max", { max: 256 })),
     userApp: yup.string(),
   });
 
@@ -53,15 +61,18 @@ const FormEditMenu = ({ status, row, onBack }: IFormProps) => {
    * Hook para el manejo de formularios
    */
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      uuidModule: row?.uuidModule ?? "",
+      indexMenu: row?.indexMenu ?? "",
       name: row?.name ?? "",
-      value01: row?.value01 ?? "",
-      value02: row?.value02 ?? "",
+      type: row?.type ?? "",
+      taskFlow: row?.taskFlow ?? "",
       userApp: row?.userApp ?? "",
     },
   });
@@ -110,30 +121,52 @@ const FormEditMenu = ({ status, row, onBack }: IFormProps) => {
       }) => (
         <form onSubmit={handleSubmit(submitData)}>
           <InputField
-            title={t("modules.GS-IN-001.fields.name.title")}
+            title={t("modules.GS-MN-001.fields.uuidModule.title")}
             columns={BandPresentation.column_3}
-            placeholder={t("modules.GS-IN-001.fields.name.placeholder")}
+            placeholder={t("modules.GS-MN-001.fields.uuidModule.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("uuidModule")}
+            messageError={errors.uuidModule?.message}
+          />
+          <InputField
+            title={t("modules.GS-MN-001.fields.indexMenu.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-MN-001.fields.indexMenu.placeholder")}
+            directionLabel={Direction.horizontal}
+            register={register("indexMenu")}
+            messageError={errors.indexMenu?.message}
+          />
+          <InputField
+            title={t("modules.GS-MN-001.fields.name.title")}
+            columns={BandPresentation.column_3}
+            placeholder={t("modules.GS-MN-001.fields.name.placeholder")}
             directionLabel={Direction.horizontal}
             register={register("name")}
             messageError={errors.name?.message}
           />
-          <AreaField
-            title={t("modules.GS-IN-001.fields.value01.title")}
-            columns={BandPresentation.column_2}
-            rows={3}
-            placeholder={t("modules.GS-IN-001.fields.value01.placeholder")}
-            directionLabel={Direction.horizontal}
-            register={register("value01")}
-            messageError={errors.value01?.message}
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <InputSelect
+                title={t("modules.GS-MN-001.fields.type.title")}
+                placeholder={t("modules.GS-MN-001.fields.type.placeholder")}
+                messageError={errors.type?.message}
+                columns={BandPresentation.column_6}
+                directionLabel={Direction.horizontal}
+                items={listaFormTypeMenu()}
+                {...field}
+              />
+            )}
           />
           <AreaField
-            title={t("modules.GS-IN-001.fields.value02.title")}
+            title={t("modules.GS-MN-001.fields.taskFlow.title")}
             columns={BandPresentation.column_2}
             rows={3}
-            placeholder={t("modules.GS-IN-001.fields.value02.placeholder")}
+            placeholder={t("modules.GS-MN-001.fields.taskFlow.placeholder")}
             directionLabel={Direction.horizontal}
-            register={register("value02")}
-            messageError={errors.value02?.message}
+            register={register("taskFlow")}
+            messageError={errors.taskFlow?.message}
           />
           <FooterFormAction
             loading={loading}

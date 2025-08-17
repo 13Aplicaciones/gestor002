@@ -58,8 +58,8 @@ const QueryMenu = ({ onEditRow, onSeeRow, onCreateRow }: IQueryProps) => {
     }
 
     // Configurar acción de edición
-    if (tableFormat.items[3]) {
-      tableFormat.items[3].component = (row: IRowDataMenu) => (
+    if (tableFormat.items[6]) {
+      tableFormat.items[6].component = (row: IRowDataMenu) => (
         <IconButton
           size="1"
           variant="ghost"
