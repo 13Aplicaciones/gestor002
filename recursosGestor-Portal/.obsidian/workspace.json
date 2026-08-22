@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "Respuesta-REST"
             }
+          },
+          {
+            "id": "2b0159fc50a2d6de",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2026-08-12 18.56.45.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-08-12 18.56.45.excalidraw"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -160,6 +173,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Crear nueva base": false,
       "switcher:Abrir selector rápido": false,
       "graph:Abrir vista gráfica": false,
       "canvas:Crear nuevo lienzo": false,
@@ -169,8 +183,10 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "b242c8ffcdfde691",
+  "active": "2b0159fc50a2d6de",
   "lastOpenFiles": [
+    "documentos/Respuesta-REST.md",
+    "Excalidraw/Drawing 2026-08-12 18.56.45.excalidraw.md",
     "documentos/CORS.md",
     "documentos/ArquitecturaReact.md",
     "SitosUI-Investigacion.canvas",
@@ -183,7 +199,6 @@
     "Excalidraw/Drawing 2025-04-03 11.39.55.excalidraw.md",
     "idea",
     "documentos/ejemplo toast.md",
-    "documentos/Respuesta-REST.md",
     "documentos/Seguridades.pdf"
   ]
 }
